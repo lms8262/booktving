@@ -61,6 +61,13 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+		
+		<!--타임리프 의존성 추가-->
+		<dependency>
+     		<groupId>nz.net.ultraq.thymeleaf</groupId>
+     		<artifactId>thymeleaf-layout-dialect</artifactId>
+		</dependency>
+		
 	</dependencies>
 
 	<build>

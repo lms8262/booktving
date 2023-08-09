@@ -1,10 +1,21 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
-	main
-</body>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/layout1}">
+	 
+<!-- main 페이지 CSS --> 
+<th:block layout:fragment="css">
+	<link rel="stylesheet" type="text/css" href="/css/main.css" />	
+</th:block>
+
+<div layout:fragment="content">
+
+	
+</div>
+
+
+<!-- main 페이지 javaScript -->
+<th:block layout:fragment="script">
+</th:block>
+
 </html>

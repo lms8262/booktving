@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
+	<header th:fragment="header" class="header-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-12 header-box">
+				
+					<nav class="main-nav">
+					
+						<!-- 로고 -->
+						<div class="logo col-lg-2">
+							<a href="/" >
+								<img alt="logo" src="">
+							</a>
+						</div>
+						
+						<!-- 메뉴 -->
+						<!-- 개발 후 로그인 전/후 메뉴 sec:authorize코드 추가예정  -->
+						<div class="col-lg-7">
+							<ul class="nav_left">
+								<li> <a href="">카테고리</a> </li>
+								<li> <a href="">검색</a> </li>
+								<li> <a href="">문의하기</a> </li>
+								<li> <a href="">팔로우</a> </li>
+								<li> <a href="">나의서재</a> </li>
+								<li class="menu"><a href="javascript:;">나의정보</a>
+									<ul class="submenu">
+										<li> <a href="">개인정보 수정</a> </li>
+										<li> <a href="">대여내역</a> </li>
+										<li> <a href="">이용권 관리</a> </li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+						
+						<div class="col-lg-3">
+							<ul class="nav_right">
+		 						<li class="admin">
+		 							<a href="" class="admin-btn">
+		 								<img alt="admin" src="">
+		 							</a>
+		 						</li>
+								<li class="login">
+									<a href="" class="login-btn">
+										<img alt="login" src="">
+									</a>
+								</li>
+								<li class="logout">
+									<a href="" class="logout-btn">
+										<img alt="logout" src="">
+									</a>
+								</li>
+							</ul>
+						</div>
+						
+					</nav>
+				
+				</div>
+			</div>
+		</div>	
+	</header>
+
+</html>
