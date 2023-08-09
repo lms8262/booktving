@@ -49,35 +49,52 @@ ul{
 	align-items: center;
 }
 
+.logo img{
+	width:150px;
+}
+
 .nav_left{
+	width: 520px;
 	display: flex;
 	align-items: center;
 	padding: 0;
 	margin: 0;	
 }
 
-.nav-left li{
-	width: 16%;
+.nav-left .menu{
+	display: block;	
+	position: relative;
 	padding: 0;
 	margin: 0;
 }
 
-.nav_left .menu {
-	display: block;	
-	position: relative;
+.nav-left li a:hover {
+	background-color: #FFD360;
+	font-weight: bold;
 }
 
 .nav_left .submenu{
 	display: none;
-	height:90px;
-	width: 120px;
+	width: 150px;
 	position:absolute; 
-	left: 10px;
-	padding: 10px 0;	
+	padding: 0;
+	top: 40px;
+	left: 460px;	
+	border: 1px solid #eee;
+	background-color: #fff;
+}
+
+.nav_left .submenu li:hover{
+	background-color:#FFD360;
+	font-weight: bold;
 }
 
 .nav_left .submenu li {
-	height: 30px;
+	padding: 15px 0;
+}
+
+.nav_left .submenu a{
+	padding-left: 15px;
 }
 
 .nav_right{
@@ -86,6 +103,18 @@ ul{
 	justify-content:flex-end;
 	padding: 0;
 	margin: 0;
+}
+
+.admin-btn img{
+	width: 30px;
+}
+
+.login-btn img{
+	width: 80px;
+} 
+
+.logout-btn img{
+	width: 80px;
 }
 
 /* sec: content */
@@ -107,10 +136,14 @@ ul{
 	justify-content: space-between;
 }
 
-.footer-title{
+.footer-logo{
 	margin: 0;
 	font-size: 15px;
 	font-weight: bold;
+}
+
+.footer-logo img{
+	width: 150px;
 }
 
 .footer-sns{
@@ -121,6 +154,10 @@ ul{
 
 .footer-sns span{
 	margin: 0 10px;
+}
+
+.footer-sns img{
+	width:30px;
 }
 
 .footer-content{
