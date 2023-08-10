@@ -49,35 +49,63 @@ ul{
 	align-items: center;
 }
 
+.logo img{
+	width:150px;
+}
+
 .nav_left{
+	width: 520px;
+	height: 40px;
+	line-height: 40px;
 	display: flex;
 	align-items: center;
 	padding: 0;
 	margin: 0;	
-}
-
-.nav-left li{
-	width: 16%;
-	padding: 0;
-	margin: 0;
-}
-
-.nav_left .menu {
-	display: block;	
 	position: relative;
 }
 
-.nav_left .submenu{
-	display: none;
-	height:90px;
+nav .menu{
 	width: 120px;
-	position:absolute; 
-	left: 10px;
-	padding: 10px 0;	
+	height: 40px;
+	line-height: 40px;
+	display: block;	
+	padding: 0 !important;
+	margin: 0 !important;
+	text-align: center;
 }
 
-.nav_left .submenu li {
-	height: 30px;
+nav li:hover {
+	font-weight: bold;
+}
+
+nav .submenu{
+	display: none;
+	width: 150px;
+	position:absolute; 
+	padding: 0;
+	top: 40px;
+	left: 435px;	
+	border: 1px solid #eee;
+	background-color: #fff;
+}
+
+nav .slide-menu:hover .submenu{
+	display: block !important;
+    z-index: 100 !important;
+}
+
+
+nav .submenu li {
+	padding: 5px 0;
+}
+
+nav .submenu a{
+	text-align: center;
+}
+
+nav .submenu li:hover{
+	background-color:#FFD360;
+	font-weight: bold;
 }
 
 .nav_right{
@@ -88,6 +116,18 @@ ul{
 	margin: 0;
 }
 
+.admin-btn img{
+	width: 30px;
+}
+
+.login-btn img{
+	width: 80px;
+} 
+
+.logout-btn img{
+	width: 80px;
+}
+
 /* sec: content */
 .content{
 	min-height: 200px;
@@ -95,9 +135,15 @@ ul{
 
 /* sec: footer */
 .footer_section{
+	background-color: #FFD360;
+}
+
+.footer-content{
 	height: 300px;
 	background-color: #FFD360;
-	padding: 30px;
+	padding: 30px 0;
+	display: block;
+	position: relative;
 }
 
 .footer-top{
@@ -107,10 +153,14 @@ ul{
 	justify-content: space-between;
 }
 
-.footer-title{
+.footer-logo{
 	margin: 0;
 	font-size: 15px;
 	font-weight: bold;
+}
+
+.footer-logo img{
+	width: 150px;
 }
 
 .footer-sns{
@@ -123,17 +173,43 @@ ul{
 	margin: 0 10px;
 }
 
-.footer-content{
-	height: 120px;
-	line-height: 120px;
-	font-size: 12px;
+.footer-sns img{
+	width:30px;
 }
 
-.footer-copy{
+.footer-menu{
+	width: 700px;
+	display:flex;
+	justify-content:flex-start;
+	height: 50px;
+	line-height: 50px;
+	font-size: 12px;
+	color: #fff;
+	margin: 20px 0;
+}
+
+.footer-menu a{
+	color: #fff;
+}
+
+.footer-menu span{
+	margin-left: 10px;
+	margin-right: 5px;
+}
+
+.footer-content .footer-copy{
+	width: 100%;
 	height: 40px;
 	line-height: 40px;
-	display: flex;
-	justify-content: center;
-	align-content: flex-end;
+	display:inline-block;
+	position:absolute;
+	bottom: 30px;
 	font-size: 12px;
+	color: #fff;
+	font-weight: bold;
+}
+
+.footer-copy p{
+	width: 100%;
+	text-align: center;
 }
