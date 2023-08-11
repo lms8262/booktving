@@ -19,6 +19,8 @@
 <link rel="stylesheet" th:href="@{/css/jquery-ui.css}" />
 <link rel="stylesheet" th:href="@{/css/style.css}" />
 
+<th:block layout:fragment="css">
+</th:block>
 
 
 </head>
@@ -33,9 +35,14 @@
 
 
 <!-- javaScript link -->
-
-
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/jquery-3.3.1.min.js}"></script>
+<script th:src="@{/js/jquery-ui.js}"></script>
+<script th:src="@{/js/main.js}"></script>
 
 </body>
+
+<th:block layout:fragment="script">
+</th:block>
 
 </html>
