@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/layout1}">
+	
+	 
+<!-- adminBook 페이지 CSS --> 
+<th:block layout:fragment="css">
+	<link rel="stylesheet" href="/css/adminMember.css" />	
+</th:block>
+
+<div layout:fragment="content">
+
+	<div class="top">
+		<div class="container">
+			<div class="row">
+				<div class="col-12 section-wrap">
+				
+					<div class="row">
+						<nav class="menu col-lg-2">
+							<ul class="col-12">
+								<li><a href="/adminBook">도서관리</a></li>
+								<li><a href="/adminMember">회원관리</a></li>
+								<li><a href="/adminRent">대출관리</a></li>
+								<li><a href="/adminKeyword">키워드 관리</a></li>
+								<li><a href="/adminAsk">문의관리</a></li>
+								<li><a href="/adminNotice">공지관리</a></li>
+							</ul>
+						</nav>
+						
+						 
+						<div class="admin-content col-lg-10">
+							<div class="container">
+								<div class="row">
+									<div class="col-12">
+										
+										<div class="top-title">
+											<h4>회원정보</h4>
+											<hr>
+										</div>
+										
+										
+										<form role="form" action="">
+											<!-- 도서관리 contents -->
+											<table class="table table-responsive-md ">						
+												<tbody class="member-tbody">
+													<tr>
+														<th>아이디</th>
+														<td></td>
+													</tr>
+													<tr>
+														<th>회원이름</th>
+														<td></td>
+													</tr>
+													<tr>
+														<th>전화번호</th>
+														<td></td>
+													</tr>
+												</tbody>
+												
+											</table>
+											
+											<!-- 등록버튼  -->
+											<div class="form-group button col-12">
+												<div class="col-md-8"></div>
+												<div class="col-md-2 goBack-link">
+													<a href="/adminMember" class="btn goBack" style="width: 100px;">도서등록</a>
+												</div>
+											</div>
+
+																						
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+<!-- adminBook 페이지 javaScript -->
+<th:block layout:fragment="script">
+
+	<script>
+	/*  개발 후 검색 항목에 맞게 수정해서 사용하세요
+	$(document).ready(function(){
+		$("#searchBtn").on("click", function(e){
+			e.preventDefault(); 
+			page(0); 
+		});			
+	});
+	
+	function page(page){
+		
+		var searchDateType = $("#searchDateType").val();
+		var searchSellStatus = $("#searchSellStatus").val();
+		var searchBy = $("#searchBy").val();
+		var searchQuery = $("#searchQuery").val();
+		
+		location.href = "/admin/adminBook/" + page 
+					  + "?searchDateType=" +  searchDateType 
+					  + "&searchSellStatus=" + searchSellStatus
+					  + "&searchBy=" + searchBy
+					  + "&searchQuery=" + searchQuery
+	}	
+	 */
+	</script>
+</th:block>
+
+</html>

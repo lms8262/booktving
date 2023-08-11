@@ -128,10 +128,190 @@ nav .submenu li:hover{
 	width: 80px;
 }
 
-/* sec: content */
-.content{
-	min-height: 200px;
+/* sec: content : admin 페이지 공통 양식*/
+
+.top{
+	height: 100%;
 }
+
+.section-wrap .menu{
+	width: 100%;
+	height: 100%;
+	background-color: #ddd;	
+	padding-bottom: 300px;
+}
+
+.section-wrap .menu ul {
+	height: 100%;
+	margin-top: 50px;
+}
+
+.section-wrap .menu li {
+	height: 40px;
+	line-height: 40px;
+}
+
+.section-wrap .menu li:hover a {
+	font-weight: bold;
+}
+
+.top-title {
+	margin-top: 50px; 
+}
+
+.top-title h4{
+	font-weight: bold;
+}
+
+form{
+	margin-top: 40px;
+}
+
+table {
+	border-bottom: 1px solid #000 !important;	
+}
+
+table>thead>tr>th {
+	border-top: 1px solid #000 !important;
+	border-bottom: 1px solid #000 !important;
+}
+ 
+table>tbody {
+	border-bottom: 1px solid #eee !important;		
+}
+
+table>tbody:last-child {
+	border-bottom: none !important;		
+}
+
+.button{
+	display: flex;
+}
+
+.button div {
+	padding: 0;
+	display: flex;
+	justify-content: flex-end;	
+}
+
+.button .btn{
+	color: #fff;
+	font-weight: bold;
+	border-radius: 0;	
+}
+.reg_btn {
+	background-color: #FFD360;	
+}
+
+.delete_btn{
+	background-color: #ec6b6b;	
+}
+
+.button .btn:hover{
+	color: #fff;
+}
+
+.search-bar {
+	margin-top: 30px;
+}
+
+.search-bar div {
+	padding: 0;
+}
+
+.search-bar select{
+	border-right: none;
+}
+
+.search-bar .form-control{
+	border-radius: 0;
+}
+
+.search-btn{
+	background-color: #FFD360;
+	border-radius: 0;
+	color: #fff;
+	font-weight: bold;
+}
+
+.search-btn:focus, .search-btn:active, .search-btn:hover{
+	outline: none;	
+	color: #fff;
+}
+
+form nav {
+	margin-top: 40px;
+}
+
+/* 회원정보 페이지 */
+
+.table .member-tbody th:first-child{
+	border-top: 1px solid #000 !important;
+}
+
+.table .member-tbody td:first-child{
+	border-top: 1px solid #000 !important;
+}
+.goBack-link {
+	display: flex;
+	justify-content: flex-end;
+	margin: 0;
+}
+
+.goBack {
+	color: #fff;
+	font-weight: bold;
+	border-radius: 0;	
+	background-color: #FFD360;
+	margin: 0;
+}
+
+/* 회원정보 페이지 끝 */
+
+
+/* 키워드 관리페이지 */
+.explanation{
+	font-size: 12px;
+}
+
+.keyword_reg{
+	display: flex;
+	margin-bottom: 60px;
+}
+
+.reg-box{
+	display: flex;
+	padding: 0;
+	margin-top: 40px;
+}
+
+.reg-box label{
+	padding: 0;
+	margin: 0;
+	line-height: 38px;
+}
+
+.reg-box input{
+	border-radius: 0;	
+}
+
+.reg-box button{
+	padding: 0;
+	margin-left: 10px;
+	border-radius: 20px;
+	color: #fff;
+	font-weight: bold;
+}
+
+.reg-box button:hover{
+	color: #fff;
+}
+/* 키워드 관리페이지 끝*/
+
+
+/* sec: content : admin 페이지 공통 양식 끝 */
+
+
 
 /* sec: footer */
 .footer_section{
