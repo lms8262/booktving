@@ -23,7 +23,7 @@
 								<li><a href="/adminMember">회원관리</a></li>
 								<li><a href="/adminRent">대출관리</a></li>
 								<li><a href="/adminKeyword">키워드 관리</a></li>
-								<li><a href="/adminAsk">문의관리</a></li>
+								<li><a href="/adminQuestion">문의관리</a></li>
 								<li><a href="/adminNotice">공지관리</a></li>
 							</ul>
 						</nav>
@@ -107,8 +107,8 @@
 															aria-label="...">
 												<ul class="pagination d-flex justify-content-center">
 						  
-												    <li class="page-item" th:classappend="${items.first} ? 'disabled'">
-												      	<a class="page-link" th:onclick="'javascript:page(' + ${items.number - 1} + ')'">◀</a>
+												    <li class="page-item " th:classappend="${items.first} ? 'disabled'">
+												      	<a class="page-link page-item" th:onclick="'javascript:page(' + ${items.number - 1} + ')'">◀</a>
 													</li>
 
 													<li class="page-item"
@@ -119,10 +119,8 @@
 															[[${page}]] </a>
 													</li>
 
-													<li class="page-item"
-														th:classappend="${items.last} ? 'disabled'"><a
-														class="page-link"
-														th:onclick="'javascript:page(' + ${items.number + 1} + ')'">▶</a>
+													<li class="page-item" th:classappend="${items.last} ? 'disabled'"><a
+														class="page-link page-item" th:onclick="'javascript:page(' + ${items.number + 1} + ')'">▶</a>
 														</li>
 
 												</ul>
