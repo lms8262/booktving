@@ -13,6 +13,20 @@ public class AdminController {
 		return "admin/adminBook";
 	}
 	
+	//도서등록 페이지 보여주기
+	@GetMapping(value = "/adminBookReg")
+	public String adminBoomReg() {
+		
+		return "admin/adminBookReg";
+	}
+	
+	//도서수정 페이지 보여주기
+	@GetMapping(value = "/adminBookModify")
+	public String adminBookModify() {
+		
+		return "admin/adminBookModify";
+	}
+	
 	//회원관리 페이지 보여주기 
 	@GetMapping(value = "/adminMember")
 	public String adminMemberMng() {
@@ -42,17 +56,38 @@ public class AdminController {
 	}
 	
 	//문의관리 페이지 보여주기
-	@GetMapping(value = "/adminAsk")
-	public String adminAsk() {
+	@GetMapping(value = "/adminQuestion")
+	public String adminQuestion() {
 		
-		return "admin/adminAsk";
+		return "admin/adminQuestion";
 	}
 	
+	//문의답변 페이지 보여주기
+	@GetMapping(value = "/adminAnswer")
+	public String adminAnswer() {
+		
+		return "admin/adminAnswer";
+	}
+	  
 	//공지관리 페이지 보여주기
 	@GetMapping(value = "/adminNotice")
 	public String adminNotice() {
 		
 		return "admin/adminNotice";
+	}
+	
+	//공지사항 등록 페이지 보여주기
+	@GetMapping(value = "/adminNoticeReg")
+	public String adminNoticeReg() {
+		
+		return "admin/adminNoticeReg";
+	}
+	
+	//공지사항 수정 페이지 보여주기
+	@GetMapping(value = "/adminNoticeModify")
+	public String adminNoticeModify() {
+		
+		return "admin/adminNoticeModify";
 	}
 	
 }

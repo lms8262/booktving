@@ -9,7 +9,7 @@
 	<link rel="stylesheet" href="/css/adminMember.css" />	
 </th:block>
 
-<div layout:fragment="content">
+<div layout:fragment="content"> 
 
 	<div class="top">
 		<div class="container">
@@ -35,40 +35,22 @@
 									<div class="col-12">
 										
 										<div class="top-title">
-											<h4>회원정보</h4>
+											<h4>문의답변</h4>
 											<hr>
 										</div>
 										
 										
 										<form role="form" action="">
 											
-											<div class="col-md-2"></div>
-											<div class="col-md-8">
-												<table class="table table-responsive-md ">						
-													<tr>
-														<th class="col-sm-3">아이디</th>
-														<td class="col-sm-9"></td>
-													</tr>
-													<tr>
-														<th class="col-sm-3">회원이름</th>
-														<td class="col-sm-9"></td>
-													</tr>
-													<tr>
-														<th class="col-sm-3">전화번호</th>
-														<td class="col-sm-9"></td>
-													</tr>																										
-												</table>
-												
+											<input type="text" class="form-control answer-title col-12"/>
+											<textarea rows="10" class="form-control answer-content col-12" id="answer"></textarea>
+																				
 												<!-- 등록버튼  -->
 												<div class="form-group button col-12">
-													<div class="col-md-9"></div>
-													<div class="col-md-3 goBack-link">
-														<a href="/adminMember" class="btn goBack" style="width: 100px;">뒤로가기</a>
+													<div class="col-12">
+														<button type="button" class="btn col-12 answer-btn">등록하기</button>
 													</div>
 												</div>
-											</div>
-											<div class="col-md-2"</div>
-
 																						
 										</form>
 									</div>
