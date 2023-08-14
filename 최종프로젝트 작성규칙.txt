@@ -30,3 +30,11 @@
 
 
 3. 메인컬러  :  #FFD360  (노랑계열)
+
+4. 레이아웃 나누기 기본 틀
+	<div class="container">
+		<div class="row">
+			<div class="col-12">
+			</div>
+		</div>
+	</div>

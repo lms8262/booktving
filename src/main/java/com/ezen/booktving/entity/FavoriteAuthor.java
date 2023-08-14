@@ -18,7 +18,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class FavoriteAuthor {
+public class FavoriteAuthor extends BaseTimeEntity {
 	
 	@Id
 	@Column(name = "favorite_author_id")

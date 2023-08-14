@@ -22,7 +22,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class ChallengeItem {
+public class ChallengeItem extends BaseTimeEntity {
 	
 	@Id
 	@Column(name = "challenge_item_id")

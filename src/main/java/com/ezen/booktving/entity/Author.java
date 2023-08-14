@@ -15,7 +15,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Author {
+public class Author{
 	
 	@Id
 	@Column(name = "author_id")
