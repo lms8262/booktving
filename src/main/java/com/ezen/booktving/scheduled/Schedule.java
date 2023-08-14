@@ -1,24 +1,24 @@
-package com.ezen.booktving.controller;
+package com.ezen.booktving.scheduled;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Component;
 
 import com.ezen.booktving.service.ApiService;
 
 import lombok.RequiredArgsConstructor;
 
-@Controller
+@Component
 @RequiredArgsConstructor
-public class ApiController {
+public class Schedule {
 	
 	private final ApiService apiService;
 	
 	//@Scheduled(fixedDelay = 10000)
-	@Scheduled(cron = "40 * * * * *")
+	@Scheduled(cron = "0 30 10 * * *")
 	public void getInfo() {
 		
 		try {
@@ -40,5 +40,4 @@ public class ApiController {
 	    }	
 			
 		}
-
 }

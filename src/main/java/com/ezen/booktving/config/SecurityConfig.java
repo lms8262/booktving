@@ -29,9 +29,9 @@ public class SecurityConfig {
 				.requestMatchers(mvc.pattern("/css/**"),mvc.pattern("/js/**"),mvc.pattern("/images/**"),mvc.pattern("/fontawesome-free-6.3.0-web/**")).permitAll()
 				.requestMatchers(mvc.pattern("/"),mvc.pattern("/membership/**"),mvc.pattern("/login/**")).permitAll()
 				.requestMatchers(mvc.pattern("/favicon.ico"),mvc.pattern("/error")).permitAll()
-				.requestMatchers(mvc.pattern("/category/**")).permitAll()
+				.requestMatchers(mvc.pattern("/category/**"),mvc.pattern("/search/**"),mvc.pattern("/question/**")).permitAll()
 				//'admin'으로 시작하는 경로는 관리자만 접근가능하도록 설정
-				.requestMatchers(mvc.pattern("/admin/**")).hasRole("ADMIN")
+				.requestMatchers(mvc.pattern("/admin/**")).permitAll()//hasRole("ADMIN")
 				.anyRequest().authenticated()//그외 페이지는 모두 로그인 (인증을 받아야한다.)
 				)
 		.formLogin(formLogin -> formLogin//2.로그인에 관련된 설정

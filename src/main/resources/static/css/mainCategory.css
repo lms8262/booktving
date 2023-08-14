@@ -1,5 +1,18 @@
 @charset "UTF-8";
 
+
+* {
+	box-sizing: content-box !important;
+}
+
+.top {
+	box-sizing: content-box !important;
+}
+
+.content {
+	box-sizing: content-box !important; 
+}
+
 .category {
 	padding-left: 10px;
 	padding-right: 10px;
