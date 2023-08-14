@@ -1,39 +1,49 @@
 package com.ezen.booktving.entity;
 
-import com.ezen.booktving.constant.NoticeGroup;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.Builder;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "notice")
+@Table(name = "best_seller")
 @Getter
 @Setter
 @ToString
-public class Notice extends BaseEntity {
-	
+@Builder
+@EqualsAndHashCode
+public class BestSeller {
+
 	@Id
-	@Column(name = "notice_id")
+	@Column(name = "bestSeller_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
 	@Column(nullable = false)
 	private String title;
 	
-	@Column(columnDefinition = "longtext", nullable = false)
-	private String content;
-	
-	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
-	private NoticeGroup noticeGroup;
+	private String isbn;
 	
+	@Column(nullable = false)
+	private String author;
+	
+	@Column(nullable = false)
+	private String publisher;
+	
+	@Column(nullable = false)
+	private String bestRank;
+	
+	@Column(nullable = false)
+	private String imgUrl;
+	
+	@Column(nullable = false)
+	private String link;
 }
