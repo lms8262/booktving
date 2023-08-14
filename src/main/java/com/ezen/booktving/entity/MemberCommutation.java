@@ -20,7 +20,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class MemberCommutation {
+public class MemberCommutation extends BaseTimeEntity {
 	
 	@Id
 	@Column(name = "member_commutation_id")
