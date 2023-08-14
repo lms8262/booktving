@@ -9,8 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.ezen.booktving.dto.BestSellerDto;
 import com.ezen.booktving.dto.BookSearchDto;
+import com.ezen.booktving.entity.BestSeller;
+import com.ezen.booktving.repository.BestSellerRepository;
 import com.ezen.booktving.service.BestSellerService;
 
 import lombok.RequiredArgsConstructor;
@@ -18,16 +19,19 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequiredArgsConstructor
 public class MainController {
-
 	
 
 	private final BestSellerService bestSellerService;
+	private final BestSellerRepository bestSellerRepository;
 	
 	@GetMapping(value = "/")
 	public String main(BookSearchDto bookSearchDto, Optional<Integer> page, Model model) {
 		
-		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , 10);
-		Page<BestSellerDto> bestSellers = bestSellerService.getBestSellerDto(bookSearchDto, pageable);
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , 7);
+		Page<BestSeller> bestSellers = bestSellerService.getBestSeller(bookSearchDto, pageable);
+		
+		model.addAttribute("bestSellers", bestSellers);
+		model.addAttribute("bookSearchDto", bookSearchDto);
 		
 		
 		return "main";

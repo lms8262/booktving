@@ -19,17 +19,19 @@ public class ApiService {
 
 	private final BestSellerRepository bestSellerRepository;
 
-    public void getInfo(String result) throws ParseException  {
+    public String getInfo(String result) throws ParseException  {
 
         JSONArray list = null;
         
-        log.info("서비스 시작" );
+        log.info("서비스 시작");
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = (JSONObject) jsonParser.parse(result);
         list = (JSONArray) jsonObject.get("item");
-
+      
+        
         for (int k = 0; k < list.size(); k++) {
         	JSONObject contents = (JSONObject) list.get(k);
+        	
 
             bestSellerRepository.save(
                     BestSeller.builder()
@@ -44,6 +46,8 @@ public class ApiService {
             );
 
         }
+        
+        return "ok";
     }
 	
 }
