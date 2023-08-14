@@ -6,10 +6,14 @@ import org.springframework.stereotype.Service;
 @Service
 public class ApiService {
 
+<<<<<<< HEAD
 	/*private final BookRepository bookRepository;
 =======
+=======
+	
+
+>>>>>>> 26112e0bd9f8dbc4b8a8906c785ff7b87cd2640a
 	private final BestSellerRepository bestSellerRepository;
->>>>>>> 6b6b566495e6435166a315181c1b014c688d61f0
 
     LocalDateTime dateTime = LocalDateTime.now();
 
@@ -39,5 +43,5 @@ public class ApiService {
 
         }
         return "ok";
-    }*/
+    }
 }

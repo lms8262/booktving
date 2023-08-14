@@ -2,6 +2,8 @@ package com.ezen.booktving.dto;
 
 import org.modelmapper.ModelMapper;
 
+import com.ezen.booktving.entity.BestSeller;
+
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
@@ -34,6 +36,17 @@ public class BestSellerDto {
 	private String link;
 	
 	private static ModelMapper modelMapper = new ModelMapper();
+	
+	// Dto -> Entity 변환
+	public BestSeller createBestSeller() {
+		return modelMapper.map(this, BestSeller.class);
+	}
+	
+	// Entity -> Dto 변환
+	public static BestSellerDto of(BestSeller bestSeller) {
+		return modelMapper.map(bestSeller, BestSellerDto.class);
+	}
+	
 	
 	
 	
