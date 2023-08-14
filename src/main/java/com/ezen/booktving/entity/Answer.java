@@ -18,7 +18,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Answer {
+public class Answer extends BaseEntity {
 	
 	@Id
 	@Column(name = "answer_id")

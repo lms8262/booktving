@@ -7,6 +7,47 @@ body{
 	height: 100%;
 }
 
+<<<<<<< HEAD
+
+.text-center {
+	text-align: center;
+}
+
+.p-t-115 {
+	padding-top: 115px;
+}
+
+.text-center {
+	text-align: center !important;
+}
+
+.txt1 {
+	font-family: Poppins-Regular;
+	font-size: 13px;
+	color: #666;
+	line-height: 1.5;
+}
+
+.txt2 {
+	font-family: Poppins-Regular;
+	font-size: 13px;
+	color: #333;
+	line-height: 1.5;
+}
+=======
+>>>>>>> 26112e0bd9f8dbc4b8a8906c785ff7b87cd2640a
+
+a {
+	font-family: Poppins-Regular;
+	font-size: 14px;
+	line-height: 1.7;
+	color: #666;
+	margin: 0;
+	transition: all .4s;
+	-webkit-transition: all .4s;
+	-o-transition: all .4s;
+	-moz-transition: all .4s;
+}
 a,
 a:hover,
 a:focus {
@@ -110,12 +151,14 @@ nav .submenu li:hover{
 }
 
 .nav_right{
+	max-width:250px;
 	display: flex;
 	align-items: center;
-	justify-content:flex-end;
+	justify-content:space-between;
 	padding: 0;
 	margin: 0;
 }
+
 
 .admin-btn img{
 	width: 30px;
@@ -447,7 +490,6 @@ form nav {
 }
 
 .footer-menu{
-	width: 700px;
 	display:flex;
 	justify-content:flex-start;
 	height: 50px;
@@ -459,11 +501,13 @@ form nav {
 
 .footer-menu a{
 	color: #fff;
+	display: flex;
+	align-items: center;
 }
 
 .footer-menu span{
 	margin-left: 10px;
-	margin-right: 5px;
+	margin-right: 10px;
 }
 
 .footer-content .footer-copy{

@@ -18,7 +18,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Follow {
+public class Follow extends BaseTimeEntity {
 	
 	@Id
 	@Column(name = "follow_id")
