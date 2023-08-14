@@ -2,18 +2,32 @@ package com.ezen.booktving.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
+<<<<<<< HEAD
+=======
+
+import lombok.RequiredArgsConstructor;
+
+>>>>>>> 6b6b566495e6435166a315181c1b014c688d61f0
 @Controller
+@RequiredArgsConstructor
 public class MainController {
 	
 	
+<<<<<<< HEAD
+=======
+	
+>>>>>>> 6b6b566495e6435166a315181c1b014c688d61f0
 	@GetMapping(value = "/")
 	public String main() {
+		
+		
+		
 		
 		return "main";
 	}
 	
+<<<<<<< HEAD
 	/*
 	@ResponseBody
 	@GetMapping("/api/getInfo")
@@ -44,6 +58,10 @@ public class MainController {
 	    return "ok";
 	}
 	*/
+=======
+
+	
+>>>>>>> 6b6b566495e6435166a315181c1b014c688d61f0
 	
 
 }
