@@ -1,24 +1,11 @@
 package com.ezen.booktving.service;
 
-import java.time.LocalDateTime;
-
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
 
-import com.ezen.booktving.entity.BestSeller;
-import com.ezen.booktving.repository.BestSellerRepository;
 
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-
-@RequiredArgsConstructor
 @Service
-@Slf4j
 public class ApiService {
-<<<<<<< HEAD
+
 	/*private final BookRepository bookRepository;
 =======
 	private final BestSellerRepository bestSellerRepository;

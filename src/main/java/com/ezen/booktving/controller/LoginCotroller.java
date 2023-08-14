@@ -12,12 +12,16 @@ public class LoginCotroller {
 		return "login/login";
 	}
 
-	
 	// 로그인 실패했을때
 	@GetMapping(value = "/login/error")
 	public String loginError(Model model) {
 		model.addAttribute("loginErrorMsg", "아이디 또는 비밀번호를 입력해주세요");
-		return "member/member";
+		return "login/login";
 
+	}
+
+	@GetMapping(value = "/login/new")
+	public String membership() {
+		return"membership/memberloginForm";
 	}
 }
