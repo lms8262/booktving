@@ -11,6 +11,7 @@ import com.ezen.booktving.service.ApiService;
 
 import lombok.RequiredArgsConstructor;
 
+
 @Component
 @RequiredArgsConstructor
 public class Schedule {
@@ -40,4 +41,5 @@ public class Schedule {
 	    }	
 			
 		}
+
 }

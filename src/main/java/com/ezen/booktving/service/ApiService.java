@@ -1,7 +1,5 @@
 package com.ezen.booktving.service;
 
-import java.time.LocalDateTime;
-
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -14,18 +12,14 @@ import com.ezen.booktving.repository.BestSellerRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 @Slf4j
 public class ApiService {
 
-	
-
 	private final BestSellerRepository bestSellerRepository;
 
-    LocalDateTime dateTime = LocalDateTime.now();
-
-    public String getInfo(String result) throws ParseException {
+    public void getInfo(String result) throws ParseException  {
 
         JSONArray list = null;
         
@@ -50,6 +44,6 @@ public class ApiService {
             );
 
         }
-        return "ok";
     }
+	
 }
