@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class Schedule {
 	
-<<<<<<< HEAD:src/main/java/com/ezen/booktving/controller/ApiController.java
+
 	/*
 	 * private final ApiService apiService;
 	 * 
@@ -42,31 +42,32 @@ public class Schedule {
 	 * 
 	 * }
 	 */
-=======
+
 	private final ApiService apiService;
 	
-	//@Scheduled(fixedDelay = 10000)
-	@Scheduled(cron = "0 30 10 * * *")
-	public void getInfo() {
-		
-		try {
+	/*
+	 * //@Scheduled(fixedDelay = 10000)
+	 * 
+	 * @Scheduled(cron = "0 30 10 * * *") public void getInfo() {
+	 * 
+	 * try {
+	 * 
+	 * String apiURL =
+	 * "http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey=ttblyczang41056001&QueryType=Bestseller&MaxResults=10&Cover=Big&start=1&SearchTarget=Book&output=JS&Version=20131101";
+	 * 
+	 * URL url = new URL(apiURL);
+	 * 
+	 * BufferedReader bf;
+	 * 
+	 * bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
+	 * 
+	 * String result = bf.readLine();
+	 * 
+	 * apiService.getInfo(result);
+	 * 
+	 * } catch (Exception e) { e.printStackTrace(); }
+	 * 
+	 * }
+	 */
 
-	            String apiURL = "http://www.aladin.co.kr/ttb/api/ItemList.aspx?ttbkey=ttblyczang41056001&QueryType=Bestseller&MaxResults=10&Cover=Big&start=1&SearchTarget=Book&output=JS&Version=20131101";
-
-	            URL url = new URL(apiURL);
-
-	            BufferedReader bf;
-
-	            bf = new BufferedReader(new InputStreamReader(url.openStream(), "UTF-8"));
-
-	            String result = bf.readLine();
-
-				apiService.getInfo(result);
-					
-	    } catch (Exception e) {
-	        e.printStackTrace();
-	    }	
-			
-		}
->>>>>>> 26112e0bd9f8dbc4b8a8906c785ff7b87cd2640a:src/main/java/com/ezen/booktving/scheduled/Schedule.java
 }

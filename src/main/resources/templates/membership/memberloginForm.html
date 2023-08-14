@@ -33,19 +33,9 @@
 				<h3 class="join_title">
 					<label for="pswd1">비밀번호</label>
 				</h3>
-				<span class="box int_pass"> <input type="text" id="pswd1"
+				<span class="box int_pass"> <input type="text" name="pw" id="pswd1"
 					class="int" maxlength="20" placeholder="비밀번호 입력(문자,숫자,특수문자 포함 8~20자)"> <span id="alertTxt">사용불가</span>
 					
-				</span> <span class="error_next_box"></span>
-			</div>
-
-			<!-- PW2 -->
-			<div>
-				<h3 class="join_title">
-					<label for="pswd2">비밀번호 재확인</label>
-				</h3>
-				<span class="box int_pass_check"> <input type="text"
-					id="pswd2" class="int" maxlength="20" placeholder="비밀번호 재입력"> 
 				</span> <span class="error_next_box"></span>
 			</div>
 
@@ -144,5 +134,8 @@
 	</form>
 </div>
 <th:block layout:fragment="script">
+<script th:inline="javascript">
+
+</script>
 </th:block>
 </html>

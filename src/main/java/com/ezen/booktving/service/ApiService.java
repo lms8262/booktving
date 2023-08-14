@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class ApiService {
 
-<<<<<<< HEAD
+
 	/*private final BookRepository bookRepository;
 =======
 =======
@@ -43,5 +43,5 @@ public class ApiService {
 
         }
         return "ok";
-    }
+    }*/
 }
