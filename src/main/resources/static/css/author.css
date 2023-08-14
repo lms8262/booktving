@@ -1,0 +1,47 @@
+@charset "UTF-8";
+
+.top-title{
+	display: flex;
+	justify-content: center;
+}
+
+.icorn{
+	width: 40px;
+	margin: 0;
+}
+
+.top-title h4 {
+	margin: 0;
+}
+
+.author-box{
+	display: flex;
+	justify-content: space-around;
+	margin-top: 60px;
+	padding-left: 15px;
+	padding-right: 15px;
+}
+
+.author-list{
+	width: 230px;
+	height: 230px;
+	background-color: gold;
+	border-radius: 15px;
+	margin: 20px;
+}
+
+.author-list a {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.bottom-logo{
+	margin: 70px 0;	
+}
+
+.logo-link img {
+	width: 150px;
+	display: flex;
+	justify-content: center;
+}
