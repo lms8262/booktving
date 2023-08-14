@@ -1,23 +1,25 @@
 package com.ezen.booktving.service;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
 
+import com.ezen.booktving.entity.BestSeller;
+import com.ezen.booktving.repository.BestSellerRepository;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
+@RequiredArgsConstructor
+@Slf4j
 public class ApiService {
 
-<<<<<<< HEAD
-	/*private final BookRepository bookRepository;
-=======
-=======
-	
-
->>>>>>> 26112e0bd9f8dbc4b8a8906c785ff7b87cd2640a
 	private final BestSellerRepository bestSellerRepository;
 
-    LocalDateTime dateTime = LocalDateTime.now();
-
-    public String getInfo(String result) throws ParseException {
+    public void getInfo(String result) throws ParseException  {
 
         JSONArray list = null;
         
@@ -42,6 +44,6 @@ public class ApiService {
             );
 
         }
-        return "ok";
     }
+	
 }
