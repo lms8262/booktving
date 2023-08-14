@@ -16,7 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @Slf4j
 public class ApiService {
-	private final BookRepository bookRepository;
+	/*private final BookRepository bookRepository;
 
     LocalDateTime dateTime = LocalDateTime.now();
 
@@ -47,5 +47,5 @@ public class ApiService {
 
         }
         return "ok";
-    }
+    }*/
 }

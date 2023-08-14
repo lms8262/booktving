@@ -1,28 +1,36 @@
-package com.ezen.booktving.cofig;
+package com.ezen.booktving.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
-
+import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 @Configuration // Bean 객체를 싱글톤으로 객체를 관리해준다.
 @EnableWebSecurity
 public class SecurityConfig {
-	@Bean
-	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 	
-		http.authorizeHttpRequests(authorize->authorize//페이지 접근에 관한
+	@Bean
+	MvcRequestMatcher.Builder mvc(HandlerMappingIntrospector introspector) {
+		return new MvcRequestMatcher.Builder(introspector);
+	}
+	
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
+	
+		http.authorizeHttpRequests(authorize->authorize //페이지 접근에 관한
 				//모든 사용자가 로그인(인증) 없이 접근할수 있도록 설정
-				.requestMatchers("/css/**","/js/**","/images/**","/fontawesome-free-6.3.0-web/**").permitAll()
-				.requestMatchers("/","/membership/**","/login/**").permitAll()
-				.requestMatchers("/favicon.ico","/error").permitAll()
+				.requestMatchers(mvc.pattern("/css/**"),mvc.pattern("/js/**"),mvc.pattern("/images/**"),mvc.pattern("/fontawesome-free-6.3.0-web/**")).permitAll()
+				.requestMatchers(mvc.pattern("/"),mvc.pattern("/membership/**"),mvc.pattern("/login/**")).permitAll()
+				.requestMatchers(mvc.pattern("/favicon.ico"),mvc.pattern("/error")).permitAll()
 				//'admin'으로 시작하는 경로는 관리자만 접근가능하도록 설정
-				.requestMatchers("/admin/**").hasRole("ADMIN")
+				.requestMatchers(mvc.pattern("/admin/**")).hasRole("ADMIN")
 				.anyRequest().authenticated()//그외 페이지는 모두 로그인 (인증을 받아야한다.)
 				)
 		.formLogin(formLogin -> formLogin//2.로그인에 관련된 설정
@@ -44,5 +52,9 @@ public class SecurityConfig {
 	
 		return http.build();
 		
+	}
+	@Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
 	}
 }
