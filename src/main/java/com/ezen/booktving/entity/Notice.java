@@ -1,8 +1,6 @@
 package com.ezen.booktving.entity;
 
-import java.time.LocalDate;
-
-import com.ezen.booktving.constant.Role;
+import com.ezen.booktving.constant.NoticeGroup;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,36 +15,25 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "member")
+@Table(name = "notice")
 @Getter
 @Setter
 @ToString
-public class Member extends BaseTimeEntity {
+public class Notice extends BaseEntity {
 	
 	@Id
-	@Column(name = "member_id")
+	@Column(name = "notice_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Column(nullable = false, unique = true)
-	private String userId;
-	
 	@Column(nullable = false)
-	private String password;
+	private String title;
 	
-	@Column(nullable = false)
-	private String memberName;
-	
-	@Column(nullable = false, unique = true)
-	private String email;
-	
-	@Column(nullable = false, unique = true)
-	private String tel;
-	
-	@Column(nullable = false)
-	private LocalDate birth;
+	@Column(columnDefinition = "longtext", nullable = false)
+	private String content;
 	
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
-	private Role role;
+	private NoticeGroup group;
+	
 }

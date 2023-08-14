@@ -14,22 +14,37 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "favorite_book")
+@Table(name = "author_book")
 @Getter
 @Setter
 @ToString
-public class FavoriteBook extends BaseTimeEntity {
+public class AuthorBook{
 	
 	@Id
-	@Column(name = "favorite_book_id")
+	@Column(name = "author_book_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "member_id", nullable = false)
-	private Member member;
+	@Column(nullable = false)
+	private String bookName;
+	
+	@Column(nullable = false)
+	private String bookSubTitle;
+	
+	@Column(nullable = false)
+	private String bookIntrodution;
+	
+	@Column(nullable = false, unique = true)
+	private String imgName;
+	
+	@Column(nullable = false)
+	private String oriImgName;
+	
+	@Column(nullable = false)
+	private String imgUrl;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "book_id", nullable = false)
-	private Book book;
+	@JoinColumn(name = "author_id", nullable = false)
+	private Author author;
+	
 }

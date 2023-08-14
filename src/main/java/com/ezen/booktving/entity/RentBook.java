@@ -24,7 +24,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class RentBook {
+public class RentBook extends BaseTimeEntity {
 	
 	@Id
 	@Column(name = "rent_book_id")
