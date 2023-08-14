@@ -15,7 +15,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class CommutationTicket {
+public class CommutationTicket{
 	
 	@Id
 	@Column(name = "commutation_ticket_id")

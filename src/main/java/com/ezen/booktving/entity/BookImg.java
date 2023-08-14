@@ -22,7 +22,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class BookImg {
+public class BookImg extends BaseTimeEntity {
 	
 	@Id
 	@Column(name = "book_img_id")
