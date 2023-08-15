@@ -2,6 +2,8 @@ package com.ezen.booktving.entity;
 
 import java.time.LocalDate;
 
+import com.ezen.booktving.dto.BookRegFormDto;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -51,4 +53,17 @@ public class Book extends BaseTimeEntity {
 	@Column(nullable = false)
 	private String category;
 	
+	
+	//book 엔티티 수정
+	public void updateBook(BookRegFormDto bookRegFormDto) {
+		this.bookName = bookRegFormDto.getBookName();
+		this.isbn = bookRegFormDto.getIsbn();
+		this.author = bookRegFormDto.getAuthor();
+		this.publisher = bookRegFormDto.getPublisher();
+		this.page = bookRegFormDto.getPage();
+		this.publicationDate = bookRegFormDto.getPublicationDate();
+		this.bookIntroduction = bookRegFormDto.getBookIntroduction();
+		this.contents = bookRegFormDto.getContents();
+		this.category = bookRegFormDto.getCategory();
+	}
 }

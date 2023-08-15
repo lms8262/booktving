@@ -1,11 +1,26 @@
 package com.ezen.booktving.controller;
 
+import java.util.List;
+
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
+import com.ezen.booktving.dto.BookRegFormDto;
+import com.ezen.booktving.service.BookRegService;
+
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 
 @Controller
+@RequiredArgsConstructor
 public class AdminController {
-
+	
+	private final BookRegService bookRegService;
+	
 	//도서관리 페이지 보여주기 
 	@GetMapping(value = "/admin/book")
 	public String adminBook() {
@@ -15,9 +30,35 @@ public class AdminController {
 	
 	//도서등록 페이지 보여주기
 	@GetMapping(value = "/admin/bookReg")
-	public String adminBoomReg() {
+	public String adminBoomReg(Model model) {
 		
+		model.addAttribute("bookRegFormDto", new BookRegFormDto());
 		return "admin/adminBookReg";
+	}
+	
+	//도서등록, 도서이미지 등록(insert)
+	public String bookInsert(@Valid BookRegFormDto bookRegFormDto, BindingResult bindingResult,
+			Model model, @RequestParam("BookImgFile") List<MultipartFile> bookImgFileList) {
+		
+		if(bindingResult.hasErrors()) {
+			return "admin/adminBookReg";
+		}
+		
+		//도서 등록전에 첫번째 이미지가 있는지 없는지 검사(첫번째 이미지는 필수 입력값)
+		if(bookImgFileList.get(0).isEmpty()) {
+			model.addAttribute("errorMessage", "첫번째 이미지는 필수 등록 하셔야 합니다.");
+			return "admin/adminBookReg";
+		}
+		
+		try {
+			bookRegService.saveBook(bookRegFormDto, bookImgFileList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("errorMessage", "도서등록 도중에 에러가 발생했습니다.");
+			return "admin/adminBookReg";
+		}
+		
+		return "redirect:/";
 	}
 	
 	//도서수정 페이지 보여주기
