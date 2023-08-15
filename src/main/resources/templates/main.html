@@ -159,6 +159,33 @@
 					<!-- 서점 베스트 셀러 -->
 					<div class="bestSeller-wrap container">
 						<h5>서점 베스트 셀러</h5>
+						
+							
+							<div class="bestSeller-contents-wrap">
+																
+								<th:block th:each="bestSeller, status : ${bestSellers}">
+									<div class="bestSeller-contents">
+										<a th:href="${bestSeller.link}" class="bestSeller-cover">
+											<img th:src="${bestSeller.imgUrl}" th:alt="${bestSeller.title}" class="bestSeller-cover-img">
+										</a>
+										
+										<div class="row bestSeller-contents-text">
+											<div class="bestSeller-rank"> <h2 th:text="${bestSeller.bestRank}"></h2> </div>
+											<div class="bestSeller-title-author">
+												<div class="col-12">
+													<a th:href="${bestSeller.link}">
+														<p class="bestSeller-title">[[${bestSeller.title}]]</p>
+													</a>
+													<p class="bestSeller-author">
+														<span>/</span> <span>[[${bestSeller.publisher}]]</span> </p>
+												</div>
+											</div>
+										</div>
+									</div>				
+								</th:block >
+								
+							</div>
+						
 					</div>
 									
 				</div>
