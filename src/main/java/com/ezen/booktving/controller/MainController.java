@@ -25,14 +25,12 @@ public class MainController {
 	private final BestSellerRepository bestSellerRepository;
 	
 	@GetMapping(value = "/")
-	public String main(BookSearchDto bookSearchDto, Optional<Integer> page, Model model) {
+	public String main(Optional<Integer> page, Model model) {
 		
 		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , 7);
-		Page<BestSeller> bestSellers = bestSellerService.getBestSeller(bookSearchDto, pageable);
+		Page<BestSeller> bestSellers = bestSellerService.getBestSeller(pageable);
 		
 		model.addAttribute("bestSellers", bestSellers);
-		model.addAttribute("bookSearchDto", bookSearchDto);
-		
 		
 		return "main";
 	}
