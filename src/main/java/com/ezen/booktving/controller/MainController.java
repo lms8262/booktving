@@ -32,7 +32,7 @@ public class MainController {
 		
 		model.addAttribute("bestSellers", bestSellers);
 		
-		return "main";
+		return "/main";
 	}
 	
 }
