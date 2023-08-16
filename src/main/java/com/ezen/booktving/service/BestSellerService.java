@@ -7,8 +7,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ezen.booktving.dto.BestSellerDto;
 import com.ezen.booktving.dto.BookSearchDto;
+import com.ezen.booktving.entity.BestSeller;
 import com.ezen.booktving.repository.BestSellerRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -20,11 +20,11 @@ public class BestSellerService {
 
 	private final BestSellerRepository bestSellerRepository;
 	
-	public Page<BestSellerDto> getBestSellerDto(BookSearchDto bookSearchDto, Pageable pageable){
+	public Page<BestSeller> getBestSeller(BookSearchDto bookSearchDto, Pageable pageable){
 		
-		Page<BestSellerDto> bestSellerPage = bestSellerRepository.getBestSellerDto(bookSearchDto, pageable);
+		Page<BestSeller> bestSellerPage = bestSellerRepository.getBestSeller(bookSearchDto, pageable);
 		
-		return null;
+		return bestSellerPage;
 	}
 	
 	

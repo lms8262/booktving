@@ -11,7 +11,7 @@ h5 {
 	line-height: 40px;
 	padding-left: 30px;
 }
-/* 이미지슬라이드 끝 */
+/* 공지사항 끝 */
 
 /* 이미지슬라이드 */
 .imgSlide-wrap{
@@ -128,7 +128,7 @@ h5 {
 
 /* 북티빙 Top10 */
 .top10-wrap{
-	height: 300px;
+	height: 450px;
 	padding-top: 30px;
 }
 /* 북티빙 Top10 끝 */
@@ -167,6 +167,62 @@ h5 {
 /* 서점 베스트 셀러 */
 .bestSeller-wrap{
 	padding-top: 30px;
-	height: 300px;
+	height: 450px;
 }
+
+.bestSeller-contents-wrap {
+	display: flex;
+	justify-content: start;
+	width: 170px;
+	margin: 0;
+	padding-top: 20px;
+}
+
+.bestSeller-contents {
+	margin: 10px;
+}
+
+.bestSeller-cover img{
+	overflow: hidden;
+	width: 150px;
+	height: 200px;
+}
+
+.bestSeller-contents-text {
+	margin-top: 10px;
+}
+
+.bestSeller-rank {
+	width: 40px;
+	display: flex;
+	align-items: center;
+	margin: 0;
+}
+
+.bestSeller-title-author {
+	width: 130px;
+	display: flex;
+	align-items: center;
+	margin: 0;
+	padding-left: 10px;
+}
+
+.bestSeller-title-author div{
+	padding: 0;
+}
+
+.bestSeller-title{
+	margin: 0;
+	display: flex;
+	align-items: center;
+	overflow: hidden;
+  	white-space: nowrap;
+  	text-overflow: ellipsis;
+  	word-break: break-all;
+}
+
+.bestSeller-author{
+	margin: 0;
+}
+
 /* 서점 베스트 셀러 끝 */

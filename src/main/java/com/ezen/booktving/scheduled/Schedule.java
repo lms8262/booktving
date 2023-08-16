@@ -19,7 +19,7 @@ public class Schedule {
 	private final ApiService apiService;
 	
 	//@Scheduled(fixedDelay = 10000)
-	@Scheduled(cron = "0 30 10 * * *")
+	@Scheduled(cron = " 0 30 10 * * *")
 	public void getInfo() {
 		
 		try {
