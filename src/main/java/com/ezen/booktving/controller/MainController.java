@@ -9,7 +9,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.ezen.booktving.dto.BookSearchDto;
 import com.ezen.booktving.entity.BestSeller;
 import com.ezen.booktving.repository.BestSellerRepository;
 import com.ezen.booktving.service.BestSellerService;
@@ -25,17 +24,17 @@ public class MainController {
 	private final BestSellerRepository bestSellerRepository;
 	
 	@GetMapping(value = "/")
-	public String main(BookSearchDto bookSearchDto, Optional<Integer> page, Model model) {
+	public String main(Optional<Integer> page, Model model) {
 		
-		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , 7);
-		Page<BestSeller> bestSellers = bestSellerService.getBestSeller(bookSearchDto, pageable);
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , 10);
+		Page<BestSeller> bestSellers = bestSellerService.getBestSeller(pageable);
 		
 		model.addAttribute("bestSellers", bestSellers);
-		model.addAttribute("bookSearchDto", bookSearchDto);
-		
 		
 		return "main";
 	}
+	
+	
 	
 }
 

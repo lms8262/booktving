@@ -24,6 +24,8 @@ public class BestSellerRepositoryCustomImpl implements BestSellerRepositoryCusto
 		this.queryFactory = new JPAQueryFactory(em);
 	}
 	
+	/*
+	
 	private BooleanExpression searchByLike(String searchBy, String searchQuery) {
 		if(StringUtils.equals("title", searchBy)) {
 			return QBestSeller.bestSeller.title.like("%" + searchQuery + "%");
@@ -31,22 +33,22 @@ public class BestSellerRepositoryCustomImpl implements BestSellerRepositoryCusto
 			return QBestSeller.bestSeller.isbn.like("%" + searchQuery + "%");
 		}
 		return null;
-	}		
+	}
+	
+	*/
 
 	//메인페이지 -> 서점 베스트셀러 List
 	@Override
-	public Page<BestSeller> getBestSeller(BookSearchDto bookSearchDto, Pageable pageable) {
+	public Page<BestSeller> getBestSeller(Pageable pageable) {
 
 		
 		List<BestSeller> content = queryFactory.selectFrom(QBestSeller.bestSeller)
-											   .where(searchByLike(bookSearchDto.getSearchBy(), bookSearchDto.getSearchQuery()))
 											   .orderBy(QBestSeller.bestSeller.id.asc())
 											   .offset(pageable.getOffset())
 											   .limit(pageable.getPageSize())
 											   .fetch();
 		long total = queryFactory.select(Wildcard.count)
 							.from(QBestSeller.bestSeller)
-							.where(searchByLike(bookSearchDto.getSearchBy(), bookSearchDto.getSearchQuery()))
 							.fetchOne();				   
 		
 		return new PageImpl<>(content, pageable, total);

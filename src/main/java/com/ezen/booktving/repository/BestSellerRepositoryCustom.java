@@ -8,5 +8,5 @@ import com.ezen.booktving.entity.BestSeller;
 
 public interface BestSellerRepositoryCustom {
 
-	Page<BestSeller> getBestSeller(BookSearchDto bookSearchDto, Pageable pageable);
+	Page<BestSeller> getBestSeller(Pageable pageable);
 }
