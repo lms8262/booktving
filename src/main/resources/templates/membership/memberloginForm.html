@@ -3,7 +3,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout1}">
 <th:block layout:fragment="css">
-<link rel="stylesheet" type="text/css" href="/css/mebership.css" />	
+	<link rel="stylesheet" type="text/css" href="/css/mebership.css" />
 	<style>
 </style>
 </th:block>
@@ -16,14 +16,17 @@
 		<div id="content">
 
 			<!-- ID -->
-			
+
 			<div>
 				<h3 class="join_title">
 					<label for="id">아이디</label>
-					
+
 				</h3>
 				<span class="box int_id"> <input type="text" id="id"
-					class="int" maxlength="20" placeholder="아이디 입력(6~20자)"> <span class="step_url"></span>
+					class="int" maxlength="20" placeholder="아이디 입력(6~20자)"
+					th:field="*{userId}"> <span class="step_url"></span>
+					<p th:if="${#fields.hasErrors('userId')}" th:errors="*{userId}"
+						class="fieldError">Incorrect Data</p>
 					<button id="id1">중복확인</button>
 				</span> <span class="error_next_box"></span>
 			</div>
@@ -33,9 +36,11 @@
 				<h3 class="join_title">
 					<label for="pswd1">비밀번호</label>
 				</h3>
-				<span class="box int_pass"> <input type="text" name="pw" id="pswd1"
-					class="int" maxlength="20" placeholder="비밀번호 입력(문자,숫자,특수문자 포함 8~20자)"> <span id="alertTxt">사용불가</span>
-					
+				<span class="box int_pass"> <input type="text" name="pw"
+					id="pswd1" class="int" maxlength="20"
+					placeholder="비밀번호 입력(문자,숫자,특수문자 포함 8~20자)"> <span
+					id="alertTxt">사용불가</span>
+
 				</span> <span class="error_next_box"></span>
 			</div>
 
@@ -56,46 +61,20 @@
 				</h3>
 
 				<div id="bir_wrap">
+
 					<!-- BIRTH_YY -->
 					<div id="bir_yy">
-						<span class="box"> <input type="text" id="yy" class="int"
-							maxlength="4" placeholder="년(4자)">
+						<span class="box"> <input type="date" id="yy" class="int">
 						</span>
 					</div>
 
-					<!-- BIRTH_MM -->
-					<div id="bir_mm">
-						<span class="box"> <select id="mm" class="sel">
-								<option>월</option>
-								<option value="01">1</option>
-								<option value="02">2</option>
-								<option value="03">3</option>
-								<option value="04">4</option>
-								<option value="05">5</option>
-								<option value="06">6</option>
-								<option value="07">7</option>
-								<option value="08">8</option>
-								<option value="09">9</option>
-								<option value="10">10</option>
-								<option value="11">11</option>
-								<option value="12">12</option>
-						</select>
-						</span>
-					</div>
-
-					<!-- BIRTH_DD -->
-					<div id="bir_dd">
-						<span class="box"> <input type="text" id="dd" class="int"
-							maxlength="2" placeholder="일">
-						</span>
-					</div>
 
 				</div>
 				<span class="error_next_box"></span>
 			</div>
 
-			<!-- GENDER -->
-			
+
+
 
 			<!-- EMAIL -->
 			<div>
@@ -120,22 +99,27 @@
 
 			<!-- JOIN BTN-->
 			<div class="btn_area">
-				<button type="button" id="btnJoin" style="margin-left: 45px;">
+				<button type="submit" id="btnJoin" style="margin-left: 45px;">
 					<span>가입하기</span>
 				</button>
-				<button type="button" id="btnJoin">
+				<button type="submit" id="btnJoin">
 					<span>취소</span>
 				</button>
 			</div>
-
+			<input type="hidden" th:name="${_csrf.parameterName}"
+				th:value="${_csrf.token}">
 
 
 		</div>
 	</form>
 </div>
 <th:block layout:fragment="script">
-<script th:inline="javascript">
-
-</script>
+	<script th:inline="javascript">
+var errorMessage = [[${errorMessage}]];
+	
+	if(errorMessage != null) {
+		alert)(errorMessage);
+	}
+	</script>
 </th:block>
 </html>

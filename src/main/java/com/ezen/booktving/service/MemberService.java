@@ -1,4 +1,5 @@
 package com.ezen.booktving.service;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -21,6 +22,8 @@ public class MemberService implements UserDetailsService {
 		Member savedMember = memberRepository.save(member);// insert
 		return savedMember;// 회원가입된 데이터를 리턴해준다.
 	}
+	
+	//중복아이디
 	private void validateDuplicateMember(Member member) {
 
 		Member findMember = memberRepository.findByUserId(member.getUserId());
@@ -31,9 +34,18 @@ public class MemberService implements UserDetailsService {
 	}
 
 	@Override
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
+		Member member = memberRepository.findByUserId(userId);
+		
+		if(member == null) {
+			throw new UsernameNotFoundException(userId);
+		}
+		return User.builder().username(member.getUserId()).password(member.getPassword())
+				.roles(member.getRole().toString()).build();
 	}
+
+
+	
+	
 
 }
