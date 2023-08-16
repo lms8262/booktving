@@ -30,7 +30,7 @@ public class MainController {
 		Page<BestSellerDto> bestSellers = bestSellerService.getBestSellerDto(bookSearchDto, pageable);
 		
 		
-		return "main";
+		return "/main";
 	}
 	
 }
