@@ -1,3 +1,39 @@
 @charset "UTF-8";
 
+.adminmenu_td {
+	text-align: center;
+}
 
+.adminbook_link {
+	color: black;
+	font-weight: bold;
+}
+
+.adminbook_link:hover {
+	color: #ffd360;
+}
+
+.adminbook-page {
+	cursor: pointer;
+}
+
+.adminbook-page > li {
+	margin: 0;
+}
+
+#checkall {
+	accent-color: #ffd360;	
+}
+
+#bookChkBox {
+	accent-color: #ffd360;
+}
+
+.page-link {
+	color: black;
+}
+
+.page-item.active .page-link {
+	background-color: #ffd360;
+	border-color: white;
+}

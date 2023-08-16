@@ -30,7 +30,7 @@ public class BookImgService {
 		if(!StringUtils.isEmpty(oriImgName)) {
 			//oriImgName이 빈문자열이 아니라면 이미지 파일 업로드
 			imgName = fileService.uploadFile(bookImgLocation, oriImgName, bookimgFile.getBytes());
-			imgUrl = "/images/book/" + imgName;
+			imgUrl = "/image/book/" + imgName;
 		}
 		
 		//2.book_img 테이블에 저장
@@ -54,7 +54,7 @@ public class BookImgService {
 			//수정된 이미지 파일 업로드 C:/booktving/book에 업로드
 			String oriImgName = bookImgFile.getOriginalFilename();
 			String imgName = fileService.uploadFile(bookImgLocation, oriImgName, bookImgFile.getBytes());
-			String imgUrl = "/images/book" + imgName;
+			String imgUrl = "/image/book" + imgName;
 			
 			//update 쿼리문 실행
 			/*한번 insert를 진행하면 엔티티가 영속성 컨텍스트에 저장이 되므로 

@@ -8,7 +8,7 @@ public class CategoryController {
 	
 	//카테고리 메인 페이지 보여주기
 	@GetMapping(value = "/category/main")
-	public String MainCategory() {
+	public String mainCategory() {
 		
 		return "category/mainCategory";
 	}
@@ -16,7 +16,7 @@ public class CategoryController {
 	
 	//서브 카테고리 페이지 보여주기
 	@GetMapping(value= "/category/sub")
-	public String SubCategory() {
+	public String subCategory() {
 		
 		return "category/subCategory";
 	}

@@ -2,6 +2,7 @@ package com.ezen.booktving.dto;
 
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +35,7 @@ public class BookRegFormDto {
 	@NotNull(message = "페이지수는 필수 입력 값 입니다.")
 	private Integer page;
 	
-	@NotBlank(message = "출판일은 필수 입력 값 입니다.")
+	@NotNull(message = "출판일은 필수 입력 값 입니다.")
 	private LocalDate publicationDate;
 	
 	@NotBlank(message = "책소개는 필수 입력 값 입니다.")
@@ -63,4 +64,8 @@ public class BookRegFormDto {
 	public static BookRegFormDto of(Book book) {
 		return modelMapper.map(book, BookRegFormDto.class);
 	}
+	
+	public String bookcreate;
+	
+
 }

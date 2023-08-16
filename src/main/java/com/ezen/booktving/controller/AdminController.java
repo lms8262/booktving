@@ -1,15 +1,29 @@
 package com.ezen.booktving.controller;
 
-import java.util.List;
 
+import java.security.Principal;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ezen.booktving.dto.BookRegFormDto;
+import com.ezen.booktving.dto.BookSearchDto;
+import com.ezen.booktving.entity.Book;
 import com.ezen.booktving.service.BookRegService;
 
 import jakarta.validation.Valid;
@@ -22,8 +36,17 @@ public class AdminController {
 	private final BookRegService bookRegService;
 	
 	//도서관리 페이지 보여주기 
-	@GetMapping(value = "/admin/book")
-	public String adminBook() {
+	@GetMapping(value = {"/admin/books", "/admin/books/{page}"})
+	public String adminBook(BookSearchDto bookSearchDto,
+			@PathVariable("page") Optional<Integer> page, Model model) {
+		
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 3);
+		
+		Page<Book> books = bookRegService.getAdminBookPage(bookSearchDto, pageable);
+		
+		model.addAttribute("books", books);
+		model.addAttribute("bookSearchDto", bookSearchDto);
+		model.addAttribute("maxPage", 5); 
 		
 		return "admin/adminBook";
 	}
@@ -36,6 +59,7 @@ public class AdminController {
 		return "admin/adminBookReg";
 	}
 	
+	@PostMapping(value = "/admin/bookReg")
 	//도서등록, 도서이미지 등록(insert)
 	public String bookInsert(@Valid BookRegFormDto bookRegFormDto, BindingResult bindingResult,
 			Model model, @RequestParam("BookImgFile") List<MultipartFile> bookImgFileList) {
@@ -62,11 +86,58 @@ public class AdminController {
 	}
 	
 	//도서수정 페이지 보여주기
-	@GetMapping(value = "/admin/bookModify")
-	public String adminBookModify() {
+	@GetMapping(value = "/admin/book/{bookId}")
+	public String adminBookModify(@PathVariable("bookId") Long bookId, Model model) {
+		
+		try {
+			BookRegFormDto bookRegFormDto = bookRegService.getBookDtl(bookId);
+			model.addAttribute("bookRegFormDto", bookRegFormDto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("errorMessage", "상품정보를 가져올때 에러가 발생했습니다.");
+			
+			//에러 발생시 비어있는 객체를 넘겨준다.
+			model.addAttribute("bookRegFormDto", new BookRegFormDto());
+			return "admin/adminBookReg";
+		}
 		
 		return "admin/adminBookModify";
 	}
+	
+	//도서 수정(update)
+	@PostMapping(value="/admin/book/{bookId}")
+	public String adminBookUpdate(@Valid BookRegFormDto bookRegFormDto, Model model, BindingResult bindingResult, @RequestParam("bookImgFile") List<MultipartFile> bookimgFileList) {
+		
+		if(bindingResult.hasErrors()) {
+			return "admin/adminBookReg";
+		}
+		
+		//첫번째 이미지가 있는지 검사
+		if(bookimgFileList.get(0).isEmpty() && bookRegFormDto.getId() == null) {
+			model.addAttribute("errorMessage", "첫번째 도서 이미지는 필수 입니다.");
+			return "admin/adminBookReg";
+		}
+		
+		try {
+			bookRegService.updateBook(bookRegFormDto, bookimgFileList);
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("errorMessage", "도서 정보 수정 중 에러가 발생 했습니다.");
+			return "admin/adminBookReg";
+		}
+		
+		return "redirect:/";
+	}
+	
+	//도서 상세 페이지 삭제
+	@DeleteMapping("/admin/book/{bookId}/delete")
+	public @ResponseBody ResponseEntity deleteBooks(@PathVariable("bookId") Long bookId, Principal principal) {
+		
+		bookRegService.deleteBooks(bookId);
+		
+		return new ResponseEntity<Long> (bookId, HttpStatus.OK);
+	}
+	
 	
 	//회원관리 페이지 보여주기 
 	@GetMapping(value = "/admin/member")

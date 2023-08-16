@@ -3,6 +3,8 @@ package com.ezen.booktving.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -10,6 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ezen.booktving.constant.YesNoStatus;
 import com.ezen.booktving.dto.BookImgDto;
 import com.ezen.booktving.dto.BookRegFormDto;
+import com.ezen.booktving.dto.BookSearchDto;
 import com.ezen.booktving.entity.Book;
 import com.ezen.booktving.entity.BookImg;
 import com.ezen.booktving.repository.BookImgRepository;
@@ -98,5 +101,23 @@ public class BookRegService {
 		
 		return book.getId(); //변경한 book의 id 리턴
 	}
+	
+	@Transactional(readOnly = true)
+	public Page<Book> getAdminBookPage(BookSearchDto bookSearchDto, Pageable pageable) {
+		Page<Book> bookPage = bookRepository.getAdminBookPage(bookSearchDto, pageable);
+		List<Book> bookList = bookPage.getContent();
+		
+		return bookPage;
+	}
+	
+	//도서 상세페이지 삭제
+	public void deleteBooks(Long bookId) {
+		Book book = bookRepository.findById(bookId)
+						.orElseThrow(EntityNotFoundException::new);
+		List<BookImg> bookImgList = bookImgRepository.findByBookIdOrderByIdAsc(bookId);
+		bookImgRepository.deleteAll(bookImgList);
+		
+		bookRepository.delete(book);
+	} 
 	
 }
