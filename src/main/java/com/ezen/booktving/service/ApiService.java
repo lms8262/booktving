@@ -1,9 +1,5 @@
 package com.ezen.booktving.service;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
 
 import com.ezen.booktving.entity.BestSeller;
@@ -46,6 +42,7 @@ public class ApiService {
             );
         }
         return "ok";
+      
     }
     
     //main 페이지 - NEW 북티딩 api
@@ -74,4 +71,5 @@ public class ApiService {
     	return "ok";
     }
 	
-}
+
+

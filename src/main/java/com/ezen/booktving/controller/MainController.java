@@ -20,7 +20,6 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequiredArgsConstructor
 public class MainController {
-	
 	//베스트셀러 관련 의존성 주입
 	private final BestSellerService bestSellerService;
 	
@@ -46,7 +45,4 @@ public class MainController {
 		return "/main";
 	}
 	
-	
-	
 }
-
