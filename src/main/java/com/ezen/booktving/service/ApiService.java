@@ -7,7 +7,10 @@ import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
 
 import com.ezen.booktving.entity.BestSeller;
+import com.ezen.booktving.entity.Book;
 import com.ezen.booktving.repository.BestSellerRepository;
+import com.ezen.booktving.repository.BookDetailRepository;
+import com.ezen.booktving.repository.BookRepository;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -50,4 +53,5 @@ public class ApiService {
         return "ok";
     }
 	
+    
 }

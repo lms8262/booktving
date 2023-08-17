@@ -18,13 +18,13 @@
 		<div class="content">
 			<div class="book-content">
 				<div class="bookimg">
-					<img src="/images/book1.jpg" class="img">
+					<img th:src="${book.bookImgDtoList[0].imgUrl}" class="img">
 				</div>
 				<div class="bookdetail">
-					<h2 style="font-weight:bolder">제목</h2>
-					<p>저자</p>
+					<h2 style="font-weight:bolder" th:text="${book.bookName}"></h2>
+					<p th:text="${book.author}"></p>
 					<h5 style="font-weight:bold">책 소개</h5>
-					<p>내용</p>
+					<p th:text="${book.bookIntroduction}"></p>
 					<div class=button>
 						<button type="button" class="like"><i class="fa-solid fa-heart"></i>&nbsp;찜하기</button>
 						<button type="button" class="rent"><i class="fa-solid fa-cart-shopping"></i>&nbsp;대여하기</button>
