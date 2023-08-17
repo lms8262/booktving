@@ -28,20 +28,12 @@ public class MainController {
 	
 	@GetMapping(value = "/")
 	public String main(Optional<Integer> page, Model model) {
-<<<<<<< HEAD
-		
-		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0 , 7);
-		Page<BestSeller> bestSellers = bestSellerService.getBestSeller(pageable);
-=======
->>>>>>> 98991903a179af46e522a5ca39f678f4e6e62bed
 		
 		//서점 베스트셀러
 		Pageable pageable1 = PageRequest.of(page.isPresent() ? page.get() : 0 , 10);
 		Page<BestSeller> bestSellers = bestSellerService.getBestSeller(pageable1);
 		model.addAttribute("bestSellers", bestSellers);
-<<<<<<< HEAD
-=======
-		
+
 		//NEW 북티빙
 		//Pageable pageable2 = PageRequest.of(page.isPresent() ? page.get() : 0 , 4);
 		//Page<NewBookTving> newBookTvings = newBookTvingService.getNewBookTving(pageable2);
@@ -49,7 +41,6 @@ public class MainController {
 
 		List<NewBookTving> randomNewBooks = newBookTvingService.getRandomNewBook(4);
 		model.addAttribute("randomNewBooks", randomNewBooks);
->>>>>>> 98991903a179af46e522a5ca39f678f4e6e62bed
 		
 		return "/main";
 	}

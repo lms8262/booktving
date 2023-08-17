@@ -33,8 +33,4 @@ public class BookImgDto {
 	public static BookImgDto of(BookImg bookImg) {
 		return modelMapper.map(bookImg, BookImgDto.class);
 	}
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 98991903a179af46e522a5ca39f678f4e6e62bed
