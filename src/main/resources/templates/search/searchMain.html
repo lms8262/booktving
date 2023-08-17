@@ -3,13 +3,12 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="~{layouts/layout1}">
 	 
-<!-- main 페이지 CSS --> 
 <th:block layout:fragment="css">
 	<link rel="stylesheet" th:href="@{/css/search.css}" />
 </th:block>
 
 <div layout:fragment="content">
-	<div class="search_wrap">	
+	<div class="search_wrap">
 		<div class="container">
 			<form class="search-form" method="get" action="/search/detail">			
 				<div class="search-select">

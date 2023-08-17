@@ -14,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class ApiService {
 
 	private final BestSellerRepository bestSellerRepository;
@@ -23,7 +22,6 @@ public class ApiService {
 
         JSONArray list = null;
         
-        log.info("서비스 시작");
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = (JSONObject) jsonParser.parse(result);
         list = (JSONArray) jsonObject.get("item");
@@ -50,4 +48,5 @@ public class ApiService {
         return "ok";
     }
 	
+    
 }

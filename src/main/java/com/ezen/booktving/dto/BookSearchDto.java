@@ -7,6 +7,6 @@ import lombok.Setter;
 @Setter
 public class BookSearchDto {
 	
-	private String searchType;
+	private String searchBy;
 	private String searchQuery = "";
 }
