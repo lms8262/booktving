@@ -16,17 +16,16 @@ import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class ApiService {
 
-	//main 페이지 - 서점 베스트셀러 api
 	private final BestSellerRepository bestSellerRepository;
+	private final NewBookTvingRepository newBookTvingRepository;
 
+	//main 페이지 - 서점 베스트셀러 api
     public String getBestSeller(String result) throws ParseException  {
 
         JSONArray list = null;
         
-        log.info("서비스 시작");
         JSONParser jsonParser = new JSONParser();
         JSONObject jsonObject = (JSONObject) jsonParser.parse(result);
         list = (JSONArray) jsonObject.get("item");
@@ -50,13 +49,10 @@ public class ApiService {
     }
     
     //main 페이지 - NEW 북티딩 api
-    private final NewBookTvingRepository newBookTvingRepository;
-    
     public String getNewBookTving(String result) throws ParseException {
     	
     	JSONArray list = null;
     	
-    	log.info("서비스 시작");
     	JSONParser jsonParser = new JSONParser();
     	JSONObject jSONObject = (JSONObject)jsonParser.parse(result) ;
     	list = (JSONArray) jSONObject.get("item");
@@ -72,9 +68,7 @@ public class ApiService {
     							.publisher(contents.get("publisher").toString())
     							.imgUrl(contents.get("cover").toString())
     							.link(contents.get("link").toString())
-    							.description(contents.get("description").toString())
     							.build()
-    				
     				);    		
     	}
     	return "ok";

@@ -20,7 +20,7 @@ public class Schedule {
 	
 	//main페이지 - 서점 베스트셀러 api
 	//@Scheduled(fixedDelay = 10000)
-	@Scheduled(cron = " 30 * * * * *")
+	@Scheduled(cron = " 0 30 10 * * *")
 	public void getBestSeller() {
 		
 		try {

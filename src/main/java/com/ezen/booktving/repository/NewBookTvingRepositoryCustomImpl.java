@@ -29,10 +29,10 @@ public class NewBookTvingRepositoryCustomImpl implements NewBookTvingRepositoryC
 											.offset(pageable.getOffset())
 											.limit(pageable.getPageSize())
 											.fetch();
-		
+
 		long total = queryFactory.select(Wildcard.count)
-								.from(QNewBookTving.newBookTving)
-								.fetchOne();
+							.from(QNewBookTving.newBookTving)
+							.fetchOne();
 
 		return new PageImpl<>(content, pageable, total);
 	}

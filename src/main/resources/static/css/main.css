@@ -17,6 +17,14 @@ h5 {
 .imgSlide-wrap{
 	width: 100%;
 	height: 350px;
+	display:block;
+	position: relative;
+}
+
+.imgSlide-wrap .contents-wrap {
+	display: block;
+	position: absolute;
+	top: 0;
 }
 
 .contents-wrap{
@@ -131,69 +139,346 @@ h5 {
 	height: 450px;
 	padding-top: 30px;
 }
+
+.top10-submenu{
+	display: flex;
+	width: 200px;
+	height: 30px;
+	line-height: 30px;
+	margin: 0;		
+	margin-left: 30px;
+}
+
+.top10-contents-wrap {
+	display: flex;
+	width: 200px;
+	margin: 0;
+	padding-top: 20px;
+}
+
+.top10-contents {
+	margin: 5px;
+}
+
+.position-relatiove{
+	height: 225px;
+	position: relative;
+}
+
+.top10-rank{
+	display: block;
+	position: absolute;
+	bottom: 15px;
+}
+
+.top10-rank h1{
+	color: #fff;
+	-webkit-text-stroke: 2px #000;
+	font-weight: bold;
+	font-size: 60px;
+}
+
+.top10-contents .top10-cover{
+	width: 170px;
+	height: 225px;
+	overflow: hidden;
+	padding-left: 13px;
+	background-color: #000;
+	margin-left: 15px;
+}
+
+.top10-contents .top10-cover img{
+	
+}
+
+.top10-contents-text {
+	width: 175px ;
+	margin: 0;
+	margin-top: 10px;
+}
+
+.top10-rank {
+	width: 30px;
+	display: flex;
+	align-items: center;
+	margin: 0;
+}
+
+.top10-title-author {
+	width: 130px;
+	margin: 0;
+	padding-left: 15px;
+}
+
+.top10-title-author div{
+	padding: 0;
+	overflow: hidden;
+  	white-space: nowrap;
+  	text-overflow: ellipsis;
+  	word-break: break-all;
+}
+
+.top10-title-author div a{
+	padding-left: 5px;
+	margin: 0;
+	overflow: hidden;
+  	white-space: nowrap;
+  	text-overflow: ellipsis;
+  	word-break: break-all;
+  	font-weight: bold;
+  	font-size: 12px;
+}
+
+.top10-title-author .top10-author{
+	display: flex;
+}
+
+.top10-title-author .top10-author p{
+	padding-left: 5px;
+	overflow: hidden;
+  	white-space: nowrap;
+  	text-overflow: ellipsis;
+  	word-break: break-all;
+  	font-size: 12px;
+  	margin: 0px;
+  	padding: 0;
+}
 /* 북티빙 Top10 끝 */
 
 /* NEW 북티빙 */
 .new-wrap{
-	height: 450px;
+	height: 550px;
 	padding-top: 30px;
 }
 
+.new-wrap h5 {
+	margin-bottom: 20px;
+}
 .new-box-wrap{
 	display: flex;
+	white-space: nowrap;
+	margin: 0;
+	padding: 0;
 }
 
 .new-box{
-	height: 150px;
+	margin: 0;
+	display:flex;
+	justify-content:space-between;
+	height: 200px;
 	background-color: #eee;
 	border-radius: 20px;
-	margin: 10px;
+	overflow: hidden;
+	padding: 0 60px 0 40px;
+	box-sizing: border-box;
 }
+
+.new-book-text{
+	position: relative;
+	padding: 40px 0;
+	margin: 0;
+}
+.new-book-text .new-book-title {
+	height: 50px;
+	padding: 0;
+	height: 50px;
+	font-weight: bold;
+	overflow: hidden;
+  	white-space: nowrap;
+  	text-overflow: ellipsis;
+  	word-break: break-all;
+}
+
+.new-book-text p{
+	font-size: 15px;	
+	overflow: hidden;
+  	white-space: nowrap;
+  	text-overflow: ellipsis;
+  	word-break: break-all;
+  	padding: 0;
+}
+
+.new-book-text .new-book-author-publishrer{
+	display: flex;
+}
+
+.new-book-author-publishrer p{
+	margin: 0;
+}
+
+.new-book-author-publishrer span {
+	padding: 0 5px;
+}
+
+.new-book-text .description{
+	position: absolute;
+	bottom: 0;
+	margin: 0;
+}
+
+.new-book-cover{
+	width: 200px;
+	margin : 0;
+	overflow: hidden;
+	padding: 0
+}
+
+.new-book-cover img{
+	height: 210px;
+	transform:rotate(25deg);
+	margin-left: 30px;
+	filter: drop-shadow(5px 5px 5px gray);
+}
+
 /* NEW 북티빙 끝 */
 
 
 /* 북티빙이 사랑한 작가 */
 .author-wrap{
-	height: 400px;
+	height: 450px;
 	background-color: #ebfff8;
 }
 
-.author-wrap .author-contents {
+.author-wrap .author {
 	padding-top: 30px;
+}
+
+.author-contents-wrap{
+	width:250px;
+	margin: 0;
+	margin-top: 30px;
+}
+
+.author-contents-wrap .author-contents{
+	width: 250px;
+	height: 250px;
+	overflow: hidden;	
+	background-color: #000;
+	border-radius: 15px;
+	margin: 0;
+	padding: 0;
+}
+
+.author-cover img{
+}
+
+.author-contents-text{
+	margin-top: 10px;
+	padding-left: 20px;
+}
+
+.author-text{
+	margin: 0;
+}
+
+.author-text .author-name{
+	font-size: 20px;
+	font-weight: bold;
+	margin-bottom: 5px;
 }
 
 /* 북티빙이 사랑한 작가 끝 */
 
 /* 서점 베스트 셀러 */
 .bestSeller-wrap{
+	padding: 0;
 	padding-top: 30px;
 	height: 450px;
 }
 
+.bestSeller-title-box{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.bestSeller-top-title {
+	display: flex;
+	margin: 0;
+}
+
+.bestSeller-top-title .aladin-logo{
+	display:flex;	
+	position: relative;
+	margin-left: 12px;
+}
+
+.bestSeller-top-title img{
+	width: 65px;
+	height: 25px;
+	margin: 0;
+}
+
+.bestSeller-top-title .standard {
+	width: 20px;
+	margin: 0;
+	font-size: 10px;
+	height: 25px;
+	line-height : 25px;
+	position: absolute;
+	top: 0;
+	left: 67px;
+	color: #bbb;
+}
+
+.bestSeller-more {
+	display : flex;
+	align-items: center;
+	margin: 0;
+	height: 40px;
+	line-height: 40px;
+}
+
+.bestSeller-more .more-text {
+	font-size: 10px;
+	color: #bbb;
+}
+
+.bestSeller-more .more {
+	width: 40px;
+	height: 20px;
+	line-height: 20px;
+	background-color: #ddd;
+	border-radius: 30px;
+	text-align: center;
+}
+
+.bestSeller-more .more a{
+	display : flex;
+	align-items: center;
+	justify-content: center;
+	color: #000;
+	font-weight: bold;
+	font-size: 10px;	
+}
+
 .bestSeller-contents-wrap {
 	display: flex;
-	justify-content: start;
 	width: 170px;
 	margin: 0;
 	padding-top: 20px;
+	padding-left: 10px;
 }
 
 .bestSeller-contents {
-	margin: 10px;
+	margin: 5px;
 }
 
 .bestSeller-cover img{
 	overflow: hidden;
-	width: 150px;
-	height: 200px;
+	width: 170px;
+	height: 225px;
+	border: 0.5px solid #eee;
 }
 
 .bestSeller-contents-text {
+	width: 175px ;
+	margin: 0;
 	margin-top: 10px;
 }
 
 .bestSeller-rank {
-	width: 40px;
+	width: 30px;
 	display: flex;
 	align-items: center;
 	margin: 0;
@@ -204,25 +489,35 @@ h5 {
 	display: flex;
 	align-items: center;
 	margin: 0;
-	padding-left: 10px;
 }
 
 .bestSeller-title-author div{
 	padding: 0;
-}
-
-.bestSeller-title{
-	margin: 0;
-	display: flex;
-	align-items: center;
 	overflow: hidden;
   	white-space: nowrap;
   	text-overflow: ellipsis;
   	word-break: break-all;
 }
 
-.bestSeller-author{
+.bestSeller-title-author div a{
+	padding-left: 5px;
 	margin: 0;
+	overflow: hidden;
+  	white-space: nowrap;
+  	text-overflow: ellipsis;
+  	word-break: break-all;
+  	font-weight: bold;
+  	font-size: 12px;
+}
+
+.bestSeller-title-author .bestSeller-author p{
+	padding-left: 5px;
+	overflow: hidden;
+  	white-space: nowrap;
+  	text-overflow: ellipsis;
+  	word-break: break-all;
+  	font-size: 12px;
+  	margin-bottom: 0px
 }
 
 /* 서점 베스트 셀러 끝 */
