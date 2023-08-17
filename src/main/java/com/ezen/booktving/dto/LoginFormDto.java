@@ -20,14 +20,14 @@ public class LoginFormDto {
 	private String memberName;
 
 	@Email(message = "이메일 형식으로 입력해주세요")
-	@NotEmpty(message = "이메일은 필수입력 입니다.")
+	@NotEmpty(message = "이메일은 필수 입력 값입니다.")
 	private String email;
 
-	@Length(min = 8, max = 20, message = "비밀번호는 8자 ~20자 사이")
-	@NotEmpty(message = "비밀번호는 필수입력 입니다.")
+	@Length(min = 8, max = 20, message = "비밀번호는 8자 ~ 20자 사이로 입력해주세요.")
+	@NotEmpty(message = "비밀번호는 필수 입력 값입니다.")
 	private String password;
 	
-	@NotEmpty(message = "전화번호는 필수입력 입니다.")
+	@NotEmpty(message = "전화번호는 필수 입력 값입니다.")
 	private String tel;
 	
 	private LocalDate birth;
