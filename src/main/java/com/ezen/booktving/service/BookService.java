@@ -12,12 +12,15 @@ import org.springframework.web.client.RestTemplate;
 
 import com.ezen.booktving.dto.BookDto;
 import com.ezen.booktving.dto.BookImgDto;
+import com.ezen.booktving.dto.BookReviewDto;
 import com.ezen.booktving.dto.BookSearchDto;
 import com.ezen.booktving.entity.Book;
 import com.ezen.booktving.entity.BookImg;
+import com.ezen.booktving.entity.BookReview;
 import com.ezen.booktving.repository.BookDetailRepository;
 import com.ezen.booktving.repository.BookImgRepository;
 import com.ezen.booktving.repository.BookRepository;
+import com.ezen.booktving.repository.BookReviewRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -32,6 +35,7 @@ public class BookService {
 	private final BookDetailRepository bookDetailRepository;
 	private final BookImgService bookImgService;
 	private final BookImgRepository bookImgRepository;
+	private final BookReviewRepository bookReviewRepository;
 	
 	@Transactional(readOnly = true)
 	public BookDto getBookDetail(String isbn) {
@@ -47,7 +51,13 @@ public class BookService {
 			bookImgDtoList.add(bookImgDto);
 		}
 		
-											
+		List<BookReview> bookReviewList = bookReviewRepository.findByIdOrderByIdAsc(book.getId());
+		
+		List<BookReviewDto> bookReviewDtoList = new ArrayList<>();
+		for(BookReview bookReview : bookReviewList) {
+			BookReviewDto bookReviewDto = BookReviewDto.of(bookReview);
+			bookReviewDtoList.add(bookReviewDto);
+		}
 		
 		BookDto bookDto = BookDto.of(book);
 		bookDto.setBookImgDtoList(bookImgDtoList);
@@ -55,5 +65,4 @@ public class BookService {
 		return bookDto;
 						
 	}
-	
 }

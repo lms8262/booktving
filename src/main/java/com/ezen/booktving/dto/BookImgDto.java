@@ -26,7 +26,7 @@ public class BookImgDto {
 	
 	private static ModelMapper modelMapper = new ModelMapper();
 	
-	private BookImg createBookImg() {
+	public BookImg createBookImg() {
 		return modelMapper.map(this, BookImg.class);
 	}
 	
