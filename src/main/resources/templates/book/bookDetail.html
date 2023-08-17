@@ -1,97 +1,108 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="~{layouts/layout1}">
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
 <head>
 <th:block layout:fragment="css">
-	<link rel="stylesheet" type="text/css" href="/css/bookDetail.css" />	
+	<link rel="stylesheet" type="text/css" href="/css/bookDetail.css" />
 </th:block>
 
- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
- 	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
- 	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+	rel="stylesheet"
+	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+	crossorigin="anonymous">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+	crossorigin="anonymous"></script>
 </head>
 <div layout:fragment="content">
 
 	<div class="top">
-		<div class="content">
-			<div class="book-content">
-				<div class="bookimg">
-					<img src="/images/book1.jpg" class="img">
-				</div>
-				<div class="bookdetail">
-					<h2 style="font-weight:bolder">제목</h2>
-					<p>저자</p>
-					<h5 style="font-weight:bold">책 소개</h5>
-					<p>내용</p>
-					<div class=button>
-						<button type="button" class="like"><i class="fa-solid fa-heart"></i>&nbsp;찜하기</button>
-						<button type="button" class="rent"><i class="fa-solid fa-cart-shopping"></i>&nbsp;대여하기</button>
+		<th:block th:each="book, status: ${books}">
+			<div class="content">
+				<div class="book-content">
+					<div class="bookimg">
+						<img th:src="${book.bookImgDtoList[0].imgUrl}" class="img">
+					</div>
+					<div class="bookdetail">
+						<h2 style="font-weight: bolder" th:text="${book.bookName}"></h2>
+						<p th:text="${book.author}"></p>
+						<h5 style="font-weight: bold">책 소개</h5>
+						<p th:text="${book.bookIntroduction}"></p>
+						<div class=button>
+							<button type="button" class="like">
+								<i class="fa-solid fa-heart"></i>&nbsp;찜하기
+							</button>
+							<button type="button" class="rent">
+								<i class="fa-solid fa-cart-shopping"></i>&nbsp;대여하기
+							</button>
+						</div>
 					</div>
 				</div>
+				<div data-v-4edfbce0="" class="book-info-detail slide-container"
+					data-scroll-move="false">
+					<ul data-v-4edfbce0="" class="slide-wrapper">
+						<li data-v-4edfbce0="" class="slide-item">
+							<p data-v-4edfbce0="">카테고리</p> <strong data-v-4edfbce0="">
+								<a data-v-4edfbce0="" th:text="${book.category}"></a>
+						</strong>
+						<li data-v-4edfbce0="" class="slide-item">
+							<p data-v-4edfbce0="">페이지</p> <strong data-v-4edfbce0=""
+							th:text="${book.page}"></strong>
+						</li>
+						<li data-v-4edfbce0="" class="slide-item">
+							<p data-v-4edfbce0="">출판사</p> <strong data-v-4edfbce0="">
+								<a data-v-4edfbce0="" th:text="${book.publisher}"></a>
+						</strong>
+						</li>
+						<li data-v-4edfbce0="" class="slide-item">
+							<p data-v-4edfbce0="">출간일</p> <strong data-v-4edfbce0=""
+							th:text="${book.publicationDate}"></strong>
+						</li>
+						<li data-v-4edfbce0="" class="slide-item">
+							<p data-v-4edfbce0="">ISBN</p> <strong data-v-4edfbce0=""
+							th:text="${book.isbn}"></strong>
+						</li>
+					</ul>
+				</div>
 			</div>
-			<div data-v-4edfbce0="" class="book-info-detail slide-container" data-scroll-move="false">
-				<ul data-v-4edfbce0="" class="slide-wrapper">
-					<li data-v-4edfbce0="" class="slide-item">
-						<p data-v-4edfbce0="">카테고리</p> 
-							<strong data-v-4edfbce0="">
-								<a data-v-4edfbce0="">소설</a>
-									</strong>
-					<li data-v-4edfbce0="" class="slide-item">
-						<p data-v-4edfbce0="">페이지</p> 
-							<strong data-v-4edfbce0="">368P</strong>
-					</li> 
-					<li data-v-4edfbce0="" class="slide-item">
-						<p data-v-4edfbce0="">출판사</p> 
-							<strong data-v-4edfbce0="">
-								<a data-v-4edfbce0="">열린책들</a>
-							</strong>
-					</li> 
-					<li data-v-4edfbce0="" class="slide-item">
-						<p data-v-4edfbce0="">출간일</p> 
-							<strong data-v-4edfbce0="">2023.06.20</strong></li> 
-					<li data-v-4edfbce0="" class="slide-item">
-						<p data-v-4edfbce0="">ISBN</p> 
-							<strong data-v-4edfbce0="">9788932991146</strong>
-					</li>
-				</ul>
+		
+		<div class="bookindex">
+			<p class="d-inline-flex gap-1">
+				<a class="btn btn-primary" data-bs-toggle="collapse"
+					href="#collapseExample" role="button" aria-expanded="false"
+					aria-controls="collapseExample"
+					style="background-color: white; color: black; border-style: none; font-weight: bolder">
+					목차 </a>
+			</p>
+			<div class="collapse" id="collapseExample">
+				<div class="card card-body" th:text="${book.contents}"></div>
 			</div>
-			<div class="bookindex">
-				<p class="d-inline-flex gap-1">
-  <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"
-    style="background-color: white; color: black; border-style: none; font-weight: bolder">
-    목차
-  </a>
-  
-   
-</p>
-<div class="collapse" id="collapseExample">
-  <div class="card card-body">
-    Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
-  </div>
-</div>
+		</div>
+		<div class="bookindex">
+			<p class="d-inline-flex gap-1">
+				<a class="btn btn-primary" data-bs-toggle="collapse"
+					href="#collapseExample" role="button" aria-expanded="false"
+					aria-controls="collapseExample"
+					style="background-color: white; color: black; border-style: none; font-weight: bolder">
+					저자 소개 </a>
+
+
+			</p>
+			<div class="collapse" id="collapseExample">
+				<div class="card card-body">Some placeholder content for the
+					collapse component. This panel is hidden by default but revealed
+					when the user activates the relevant trigger.</div>
 			</div>
-			<div class="bookindex">
-				<p class="d-inline-flex gap-1">
-  <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample"
-  	style="background-color: white; color: black; border-style: none; font-weight: bolder">
-    저자 소개
-  </a>
-  
-   
-</p>
-<div class="collapse" id="collapseExample">
-  <div class="card card-body">
-    Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
-  </div>
-</div>
-			</div>
-			<div class="bookindex bookindex-image">
-				<img src="/images/aladin.png" class="aladin">
-				<h6>알라딘</h6>
-			</div>
-			
+		</div>
+		
+		<div class="bookindex bookindex-image">
+			<img src="/images/aladin.png" class="aladin">
+			<h6>알라딘</h6>
+		</div>
+
 			<div class="review">
 				<h6 style="font-weight: bolder;">리뷰</h6>
 				<ul class="review-profile">
@@ -101,33 +112,15 @@
 						</div>
 						<div class="review-content">
 							<p>닉네임</p>
-							<span>날짜</span>
 							<a>가슴이 뭉클합니다</a>
-						</div>
-					</li>
-					<li>
-						<div>
-						
-						</div>
-						<div>
-						
-						</div>
-					</li>
-					<li>
-						<div>
-						
-						</div>
-						<div>
-						
 						</div>
 					</li>
 				</ul>
 				<div></div>
 			</div>
-		</div>
-		
-		
+			</th:block>
 	</div>
+
 
 </div>
 

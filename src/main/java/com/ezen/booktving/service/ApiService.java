@@ -45,7 +45,7 @@ public class ApiService {
       
     }
     
-    //main 페이지 - NEW 북티딩 api
+    //main 페이지 - NEW 북티빙 api
     public String getNewBookTving(String result) throws ParseException {
     	
     	JSONArray list = null;
@@ -71,5 +71,5 @@ public class ApiService {
     	return "ok";
     }
 	
-
+}
 

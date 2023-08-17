@@ -12,6 +12,5 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 public class BookImgService {
 	
-	private String bookImgLocation = "";
 	private final BookImgRepository bookImgRepository;
 }
