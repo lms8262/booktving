@@ -172,23 +172,23 @@
 
 					<!-- NEW 북티빙 -->
 					<div class="new-wrap container">
-						<div>
+						<div >
 							<h5>NEW 북티빙</h5>
 						</div>
 						
-						<div class="row new-box-wrap col-lg-12">
+						<div class="row new-box-wrap container ">
 							<th:block th:each="newBook, status : ${randomNewBooks}">
-								<div class="new-box col-lg-6 mb-4">
-									<div class="new-book-text col-6">
+								<div class="new-box col-md-6 mb-4">
+									<div class="new-book-text col-7">
 										<h4 th:text="${newBook.title}" class="new-book-title"></h4>
 										<div class="new-book-author-publishrer">
-											<p th:text="${newBook.author}" class="new-book-author col-5"></p>
+											<p th:text="${newBook.author}" class="new-book-author col-4"></p>
 											<span class="col-1">/</span>
-											<p th:text="${newBook.publisher}" class="new-book-publisher col-6"></p>
+											<p th:text="${newBook.publisher}" class="new-book-publisher col-7"></p>
 										</div>
 										<p class="description" th:text="${newBook.description}"></p>
 									</div>
-									<div class="new-book-cover">
+									<div class="new-book-cover col-5">
 										<img alt="${newBook.title}" th:src="${newBook.imgUrl}">
 									</div>
 								</div>

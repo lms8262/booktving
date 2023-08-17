@@ -39,7 +39,7 @@ public class Schedule {
 	}
 	
 	//main 페이지 - NEW 북티빙 api
-	@Scheduled(cron = " 0 30 10 * * *")
+	@Scheduled(cron = " 0 30 10 1 * *")
 	public void getNewBookTving() {
 			
 		try {
