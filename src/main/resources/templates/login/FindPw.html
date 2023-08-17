@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+<th:block layout:fragment="css">
+	<style>
+</style>
+</th:block>
+<div layout:fragment="content">
+	<div class="password_container">
+		<form class="form-horizontal" role="form" method="POST">
+			<div class="form">
+				<div class="fow">
+					<div class="col-md-12 h2m">
+						<h2>비밀번호 찾기</h2>
+						<h6>
+							회원가입시 사용할 비밀번호는<strong>${fn:substring(pw,0,4)}<c:forEach
+									begin="1" end="${fin:length(pw)-4}">*</c:forEach></strong>입니다.
+						</h6>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-md-10 inputbb">
+					<button type="button" class="btn btn-outline-secondary loginbtn" onclick="backToLogin()">로그인 화면으로 돌아가기</button>
+				
+				</div>
+			</div>
+		</form>
+	</div>
+
+</div>
+</html>

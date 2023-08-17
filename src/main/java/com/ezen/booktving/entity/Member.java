@@ -2,7 +2,10 @@ package com.ezen.booktving.entity;
 
 import java.time.LocalDate;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
+
 import com.ezen.booktving.constant.Role;
+import com.ezen.booktving.dto.LoginFormDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -49,4 +52,24 @@ public class Member extends BaseTimeEntity {
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	private Role role;
+	
+	public static Member createMember(LoginFormDto loginFormDto, PasswordEncoder passwordEncoder) {
+
+		// 패스워드 암호화
+		String password = passwordEncoder.encode(loginFormDto.getPassword());
+
+		//MemberFormDto를 -> Member 엔티티 객체로 변환
+		
+		Member member = new Member();
+		member.setUserId(loginFormDto.getUserId());
+		member.setMemberName(loginFormDto.getMemberName());
+		member.setEmail(loginFormDto.getEmail());
+		member.setBirth(loginFormDto.getBirth());
+		member.setTel(loginFormDto.getTel());
+		member.setPassword(password);
+		/* member.setRole(Role.ADMIN);  //관리자로 가입할때*/
+		member.setRole(Role.USER);//일반 사용자로 가입할때
+		
+		return member;
+	}
 }
