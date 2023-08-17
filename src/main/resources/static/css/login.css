@@ -1,9 +1,5 @@
 @charset "EUC-KR";
 
-.backgroung-img {
-	width: 2400px;
-}
-
 .wrap-login100 {
 	width: 390px;
 	background: #fff;
@@ -18,12 +14,8 @@
 }
 
 .limiter {
-	background-image: url("../images/login.jpg");
-	background-size: 100%;
 	width: 100%;
-	height: 100%;
 	margin: 0 auto;
-	background-position: 20% 30%;
 }
 
 * {
@@ -34,14 +26,6 @@
 
 div {
 	display: block;
-}
-
-.findId {
-	text-align: center;
-	font-family: Poppins-Regular;
-	font-size: 13px;
-	color: #666;
-	line-height: 1.5;
 }
 
 .container-login100 {
@@ -56,6 +40,7 @@ div {
 	justify-content: center;
 	align-items: center;
 	padding: 15px;
+	background: #f2f2f2;
 }
 
 .login100-form {
@@ -116,7 +101,7 @@ form {
 	display: block;
 	width: 100%;
 	height: 45px;
-
+	padding-left: 90px;
 }
 
 input {

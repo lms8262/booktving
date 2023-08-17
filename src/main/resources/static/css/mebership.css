@@ -1,14 +1,5 @@
 @charset "EUC-KR";
 
-.id_input_re_1{
-	color : green;
-	display : none;
-}
-.id_input_re_2{
-	color : green;
-	display : none;
-}
-
 html {
 	height: 100%;
 }

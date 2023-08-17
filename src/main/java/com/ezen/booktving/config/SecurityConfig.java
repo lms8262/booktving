@@ -37,7 +37,7 @@ public class SecurityConfig {
 		.formLogin(formLogin -> formLogin//2.로그인에 관련된 설정
 				.loginPage("/login")//로그인페이지 URL설정
 				.defaultSuccessUrl("/")//로그인 성공시 이동할 페이지
-				.usernameParameter("userId")//로그인시 id로 사용할 파라메터 이름
+				.usernameParameter("email")//로그인시 id로 사용할 파라메터 이름
 				.failureUrl("/login/error")//로그인 실패시 이동할 url
 				//.permitAll()
 				)
