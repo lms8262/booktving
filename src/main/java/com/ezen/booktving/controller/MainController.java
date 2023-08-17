@@ -19,6 +19,7 @@ import lombok.RequiredArgsConstructor;
 @Controller
 @RequiredArgsConstructor
 public class MainController {
+	
 
 	private final BestSellerService bestSellerService;
 	private final BestSellerRepository bestSellerRepository;
@@ -37,3 +38,4 @@ public class MainController {
 	}
 	
 }
+
