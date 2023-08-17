@@ -14,10 +14,10 @@ import lombok.Setter;
 @Setter
 public class LoginFormDto {
 	@NotBlank(message = "아이디는 필수 입력 값입니다.")
-	private String userid;
+	private String userId;
 	
 	@NotBlank(message = "이름은 필수 입력 값입니다.")
-	private String membername;
+	private String memberName;
 
 	@Email(message = "이메일 형식으로 입력해주세요")
 	@NotEmpty(message = "이메일은 필수입력 입니다.")

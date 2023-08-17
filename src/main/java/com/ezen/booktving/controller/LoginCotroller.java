@@ -1,7 +1,5 @@
 package com.ezen.booktving.controller;
 
-
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ezen.booktving.dto.LoginFormDto;
-import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.service.IdService;
 import com.ezen.booktving.service.MemberService;
 
@@ -25,10 +22,8 @@ import lombok.RequiredArgsConstructor;
 public class LoginCotroller {
 
 	private final MemberService memberService;
-	private final PasswordEncoder passwordEncoder;
 	private final IdService idService;
-	
-	
+
 	// 로그인 화면
 	@GetMapping(value = "/login")
 	public String loginList() {
@@ -56,25 +51,26 @@ public class LoginCotroller {
 			return "membership/memberloginForm";
 		}
 		try {
-			Member member = Member.createMember(loginFormDto, passwordEncoder);
-			memberService.saveMember(member);
-
+			memberService.createMember(loginFormDto);
 		} catch (Exception e) {
-			model.addAttribute("errorMessage",e.getMessage());
+			model.addAttribute("errorMessage", e.getMessage());
 			return "membership/memberloginForm";
 		}
 		return "redirect:/";
 	}
-	//아이디 찾기 
-	
-	  @RequestMapping(value = "/findId", method = RequestMethod.POST)
-	  @ResponseBody 
-	  public String finduserId(@RequestParam("memberName") String
-	  memberName,@RequestParam("email") String email) {
-	  
-	  String result = idService.finduserId(memberName, email);
-	
-	  return result; }
 
 	
+
+	
+	// 아이디 찾기
+
+	@RequestMapping(value = "/findId", method = RequestMethod.POST)
+	@ResponseBody
+	public String finduserId(@RequestParam("memberName") String memberName, @RequestParam("email") String email) {
+
+		String result = idService.finduserId(memberName, email);
+
+		return result;
+	}
+
 }

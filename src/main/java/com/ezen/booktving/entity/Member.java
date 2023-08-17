@@ -61,8 +61,8 @@ public class Member extends BaseTimeEntity {
 		//MemberFormDto를 -> Member 엔티티 객체로 변환
 		
 		Member member = new Member();
-		member.setUserId(loginFormDto.getUserid());
-		member.setMemberName(loginFormDto.getMembername());
+		member.setUserId(loginFormDto.getUserId());
+		member.setMemberName(loginFormDto.getMemberName());
 		member.setEmail(loginFormDto.getEmail());
 		member.setBirth(loginFormDto.getBirth());
 		member.setTel(loginFormDto.getTel());

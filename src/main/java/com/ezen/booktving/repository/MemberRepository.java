@@ -10,10 +10,12 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 	
 	Member findByMemberNameAndEmail(String memberName, String email);
 
+	Member findByEmail(String email);
+
+	Member findByTel(String tel);
 	/*
-	 * String findId(String memberName, String email);
-	 * 
-	 * 
+	 * @Select("SELECT SELECT MID FROM member WHERE MID= #{mid}") String
+	 * checkIdUser(@Param("mid")String mid);
 	 */
 	
 }

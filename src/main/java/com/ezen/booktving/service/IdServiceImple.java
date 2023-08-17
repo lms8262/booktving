@@ -10,20 +10,26 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class IdServiceImple implements IdService {
-	
+
 	private final MemberRepository memberRepository;
 
 	@Override
 	public String finduserId(String memberName, String email) {
-		String result="";
+		String result = "";
 		try {
-			Member member = memberRepository.findByMemberNameAndEmail(memberName,email);
+			Member member = memberRepository.findByMemberNameAndEmail(memberName, email);
 			result = member.getUserId();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return result;
 	}
+
+	
+
+
+
+
 
 	/*
 	 * private final MemberRepository memberRepository;
