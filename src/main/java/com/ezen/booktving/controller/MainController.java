@@ -33,7 +33,7 @@ public class MainController {
 		Pageable pageable1 = PageRequest.of(page.isPresent() ? page.get() : 0 , 10);
 		Page<BestSeller> bestSellers = bestSellerService.getBestSeller(pageable1);
 		model.addAttribute("bestSellers", bestSellers);
-		
+
 		//NEW 북티빙
 		//Pageable pageable2 = PageRequest.of(page.isPresent() ? page.get() : 0 , 4);
 		//Page<NewBookTving> newBookTvings = newBookTvingService.getNewBookTving(pageable2);

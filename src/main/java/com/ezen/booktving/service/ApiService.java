@@ -1,5 +1,9 @@
 package com.ezen.booktving.service;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
 
 import com.ezen.booktving.entity.BestSeller;
@@ -8,7 +12,6 @@ import com.ezen.booktving.repository.BestSellerRepository;
 import com.ezen.booktving.repository.NewBookTvingRepository;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
@@ -70,6 +73,6 @@ public class ApiService {
     	}
     	return "ok";
     }
-	
+    
 }
 
