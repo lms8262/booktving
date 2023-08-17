@@ -15,7 +15,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "best_seller")
+@Table(name = "new_book_tving")
 @Getter
 @Setter
 @ToString
@@ -23,10 +23,10 @@ import lombok.ToString;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-public class BestSeller {
-
+public class NewBookTving {
+	
 	@Id
-	@Column(name = "best_seller_id")
+	@Column(name = "new_book_tving_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
@@ -43,11 +43,12 @@ public class BestSeller {
 	private String publisher;
 	
 	@Column(nullable = false)
-	private String bestRank;
-	
-	@Column(nullable = false)
 	private String imgUrl;
 	
 	@Column(nullable = false)
 	private String link;
+	
+	@Column(nullable = true)
+	private String description;
+
 }

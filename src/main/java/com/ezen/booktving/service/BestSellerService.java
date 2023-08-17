@@ -20,9 +20,9 @@ public class BestSellerService {
 
 	private final BestSellerRepository bestSellerRepository;
 	
-	public Page<BestSeller> getBestSeller(BookSearchDto bookSearchDto, Pageable pageable){
+	public Page<BestSeller> getBestSeller(Pageable pageable){
 		
-		Page<BestSeller> bestSellerPage = bestSellerRepository.getBestSeller(bookSearchDto, pageable);
+		Page<BestSeller> bestSellerPage = bestSellerRepository.getBestSeller(pageable);
 		
 		return bestSellerPage;
 	}
