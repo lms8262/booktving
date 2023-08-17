@@ -24,6 +24,8 @@ public class BestSellerRepositoryCustomImpl implements BestSellerRepositoryCusto
 		this.queryFactory = new JPAQueryFactory(em);
 	}
 	
+	/*
+	
 	private BooleanExpression searchByLike(String searchBy, String searchQuery) {
 		if(StringUtils.equals("title", searchBy)) {
 			return QBestSeller.bestSeller.title.like("%" + searchQuery + "%");
@@ -31,7 +33,9 @@ public class BestSellerRepositoryCustomImpl implements BestSellerRepositoryCusto
 			return QBestSeller.bestSeller.isbn.like("%" + searchQuery + "%");
 		}
 		return null;
-	}		
+	}
+	
+	*/
 
 	//메인페이지 -> 서점 베스트셀러 List
 	@Override

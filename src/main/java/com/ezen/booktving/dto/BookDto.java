@@ -1,6 +1,8 @@
 package com.ezen.booktving.dto;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.modelmapper.ModelMapper;
 
@@ -31,6 +33,8 @@ public class BookDto {
 	private String contents;
 	
 	private String category;
+	
+	private List<BookImgDto> bookImgDtoList = new ArrayList<>();
 	
 	private static ModelMapper modelMapper = new ModelMapper();
 	
