@@ -21,7 +21,7 @@
 						<ul class="nav_left">
 							<li class="menu"><a href="/category/main"> <span>카테고리</span>
 							</a></li>
-							<li class="menu"><a href=""> <span>검색</span>
+							<li class="menu"><a href="/search/main"> <span>검색</span>
 							</a></li>
 							<li class="menu"><a href=""> <span>문의하기</span>
 							</a></li>
@@ -49,11 +49,11 @@
 									src="/images/admin.png">
 							</a></li>
 							<li class="login"><a href="/login" class="login-btn"
-								> <img alt="login"
+								sec:authorize="isAnonymous()"> <img alt="login"
 									src="/images/login.png">
 							</a></li>
-							<li class="logout"><a href="" class="logout-btn"
-								> <img alt="logout"
+							<li class="logout"><a href="/logout" class="logout-btn"
+								sec:authorize="isAuthenticated()"> <img alt="logout"
 									src="/images/logout.png">
 							</a></li>
 						</ul>

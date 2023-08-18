@@ -29,7 +29,7 @@ public class SecurityConfig {
 				.requestMatchers(mvc.pattern("/css/**"),mvc.pattern("/js/**"),mvc.pattern("/images/**"),mvc.pattern("/fontawesome-free-6.3.0-web/**")).permitAll()
 				.requestMatchers(mvc.pattern("/"),mvc.pattern("/membership/**"),mvc.pattern("/login/**")).permitAll()
 				.requestMatchers(mvc.pattern("/favicon.ico"),mvc.pattern("/error")).permitAll()
-				.requestMatchers(mvc.pattern("/category/**"),mvc.pattern("/search/**"),mvc.pattern("/question/**"),mvc.pattern("/author/**")).permitAll()
+				.requestMatchers(mvc.pattern("/category/**"),mvc.pattern("/search/**"),mvc.pattern("/question/**"),mvc.pattern("/author/**"),mvc.pattern("/book/**")).permitAll()
 				//'admin'으로 시작하는 경로는 관리자만 접근가능하도록 설정
 				.requestMatchers(mvc.pattern("/admin/**")).permitAll()//hasRole("ADMIN")
 				.anyRequest().authenticated()//그외 페이지는 모두 로그인 (인증을 받아야한다.)
@@ -37,7 +37,7 @@ public class SecurityConfig {
 		.formLogin(formLogin -> formLogin//2.로그인에 관련된 설정
 				.loginPage("/login")//로그인페이지 URL설정
 				.defaultSuccessUrl("/")//로그인 성공시 이동할 페이지
-				.usernameParameter("email")//로그인시 id로 사용할 파라메터 이름
+				.usernameParameter("userId")//로그인시 id로 사용할 파라메터 이름
 				.failureUrl("/login/error")//로그인 실패시 이동할 url
 				//.permitAll()
 				)

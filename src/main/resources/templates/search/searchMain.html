@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/layout1}">
+	 
+<th:block layout:fragment="css">
+	<link rel="stylesheet" th:href="@{/css/search.css}" />
+</th:block>
+
+<div layout:fragment="content">
+	<div class="search_wrap">
+		<div class="container">
+			<form class="search-form" method="get" action="/search/detail">			
+				<div class="search-select">
+					<select id="searchType" name="searchType">
+						<option>제목</option>
+						<option>저자</option>
+						<option>출판사</option>
+					</select>
+				</div>
+				<div class="search-input d-flex container">
+					<button type="submit">
+						<img alt="search" src="/images/search.png">
+					</button>
+					<div class="d-flex align-items-center">
+						<input type="text" id="searchQuery" name="searchQuery" placeholder="검색어를 입력하세요">
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div>
+		<div class="search_recommend container">		
+			<h5>
+				북티빙 추천 검색어
+			</h5>
+			<div>
+				<ul class="recommend-list d-flex flex-wrap">
+					<li><a>히가시노게이고</a></li>
+					<li><a>삼국지</a></li>
+					<li><a>토지</a></li>
+					<li><a>투자</a></li>
+					<li><a>베르나르</a></li>
+					<li><a>프로그래밍</a></li>
+					<li><a>프레젠테이션</a></li>
+					<li><a>글쓰기</a></li>
+					<li><a>성공</a></li>
+					<li><a>습관</a></li>
+					<li><a>공부</a></li>
+					<li><a>미래</a></li>
+					<li><a>세이노</a></li>
+					<li><a>집중력</a></li>
+					<li><a>커뮤니케이션</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div>
+		<div class="search_popular container d-flex">
+			<div class="popular-title d-flex">			
+				<h5>
+					인기 검색어
+				</h5>
+				<small>
+					2023.08.08.12:00 기준
+				</small>
+			</div>
+		</div>
+		<div class ="container">
+			<ul class="popular-list">
+				<li><a>1&nbsp;&nbsp;<span>주식</span></a></li>
+				<li><a>2&nbsp;&nbsp;<span>MBTI</span></a></li>
+				<li><a>3&nbsp;&nbsp;<span>인공지능</span></a></li>
+				<li><a>4&nbsp;&nbsp;<span>히가시노게이고</span></a></li>
+				<li><a>5&nbsp;&nbsp;<span>프레젠테이션</span></a></li>
+				<li><a>6&nbsp;&nbsp;<span>프로그래밍</span></a></li>
+				<li><a>7&nbsp;&nbsp;<span>한국사</span></a></li>
+				<li><a>8&nbsp;&nbsp;<span>세이노</span></a></li>
+				<li><a>9&nbsp;&nbsp;<span>최애</span></a></li>
+				<li><a>10&nbsp;&nbsp;<span>영어회화</span></a></li>
+			</ul>
+		</div>
+	</div>
+</div>
+
+<th:block layout:fragment="script">
+</th:block>
+
+</html>

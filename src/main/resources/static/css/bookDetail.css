@@ -1,11 +1,10 @@
 @charset "UTF-8";
 
 .top {
-	height: 3000px;
+	height: 1200px;
 }
 
 .content {
-	height: 1100px;
 	width: 1310px;
 	border-left: 1px solid #eee;
 	border-right: 1px solid #eee;
@@ -14,7 +13,6 @@
 .book-content {
 	height: 400px;
 	width: 1310px;
-
 	display: flex;
 	position: relative;
 	
@@ -113,4 +111,56 @@
 	width: 24px;
 	height: 24px;
 	margin-left: 1000px;
+}
+
+.bookindex-image{
+	height: 73px;
+	display: flex;
+	align-items: center;	
+	border-bottom: 12px solid #f4f4f4;
+}
+
+.aladin {
+	width: 35px;
+	height: 35px;
+	margin-left: 60px;
+}
+
+h6 {
+	margin: 0;
+	padding-right: 1150px;	
+}
+
+.review {
+	margin-top: 25px;
+	margin-left: 60px;
+}
+
+.profile {
+	width: 32px;
+	height: 32px;
+	margin: 0;
+	padding-top: 20px;
+	padding-left: 0;
+	display: flex;
+}
+
+.profile-img {
+	width: 32px;
+	height: 32px;
+	border-radius: 70px;
+}
+
+.review-profile {
+	padding-left: 0;
+}
+
+.review-content {
+	margin-left: 50px;
+	margin-top: -25px;
+}
+
+span {
+	display: block;
+	font-size: 13px;
 }

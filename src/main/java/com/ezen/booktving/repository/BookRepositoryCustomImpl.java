@@ -8,11 +8,13 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.thymeleaf.util.StringUtils;
 
+import com.ezen.booktving.dto.BookDto;
 import com.ezen.booktving.dto.BookSearchDto;
 import com.ezen.booktving.entity.Book;
 import com.ezen.booktving.entity.QBook;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Wildcard;
+
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import jakarta.persistence.EntityManager;
@@ -24,7 +26,6 @@ public class BookRepositoryCustomImpl implements BookRepositoryCustom{
 	public BookRepositoryCustomImpl(EntityManager em) {
 		this.queryFactory = new JPAQueryFactory(em);
 	}
-	
 	
 	private BooleanExpression regDtsAfter(String searchDateType) {
 		LocalDateTime dateTime = LocalDateTime.now(); //현재날짜, 시간
@@ -85,5 +86,10 @@ public class BookRepositoryCustomImpl implements BookRepositoryCustom{
 				null : QBook.book.bookName.like("%" + searchQuery + "%");
 	}
 	
+	@Override
+	public Page<BookDto> getBookDto(BookSearchDto bookSearchDto, Pageable pageable) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

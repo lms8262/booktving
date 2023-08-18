@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+<th:block layout:fragment="css">
+	<link rel="stylesheet" th:href="@{/css/search.css}" />
+</th:block>
+
+<div layout:fragment="content">
+	<div class="search_wrap">
+		<div class="container">
+			<form class="search-form" method="get" action="/search/detail">
+				<div class="search-select">
+					<select id="searchType" name="searchType">
+						<option>제목</option>
+						<option>저자</option>
+						<option>출판사</option>
+					</select>
+				</div>
+				<div class="search-input d-flex container">
+					<button type="submit">
+						<img alt="search" src="/images/search.png">
+					</button>
+					<div class="d-flex align-items-center">
+						<input type="text" id="searchQuery" name="searchQuery" placeholder="검색어를 입력하세요">
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<div class="search-result container">
+		<h5>
+			검색결과&nbsp;&nbsp;<span>61</span>
+		</h5>
+		<div class="container">
+			<div class="row row-cols-1 row-cols-md-6 g-4">
+			
+				<div class="search-card col">
+					<div class="card">
+						<img src="https://cover.millie.co.kr/service/cover/179484840/78bf41bfb2d1458dbb652314803ec84c.jpg?w=150&f=webp&q=80" class="card-img-top" alt="...">
+						<div class="card-body">
+							<h5 class="card-title">블랙 쇼맨과 이름 없는 마을의 살인</h5>
+							<p class="card-text">히가시노게이고 지음,히가시노게이고 지음</p>
+						</div>
+					</div>
+				</div>
+				<div class="search-card col">
+					<div class="card">
+						<img src="https://cover.millie.co.kr/service/cover/179484840/78bf41bfb2d1458dbb652314803ec84c.jpg?w=150&f=webp&q=80" class="card-img-top" alt="...">
+						<div class="card-body">
+							<h5 class="card-title">블랙 쇼맨과 이름 없는 마을의 살인</h5>
+							<p class="card-text">히가시노게이고 지음</p>
+						</div>
+					</div>
+				</div>
+				<div class="search-card col">
+					<div class="card">
+						<img src="https://cover.millie.co.kr/service/cover/179484840/78bf41bfb2d1458dbb652314803ec84c.jpg?w=150&f=webp&q=80" class="card-img-top" alt="...">
+						<div class="card-body">
+							<h5 class="card-title">블랙 쇼맨과 이름 없는 마을의 살인</h5>
+							<p class="card-text">히가시노게이고 지음</p>
+						</div>
+					</div>
+				</div>
+				<div class="search-card col">
+					<div class="card">
+						<img src="https://cover.millie.co.kr/service/cover/179484840/78bf41bfb2d1458dbb652314803ec84c.jpg?w=150&f=webp&q=80" class="card-img-top" alt="...">
+						<div class="card-body">
+							<h5 class="card-title">블랙 쇼맨과 이름 없는 마을의 살인</h5>
+							<p class="card-text">히가시노게이고 지음</p>
+						</div>
+					</div>
+				</div>
+				<div class="search-card col">
+					<div class="card">
+						<img src="https://cover.millie.co.kr/service/cover/179484840/78bf41bfb2d1458dbb652314803ec84c.jpg?w=150&f=webp&q=80" class="card-img-top" alt="...">
+						<div class="card-body">
+							<h5 class="card-title">블랙 쇼맨과 이름 없는 마을의 살인</h5>
+							<p class="card-text">히가시노게이고 지음</p>
+						</div>
+					</div>
+				</div>
+				<div class="search-card col">
+					<div class="card">
+						<img src="https://cover.millie.co.kr/service/cover/179484840/78bf41bfb2d1458dbb652314803ec84c.jpg?w=150&f=webp&q=80" class="card-img-top" alt="...">
+						<div class="card-body">
+							<h5 class="card-title">블랙 쇼맨과 이름 없는 마을의 살인</h5>
+							<p class="card-text">히가시노게이고 지음</p>
+						</div>
+					</div>
+				</div>
+				<div class="search-card col">
+					<div class="card">
+						<img src="https://cover.millie.co.kr/service/cover/179484840/78bf41bfb2d1458dbb652314803ec84c.jpg?w=150&f=webp&q=80" class="card-img-top" alt="...">
+						<div class="card-body">
+							<h5 class="card-title">블랙 쇼맨과 이름 없는 마을의 살인</h5>
+							<p class="card-text">히가시노게이고 지음,히가시노게이고 지음</p>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<th:block layout:fragment="script">
+</th:block>
+
+</html>

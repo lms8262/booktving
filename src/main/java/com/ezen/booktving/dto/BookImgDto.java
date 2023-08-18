@@ -3,14 +3,16 @@ package com.ezen.booktving.dto;
 import org.modelmapper.ModelMapper;
 
 import com.ezen.booktving.constant.YesNoStatus;
+
+import com.ezen.booktving.entity.Book;
 import com.ezen.booktving.entity.BookImg;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 @Getter
 @Setter
 public class BookImgDto {
+
 	private Long id;
 	
 	private String imgName;
@@ -21,9 +23,14 @@ public class BookImgDto {
 	
 	private String imgUrl;
 	
+	private Book book;
+	
 	private static ModelMapper modelMapper = new ModelMapper();
 	
-	//entity를 DTO로 변환
+	public BookImg createBookImg() {
+		return modelMapper.map(this, BookImg.class);
+	}
+	
 	public static BookImgDto of(BookImg bookImg) {
 		return modelMapper.map(bookImg, BookImgDto.class);
 	}

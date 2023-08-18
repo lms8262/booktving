@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+<th:block layout:fragment="css">
+	<style>
+</style>
+</th:block>
+<div layout:fragment="content">
+
+	<div id="modal" class="modal-overlay">
+		<div class="modal-window">
+			<div class="title">
+				<h2>아이디 조회 결과</h2>
+			</div>
+			<div class="close-area">X</div>
+			<div class="content" id="id_value"></div>
+		</div>
+	</div>
+
+</div>
+</html>

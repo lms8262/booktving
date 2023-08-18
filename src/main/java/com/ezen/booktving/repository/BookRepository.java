@@ -14,4 +14,5 @@ public interface BookRepository extends JpaRepository<Book, Long>, BookRepositor
 	List<Book> findByAuthor(String author);
 	
 	List<Book> findByRegTimeAfter(LocalDateTime regTime);
+
 }

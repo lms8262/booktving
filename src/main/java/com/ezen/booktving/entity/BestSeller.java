@@ -26,7 +26,7 @@ import lombok.ToString;
 public class BestSeller {
 
 	@Id
-	@Column(name = "bestSeller_id")
+	@Column(name = "best_seller_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	

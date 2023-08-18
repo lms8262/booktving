@@ -14,4 +14,5 @@ public interface BookImgRepository extends JpaRepository<BookImg, Long>{
 	
 	//select * from book_img where book_id = ? and rep_yn = ?
 	BookImg findByBookIdAndRepYn(Long bookId, YesNoStatus repYn);
+
 }

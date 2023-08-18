@@ -9,6 +9,7 @@ import com.ezen.booktving.entity.BookImg;
 import com.ezen.booktving.repository.BookImgRepository;
 
 import jakarta.persistence.EntityNotFoundException;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -66,4 +67,5 @@ public class BookImgService {
 
 		}
 	}
+
 }
