@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+<th:block layout:fragment="css">
+<link rel="stylesheet" type="text/css" href="/css/findIdResult.css" />
+	<style>
+</style>
+</th:block>
+<div layout:fragment="content">
+	<div class="w3-content w3-container w3-margin-top">
+		<div class="w3-container w3-card-4">
+			<div class="w3-center w3-large w3-margin-top">
+				<h3>아이디 찾기 결과</h3>
+			</div>
+			<div>
+				<p th:if="${userId}">
+					Your ID is: <span th:text="${userId}"></span>
+				</p>
+				<p th:if="${userIdNotFound}">ID를 찾을수 업습니다.</p>
+			</div>
+		</div>
+	</div>
+</div>
+</html>

@@ -6,6 +6,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.ezen.booktving.constant.Role;
 import com.ezen.booktving.dto.LoginFormDto;
+import com.ezen.booktving.dto.MemberFormDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -72,4 +73,18 @@ public class Member extends BaseTimeEntity {
 		
 		return member;
 	}
+
+	public  void updateMember(LoginFormDto loginFormDto) {
+		this.password = loginFormDto.getPassword();
+	}
+	public String  updatePassword(String pass,PasswordEncoder passwordEncoder) {
+		String password = passwordEncoder.encode(pass);
+		this.password = password;
+
+		return password;
+	}
+	
+
+	
+	
 }
