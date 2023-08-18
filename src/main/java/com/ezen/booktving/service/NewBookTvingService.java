@@ -36,12 +36,13 @@ public class NewBookTvingService {
 		List<NewBookTving> randomNewBooks = new ArrayList<>();
 		
 		Random random = new Random();
-		int totalNewBooks = allNewBooks.size();
-		
-		for(int i = 0; i < count; i++) {
-			int randomIndex = random.nextInt(totalNewBooks);
-			randomNewBooks.add(allNewBooks.get(randomIndex));
+		if (allNewBooks.size() > 0) {
+			int totalNewBooks = allNewBooks.size();	
 			
+			for(int i = 0; i < count; i++) {
+				int randomIndex = random.nextInt(totalNewBooks);
+				randomNewBooks.add(allNewBooks.get(randomIndex));
+			}
 		}
 		
 		return randomNewBooks;
