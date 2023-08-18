@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.ezen.booktving.entity.BestSeller;
 import com.ezen.booktving.entity.NewBookTving;
+import com.ezen.booktving.service.ApiService;
 import com.ezen.booktving.service.BestSellerService;
 import com.ezen.booktving.service.NewBookTvingService;
 
@@ -25,6 +26,7 @@ public class MainController {
 	
 	//신간리스트 관련 의존성 주입
 	private final NewBookTvingService newBookTvingService;
+
 	
 	@GetMapping(value = "/")
 	public String main(Optional<Integer> page, Model model) {
@@ -33,14 +35,16 @@ public class MainController {
 		Pageable pageable1 = PageRequest.of(page.isPresent() ? page.get() : 0 , 10);
 		Page<BestSeller> bestSellers = bestSellerService.getBestSeller(pageable1);
 		model.addAttribute("bestSellers", bestSellers);
+	
+		//NEW 북티빙		
+		//상위 4개만 가져오기
+		Pageable pageable2 = PageRequest.of(page.isPresent() ? page.get() : 0 , 4);
+		Page<NewBookTving> newBookTvings = newBookTvingService.getNewBookTving(pageable2);
+		model.addAttribute("newBooks", newBookTvings);
 
-		//NEW 북티빙
-		//Pageable pageable2 = PageRequest.of(page.isPresent() ? page.get() : 0 , 4);
-		//Page<NewBookTving> newBookTvings = newBookTvingService.getNewBookTving(pageable2);
-		//model.addAttribute("newBooks", newBookTvings);
-
-		List<NewBookTving> randomNewBooks = newBookTvingService.getRandomNewBook(4);
-		model.addAttribute("randomNewBooks", randomNewBooks);
+		//랜덤 4개 가져오기
+		//List<NewBookTving> randomNewBooks = newBookTvingService.getRandomNewBook(4);
+		//model.addAttribute("randomNewBooks", randomNewBooks);
 		
 		return "/main";
 	}

@@ -31,6 +31,7 @@ public class NewBookTvingService {
 		return newBookTvingPage;
 	}
 	
+	/* NEW 북티빙
 	public List<NewBookTving> getRandomNewBook(int count) {
 		List<NewBookTving> allNewBooks = newBookTvingRepository.findAll();
 		List<NewBookTving> randomNewBooks = new ArrayList<>();
@@ -47,5 +48,6 @@ public class NewBookTvingService {
 		
 		return randomNewBooks;
 	}
+	*/
 
 }
