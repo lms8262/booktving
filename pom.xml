@@ -81,7 +81,11 @@
 			<version>5.0.0</version>
 			<classifier>jakarta</classifier>
 		</dependency>
-		
+		<!--인증번호-->
+		<dependency>
+	    	<groupId>org.springframework.boot</groupId>
+	    	<artifactId>spring-boot-starter-mail</artifactId>
+		</dependency>
 		<!-- validation 의존성 추가 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
