@@ -1,0 +1,100 @@
+@charset "EUC-KR";
+body {
+			font-family: Arial, sans-serif;
+			background-color: #f5f5f5;
+			margin: 0;
+			padding: 0;
+		}
+		
+		.w3-container {
+			background-color: #fff;
+			border-radius: 5px;
+			box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+			padding: 20px;
+			margin: 20px auto;
+			max-width: 500px;
+		}
+		
+		.w3-center {
+			text-align: center;
+		}
+		
+		.w3-large {
+			font-size: 1.5em;
+		}
+		
+		label {
+			display: block;
+			margin-bottom: 5px;
+		}
+		
+		input[type="text"] {
+			width: 100%;
+			padding: 10px;
+			margin-bottom: 10px;
+			border: 1px solid #ccc;
+			border-radius: 3px;
+		}
+		
+		button[type="submit"] {
+			padding: 10px 20px;
+			background-color: #007bff;
+			color: #fff;
+			border: none;
+			border-radius: 3px;
+			cursor: pointer;
+		}
+		
+		button[type="
+
+		/* Add CSS styles here */
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f5f5f5;
+			margin: 0;
+			padding: 0;
+		}
+		
+		.w3-container {
+			background-color: #fff;
+			border-radius: 5px;
+			box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.1);
+			padding: 20px;
+			margin: 20px auto;
+			max-width: 500px;
+		}
+		
+		.w3-center {
+			text-align: center;
+		}
+		
+		.w3-large {
+			font-size: 1.5em;
+		}
+		
+		label {
+			display: block;
+			margin-bottom: 5px;
+		}
+		
+		input[type="text"] {
+			width: 100%;
+			padding: 10px;
+			margin-bottom: 10px;
+			border: 1px solid #ccc;
+			border-radius: 3px;
+		}
+		
+		button[type="submit"] {
+			padding: 10px 20px;
+			background-color: #007bff;
+			color: #fff;
+			border: none;
+			border-radius: 3px;
+			cursor: pointer;
+		}
+		
+		button[type="submit"]:hover {
+			background-color: #0056b3;
+		}
+		

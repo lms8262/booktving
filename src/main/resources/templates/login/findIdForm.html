@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+
+<head>
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
+
+<th:block layout:fragment="css">
+	<link rel="stylesheet" type="text/css" href="/css/find.css" />
+	<style>
+</style>
+</th:block>
+<!-- find-id.html -->
+<!-- ... (기존 코드) ... -->
+
+<div layout:fragment="content">
+	<div class="w3-content w3-container w3-margin-top">
+		<div class="w3-container w3-card-4">
+			<div class="w3-center w3-large w3-margin-top">
+				<h3>아이디 찾기</h3>
+			</div>
+			<div>
+				<form action="/findid" method="post">
+					<!-- Form fields for memberName and email -->
+					<label for="memberName">Name</label> <input type="text"
+						id="memberName" name="memberName" required> <label
+						for="email">Email</label> <input type="text" id="email"
+						name="email" required>
+
+					<button type="submit">Find ID</button>
+					<button type="submit" onclick="location.href='/login'">Cancel</button>
+					<input type="hidden" th:name="${_csrf.parameterName}"
+						th:value="${_csrf.token}">
+				</form>
+				<!-- ... (display appropriate messages) ... -->
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- ... (기존 코드) ... -->
+
+<!-- main 페이지 javaScript -->
+<th:block layout:fragment="script">
+	<script>
+		
+	</script>
+
+</th:block>
+</html>

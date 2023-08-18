@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+<head>
+<meta charset="UTF-8">
+<title>Authentication Code</title>
+</head>
+<th:block layout:fragment="css">
+	<style>
+</style>
+</th:block>
+<p>
+	Your authentication code is: <strong th:text="${authenticationCode}"></strong>
+</p>
+</html>
