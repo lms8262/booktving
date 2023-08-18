@@ -26,15 +26,12 @@ public class SecurityConfig {
 
 		http.authorizeHttpRequests(authorize -> authorize // 페이지 접근에 관한
 				// 모든 사용자가 로그인(인증) 없이 접근할수 있도록 설정
-				.requestMatchers(mvc.pattern("/css/**"), mvc.pattern("/js/**"), mvc.pattern("/images/**"),
-						mvc.pattern("/fontawesome-free-6.3.0-web/**"))
-				.permitAll().requestMatchers(mvc.pattern("/"), mvc.pattern("/membership/**"), mvc.pattern("/login/**"))
-				.permitAll().requestMatchers(mvc.pattern("/favicon.ico"), mvc.pattern("/error")).permitAll()
+				.requestMatchers(mvc.pattern("/css/**"), mvc.pattern("/js/**"), mvc.pattern("/images/**"),mvc.pattern("/fontawesome-free-6.3.0-web/**")).permitAll()
+				.requestMatchers(mvc.pattern("/"), mvc.pattern("/membership/**"), mvc.pattern("/login/**")).permitAll()
+				.requestMatchers(mvc.pattern("/favicon.ico"), mvc.pattern("/error")).permitAll()
 				.requestMatchers(mvc.pattern("/findid")).permitAll()
 				.requestMatchers(mvc.pattern("/findpw")).permitAll()
-				.requestMatchers(mvc.pattern("/category/**"), mvc.pattern("/search/**"), mvc.pattern("/question/**"),
-						mvc.pattern("/author/**"), mvc.pattern("/book/**"))
-				.permitAll()
+				.requestMatchers(mvc.pattern("/category/**"), mvc.pattern("/search/**"), mvc.pattern("/question/**"),mvc.pattern("/author/**"), mvc.pattern("/book/**")).permitAll()
 				// 'admin'으로 시작하는 경로는 관리자만 접근가능하도록 설정
 				.requestMatchers(mvc.pattern("/admin/**")).permitAll()// hasRole("ADMIN")
 				.anyRequest().authenticated()// 그외 페이지는 모두 로그인 (인증을 받아야한다.)
