@@ -46,7 +46,7 @@ public class MainController {
 		//List<NewBookTving> randomNewBooks = newBookTvingService.getRandomNewBook(4);
 		//model.addAttribute("randomNewBooks", randomNewBooks);
 		
-		return "/main";
+		return "main";
 	}
 	
 }
