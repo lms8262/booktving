@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+<head>
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
+
+
+<!-- rentlist 페이지 CSS -->
+<th:block layout:fragment="css">
+	<link rel="stylesheet" href="/css/rentlist.css" />
+</th:block>
+
+<div layout:fragment="content">
+
+	<div class="top">
+		<div class="container">
+			<div class="row">
+				<div class="col-12 section-wrap">
+
+					<div class="row">
+
+
+						<div class="admin-content col-lg-12">
+							<div class="container">
+								<div class="row">
+									<div class="col-12">
+
+										<div class="top-title">
+											<h4>내 대여내역</h4>
+											<hr>
+										</div>
+
+										<!-- 내 대여내역 contents -->
+										<div class="container">
+											<div class="row">
+												<div class="col-md-2"></div>
+												<div class="col-md-8">
+													<div>
+														<div class="card">
+															<div class="each">
+																<div style="margin: 0">
+																	<span class="book-rent-num">대여번호</span>
+																	<p>1</p>
+																</div>
+																<div style="margin: 0">
+																	<div class="img">
+																		<img class="rentlist-img" alt="이미지"
+																			src="/images/booktest1.JPG">
+																	</div>
+																</div>
+																<div class="test" style="display: flex;">
+																
+																<div style="margin-right: 30px">
+																	<h5 class="book-name">도서명</h5>
+																	<span class="rent-sub">저자명</span> / <span class="rent-sub">출판사명</span>
+																</div>
+																<div style="margin-right: 30px;">
+																	<p class="book-price">결제방식</p>
+																	<span class="rent-sub">이용권</span>
+																</div>
+																<div>
+																	<p class="book-date">대여일</p>
+																	<span class="rent-sub">2023/08/18</span>
+																</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+												<div class="col-md-2"></div>
+											</div>
+										</div>
+
+
+
+
+										<!--페이지 버튼  -->
+										<!--  <div>
+												<nav
+													th:with="start=${(books.number/maxPage)*maxPage + 1}
+			                 ,end=(${(books.totalPages == 0) ? 1 : (start + (maxPage - 1) < books.totalPages ? start + (maxPage - 1) : books.totalPages)})"
+													aria-label="Page navigation example" class="page-nav">
+													<ul
+														class="pagination d-flex justify-content-center adminbook-page">
+														<li class="page-item pageitem"
+															th:classappend="${books.first}?'disabled'"><a
+															class="page-link"
+															th:onclick="'javascript:page(' + ${books.number - 1} +')'">이전</a>
+														</li>
+
+														<li class="page-item pageitem"
+															th:each="page: ${#numbers.sequence(start, end)}"
+															th:classappend="${books.number eq page-1}?'active':''">
+															<a class="page-link" th:inline="text"
+															th:onclick="'javascript:page(' + ${page - 1} +')'">[[${page}]]</a>
+														</li>
+
+														<li class="page-item pageitem"
+															th:classappend="${books.last}?'disabled'"><a
+															class="page-link"
+															th:onclick="'javascript:page(' + ${books.number + 1} +')'">다음</a>
+														</li>
+													</ul>
+												</nav>
+											</div> -->
+
+
+
+										<!-- 검색 bar 부분 -->
+										<div class="row search-bar" style="height: 40px;">
+											<div class="col-lg-2"></div>
+											<div class="col-lg-2" style="display: flex;">
+												<!-- 검색분류 -->
+												<select class="form-control">
+													<option value="">검색분류</option>
+													<option value="id">도서ID</option>
+													<option value="bookName">도서명</option>
+													<option value="author">저자명</option>
+													<option value="publisher">출판사</option>
+													<option value="isbn">ISBN</option>
+												</select>
+											</div>
+											<div class="col-lg-6">
+												<div style="display: flex;">
+													<input type="text" class="form-control col-sm-10"
+														placeholder="검색어 입력">
+													<button id="searchBtn" type="submit"
+														class="btn search-btn col-sm-2">검색</button>
+												</div>
+											</div>
+											<div class="col-lg-2"></div>
+										</div>
+
+
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+</html>

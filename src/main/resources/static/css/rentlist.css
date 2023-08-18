@@ -1,0 +1,45 @@
+@charset "UTF-8";
+
+p {
+	margin: 0;
+}
+
+.each {
+	display: flex;
+	align-items: center;
+}
+
+.card {
+	display: block;
+	text-align: center;
+	padding: 10px;
+}
+
+.rentlist-img {
+	width: 70%;
+}
+
+.book-rent-num {
+	font-weight: bold;
+}
+
+.book-name {
+	font-weight: bold !important;
+	font-size: 1rem
+}
+
+.book-price {
+	font-weight: bold;
+}
+
+.book-date {
+	font-weight: bold;
+}
+
+.rent-sub {
+	font-size: 0.9rem;
+}
+
+.test {
+	margin-left: 70px;
+}

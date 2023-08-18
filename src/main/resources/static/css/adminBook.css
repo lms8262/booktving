@@ -14,7 +14,7 @@
 }
 
 .adminbook-page {
-	cursor: pointer;
+	
 }
 
 .adminbook-page > li {
@@ -27,6 +27,10 @@
 
 #bookChkBox {
 	accent-color: #ffd360;
+}
+
+.page-item {
+	cursor: pointer;
 }
 
 .page-link {
