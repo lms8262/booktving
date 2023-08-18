@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+*{
+	box-sizing: border-box;
+}
+
 h5 {
 	font-weight: bold;
 	padding-left: 10px;
@@ -261,6 +265,8 @@ h5 {
 	padding-left: 0;
 	padding-right: 0;
 	padding-top: 30px;
+	margin-left: 370px;
+	margin-right: 370px;
 }
 
 .new-wrap h5 {
@@ -269,25 +275,23 @@ h5 {
 }
 .new-box-wrap{
 	display: flex;
-	white-space: nowrap;
-	margin: 0 auto;
 	padding: 0;
+	margin: 0;
 }
 
 .new-box{
-	margin: 0;
 	display:flex;
 	height: 200px;
 	background-color: #eee;
 	border-radius: 20px;
 	overflow: hidden;
-	padding: 0 30px 0 40px;
+	box-sizing: border-box !important;
+	padding: 0;
 }
 
 .new-book-text{
-	position: relative;
 	padding: 40px 0;
-	margin: 0;
+	margin-left: 30px ;
 }
 .new-book-text .new-book-title {
 	height: 30px;
@@ -346,6 +350,7 @@ h5 {
 
 .new-book-cover{
 	margin : 0;
+	margin-right: 30px;
 	overflow: hidden;
 	padding: 0
 }
@@ -511,6 +516,10 @@ h5 {
 	margin: 0;
 }
 
+.bestSeller-rank h2 {
+	margin: 0;
+}
+
 .bestSeller-title-author {
 	width: 130px;
 	display: flex;
@@ -537,7 +546,7 @@ h5 {
   	font-size: 12px;
 }
 
-.bestSeller-title-author .bestSeller-author p{
+.bestSeller-title-author .bestSeller-author .author{
 	padding-left: 5px;
 	overflow: hidden;
   	white-space: nowrap;
