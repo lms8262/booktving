@@ -18,16 +18,16 @@ public class SearchBookDto {
 	
 	private String isbn;
 	
-	private String author;
+	private String authorName;
 	
 	private String imgUrl;
 	
 	@QueryProjection
-	public SearchBookDto(Long id, String bookName, String isbn, String author, String imgUrl) {
+	public SearchBookDto(Long id, String bookName, String isbn, String authorName, String imgUrl) {
 		this.id = id;
 		this.bookName = bookName;
 		this.isbn = isbn;
-		this.author = author;
+		this.authorName = authorName;
 		this.imgUrl = imgUrl;
 	}
 }

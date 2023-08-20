@@ -12,14 +12,14 @@
 		<div class="container">
 			<form class="search-form" method="get" action="/search/detail">			
 				<div class="search-select">
-					<select id="searchType" name="searchType">
+					<select id="searchBy" name="searchBy">
 						<option value="Title">제목</option>
 						<option value="Author">저자</option>
 						<option value="Publisher">출판사</option>
 					</select>
 				</div>
 				<div class="search-input d-flex container">
-					<button type="submit">
+					<button id="searchBtn" type="submit">
 						<img alt="search" src="/images/search.png">
 					</button>
 					<div class="d-flex align-items-center">
@@ -84,6 +84,34 @@
 </div>
 
 <th:block layout:fragment="script">
+	<script th:inline="javascript">
+		$(document).ready(function() {
+		
+			$("#searchBtn").on("click", function(e) {
+				e.preventDefault(); // submit 방지
+				
+				var searchQuery = $("#searchQuery").val();
+				if(searchQuery.replace(/\s| /gi, "").length == 0) {
+					alert("검색어는 필수로 입력해주세요.");
+					return false;
+				}
+				
+				search();
+				
+			});
+			
+		});
+		
+		function search() {
+			var searchBy = $("#searchBy").val();
+			var searchQuery = $("#searchQuery").val();
+			
+			location.href = "/search/detail"
+							+ "?searchBy=" + searchBy
+							+ "&searchQuery=" + searchQuery; 
+		}
+		
+	</script>
 </th:block>
 
 </html>

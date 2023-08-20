@@ -37,7 +37,7 @@ public class Book extends BaseTimeEntity {
 	private String isbn;
 	
 	@Column(nullable = false)
-	private String author;
+	private String authorName;
 	
 	@Column(nullable = false)
 	private String publisher;
@@ -56,5 +56,8 @@ public class Book extends BaseTimeEntity {
 	
 	@Column(nullable = false)
 	private String category;
+	
+	@Column(columnDefinition = "text", nullable = false)
+	private String authorInfo;
 	
 }

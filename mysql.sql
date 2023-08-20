@@ -11,5 +11,7 @@ insert into book values (200, '2022-08-17', 1, "이지연", "책이다", "책이
 
 select * from best_seller;
 select * from new_book_tving;
+select * from book;
+select * from book_img;
 
 use booktving;

@@ -12,14 +12,14 @@
 		<div class="container">
 			<form class="search-form" method="get" action="/search/detail">
 				<div class="search-select">
-					<select id="searchType" name="searchType">
-						<option>제목</option>
-						<option>저자</option>
-						<option>출판사</option>
+					<select id="searchBy" name="searchBy">
+						<option value="Title">제목</option>
+						<option value="Author">저자</option>
+						<option value="Publisher">출판사</option>
 					</select>
 				</div>
 				<div class="search-input d-flex container">
-					<button type="submit">
+					<button id="searchBtn" type="submit">
 						<img alt="search" src="/images/search.png">
 					</button>
 					<div class="d-flex align-items-center">
@@ -32,82 +32,68 @@
 
 	<div class="search-result container">
 		<h5>
-			검색결과&nbsp;&nbsp;<span>61</span>
+			검색결과&nbsp;&nbsp;<span>[[${searchCount}]]</span>
 		</h5>
 		<div class="container">
-			<div class="row row-cols-1 row-cols-md-6 g-4">
-			
-				<div class="search-card col">
-					<div class="card">
-						<img src="https://cover.millie.co.kr/service/cover/179484840/78bf41bfb2d1458dbb652314803ec84c.jpg?w=150&f=webp&q=80" class="card-img-top" alt="...">
-						<div class="card-body">
-							<h5 class="card-title">블랙 쇼맨과 이름 없는 마을의 살인</h5>
-							<p class="card-text">히가시노게이고 지음,히가시노게이고 지음</p>
+			<div id="search-data" class="row row-cols-1 row-cols-md-6 g-4">
+				
+				<th:block th:if="${!#lists.isEmpty(searchBookList.getContent())}" th:each="searchBook, status : ${searchBookList.getContent()}">
+					<div class="search-card col">
+						<div class="card">
+							<a th:data-isbn="${searchBook.isbn}">
+								<img th:src="${searchBook.imgUrl}" class="card-img-top" alt="이미지">
+							</a>
+							<a th:data-isbn="${searchBook.isbn}">
+								<div class="card-body" th:data-last-book-id="${searchBook.id}">
+									<h5 class="card-title">[[${searchBook.bookName}]]</h5>
+									<p class="card-text">[[${searchBook.authorName}]]</p>
+								</div>
+							</a>
 						</div>
 					</div>
-				</div>
-				<div class="search-card col">
-					<div class="card">
-						<img src="https://cover.millie.co.kr/service/cover/179484840/78bf41bfb2d1458dbb652314803ec84c.jpg?w=150&f=webp&q=80" class="card-img-top" alt="...">
-						<div class="card-body">
-							<h5 class="card-title">블랙 쇼맨과 이름 없는 마을의 살인</h5>
-							<p class="card-text">히가시노게이고 지음</p>
-						</div>
-					</div>
-				</div>
-				<div class="search-card col">
-					<div class="card">
-						<img src="https://cover.millie.co.kr/service/cover/179484840/78bf41bfb2d1458dbb652314803ec84c.jpg?w=150&f=webp&q=80" class="card-img-top" alt="...">
-						<div class="card-body">
-							<h5 class="card-title">블랙 쇼맨과 이름 없는 마을의 살인</h5>
-							<p class="card-text">히가시노게이고 지음</p>
-						</div>
-					</div>
-				</div>
-				<div class="search-card col">
-					<div class="card">
-						<img src="https://cover.millie.co.kr/service/cover/179484840/78bf41bfb2d1458dbb652314803ec84c.jpg?w=150&f=webp&q=80" class="card-img-top" alt="...">
-						<div class="card-body">
-							<h5 class="card-title">블랙 쇼맨과 이름 없는 마을의 살인</h5>
-							<p class="card-text">히가시노게이고 지음</p>
-						</div>
-					</div>
-				</div>
-				<div class="search-card col">
-					<div class="card">
-						<img src="https://cover.millie.co.kr/service/cover/179484840/78bf41bfb2d1458dbb652314803ec84c.jpg?w=150&f=webp&q=80" class="card-img-top" alt="...">
-						<div class="card-body">
-							<h5 class="card-title">블랙 쇼맨과 이름 없는 마을의 살인</h5>
-							<p class="card-text">히가시노게이고 지음</p>
-						</div>
-					</div>
-				</div>
-				<div class="search-card col">
-					<div class="card">
-						<img src="https://cover.millie.co.kr/service/cover/179484840/78bf41bfb2d1458dbb652314803ec84c.jpg?w=150&f=webp&q=80" class="card-img-top" alt="...">
-						<div class="card-body">
-							<h5 class="card-title">블랙 쇼맨과 이름 없는 마을의 살인</h5>
-							<p class="card-text">히가시노게이고 지음</p>
-						</div>
-					</div>
-				</div>
-				<div class="search-card col">
-					<div class="card">
-						<img src="https://cover.millie.co.kr/service/cover/179484840/78bf41bfb2d1458dbb652314803ec84c.jpg?w=150&f=webp&q=80" class="card-img-top" alt="...">
-						<div class="card-body">
-							<h5 class="card-title">블랙 쇼맨과 이름 없는 마을의 살인</h5>
-							<p class="card-text">히가시노게이고 지음,히가시노게이고 지음</p>
-						</div>
-					</div>
-				</div>
+				</th:block>
+				
 				
 			</div>
+			<div th:if="${#lists.isEmpty(searchBookList.getContent())}">검색 결과가 존재하지 않습니다.</div>
 		</div>
 	</div>
 
 </div>
 
 <th:block layout:fragment="script">
+	<script th:inline="javascript">
+		$(document).ready(function() {
+			
+			$("#searchBy").val([[${bookSearchDto.searchBy}]]).prop("selected", true);
+			
+			$("#searchQuery").val([[${bookSearchDto.searchQuery}]]);
+			
+			$("#searchBtn").on("click", function(e) {
+				e.preventDefault(); // submit 방지
+				
+				var searchQuery = $("#searchQuery").val();
+				if(searchQuery.replace(/\s| /gi, "").length == 0) {
+					alert("검색어는 필수로 입력해주세요.");
+					return false;
+				}
+				
+				search();
+				
+			});
+			
+		});
+		
+		function search() {
+			var searchBy = $("#searchBy").val();
+			var searchQuery = $("#searchQuery").val();
+			
+			location.href = "/search/detail"
+							+ "?searchBy=" + searchBy
+							+ "&searchQuery=" + searchQuery; 
+		}
+		
+	</script>
 </th:block>
 
 </html>
