@@ -1,22 +1,14 @@
 package com.ezen.booktving.controller;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.List;
-import java.util.Optional;
 
-import javax.imageio.ImageIO;
-
-import org.json.simple.parser.ParseException;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ezen.booktving.dto.BookSearchDto;
@@ -26,7 +18,6 @@ import com.ezen.booktving.service.SearchService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Controller

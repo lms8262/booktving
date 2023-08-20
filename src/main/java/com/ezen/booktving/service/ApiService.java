@@ -1,10 +1,5 @@
 package com.ezen.booktving.service;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
-import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -40,7 +35,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ApiService {
 	
-	private final WebClient aladinWebClient;
+	private final WebClient webClient;
 	private final BestSellerRepository bestSellerRepository;
 	private final NewBookTvingRepository newBookTvingRepository;
 	private final BookRepository bookRepository;
@@ -121,7 +116,7 @@ public class ApiService {
     	String output = "JS";
     	String version = "20131101";
     	
-    	String result = aladinWebClient.get()
+    	String result = webClient.get()
     	.uri(uriBuilder -> uriBuilder
     			.path("/ItemSearch.aspx")
     			.queryParam("ttbKey", ttbKey)
@@ -167,7 +162,7 @@ public class ApiService {
     	String version = "20131101";
     	String optResult = "authors,Toc";
     	
-    	String result = aladinWebClient.get()
+    	String result = webClient.get()
     	    	.uri(uriBuilder -> uriBuilder
     	    			.path("/ItemLookUp.aspx")
     	    			.queryParam("ttbKey", ttbKey)

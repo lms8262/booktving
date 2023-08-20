@@ -20,14 +20,14 @@ public class WebClientConfig {
 	
 	// 알라딘 api 호출을 위한 webClient bean 등록
 	@Bean
-	public WebClient aladinWebClient() {
+	public WebClient webClient() {
 
 		HttpClient httpClient = HttpClient.create()
-				.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 5000)
-				.responseTimeout(Duration.ofSeconds(5))
+				.option(ChannelOption.CONNECT_TIMEOUT_MILLIS, 10000)
+				.responseTimeout(Duration.ofSeconds(10))
 				.doOnConnected(connection -> 
-						connection.addHandlerLast(new ReadTimeoutHandler(5))
-						.addHandlerLast(new WriteTimeoutHandler(5))
+						connection.addHandlerLast(new ReadTimeoutHandler(10))
+						.addHandlerLast(new WriteTimeoutHandler(10))
 				);
 				
 		return WebClient.builder()
