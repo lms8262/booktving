@@ -3,6 +3,11 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout1}">
 
+<head>
+	<meta name="_csrf" th:content="${_csrf.token}" />
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
+
 <th:block layout:fragment="css">
 	<link rel="stylesheet" th:href="@{/css/search.css}" />
 </th:block>
@@ -57,12 +62,17 @@
 			</div>
 			<div th:if="${#lists.isEmpty(searchBookList.getContent())}">검색 결과가 존재하지 않습니다.</div>
 		</div>
+		
 	</div>
 
 </div>
 
 <th:block layout:fragment="script">
 	<script th:inline="javascript">
+		var bookSearchDto = [[${bookSearchDto}]];
+		var pageable = [[${searchBookList.pageable}]];
+		var last = [[${searchBookList.last}]];
+		
 		$(document).ready(function() {
 			
 			$("#searchBy").val([[${bookSearchDto.searchBy}]]).prop("selected", true);
@@ -82,6 +92,23 @@
 				
 			});
 			
+			// 1. 현재 스크롤의 위치 + 화면의 높이 == 문서의 높이
+			if($(window).scrollTop() + $(window).height() == $(document).height()) {
+				if(!last) {					
+					requestNextSearchBookList();
+				}
+			}
+			
+			// 2. 스크롤시 발생하는 이벤트
+			$(window).scroll(function() {
+			      // 스크롤이 위치 + 화면의 높이가 문서의 높이가 되는 순간 새로운 데이터를 요청
+			    if($(window).scrollTop() + $(window).height() == $(document).height()) {
+			    	if(!last) {			    		
+				    	requestNextSearchBookList();
+			    	}
+			    }
+			  });
+			
 		});
 		
 		function search() {
@@ -91,6 +118,74 @@
 			location.href = "/search/detail"
 							+ "?searchBy=" + searchBy
 							+ "&searchQuery=" + searchQuery; 
+		}
+		
+		function requestNextSearchBookList() {
+			var token = $("meta[name='_csrf']").attr("content");
+	        var header = $("meta[name='_csrf_header']").attr("content");
+	        
+	        var lastBookId = $(".card-body:last").data('last-book-id');
+	        console.log(lastBookId);
+	        var paramData = {
+        		lastBookId : lastBookId,
+        		bookSearchDto : bookSearchDto,
+        		pageable : pageable, 
+        		last : last
+	        }
+	        
+	        var param = JSON.stringify(paramData);
+	        
+	        console.log(param);
+	        $.ajax({
+	            url : '/search/detail/paging',
+	            type : "POST",
+	            contentType : "application/json",
+	            data : param,
+	            beforeSend : function(xhr){
+	                // 데이터를 전송하기 전에 헤더에 csrf값을 설정
+	                xhr.setRequestHeader(header, token);
+	            },
+	            dataType : "json",
+	            cache   : false,
+	            success  : function(result, status){
+	            	// 다음 페이지 요청시 필요한 데이터 업데이트
+	            	bookSearchDto = result.bookSearchDto;
+	            	pageable = result.searchBookList.pageable;
+	            	last = result.searchBookList.last;
+	            	
+	            	// 화면에 데이터 추가
+	            	addNextBookList(result.searchBookList.content);
+	            },
+	            error : function(jqXHR, status, error){
+	                if(jqXHR.status == '401'){
+	                    alert('로그인 후 이용해주세요');
+	                    location.href='/login';
+	                } else{
+	                    alert(jqXHR.responseText);
+	                }
+	            }
+	        });
+		}
+		
+		// 가져온 데이터 화면에 추가
+		function addNextBookList(contents) {
+			for(let i = 0; i < contents.length; i++) {
+				var appendData = `<div class="search-card col">
+					<div class="card">
+					<a data-isbn="${contents[i].isbn}">
+						<img src="${contents[i].imgUrl}" class="card-img-top" alt="이미지">
+					</a>
+					<a data-isbn="${contents[i].isbn}">
+						<div class="card-body" data-last-book-id="${contents[i].id}">
+							<h5 class="card-title">${contents[i].bookName}</h5>
+							<p class="card-text">${contents[i].authorName}</p>
+						</div>
+					</a>
+				</div>
+			</div>`;
+			
+			$("#search-data").append(appendData);
+			}
 		}
 		
 	</script>

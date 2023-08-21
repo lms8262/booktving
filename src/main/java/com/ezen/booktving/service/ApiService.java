@@ -27,7 +27,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ArrayNode;
 
 import lombok.RequiredArgsConstructor;
 
@@ -105,38 +104,44 @@ public class ApiService {
     	return true;
     }
     
-    // 알라딘 검색 api -> 검색한 책 리스트 isbn만 가져오기
-    public List<String> getSearchBookIsbnList(BookSearchDto bookSearchDto, int startIndex, int itemsPerPage) throws JsonMappingException, JsonProcessingException {
+    // 검색 결과가 들어있는 JsonString 
+    private String getJsonStringOfSearchBook(BookSearchDto bookSearchDto, int start) {
     	String ttbKey = "ttblyczang41056001";
     	String query = bookSearchDto.getSearchQuery();
     	String queryType = bookSearchDto.getSearchBy();
-    	int start = startIndex;
-    	int maxResults = itemsPerPage;
-    	String cover = "Big";
+    	int maxResults = 50;
     	String output = "JS";
     	String version = "20131101";
-    	
-    	String result = webClient.get()
-    	.uri(uriBuilder -> uriBuilder
-    			.path("/ItemSearch.aspx")
-    			.queryParam("ttbKey", ttbKey)
-    			.queryParam("Query", query)
-    			.queryParam("QueryType", queryType)
-    			.queryParam("Start", start)
-    			.queryParam("MaxResults", maxResults)
-    			.queryParam("Cover", cover)
-    			.queryParam("Output", output)
-    			.queryParam("Version", version)
-    			.build()
-    		)
-    	.retrieve()
-    	.bodyToMono(String.class)
-    	.block();
-    	
+    		
+		String result = webClient.get()
+		    	.uri(uriBuilder -> uriBuilder
+		    			.path("/ItemSearch.aspx")
+		    			.queryParam("TTBKey", ttbKey)
+		    			.queryParam("Query", query)
+		    			.queryParam("QueryType", queryType)
+		    			.queryParam("Start", start)
+		    			.queryParam("MaxResults", maxResults)
+		    			.queryParam("Output", output)
+		    			.queryParam("Version", version)
+		    			.build()
+		    		)
+		    	.retrieve()
+		    	.bodyToMono(String.class)
+		    	.block();
+		
+		return result;
+    }
+    
+    // 알라딘 검색 api -> 검색한 책 리스트 isbn만 가져오기
+    public List<String> getSearchBookIsbnList(BookSearchDto bookSearchDto) throws JsonMappingException, JsonProcessingException {
+    	// 1번째 api 요청
+    	String result = getJsonStringOfSearchBook(bookSearchDto, 1);
+		    	
     	ObjectMapper objectMapper = new ObjectMapper();
         JsonNode rootNode = objectMapper.readTree(result);
         
         List<String> searchBookIsbnList = new ArrayList<>();
+        
         for(JsonNode itemNode : rootNode.get("item")) {
         	String isbn13 = itemNode.get("isbn13").textValue();
         	if(isbn13.equals("") || isbn13 == null) {
@@ -144,12 +149,35 @@ public class ApiService {
         	}
         	searchBookIsbnList.add(isbn13);
         }
+	    
+        // 총 데이터 개수에 따른 api 요청 횟수를 계산(1회당 데이터 50개)
+        int totalResults = rootNode.get("totalResults").intValue();
+        int totalPage = (totalResults / 50) + 1 > 4 ? 4 : (totalResults / 50);
+        
+        // 2번째 이후 api 요청
+        if(totalPage >= 2) {
+        	for(int i = 2; i <= totalPage; i++) {
+        		result = getJsonStringOfSearchBook(bookSearchDto, i);
+        		
+        		rootNode = objectMapper.readTree(result);
+        		
+        		for(JsonNode itemNode : rootNode.get("item")) {
+                	String isbn13 = itemNode.get("isbn13").textValue();
+                	if(isbn13.equals("") || isbn13 == null) {
+                		continue;
+                	}
+                	searchBookIsbnList.add(isbn13);
+                }
+        	}
+        }
     	
+        // 최대 200의 isbn이 들어있는 List 반환
     	return searchBookIsbnList;
     }
     
     // 알라딘 책 정보 조회 및 저장api
     public void getBookInfoByAladinApi(String isbn) throws JsonMappingException, JsonProcessingException {
+    	// db에서 isbn으로 검색해서 이미 저장된 책이면 패스  
     	if(!validateDuplicateIsbn(isbn)) {
     		return;
     	}
@@ -165,7 +193,7 @@ public class ApiService {
     	String result = webClient.get()
     	    	.uri(uriBuilder -> uriBuilder
     	    			.path("/ItemLookUp.aspx")
-    	    			.queryParam("ttbKey", ttbKey)
+    	    			.queryParam("TTBKey", ttbKey)
     	    			.queryParam("ItemId", itemId)
     	    			.queryParam("ItemIdType", itemIdType)
     	    			.queryParam("Cover", cover)

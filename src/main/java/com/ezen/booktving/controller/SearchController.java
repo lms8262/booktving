@@ -1,14 +1,19 @@
 package com.ezen.booktving.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ezen.booktving.dto.BookSearchDto;
@@ -36,10 +41,8 @@ public class SearchController {
 	@GetMapping(value = "/search/detail")
 	public String searchDetail(BookSearchDto bookSearchDto, Model model) {
 		
-		Pageable pageble = PageRequest.of(0, 30);
-		
 		try {
-			List<String> searchBookIsbnList = apiService.getSearchBookIsbnList(bookSearchDto, 1, 30);
+			List<String> searchBookIsbnList = apiService.getSearchBookIsbnList(bookSearchDto);
 			for(String isbn : searchBookIsbnList) {
 				apiService.getBookInfoByAladinApi(isbn);
 			}
@@ -48,20 +51,47 @@ public class SearchController {
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
+		
+		Pageable pageble = PageRequest.of(0, 30);
 		Slice<SearchBookDto> searchBookList = searchService.getSearchBookList(null, bookSearchDto, pageble);
 		Long searchCount = searchService.getSearchBookCount(bookSearchDto);
 		
 		model.addAttribute("bookSearchDto", bookSearchDto);
 		model.addAttribute("searchBookList", searchBookList);
 		model.addAttribute("searchCount", searchCount);
+		model.addAttribute("pageble", pageble);
 		
 		return "search/searchDetail";
 	}
 	
 	// 무한스크롤시 필요한 데이터 넘겨주기
-	@GetMapping(value = "/search/detail/paging")
+	@PostMapping(value = "/search/detail/paging")
 	@ResponseBody
-	public ResponseEntity<Slice<SearchBookDto>> getSearchBookList(Long lastBookId, BookSearchDto bookSearchDto) {
-		return null;
+	public ResponseEntity<Map<String, Object>> getNextSearchBookList(@RequestBody Map<String, Object> data) {
+		
+		Long lastBookId = ((Integer) data.get("lastBookId")).longValue();
+		System.out.println(data.get("lastBookId"));
+		
+		Map<String, Object> bookSearchDtoMap = (HashMap) data.get("bookSearchDto");
+		System.out.println(bookSearchDtoMap.get("searchBy"));
+		System.out.println(bookSearchDtoMap.get("searchQuery"));
+		
+		BookSearchDto bookSearchDto = new BookSearchDto((String) bookSearchDtoMap.get("searchBy"), (String) bookSearchDtoMap.get("searchQuery"));
+		
+		Map<String ,Object> pageableMap = (HashMap) data.get("pageable");
+		Pageable pageable = PageRequest.of((Integer)pageableMap.get("pageNumber") + 1, 30);
+		System.out.println(pageableMap);
+		System.out.println(pageable);
+		
+		boolean last = (boolean) data.get("last");
+		System.out.println(last);
+		
+		Slice<SearchBookDto> searchBookList = searchService.getSearchBookList(lastBookId , bookSearchDto, pageable);
+		
+		Map<String, Object> result = new HashMap<>();
+		result.put("bookSearchDto", bookSearchDto);
+		result.put("searchBookList", searchBookList);
+		
+		return new ResponseEntity<Map<String,Object>>(result, HttpStatus.OK);
 	}
 }
