@@ -171,12 +171,11 @@ h5 {
 	display: flex;
 	height: 450px;
 	margin: 0;
-	position: relative;
 }
 
 .tabmenu>li {
 	width: 70px;
-	height: 70px;
+	line-height: 40px;
 	margin: 0;
 }
 
@@ -184,6 +183,7 @@ h5 {
 	display: block;
 	font-size: 14px;
 	text-align: center;
+	margin-bottom: 30px;
 }
 
 .tabmenu>li>a:hover,
@@ -192,18 +192,83 @@ h5 {
 	font-weight: bold;
 }
 
-.tabmenu>li div{
-	position: absolute;
-	left: 0;
+.tabmenu>li .rank-list{
+	display: flex;
 	height: 0;
 	overflow: hidden;
-	top: 70px;
 }
 
-.tabmenu >li.active div{
-	width: 100%;
+.tabmenu >li.active .rank-list{
+	display: flex;
+	width: 1500px;
 	height: 380px;
 	z-index: 100;
+	padding: 0;
+}
+
+.top10-contents {
+	margin: 5px;
+	position: relative;
+}
+
+.top10-rank{
+	display: block;
+	position: absolute;
+	bottom: 15px;
+	z-index: 50;
+}
+
+.top10-rank h1{
+	color: #fff;
+	-webkit-text-stroke: 2.5px #000;
+	font-weight: bolder;
+	font-size: 70px;
+	text-shadow: 2px 2px 2px #eee;
+}
+
+.top10-contents .top10-cover{
+	width: 170px;
+	height: 230px;
+	overflow: hidden;
+	margin-left: 17px;
+}
+
+.top10-contents .top10-cover img{
+	width: 170px;
+	height: 230px;
+}
+
+.top10-contents-text {
+	width: 175px ;
+	margin: 0;
+}
+
+.top10-title-author {
+	width: 170px;
+	margin: 0;
+	margin-left: 17px;
+	padding-left: 10px;
+	overflow: hidden;
+  	white-space: nowrap;
+  	text-overflow: ellipsis;
+  	word-break: break-all;
+}
+
+.top10-title-author .top10-title{
+	margin: 0;
+  	font-weight: bold;
+  	font-size: 13.5px;
+}
+
+.top10-title-author .top10-author{
+	display: flex;
+}
+
+.top10-title-author .top10-author p{
+	padding-left: 5px;
+  	font-size: 12px;
+  	margin: 0px;
+  	padding: 0;
 }
 
 

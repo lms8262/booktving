@@ -151,31 +151,33 @@
 						</div>
 						
 						<div class="top10-contents-wrap container-fluid">	
-								<ul class="tabmenu">
+								<ul class="tabmenu ">
 									
 									<!-- 일간 -->
 									<li class="active"> <a href="#">일간&nbsp;&nbsp;&nbsp;&nbsp;<span>|</span></a>
-										<div class="dayRank rank-list container-fluid">
+										<div class="rank-list">
 											<th:block th:each="dayRank, status : ${dayRanks}">
-												<div class="top10-contents">
-													<div class="top10-rank">
-														<a th:href="'/book/bookDetail/' + ${dayRank.isbn}">
-															<h1>[[${dayRank.num}]]</h1>
-														</a>
+												<div class="dayRank">
+													<div class="top10-contents">
+														<div class="top10-rank">
+															<a th:href="'/book/bookDetail/' + ${dayRank.isbn}">
+																<h1>[[${dayRank.num}]]</h1>
+															</a>
+														</div>
+														<div class="top10-cover">
+															<a th:href="'/book/bookDetail/' + ${dayRank.isbn}">
+																<img th:src="${dayRank.imgUrl}" th:alt="${dayRank.bookName}" class="top10-cover-img">
+															</a>
+														</div>
 													</div>
-													<div class="top10-cover">
-														<a th:href="'/book/bookDetail/' + ${dayRank.isbn}">
-															<img th:src="${dayRank.imgUrl}" th:alt="${dayRank.bookName}" class="top10-cover-img">
-														</a>
-													</div>
-												</div>
-											
-												<div class="row top10-contents-text">
-													<div class="top10-title-author">
-														<a class="top10-title">[[${dayRank.bookName}]]</a>
-														<div class="top10-author">
-															<p class="author">[[${dayRank.author}]] <span>&nbsp;/&nbsp;</span></p>
-															<p class="publisher">[[${dayRank.publisher}]]</p>
+									
+													<div class="row top10-contents-text">
+														<div class="top10-title-author">
+															<p class="top10-title">[[${dayRank.bookName}]]</p>
+															<div class="top10-author">
+																<p class="author">[[${dayRank.author}]] <span>&nbsp;/&nbsp;</span></p>
+																<p class="publisher">[[${dayRank.publisher}]]</p>
+															</div>
 														</div>
 													</div>
 												</div>
@@ -184,28 +186,30 @@
 									</li>
 									
 									<!-- 주간 -->
-									<li> <a href="#">주간&nbsp;&nbsp;&nbsp;&nbsp;<span>|</span></a> 
-										<div class="weekRank rank-list container-fluid">
+									<li> <a href="#">주간&nbsp;&nbsp;&nbsp;&nbsp;<span>|</span></a>
+										<div class="rank-list ">
 											<th:block th:each="weekRank, status : ${weekRanks}">
-												<div class="top10-contents">
-													<div class="top10-rank">
-														<a th:href="'/book/bookDetail/' + ${weekRank.isbn}">
-															<h1>[[${weekRank.num}]]</h1>
-														</a>
-													</div>
+												<div class="weekRank">
+													<div class="top10-contents">
+														<div class="top10-rank">
+															<a th:href="'/book/bookDetail/' + ${weekRank.isbn}">
+																<h1>[[${weekRank.num}]]</h1>
+															</a>
+														</div>
 														<div class="top10-cover">
-														<a th:href="'/book/bookDetail/' + ${weekRank.isbn}">
-															<img th:src="${weekRank.imgUrl}" th:alt="${weekRank.bookName}" class="top10-cover-img">
-														</a>
+															<a th:href="'/book/bookDetail/' + ${weekRank.isbn}">
+																<img th:src="${weekRank.imgUrl}" th:alt="${weekRank.bookName}" class="top10-cover-img">
+															</a>
+														</div>
 													</div>
-												</div>
-										
-												<div class="row top10-contents-text">
-													<div class="top10-title-author">
-														<a class="top10-title">[[${weekRank.bookName}]]</a>
-														<div class="top10-author">
-															<p class="author">[[${weekRank.author}]] <span>&nbsp;/&nbsp;</span></p>
-															<p class="publisher">[[${weekRank.publisher}]]</p>
+									
+													<div class="row top10-contents-text">
+														<div class="top10-title-author">
+															<p class="top10-title">[[${weekRank.bookName}]]</p>
+															<div class="top10-author">
+																<p class="author">[[${weekRank.author}]] <span>&nbsp;/&nbsp;</span></p>
+																<p class="publisher">[[${weekRank.publisher}]]</p>
+															</div>
 														</div>
 													</div>
 												</div>
@@ -215,27 +219,29 @@
 									
 									<!-- 월간 -->
 									<li> <a href="#">월간&nbsp;&nbsp;&nbsp;&nbsp;<span>|</span></a>
-										<div class="monthRank rank-list container-fluid">
+										<div class="rank-list ">
 											<th:block th:each="monthRank, status : ${monthRanks}">
-												<div class="top10-contents">
-													<div class="top10-rank">
-														<a th:href="'/book/bookDetail/' + ${monthRank.isbn}">
-															<h1>[[${monthRank.num}]]</h1>
-														</a>
+												<div class="monthRank">
+													<div class="top10-contents">
+														<div class="top10-rank">
+															<a th:href="'/book/bookDetail/' + ${monthRank.isbn}">
+																<h1>[[${monthRank.num}]]</h1>
+															</a>
+														</div>
+														<div class="top10-cover">
+															<a th:href="'/book/bookDetail/' + ${monthRank.isbn}">
+																<img th:src="${monthRank.imgUrl}" th:alt="${monthRank.bookName}" class="top10-cover-img">
+															</a>
+														</div>
 													</div>
-													<div class="top10-cover">
-														<a th:href="'/book/bookDetail/' + ${monthRank.isbn}">
-															<img th:src="${monthRank.imgUrl}" th:alt="${monthRank.bookName}" class="top10-cover-img">
-														</a>
-													</div>
-												</div>
-											
-												<div class="row top10-contents-text">
-													<div class="top10-title-author">
-															<a class="top10-title">[[${monthRank.bookName}]]</a>
-														<div class="top10-author">
-															<p class="author">[[${monthRank.author}]] <span>&nbsp;/&nbsp;</span></p>
-															<p class="publisher">[[${monthRank.publisher}]]</p>
+									
+													<div class="row top10-contents-text">
+														<div class="top10-title-author">
+															<p class="top10-title">[[${monthRank.bookName}]]</p>
+															<div class="top10-author">
+																<p class="author">[[${monthRank.author}]] <span>&nbsp;/&nbsp;</span></p>
+																<p class="publisher">[[${monthRank.publisher}]]</p>
+															</div>
 														</div>
 													</div>
 												</div>
@@ -245,8 +251,9 @@
 									
 									<!-- 연간 -->
 									<li> <a href="#">연간</a> 
-										<div class="yearRank rank-list container-fluid">
+									<div class="rank-list ">
 											<th:block th:each="yearRank, status : ${yearRanks}">
+										<div class="yearRank">
 												<div class="top10-contents">
 													<div class="top10-rank">
 														<a th:href="'/book/bookDetail/' + ${yearRank.isbn}">
@@ -262,12 +269,13 @@
 										
 												<div class="row top10-contents-text">
 													<div class="top10-title-author">
-														<a class="top10-title">[[${yearRank.bookName}]]</a>
+														<p class="top10-title">[[${yearRank.bookName}]]</p>
 														<div class="top10-author">
 															<p class="author">[[${yearRank.author}]] <span>&nbsp;/&nbsp;</span></p>
 															<p class="publisher">[[${yearRank.publisher}]]</p>
 														</div>
 													</div>
+												</div>
 												</div>
 											</th:block>
 										</div>
