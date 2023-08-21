@@ -101,7 +101,7 @@
 			
 			// 2. 스크롤시 발생하는 이벤트
 			$(window).scroll(function() {
-			      // 스크롤이 위치 + 화면의 높이가 문서의 높이가 되는 순간 새로운 데이터를 요청
+			      // 스크롤의 위치 + 화면의 높이가 문서의 높이가 되는 순간 새로운 데이터를 요청
 			    if($(window).scrollTop() + $(window).height() == $(document).height()) {
 			    	if(!last) {			    		
 				    	requestNextSearchBookList();
@@ -125,17 +125,14 @@
 	        var header = $("meta[name='_csrf_header']").attr("content");
 	        
 	        var lastBookId = $(".card-body:last").data('last-book-id');
-	        console.log(lastBookId);
 	        var paramData = {
         		lastBookId : lastBookId,
         		bookSearchDto : bookSearchDto,
         		pageable : pageable, 
-        		last : last
 	        }
 	        
 	        var param = JSON.stringify(paramData);
 	        
-	        console.log(param);
 	        $.ajax({
 	            url : '/search/detail/paging',
 	            type : "POST",

@@ -1,5 +1,7 @@
 package com.ezen.booktving.controller;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -46,9 +48,7 @@ public class SearchController {
 			for(String isbn : searchBookIsbnList) {
 				apiService.getBookInfoByAladinApi(isbn);
 			}
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (JsonProcessingException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
@@ -70,21 +70,12 @@ public class SearchController {
 	public ResponseEntity<Map<String, Object>> getNextSearchBookList(@RequestBody Map<String, Object> data) {
 		
 		Long lastBookId = ((Integer) data.get("lastBookId")).longValue();
-		System.out.println(data.get("lastBookId"));
 		
 		Map<String, Object> bookSearchDtoMap = (HashMap) data.get("bookSearchDto");
-		System.out.println(bookSearchDtoMap.get("searchBy"));
-		System.out.println(bookSearchDtoMap.get("searchQuery"));
-		
 		BookSearchDto bookSearchDto = new BookSearchDto((String) bookSearchDtoMap.get("searchBy"), (String) bookSearchDtoMap.get("searchQuery"));
 		
 		Map<String ,Object> pageableMap = (HashMap) data.get("pageable");
 		Pageable pageable = PageRequest.of((Integer)pageableMap.get("pageNumber") + 1, 30);
-		System.out.println(pageableMap);
-		System.out.println(pageable);
-		
-		boolean last = (boolean) data.get("last");
-		System.out.println(last);
 		
 		Slice<SearchBookDto> searchBookList = searchService.getSearchBookList(lastBookId , bookSearchDto, pageable);
 		

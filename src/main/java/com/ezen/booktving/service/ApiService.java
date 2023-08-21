@@ -1,10 +1,16 @@
 package com.ezen.booktving.service;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import javax.imageio.ImageIO;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -176,7 +182,7 @@ public class ApiService {
     }
     
     // 알라딘 책 정보 조회 및 저장api
-    public void getBookInfoByAladinApi(String isbn) throws JsonMappingException, JsonProcessingException {
+    public void getBookInfoByAladinApi(String isbn) throws IOException {
     	// db에서 isbn으로 검색해서 이미 저장된 책이면 패스  
     	if(!validateDuplicateIsbn(isbn)) {
     		return;
@@ -234,6 +240,12 @@ public class ApiService {
         String extension = oriImgName.substring(oriImgName.lastIndexOf("."));
         UUID uuid = UUID.randomUUID();
         String imgName = uuid.toString() + extension;
+        
+        // 여기 수정해야함
+        URL url = new URL(imgUrl);
+        BufferedImage image = ImageIO.read(url);
+        
+        ImageIO.write(image, extension, new File("/image/book/" + imgName));
         
         BookImg bookImg = BookImg.builder()
         						.imgName(imgName)
