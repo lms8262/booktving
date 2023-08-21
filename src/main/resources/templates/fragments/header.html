@@ -19,18 +19,12 @@
 					<!-- 개발 후 로그인 전/후 메뉴 sec:authorize코드 추가예정  -->
 					<div class="col-lg-7 menu-box">
 						<ul class="nav_left">
-							<li class="menu"><a href=""> <span>카테고리</span>
-							</a></li>
-							<li class="menu"><a href="/search/main"> <span>검색</span>
-							</a></li>
-							<li class="menu"><a href=""> <span>문의하기</span>
-							</a></li>
-							<li class="menu"><a href=""> <span>팔로우</span>
-							</a></li>
-							<li class="menu"><a href=""> <span>나의서재</span>
-							</a></li>
-							<li class="menu slide-menu"><a href="javascript:;"> <span>나의정보</span>
-							</a>
+							<li class="menu"><a href="">카테고리</a></li>
+							<li class="menu"><a href="/search/main">검색</a></li>
+							<li class="menu"><a href="">문의하기</a></li>
+							<li class="menu"><a href="">팔로우</a></li>
+							<li class="menu"><a href="">나의서재</a></li>
+							<li class="menu slide-menu"><a href="javascript:;">나의정보</a>
 								<ul class="submenu">
 									<li><a href=""> <span>개인정보 수정</span>
 									</a></li>
@@ -42,19 +36,16 @@
 						</ul>
 					</div>
 
-					<div class="col-lg-3">
+					<div>
 						<ul class="nav_right">
 							<li class="admin"><a href="/admin/book" class="admin-btn"
-								> <img alt="admin"
-									src="/images/admin.png">
+								> <img alt="admin" src="/images/admin.png">
 							</a></li>
 							<li class="login"><a href="/login" class="login-btn"
-								sec:authorize="isAnonymous()"> <img alt="login"
-									src="/images/login.png">
+								sec:authorize="isAnonymous()"> <img alt="login"src="/images/login.png">
 							</a></li>
 							<li class="logout"><a href="/logout" class="logout-btn"
-								sec:authorize="isAuthenticated()"> <img alt="logout"
-									src="/images/logout.png">
+								sec:authorize="isAuthenticated()"> <img alt="logout" src="/images/logout.png">
 							</a></li>
 						</ul>
 					</div>
