@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ezen.booktving.constant.YesNoStatus;
+import com.ezen.booktving.dto.BookImgDto;
 import com.ezen.booktving.dto.BookRentHistDto;
 import com.ezen.booktving.entity.Book;
 import com.ezen.booktving.entity.BookImg;
@@ -18,7 +21,6 @@ import com.ezen.booktving.repository.BookRepository;
 import com.ezen.booktving.repository.MemberRepository;
 import com.ezen.booktving.repository.RentRepository;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -44,7 +46,11 @@ public class MypageRentBookService {
 		
 		//3. 대여 리스트를 순회하면서 대여 이력 페이제 전달할 DTO 생성
 		for (RentBook rentBook : rentbooks) {
-			BookRentHistDto bookRentHistDto = new BookRentHistDto(rentBook, BookImg);
+			BookRentHistDto bookRentHistDto = new BookRentHistDto(rentBook, bookImgRepository.findByBookIdAndRepYn(rentBook.getBook().getId(), YesNoStatus.Y));
+			
+			bookRentHistDtos.add(bookRentHistDto);
 		}
+		
+		return new PageImpl<>(bookRentHistDtos, pageable, totalCount);
 	}
 }

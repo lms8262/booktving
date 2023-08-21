@@ -21,9 +21,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ezen.booktving.dto.AdminRentHistBookDto;
 import com.ezen.booktving.dto.BookRegFormDto;
 import com.ezen.booktving.dto.BookSearchDto;
 import com.ezen.booktving.entity.Book;
+import com.ezen.booktving.entity.RentBook;
+import com.ezen.booktving.repository.RentRepository;
+import com.ezen.booktving.service.AdminBookRentHistService;
 import com.ezen.booktving.service.BookRegService;
 
 import jakarta.validation.Valid;
@@ -34,6 +38,7 @@ import lombok.RequiredArgsConstructor;
 public class AdminController {
 	
 	private final BookRegService bookRegService;
+	private final AdminBookRentHistService adminBookRentHistService;
 	
 	//도서관리 페이지 보여주기 
 	@GetMapping(value = {"/admin/books", "/admin/books/{page}"})
@@ -154,11 +159,30 @@ public class AdminController {
 	}
 	
 	//대출관리 페이지 보여주기
-	@GetMapping(value = "/admin/rent")
-	public String adminRent() {
+	@GetMapping(value = {"/admin/rents", "/admin/rents/{page}"})
+	public String adminRent(BookSearchDto bookSearchDto, @PathVariable("page") Optional<Integer> page, Model model) {
+		
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 3);
+		
+		// 서비스 호출
+		Page<AdminRentHistBookDto> rentBooks = adminBookRentHistService.getAdminRentHistPage(bookSearchDto, pageable);
+		
+		model.addAttribute("rentBooks", rentBooks);
+		model.addAttribute("bookSearchDto", bookSearchDto);
+		model.addAttribute("maxPage", 5);
 		
 		return "admin/adminRent";
 	}
+	
+	//도서 상세 페이지 삭제
+	@DeleteMapping("/admin/rents/{rentBookId}/delete")
+	public @ResponseBody ResponseEntity deleteAdminRentBook(@PathVariable("rentBookId") Long rentBookId, Principal principal) {
+		
+		adminBookRentHistService.deleteAdminRentBook(rentBookId);
+		
+		return new ResponseEntity<Long> (rentBookId, HttpStatus.OK);
+	}
+	
 	
 	//키워드관리 페이지 보여주기
 	@GetMapping(value = "/admin/keyword")

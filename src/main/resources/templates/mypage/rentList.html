@@ -39,12 +39,12 @@
 											<div class="row">
 												<div class="col-md-2"></div>
 												<div class="col-md-8">
-													<div>
+													<div th:each="rentBook : ${rentBooks.getContent()}">
 														<div class="card">
 															<div class="each">
 																<div style="margin: 0">
 																	<span class="book-rent-num">대여번호</span>
-																	<p>1</p>
+																	<p th:text="${rentBook.id}">1</p>
 																</div>
 																<div style="margin: 0">
 																	<div class="img">
@@ -53,19 +53,21 @@
 																	</div>
 																</div>
 																<div class="test" style="display: flex;">
-																
-																<div style="margin-right: 30px">
-																	<h5 class="book-name">도서명</h5>
-																	<span class="rent-sub">저자명</span> / <span class="rent-sub">출판사명</span>
-																</div>
-																<div style="margin-right: 30px;">
-																	<p class="book-price">결제방식</p>
-																	<span class="rent-sub">이용권</span>
-																</div>
-																<div>
-																	<p class="book-date">대여일</p>
-																	<span class="rent-sub">2023/08/18</span>
-																</div>
+
+																	<div style="margin-right: 30px">
+																		<h5 class="book-name" th:text="${rentBook.bookName}">도서명</h5>
+																		<span class="rent-sub" th:text="${rentBook.author}">저자명</span>
+																		/ <span class="rent-sub"
+																			th:text="${rentBook.publisher}">출판사명</span>
+																	</div>
+																	<div style="margin-right: 30px;">
+																		<p class="book-price">결제방식</p>
+																		<span class="rent-sub">이용권</span>
+																	</div>
+																	<div>
+																		<p class="book-date">대여일</p>
+																		<span class="rent-sub" th:text="${rentBook.rentDate}">2023/08/18</span>
+																	</div>
 																</div>
 															</div>
 														</div>
@@ -79,61 +81,35 @@
 
 
 										<!--페이지 버튼  -->
-										<!--  <div>
-												<nav
-													th:with="start=${(books.number/maxPage)*maxPage + 1}
-			                 ,end=(${(books.totalPages == 0) ? 1 : (start + (maxPage - 1) < books.totalPages ? start + (maxPage - 1) : books.totalPages)})"
-													aria-label="Page navigation example" class="page-nav">
-													<ul
-														class="pagination d-flex justify-content-center adminbook-page">
-														<li class="page-item pageitem"
-															th:classappend="${books.first}?'disabled'"><a
-															class="page-link"
-															th:onclick="'javascript:page(' + ${books.number - 1} +')'">이전</a>
-														</li>
+										<div>
+											<nav
+												th:with="start=${(rentBooks.number/maxPage)*maxPage + 1}
+			                 ,end=(${(rentBooks.totalPages == 0) ? 1 : (start + (maxPage - 1) < rentBooks.totalPages ? start + (maxPage - 1) : rentBooks.totalPages)})"
+												aria-label="Page navigation example" class="page-nav">
+												<ul
+													class="pagination d-flex justify-content-center adminbook-page">
+													<li class="page-item pageitem"
+														th:classappend="${rentBooks.first}?'disabled'"><a
+														class="page-link"
+														th:onclick="'javascript:page(' + ${rentBooks.number - 1} +')'">이전</a>
+													</li>
 
-														<li class="page-item pageitem"
-															th:each="page: ${#numbers.sequence(start, end)}"
-															th:classappend="${books.number eq page-1}?'active':''">
-															<a class="page-link" th:inline="text"
-															th:onclick="'javascript:page(' + ${page - 1} +')'">[[${page}]]</a>
-														</li>
+													<li class="page-item pageitem"
+														th:each="page: ${#numbers.sequence(start, end)}"
+														th:classappend="${rentBooks.number eq page-1}?'active':''">
+														<a class="page-link" th:inline="text"
+														th:onclick="'javascript:page(' + ${page - 1} +')'">[[${page}]]</a>
+													</li>
 
-														<li class="page-item pageitem"
-															th:classappend="${books.last}?'disabled'"><a
-															class="page-link"
-															th:onclick="'javascript:page(' + ${books.number + 1} +')'">다음</a>
-														</li>
-													</ul>
-												</nav>
-											</div> -->
-
-
-
-										<!-- 검색 bar 부분 -->
-										<div class="row search-bar" style="height: 40px;">
-											<div class="col-lg-2"></div>
-											<div class="col-lg-2" style="display: flex;">
-												<!-- 검색분류 -->
-												<select class="form-control">
-													<option value="">검색분류</option>
-													<option value="id">도서ID</option>
-													<option value="bookName">도서명</option>
-													<option value="author">저자명</option>
-													<option value="publisher">출판사</option>
-													<option value="isbn">ISBN</option>
-												</select>
-											</div>
-											<div class="col-lg-6">
-												<div style="display: flex;">
-													<input type="text" class="form-control col-sm-10"
-														placeholder="검색어 입력">
-													<button id="searchBtn" type="submit"
-														class="btn search-btn col-sm-2">검색</button>
-												</div>
-											</div>
-											<div class="col-lg-2"></div>
+													<li class="page-item pageitem"
+														th:classappend="${rentBooks.last}?'disabled'"><a
+														class="page-link"
+														th:onclick="'javascript:page(' + ${rentBooks.number + 1} +')'">다음</a>
+													</li>
+												</ul>
+											</nav>
 										</div>
+
 
 
 
@@ -149,4 +125,21 @@
 	</div>
 
 </div>
+
+<th:block layout:fragment="script">
+	<script>
+	
+	function page(page) {
+
+		var searchBy = $("#searchBy").val();
+		var searchQuery = $("#searchQuery").val();
+
+		location.href = "/mypage/rentlist/" + page + "?searchBy=" + searchBy
+				+ "&searchQuery=" + searchQuery;
+	}
+	
+	</script>
+	
+</th:block>
+
 </html>

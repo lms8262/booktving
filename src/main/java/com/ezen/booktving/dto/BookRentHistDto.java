@@ -25,6 +25,7 @@ public class BookRentHistDto {
 	
 	private String imgUrl; //도서이미지
 	
+	
 	public BookRentHistDto(RentBook rentBook, BookImg bookImg) {
 		this.id = rentBook.getId();
 		this.rentDate = rentBook.getRentDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm"));
