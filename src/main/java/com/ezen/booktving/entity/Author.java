@@ -1,5 +1,7 @@
 package com.ezen.booktving.entity;
 
+import com.ezen.booktving.constant.YesNoStatus;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -42,4 +44,5 @@ public class Author{
 	
 	@Column(nullable = false)
 	private String imgUrl;
+
 }

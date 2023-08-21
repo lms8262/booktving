@@ -2,6 +2,7 @@ package com.ezen.booktving.dto;
 
 import org.modelmapper.ModelMapper;
 
+import com.ezen.booktving.constant.YesNoStatus;
 import com.ezen.booktving.entity.AuthorBook;
 
 import lombok.Getter;

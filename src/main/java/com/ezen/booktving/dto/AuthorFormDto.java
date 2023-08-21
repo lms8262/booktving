@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.modelmapper.ModelMapper;
 
+import com.ezen.booktving.constant.YesNoStatus;
 import com.ezen.booktving.entity.Author;
 
 import jakarta.validation.constraints.NotBlank;
@@ -31,6 +32,7 @@ public class AuthorFormDto {
 	
 	@NotBlank(message = "필수입력 값입니다.")
 	private String imgUrl;
+	
 	
 	private List<AuthorBookDto> authorBookDtoList = new ArrayList<>();
 	

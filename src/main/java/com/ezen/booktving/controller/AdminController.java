@@ -7,7 +7,6 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +16,6 @@ import com.ezen.booktving.dto.AuthorSearchDto;
 import com.ezen.booktving.entity.Author;
 import com.ezen.booktving.service.AuthorService;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -104,36 +102,17 @@ public class AdminController {
 	
 	//추천작가 등록하기
 	@PostMapping(value = "/admin/authorReg")
-	public String authorNew(@Valid AuthorFormDto authorFormDto, BindingResult bindingResult, Model model) {
-		if(bindingResult.hasErrors()) {
-			return "admin/adminAuthorReg";
-		}
-		
-		try {
-			authorService.saveAuthor(authorFormDto);
-		} catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("errorMessage", "작가등록 중 에러가 발생했습니다.");
-			return "admin/adminAuthorReg";
-		}
+	public String authorNew() {
 		
 		return "redirect:/";
-		
 	}
 		
 	//추천작가 수정 페이지 보여주기
 	@GetMapping(value = "/admin/authorModify/{authorId}")
-	public String adminAuthorModify(@PathVariable("authorId") Long authorId, Model model) {
-		
-		try {
-			AuthorFormDto authorFormDto = authorService.getAdminAuthorModify(authorId);
-		} catch (Exception e) {
-		}
+	public String adminAuthorModify() {
 		
 		return "admin/adminAuthorModify";
 	}
-	
-	
 	
 	//문의관리 페이지 보여주기
 	@GetMapping(value = "/admin/question")

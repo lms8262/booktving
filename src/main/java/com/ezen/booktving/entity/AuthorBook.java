@@ -1,5 +1,7 @@
 package com.ezen.booktving.entity;
 
+import com.ezen.booktving.constant.YesNoStatus;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -42,6 +44,7 @@ public class AuthorBook{
 	
 	@Column(nullable = false)
 	private String imgUrl;
+	
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "author_id", nullable = false)
