@@ -6,7 +6,7 @@
 	 
 <!-- adminBook 페이지 CSS --> 
 <th:block layout:fragment="css">
-	<link rel="stylesheet" href="/css/adminMember.css" />	
+	<link rel="stylesheet" href="/css/adminAuthorReg.css" />	
 </th:block>
 
 <div layout:fragment="content"> 
@@ -36,22 +36,44 @@
 									<div class="col-12">
 										
 										<div class="top-title">
-											<h4>문의답변</h4>
+											<h4>공지사항 등록</h4>
 											<hr>
 										</div>
 										
 										
 										<form role="form" action="">
 											
-											<input type="text" class="form-control answer-title col-12"/>
-											<textarea rows="10" class="form-control answer-content col-12" id="answer"></textarea>
-																				
-												<!-- 등록버튼  -->
-												<div class="form-group button col-12">
-													<div class="col-12">
-														<button type="button" class="btn col-12 answer-btn">등록하기</button>
-													</div>
+											<div class="form-group row dropdown col-12">
+												<div class="notice-status">
+													<select class="form-select">
+														<option value="">분류</option>
+														<option value="notice">공지</option>
+														<option value="information">안내</option>
+													</select>
 												</div>
+											</div>
+											
+											<div class="notice-title">
+												<label for="title" class="notice-label">제목</label>
+												<br />
+												<input type="text" placeholder="제목 입력" class="form-control col-12"/>
+											</div>
+											<div class="notice-contents">
+												<label for="title" class="notice-label">내용</label>
+												<br />
+												<textarea rows="10" placeholder="내용 입력" class="form-control col-12" id="notice"></textarea>
+											</div>
+																				
+											<!-- 등록버튼  -->
+											<div class="form-group button col-12">
+												<div class="col-md-8"></div>
+												<div class="col-md-2">
+													<button type="button" class="btn reg_btn" style="width: 100px;">등록하기</button>
+												</div>
+												<div class="col-md-2">
+													<button type="button" class="btn delete_btn" style="width: 100px;">다시쓰기</button>
+												</div>
+											</div>
 																						
 										</form>
 									</div>

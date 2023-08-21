@@ -150,7 +150,7 @@
 							<h5>북티빙 Top 10</h5>
 						</div>
 						
-						<div class="top10-contents-wrap container-fluid">	
+						<div class="top10-contents-wrap container">	
 								<ul class="tabmenu ">
 									
 									<!-- 일간 -->
@@ -250,7 +250,7 @@
 									</li>
 									
 									<!-- 연간 -->
-									<li> <a href="#">연간</a> 
+									<li> <a href="#">연간&nbsp;&nbsp;</a> 
 									<div class="rank-list ">
 											<th:block th:each="yearRank, status : ${yearRanks}">
 										<div class="yearRank">
@@ -296,16 +296,20 @@
 							
 							<th:block th:each="newBook, status : ${newBooks}">
 								<div class="new-box col-md-6 mb-4">
-									<div class="new-book-text">
-										<h4 class="new-book-title">[[${newBook.title}]]</h4>
-										<div class="new-book-author-publishrer">
-											<p class="new-book-author">[[${newBook.author}]]/[[${newBook.publisher}]]</p>
+									<a th:href="'/book/bookDetail/' + ${newBook.isbn}"> 
+										<div class="new-box-flex">
+											<div class="new-book-text">
+												<h4 class="new-book-title">[[${newBook.title}]]</h4>
+												<div class="new-book-author-publishrer">
+													<p class="new-book-author">[[${newBook.author}]]/[[${newBook.publisher}]]</p>
+												</div>
+												<p class="description" th:text="${newBook.description}"></p>
+											</div>
+											<div class="new-book-cover">
+												<img alt="${newBook.title}" th:src="${newBook.imgUrl}">
+											</div>
 										</div>
-										<p class="description" th:text="${newBook.description}"></p>
-									</div>
-									<div class="new-book-cover">
-										<img alt="${newBook.title}" th:src="${newBook.imgUrl}">
-									</div>
+									</a>
 								</div>
 							</th:block>
 								
@@ -394,9 +398,6 @@
 
 <!-- main 페이지 javaScript -->
 <th:block layout:fragment="script">
-	<!--
-	<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-	-->
 	
 	<script>
 		
@@ -415,7 +416,7 @@
 				
 			},5000);
 			
-			
+		
 			//북티빙 Top10		
 			$(function(){
 				

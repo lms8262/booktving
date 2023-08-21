@@ -33,4 +33,13 @@ public class Author{
 	
 	@Column(columnDefinition = "text", nullable = false)
 	private String authorIntroduction;
+	
+	@Column(nullable = false)
+	private String authorImgName;
+	
+	@Column(nullable = false)
+	private String oriImgName;
+	
+	@Column(nullable = false)
+	private String imgUrl;
 }

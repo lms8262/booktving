@@ -29,7 +29,7 @@ public class BookController {
 		//List<BookReviewDto> bookReviewDtoList = bookService.getBookDetail(isbn);
 		//model.addAttribute("reviews", bookReviewDtoList);
 		model.addAttribute("books", bookDto);
-		return "/book/bookDetail";
+		return "book/bookDetail";
 	}
 	
 }
