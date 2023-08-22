@@ -2,10 +2,11 @@ package com.ezen.booktving.service;
 
 import org.springframework.stereotype.Service;
 
-import com.ezen.booktving.dto.LoginFormDto;
+import com.ezen.booktving.dto.MemberFormDto;
 import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.repository.MemberRepository;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -26,6 +27,15 @@ public class IdServiceImple implements IdService {
 		}
 		return result;
 	}
+
+
+
+
+	
+
+
+
+	
 
 
 	

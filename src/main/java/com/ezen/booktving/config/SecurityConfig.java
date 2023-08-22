@@ -1,20 +1,31 @@
 package com.ezen.booktving.config;
 
+import javax.sql.DataSource;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
+
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
+import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
+import lombok.RequiredArgsConstructor;
+
 @Configuration // Bean 객체를 싱글톤으로 객체를 관리해준다.
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
+	private final UserDetailsService userDetailsService;
+
+	private final DataSource dataSource;
 
 	@Bean
 	MvcRequestMatcher.Builder mvc(HandlerMappingIntrospector introspector) {
@@ -30,8 +41,7 @@ public class SecurityConfig {
 						mvc.pattern("/fontawesome-free-6.3.0-web/**"))
 				.permitAll().requestMatchers(mvc.pattern("/"), mvc.pattern("/membership/**"), mvc.pattern("/login/**"))
 				.permitAll().requestMatchers(mvc.pattern("/favicon.ico"), mvc.pattern("/error")).permitAll()
-				.requestMatchers(mvc.pattern("/findid")).permitAll()
-				.requestMatchers(mvc.pattern("/findpw")).permitAll()
+				.requestMatchers(mvc.pattern("/findid")).permitAll().requestMatchers(mvc.pattern("/findpw")).permitAll()
 				.requestMatchers(mvc.pattern("/category/**"), mvc.pattern("/search/**"), mvc.pattern("/question/**"),
 						mvc.pattern("/author/**"), mvc.pattern("/book/**"))
 				.permitAll()
@@ -49,7 +59,10 @@ public class SecurityConfig {
 		// .permitAll()
 		) // 4.인증 되지 않은 사용자가 리소스에 접근했을때 설정(ex.로그인 안했는데 cart페이지에 접근..)
 				.exceptionHandling(handling -> handling.authenticationEntryPoint(new CustomAuthenticationEntryPoint()))
-				.rememberMe(Customizer.withDefaults());
+				// .rememberMe(Customizer.withDefaults());
+				.rememberMe(rememberMe -> rememberMe.rememberMeParameter("remember-me").tokenValiditySeconds(3600)
+						.alwaysRemember(false).tokenRepository(tokenRepository())
+						.userDetailsService(userDetailsService));
 
 		return http.build();
 
@@ -58,5 +71,11 @@ public class SecurityConfig {
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
+	}
+
+	public PersistentTokenRepository tokenRepository() {
+		JdbcTokenRepositoryImpl jdbcTokenRepository = new JdbcTokenRepositoryImpl();
+		jdbcTokenRepository.setDataSource(dataSource);
+		return jdbcTokenRepository;
 	}
 }
