@@ -50,4 +50,6 @@ public class BestSeller {
 	
 	@Column(nullable = false)
 	private String link;
+	
+
 }

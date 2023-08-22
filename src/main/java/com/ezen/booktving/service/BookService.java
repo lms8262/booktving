@@ -61,6 +61,7 @@ public class BookService {
 		
 		BookDto bookDto = BookDto.of(book);
 		bookDto.setBookImgDtoList(bookImgDtoList);
+		bookDto.setBookReviewDtoList(bookReviewDtoList);
 		
 		return bookDto;
 						

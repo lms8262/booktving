@@ -2,9 +2,11 @@ package com.ezen.booktving.service;
 
 import org.springframework.stereotype.Service;
 
+import com.ezen.booktving.dto.MemberFormDto;
 import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.repository.MemberRepository;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -12,7 +14,8 @@ import lombok.RequiredArgsConstructor;
 public class IdServiceImple implements IdService {
 
 	private final MemberRepository memberRepository;
-
+	
+	
 	@Override
 	public String finduserId(String memberName, String email) {
 		String result = "";
@@ -25,7 +28,18 @@ public class IdServiceImple implements IdService {
 		return result;
 	}
 
+
+
+
 	
+
+
+
+	
+
+
+	
+
 
 
 

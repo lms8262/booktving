@@ -1,18 +1,31 @@
 package com.ezen.booktving.controller;
 
+import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ezen.booktving.dto.LoginFormDto;
+import com.ezen.booktving.dto.MemberFormDto;
+import com.ezen.booktving.dto.UpdateMember;
+import com.ezen.booktving.entity.Member;
+import com.ezen.booktving.repository.MemberRepository;
 import com.ezen.booktving.service.IdService;
 import com.ezen.booktving.service.MemberService;
+import com.ezen.booktving.service.RamdomPassword;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +36,9 @@ public class LoginCotroller {
 
 	private final MemberService memberService;
 	private final IdService idService;
+	private final MemberRepository memberRepository;
+	private final RamdomPassword randomPassword;
+	private final PasswordEncoder passwordEncoder;
 
 	// 로그인 화면
 	@GetMapping(value = "/login")
@@ -51,7 +67,7 @@ public class LoginCotroller {
 			return "membership/memberloginForm";
 		}
 		try {
-			memberService.createMember(loginFormDto);
+			memberService.createMember(loginFormDto, passwordEncoder);
 		} catch (Exception e) {
 			model.addAttribute("errorMessage", e.getMessage());
 			return "membership/memberloginForm";
@@ -59,18 +75,111 @@ public class LoginCotroller {
 		return "redirect:/";
 	}
 
-	
-
-	
 	// 아이디 찾기
+	@GetMapping("/findid")
+	public String showFindIdForm() {
+		return "login/findIdForm"; // Return the template for the "Find ID" form
+	}
 
-	@RequestMapping(value = "/findId", method = RequestMethod.POST)
+	@PostMapping("/findid")
+	public String findId(@RequestParam("memberName") String memberName, @RequestParam("email") String email,
+			Model model) {
+
+		Member member = memberRepository.findByMemberNameAndEmail(memberName, email);
+
+		if (member != null) {
+			model.addAttribute("userId", member.getUserId());
+		} else {
+			model.addAttribute("userIdNotFound", true);
+		}
+
+		return "login/findIdResult"; // Return the template to display the search result
+	}
+
+	// 비밀 번호 찾기
+	@GetMapping(value = "/findpw")
+	public String search_ps(Model model) {
+		model.addAttribute("loginFormDto", new LoginFormDto());
+
+		return "login/findPwForm";
+	}
+
+	// 비밀번호 찾고 난수생성기로 랜덤비밀번호 생성
+	@PostMapping("/findpw")
 	@ResponseBody
-	public String finduserId(@RequestParam("memberName") String memberName, @RequestParam("email") String email) {
+	public HashMap<String, String> memberps(@RequestBody Map<String, Object> psdata, Principal principal) {
 
-		String result = idService.finduserId(memberName, email);
+		String email = (String) psdata.get("email");
+		String userId = (String) psdata.get("userId");
 
-		return result;
+		HashMap<String, String> msg = new HashMap<>();
+		Member member = memberRepository.findByUserIdAndEmail(userId, email);
+		/*
+		 * String pass = randomPassword.passwordFind(email, null); // pass 암호화된 비밀번호
+		 * String ramdomps = randomPassword.getRamdomPassword(12);
+		 * 
+		 * // ramdomps 를 view에 출력 String password =
+		 * randomPassword.updatePassword(ramdomps, email, passwordEncoder);
+		 * 
+		 * randomPassword.sendEmail(email, "새로운 비밀번호", "새로운 비밀번호: " + ramdomps);
+		 * 
+		 * String asd = "이메일로 임시 비밀번호가 발송되었습니다."; msg.put("message", asd);
+		 */
+		if (member != null) {
+			String ramdomps = randomPassword.getRamdomPassword(12);
+			String encodedRandomPassword = passwordEncoder.encode(ramdomps);
+
+			member.setPassword(encodedRandomPassword);
+			memberRepository.save(member);
+
+			randomPassword.sendEmail(email, "새로운 비밀번호", "새로운 비밀번호: " + ramdomps);
+
+			String asd = "이메일로 임시 비밀번호가 발송되었습니다.";
+			msg.put("message", asd);
+		} else {
+			String errorMsg = "해당하는 사용자가 없습니다.";
+			msg.put("message", errorMsg);
+		}
+
+		return msg;
+	}
+
+//회원정보 수정페이지
+	@GetMapping(value = "/login/update")
+	public String getupdateDtl(Model model, Principal principal) {
+		try {
+			MemberFormDto memberFormDto = memberService.getUpdateDtl(principal.getName());
+			model.addAttribute("memberFormDto", memberFormDto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("errorMessage", "고객정보를 가져올때 에러가 발생했습니다.");
+			model.addAttribute("memberFormDto", new MemberFormDto());
+			return "membership/privacy";
+		}
+		return "membership/privacy";
+	};
+
+//회원 수정
+	@PostMapping(value = "/login/update")
+	public String memberUpdate(@Valid MemberFormDto memberFormDto, Model model, BindingResult bindingResult) {
+		if (bindingResult.hasErrors()) {
+			return "membership/privacy";
+		}
+		try {
+			memberService.updateMember1(memberFormDto, passwordEncoder);
+		} catch (Exception e) {
+			model.addAttribute("errorMessage", "고객정보를 가져올때 에러가 발생했습니다.");
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		return "redirect:/";
+	}
+
+	@DeleteMapping(value = "/login/member/{memberId}/delete")
+	public @ResponseBody ResponseEntity deleteMenu(@PathVariable("memberId") Long memberId) {
+
+		memberService.deleteMenu(memberId);
+		return new ResponseEntity<Long>(memberId, HttpStatus.OK);
 	}
 
 }

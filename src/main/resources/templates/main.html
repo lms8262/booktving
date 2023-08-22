@@ -13,7 +13,7 @@
 	<div class="top">
 		<div class="container-fluid">
 			<div class="row">
-				<div class="col-12 section-wrap">
+				<div class="section-wrap">
 
 					<!-- 공지사항 -->
 					<div class="container">
@@ -182,23 +182,73 @@
 							<h5>NEW 북티빙</h5>
 						</div>
 						
-						<div class="row new-box-wrap container ">
-							<th:block th:each="newBook, status : ${randomNewBooks}">
-								<div class="new-box col-md-6 mb-4">
-									<div class="new-book-text col-7">
-										<h4 th:text="${newBook.title}" class="new-book-title"></h4>
-										<div class="new-book-author-publishrer">
-											<p th:text="${newBook.author}" class="new-book-author col-4"></p>
-											<span class="col-1">/</span>
-											<p th:text="${newBook.publisher}" class="new-book-publisher col-7"></p>
+						<div class="row new-box-wrap">
+						<!-- 
+							<th:block th:each="newBook, status : ${newBooks}">
+								<div class="new-top">
+									<div class="new-box col-md-6 mb-4 mr-2 ml-2">
+										<div class="new-book-text col-6">
+											<h4 class="new-book-title"></h4>
+											<div class="new-book-author-publishrer">
+												<p class="new-book-author">[[${newBook.author}]]/[[${newBook.publisher}]]</p>
+												<span class="col-1">/</span>
+												<p th:text="${newBook.publisher}" class="new-book-publisher col-7"></p>
+											</div>
+											<p class="description" th:text="${newBook.description}"></p>
 										</div>
-										<p class="description" th:text="${newBook.description}"></p>
+										<div class="new-book-cover col-6">
+											<img alt="${newBook.title}" th:src="${newBook.imgUrl}">
+										</div>
 									</div>
-									<div class="new-book-cover col-5">
-										<img alt="${newBook.title}" th:src="${newBook.imgUrl}">
+									
+									<div class="new-box col-md-6 mb-4 mr-2 ml-2">
+										<div class="new-book-text col-6">
+											<h4 th:text="${newBook.title}" class="new-book-title"></h4>
+											<div class="new-book-author-publishrer">
+												<p class="new-book-author">[[${newBook.author}]]/[[${newBook.publisher}]]</p>
+												<span class="col-1">/</span>
+												<p th:text="${newBook.publisher}" class="new-book-publisher col-7"></p>
+											</div>
+											<p class="description" th:text="${newBook.description}"></p>
+										</div>
+										<div class="new-book-cover col-6">
+											<img alt="${newBook.title}" th:src="${newBook.imgUrl}">
+										</div>
 									</div>
 								</div>
-							</th:block>							
+								<div class="new-bottom">
+									<div class="new-box col-md-6 mb-4 mr-2 ml-2">
+										<div class="new-book-text col-6">
+											<h4 th:text="${newBook.title}" class="new-book-title"></h4>
+											<div class="new-book-author-publishrer">
+												<p class="new-book-author">[[${newBook.author}]]/[[${newBook.publisher}]]</p>
+												<span class="col-1">/</span>
+												<p th:text="${newBook.publisher}" class="new-book-publisher col-7"></p>
+											</div>
+											<p class="description" th:text="${newBook.description}"></p>
+										</div>
+										<div class="new-book-cover col-6">
+											<img alt="${newBook.title}" th:src="${newBook.imgUrl}">
+										</div>
+									</div>
+									
+									<div class="new-box col-md-6 mb-4 mr-2 ml-2">
+										<div class="new-book-text col-6">
+											<h4 th:text="${newBook.title}" class="new-book-title"></h4>
+											<div class="new-book-author-publishrer">
+												<p class="new-book-author">[[${newBook.author}]]/[[${newBook.publisher}]]</p>
+												<span class="col-1">/</span>
+												<p th:text="${newBook.publisher}" class="new-book-publisher col-7"></p>
+											</div>
+											<p class="description" th:text="${newBook.description}"></p>
+										</div>
+										<div class="new-book-cover col-6">
+											<img alt="${newBook.title}" th:src="${newBook.imgUrl}">
+										</div>
+									</div>
+								</div>
+							</th:block>	
+							 -->						
 						</div>						
 					</div>
 
@@ -261,8 +311,8 @@
 												<a th:href="${bestSeller.link}" class="bestSeller-title">
 													[[${bestSeller.title}]] </a>
 												<div class="bestSeller-author">
-													<p class="author">[[${bestSeller.author}]]</p>
-													<p class="publisher">[[${bestSeller.publisher}]]</p>
+													<p class="author">[[${bestSeller.author}]]/[[${bestSeller.publisher}]]</p>
+													<!-- <p class="publisher">[[${bestSeller.publisher}]]</p> -->
 												</div>
 											</div>
 										</div>
