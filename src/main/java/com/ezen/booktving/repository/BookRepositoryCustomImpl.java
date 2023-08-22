@@ -46,11 +46,17 @@ public class BookRepositoryCustomImpl implements BookRepositoryCustom{
 	
 	// 검색 조건에 따른 처리
 	private BooleanExpression searchByLike(String searchBy, String searchQuery) {
+		if(StringUtils.equals("Keyword", searchBy)) {
+			return QBook.book.bookName.like("%" + searchQuery + "%")
+					.or(QBook.book.author.like("%" + searchQuery + "%"))
+					.or(QBook.book.reqAuthor.like("%" + searchQuery + "%"));
+		}
+		
 		if(StringUtils.equals("Title", searchBy)) {
 			return QBook.book.bookName.like("%" + searchQuery + "%");
 		}
 		if(StringUtils.equals("Author", searchBy)) {
-			return QBook.book.authorName.like("%" + searchQuery + "%");
+			return QBook.book.author.like("%" + searchQuery + "%").or(QBook.book.reqAuthor.like("%" + searchQuery + "%"));
 		}
 			
 		if(StringUtils.equals("Publisher", searchBy)) {
@@ -71,7 +77,7 @@ public class BookRepositoryCustomImpl implements BookRepositoryCustom{
 								book.id, 
 								book.bookName, 
 								book.isbn, 
-								book.authorName, 
+								book.author, 
 								bookImg.imgUrl)
 						)
 				.from(bookImg)

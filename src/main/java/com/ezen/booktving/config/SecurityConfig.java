@@ -28,7 +28,7 @@ public class SecurityConfig {
 				//모든 사용자가 로그인(인증) 없이 접근할수 있도록 설정
 				.requestMatchers(mvc.pattern("/css/**"),mvc.pattern("/js/**"),mvc.pattern("/images/**"),mvc.pattern("/fontawesome-free-6.3.0-web/**")).permitAll()
 				.requestMatchers(mvc.pattern("/"),mvc.pattern("/membership/**"),mvc.pattern("/login/**")).permitAll()
-				.requestMatchers(mvc.pattern("/favicon.ico"),mvc.pattern("/error")).permitAll()
+				.requestMatchers(mvc.pattern("/favicon.ico"),mvc.pattern("/error"),mvc.pattern("/image/**")).permitAll()
 				.requestMatchers(mvc.pattern("/category/**"),mvc.pattern("/search/**"),mvc.pattern("/question/**"),mvc.pattern("/author/**"),mvc.pattern("/book/**")).permitAll()
 				//'admin'으로 시작하는 경로는 관리자만 접근가능하도록 설정
 				.requestMatchers(mvc.pattern("/admin/**")).permitAll()//hasRole("ADMIN")

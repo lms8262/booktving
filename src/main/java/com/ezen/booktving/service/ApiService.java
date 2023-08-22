@@ -6,9 +6,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 import javax.imageio.ImageIO;
 
@@ -17,6 +14,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 
 import com.ezen.booktving.constant.YesNoStatus;
@@ -101,6 +99,7 @@ public class ApiService {
     }
     
     // db에 저장된 책인지 isbn으로 확인
+    @Transactional(readOnly = true)
     private boolean validateDuplicateIsbn(String isbn) {
     	Book book = bookRepository.findByIsbn(isbn);
     	if(book != null) { // db에 존재하면
@@ -110,12 +109,13 @@ public class ApiService {
     	return true;
     }
     
-    // 검색 결과가 들어있는 JsonString 
+    // 검색api 결과가 들어있는 jsonString
     private String getJsonStringOfSearchBook(BookSearchDto bookSearchDto, int start) {
     	String ttbKey = "ttblyczang41056001";
     	String query = bookSearchDto.getSearchQuery();
     	String queryType = bookSearchDto.getSearchBy();
     	int maxResults = 50;
+    	String cover = "Big";
     	String output = "JS";
     	String version = "20131101";
     		
@@ -127,6 +127,7 @@ public class ApiService {
 		    			.queryParam("QueryType", queryType)
 		    			.queryParam("Start", start)
 		    			.queryParam("MaxResults", maxResults)
+		    			.queryParam("Cover", cover)
 		    			.queryParam("Output", output)
 		    			.queryParam("Version", version)
 		    			.build()
@@ -138,23 +139,67 @@ public class ApiService {
 		return result;
     }
     
-    // 알라딘 검색 api -> 검색한 책 리스트 isbn만 가져오기
-    public List<String> getSearchBookIsbnList(BookSearchDto bookSearchDto) throws JsonMappingException, JsonProcessingException {
+    // 검색시 책 + 이미지 저장하는 메소드
+    @Transactional
+    private void saveBookWhenSearch(JsonNode rootNode) throws IOException {
+    	for(JsonNode itemNode : rootNode.get("item")) {
+        	String isbn13 = itemNode.get("isbn13").textValue();
+        	// isb13이 비어있거나, db에서 isbn으로 검색해서 이미 저장된 책이면 패스  
+        	if(isbn13.equals("") || isbn13 == null || !validateDuplicateIsbn(isbn13)) {
+        		continue;
+        	}
+        	
+        	Book book = Book.builder()
+        			.bookName(itemNode.get("title").textValue())
+            		.isbn(itemNode.get("isbn13").textValue())
+            		.author(itemNode.get("author").textValue())
+            		.publisher(itemNode.get("publisher").textValue())
+            		.publicationDate(LocalDate.parse(itemNode.get("pubDate").textValue(), DateTimeFormatter.ISO_DATE))
+            		.bookIntroduction(itemNode.get("description").textValue())
+            		.category(itemNode.get("categoryName").textValue())
+            		.page(0)
+            		.contents("")
+            		.reqAuthor("")
+            		.authorInfo("")
+            		.build();
+        	
+        	bookRepository.save(book);
+        	
+        	// 이미지 path를 통해서 생성 후 저장
+            String imgPath = itemNode.get("cover").textValue();
+            String oriImgName = imgPath.substring(imgPath.lastIndexOf("/") + 1);
+            String extension = oriImgName.substring(oriImgName.lastIndexOf("."));
+            String imgName = book.getIsbn() + extension;
+            String imgUrl = "/image/book/" + imgName;
+            String format = extension.substring(extension.lastIndexOf(".") + 1);
+            
+            URL url = new URL(imgPath);
+            BufferedImage image = ImageIO.read(url);
+            
+            ImageIO.write(image, format, new File("C:/booktving/book/" + imgName));
+            
+            BookImg bookImg = BookImg.builder()
+            						.imgName(imgName)
+            						.oriImgName(oriImgName)
+            						.repYn(YesNoStatus.Y)
+            						.imgUrl(imgUrl)
+            						.book(book)
+            						.build();
+            
+            bookImgRepository.save(bookImg);
+        }
+    }
+    
+    // 검색시 알라딘 검색 api로 정보 가져와서 기본정보만 저장
+    public void saveBookWhenSearchByAladinApi(BookSearchDto bookSearchDto) throws IOException {
     	// 1번째 api 요청
     	String result = getJsonStringOfSearchBook(bookSearchDto, 1);
 		    	
     	ObjectMapper objectMapper = new ObjectMapper();
         JsonNode rootNode = objectMapper.readTree(result);
         
-        List<String> searchBookIsbnList = new ArrayList<>();
+        saveBookWhenSearch(rootNode);
         
-        for(JsonNode itemNode : rootNode.get("item")) {
-        	String isbn13 = itemNode.get("isbn13").textValue();
-        	if(isbn13.equals("") || isbn13 == null) {
-        		continue;
-        	}
-        	searchBookIsbnList.add(isbn13);
-        }
 	    
         // 총 데이터 개수에 따른 api 요청 횟수를 계산(1회당 데이터 50개)
         int totalResults = rootNode.get("totalResults").intValue();
@@ -167,26 +212,35 @@ public class ApiService {
         		
         		rootNode = objectMapper.readTree(result);
         		
-        		for(JsonNode itemNode : rootNode.get("item")) {
-                	String isbn13 = itemNode.get("isbn13").textValue();
-                	if(isbn13.equals("") || isbn13 == null) {
-                		continue;
-                	}
-                	searchBookIsbnList.add(isbn13);
-                }
+        		saveBookWhenSearch(rootNode);
         	}
         }
-    	
-        // 최대 200의 isbn이 들어있는 List 반환
-    	return searchBookIsbnList;
+        
     }
     
-    // 알라딘 책 정보 조회 및 저장api
-    public void getBookInfoByAladinApi(String isbn) throws IOException {
-    	// db에서 isbn으로 검색해서 이미 저장된 책이면 패스  
-    	if(!validateDuplicateIsbn(isbn)) {
-    		return;
-    	}
+    // 상세페이지 열 때 책 상세정보 업데이트하는 메소드
+    @Transactional
+    private void updateBookDetail(JsonNode rootNode, String isbn) {
+    	JsonNode itemNode = null;
+        
+        // 1번째 item만 꺼내오기
+        for(JsonNode item : rootNode.get("item")) {
+        	itemNode = item;
+        	break;
+        }
+        
+        Integer page = itemNode.get("subInfo").get("itemPage").intValue();
+        String contents = itemNode.get("subInfo").get("toc").textValue();
+        String reqAuthor = itemNode.get("subInfo").get("authors").get(0).get("authorName").textValue();
+        String authorInfo = itemNode.get("subInfo").get("authors").get(0).get("authorInfo").textValue();
+        
+        Book book = bookRepository.findByIsbn(isbn);
+        book.updateBookDetail(page, contents, reqAuthor, authorInfo);
+        bookRepository.save(book);
+    }
+    
+    // 상세페이지 열 때 알라딘 api로 책 상세정보 조회 및 업데이트
+    public void updateBookDetailByAladinApi(String isbn) throws JsonMappingException, JsonProcessingException {
     	
     	String ttbKey = "ttblyczang41056001";
     	String itemId = isbn;
@@ -214,48 +268,8 @@ public class ApiService {
     	
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode rootNode = objectMapper.readTree(result);
-        JsonNode itemNode = null;
-        for(JsonNode item : rootNode.get("item")) {
-        	itemNode = item;
-        	break;
-        }
-       
-        Book book = Book.builder()
-        		.bookName(itemNode.get("title").textValue())
-        		.isbn(itemNode.get("isbn13").textValue())
-        		.authorName(itemNode.get("subInfo").get("authors").get(0).get("authorName").textValue())
-        		.publisher(itemNode.get("publisher").textValue())
-        		.page(itemNode.get("subInfo").get("itemPage").intValue())
-        		.publicationDate(LocalDate.parse(itemNode.get("pubDate").textValue(), DateTimeFormatter.ISO_DATE))
-        		.bookIntroduction(itemNode.get("description").textValue())
-        		.contents(itemNode.get("subInfo").get("toc").textValue())
-        		.category(itemNode.get("categoryName").textValue())
-        		.authorInfo(itemNode.get("subInfo").get("authors").get(0).get("authorInfo").textValue())
-        		.build();
         
-        bookRepository.save(book);
-        
-        String imgUrl = itemNode.get("cover").textValue();
-        String oriImgName = imgUrl.substring(imgUrl.lastIndexOf("/"));
-        String extension = oriImgName.substring(oriImgName.lastIndexOf("."));
-        UUID uuid = UUID.randomUUID();
-        String imgName = uuid.toString() + extension;
-        
-        // 여기 수정해야함
-        URL url = new URL(imgUrl);
-        BufferedImage image = ImageIO.read(url);
-        
-        ImageIO.write(image, extension, new File("/image/book/" + imgName));
-        
-        BookImg bookImg = BookImg.builder()
-        						.imgName(imgName)
-        						.oriImgName(oriImgName)
-        						.repYn(YesNoStatus.Y)
-        						.imgUrl(itemNode.get("cover").textValue())
-        						.book(book)
-        						.build();
-        
-        bookImgRepository.save(bookImg);
+        updateBookDetail(rootNode, isbn);
     }
     
 }

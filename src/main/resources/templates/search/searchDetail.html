@@ -18,6 +18,7 @@
 			<form class="search-form" method="get" action="/search/detail">
 				<div class="search-select">
 					<select id="searchBy" name="searchBy">
+						<option value="Keyword">제목+저자</option>
 						<option value="Title">제목</option>
 						<option value="Author">저자</option>
 						<option value="Publisher">출판사</option>
@@ -45,13 +46,13 @@
 				<th:block th:if="${!#lists.isEmpty(searchBookList.getContent())}" th:each="searchBook, status : ${searchBookList.getContent()}">
 					<div class="search-card col">
 						<div class="card">
-							<a th:data-isbn="${searchBook.isbn}">
+							<a th:href="@{/search/detail/update/} + ${searchBook.isbn}">
 								<img th:src="${searchBook.imgUrl}" class="card-img-top" alt="이미지">
 							</a>
-							<a th:data-isbn="${searchBook.isbn}">
+							<a th:href="@{/search/detail/update/} + ${searchBook.isbn}">
 								<div class="card-body" th:data-last-book-id="${searchBook.id}">
 									<h5 class="card-title">[[${searchBook.bookName}]]</h5>
-									<p class="card-text">[[${searchBook.authorName}]]</p>
+									<p class="card-text">[[${searchBook.author}]]</p>
 								</div>
 							</a>
 						</div>
@@ -169,13 +170,13 @@
 			for(let i = 0; i < contents.length; i++) {
 				var appendData = `<div class="search-card col">
 					<div class="card">
-					<a data-isbn="${contents[i].isbn}">
+					<a href="/search/detail/update/${contents[i].isbn}">
 						<img src="${contents[i].imgUrl}" class="card-img-top" alt="이미지">
 					</a>
-					<a data-isbn="${contents[i].isbn}">
+					<a href="/search/detail/update/${contents[i].isbn}">
 						<div class="card-body" data-last-book-id="${contents[i].id}">
 							<h5 class="card-title">${contents[i].bookName}</h5>
-							<p class="card-text">${contents[i].authorName}</p>
+							<p class="card-text">${contents[i].author}</p>
 						</div>
 					</a>
 				</div>

@@ -37,13 +37,10 @@ public class Book extends BaseTimeEntity {
 	private String isbn;
 	
 	@Column(nullable = false)
-	private String authorName;
+	private String author;
 	
 	@Column(nullable = false)
 	private String publisher;
-	
-	@Column(nullable = false)
-	private Integer page;
 	
 	@Column(nullable = false)
 	private LocalDate publicationDate;
@@ -51,13 +48,25 @@ public class Book extends BaseTimeEntity {
 	@Column(columnDefinition = "text", nullable = false)
 	private String bookIntroduction;
 	
+	@Column(nullable = false)
+	private String category;
+	
+	@Column(nullable = false)
+	private Integer page;
+	
 	@Column(columnDefinition = "text", nullable = false)
 	private String contents;
 	
 	@Column(nullable = false)
-	private String category;
+	private String reqAuthor;
 	
 	@Column(columnDefinition = "text", nullable = false)
 	private String authorInfo;
 	
+	public void updateBookDetail(Integer page, String contents, String reqAuthor, String authorInfo) {
+		this.page = page;
+		this.contents = contents;
+		this.reqAuthor = reqAuthor;
+		this.authorInfo = authorInfo;
+	}
 }
