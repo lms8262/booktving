@@ -111,7 +111,7 @@
 
 													<div class="bookReg-form-wrap">
 														<label th:for="ISBN" class="book-reg-label">ISBN</label> <input
-															type="text" placeholder="ISBN 입력" th:field="*{isbn}" />
+															type="text" placeholder="ISBN 입력" th:field="*{isbn}" readonly="readonly" />
 														<p th:if="${#fields.hasErrors('isbn')}"
 															th:errors="*{isbn}" class="fieldError">Incorrect Data</p>
 													</div>

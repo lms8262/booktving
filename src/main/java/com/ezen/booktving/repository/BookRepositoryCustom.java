@@ -19,5 +19,5 @@ public interface BookRepositoryCustom {
 	Page<BookDto> getBookDto(BookSearchDto bookSearchDto, Pageable pageable);
 	
 }
-//도서관리 페이지 보여주기 
+
 

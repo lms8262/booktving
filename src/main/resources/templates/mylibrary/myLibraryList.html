@@ -9,9 +9,8 @@
 </head>
 
 
-<!-- rentlist 페이지 CSS -->
 <th:block layout:fragment="css">
-	<link rel="stylesheet" href="/css/rentlist.css" />
+	<link rel="stylesheet" href="/css/myLibraryList.css" />
 </th:block>
 
 <div layout:fragment="content">
@@ -20,64 +19,54 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-12 section-wrap">
-
 					<div class="row">
 
-
-						<div class="admin-content col-lg-12">
+						<div class="col-lg-12">
 							<div class="container">
 								<div class="row">
 									<div class="col-12">
 
 										<div class="top-title">
-											<h4>내 대여내역</h4>
+											<h4>대여한 도서 목록</h4>
 											<hr>
 										</div>
 
-										<!-- 내 대여내역 contents -->
-										<div class="container">
-											<div class="row">
-												<div class="col-md-2"></div>
-												<div class="col-md-8">
-													<div th:each="rentBook : ${rentBooks.getContent()}">
-														<div class="card">
-															<div class="each">
-																<div style="margin: 0">
-																	<span class="book-rent-num">대여번호</span>
-																	<p th:text="${rentBook.id}">1</p>
-																</div>
-																<div style="margin: 0">
-																	<div class="img">
-																		<img class="rentlist-img"  alt="이미지"
-																			th:src="${rentBook.imgUrl}">
-																	</div>
-																</div>
-																<div class="test" style="display: flex;">
 
-																	<div style="margin-right: 30px">
-																		<h5 class="book-name" th:text="${rentBook.bookName}">도서명</h5>
-																		<span class="rent-sub" th:text="${rentBook.author}">저자명</span>
-																		/ <span class="rent-sub"
-																			th:text="${rentBook.publisher}">출판사명</span>
-																	</div>
-																	<div style="margin-right: 30px;">
-																		<p class="book-price">결제방식</p>
-																		<span class="rent-sub">이용권</span>
-																	</div>
-																	<div>
-																		<p class="book-date">대여일</p>
-																		<span class="rent-sub" th:text="${rentBook.rentDate}">2023/08/18</span>
-																	</div>
+										<!--나의 서재 대여도서 목록  -->
+										<div>
+											<div>
+												<h5 style="font-weight: bold;" th:text="총 + ${num}">총
+													1권</h5>
+											</div>
+											<div class="container">
+												<div class="row">
+
+													<div class="col-sm-3 rentbookContent"
+														th:each="rentBook: ${rentBooks.getContent()}">
+														<a href="/mylibrary/rentbookinfo">
+															<div class="cardd">
+																<div class="rentimgbox">
+																	<img alt="이미지" src="/images/categorytestimg1.jpg">
 																</div>
+																<div class="rentlistContent">
+																	<p class="library-sub" id="bookName"
+																		th:text="${rentBook.bookName}">미생물 전쟁</p>
+																	<p class="library-sub" id="author"
+																		th:text="${rentBook.author}">아일사 와일드</p>
+																	<p class="library-sub" id="publisher"
+																		th:text="${rentBook.publisher}">출판사</p>
+																	<p class="library-sub" id="category"
+																		th:text="${rentBook.category}">장르</p>
+																	<p class="library-sub" id="complete"
+																		th:text="|완독여부: ${rentBook.complete}|">완독여부: 완독</p>
+																</div>
+
 															</div>
-														</div>
+														</a>
 													</div>
 												</div>
-												<div class="col-md-2"></div>
 											</div>
 										</div>
-
-
 
 
 										<!--페이지 버튼  -->
@@ -109,22 +98,22 @@
 												</ul>
 											</nav>
 										</div>
-
-
-
-
 									</div>
 								</div>
 							</div>
 						</div>
+
 					</div>
 
 				</div>
 			</div>
 		</div>
+
 	</div>
 
+
 </div>
+
 
 <th:block layout:fragment="script">
 	<script>
@@ -134,7 +123,7 @@
 		var searchBy = $("#searchBy").val();
 		var searchQuery = $("#searchQuery").val();
 
-		location.href = "/mypage/rentlist/" + page + "?searchBy=" + searchBy
+		location.href = "/mylibrary/rentList/" + page + "?searchBy=" + searchBy
 				+ "&searchQuery=" + searchQuery;
 	}
 	
