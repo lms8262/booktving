@@ -16,26 +16,21 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class MemberFormDto {
-	//private Long id;
-
-	@NotBlank(message = "아이디는 필수 입력 값입니다.")
-	private String userId;
-
+public class UpdateMember {
 	@NotBlank(message = "이름은 필수 입력 값입니다.")
 	private String memberName;
 
-	@Email(message = "이메일 형식으로 입력해주세요.")
-	@NotEmpty(message = "이메일은 필수 입력 값입니다.")
-	private String email;
-
 	@Length(min = 8, max = 16, message = "비밀번호는 8자 ~ 16자 사이로 입력해주세요.")
-	@NotEmpty(message = "비밀번호는 필수 입력 값입니다.")
+	@NotNull(message = "비밀번호는 필수 입력 값입니다.")
 	private String password;
+
+	@Email(message = "이메일 형식으로 입력해주세요.")
+	@NotBlank(message = "이메일은 필수 입력 값입니다.")
+	private String email;
 
 	@NotEmpty(message = "전화번호는 필수 입력 값입니다.")
 	private String tel;
-	
+
 	@NotEmpty(message = "주소는 필수 입력 값입니다.")
 	private String address;
 
@@ -44,8 +39,13 @@ public class MemberFormDto {
 
 	private static ModelMapper modelMapper = new ModelMapper();
 
-	public static MemberFormDto of(Member member) {
-		return modelMapper.map(member, MemberFormDto.class);
+	public static UpdateMember of(Member member) {
+		// TODO Auto-generated method stub
+		return modelMapper.map(member, UpdateMember.class);
 	}
 
+	public String getuserId() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -9,9 +9,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ezen.booktving.dto.LoginFormDto;
+import com.ezen.booktving.dto.MemberFormDto;
+import com.ezen.booktving.dto.UpdateMember;
 import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.repository.MemberRepository;
 
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -19,15 +23,18 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class MemberService implements UserDetailsService {
 	private final MemberRepository memberRepository;
-	private final PasswordEncoder passwordEncoder;
 
-	public void createMember(LoginFormDto loginFormDto) {
+	public void createMember(LoginFormDto loginFormDto, PasswordEncoder passwordEncoder) {
 		validateDuplicateUserId(loginFormDto); /// 아이디중복 체크
 		validateDuplicateEmail(loginFormDto);// 이메일 중복
 		validateDuplicateTel(loginFormDto);// 전화 번호 중복
 		Member member = Member.createMember(loginFormDto, passwordEncoder);
 		memberRepository.save(member);// insert
 
+	}
+
+	public Member findByUserId(String id) {
+		return memberRepository.findByUserId(id);
 	}
 
 	// 중복아이디
@@ -71,7 +78,37 @@ public class MemberService implements UserDetailsService {
 				.roles(member.getRole().toString()).build();
 	}
 
-	
+	/*
+	 * public Long updateMember(MemberFormDto memberFormDto) throws
+	 * EntityNotFoundException { Member member =
+	 * memberRepository.findById(memberFormDto.getId()).orElseThrow(
+	 * EntityNotFoundException::new);
+	 * 
+	 * member.updateMember(memberFormDto);
+	 * 
+	 * 
+	 * return member.getId(); }
+	 */
 
+	public void deleteMenu(Long memberId) {
+		Member member = memberRepository.findById(memberId).orElseThrow(EntityNotFoundException::new);
+		memberRepository.delete(member);
+	}
 
+//회원정보 가져오기
+	@Transactional(readOnly = true)
+	public MemberFormDto getUpdateDtl(String userId) {
+		Member member = memberRepository.findByUserId(userId);
+		MemberFormDto memberFormDto = MemberFormDto.of(member);
+
+		return memberFormDto;
+	}
+
+	public String updateMember1(@Valid MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) throws Exception {
+		Member member = memberRepository.findByUserId(memberFormDto.getUserId());
+		member.updateMember(memberFormDto, passwordEncoder);
+		return member.getUserId();
+	}
+
+//
 }
