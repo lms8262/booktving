@@ -7,6 +7,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,6 +17,7 @@ import com.ezen.booktving.dto.AuthorSearchDto;
 import com.ezen.booktving.entity.Author;
 import com.ezen.booktving.service.AuthorService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -102,7 +104,20 @@ public class AdminController {
 	
 	//추천작가 등록하기
 	@PostMapping(value = "/admin/authorReg")
-	public String authorNew() {
+	public String authorNew(@Valid AuthorFormDto authorFormDto, BindingResult bindingResult, Model model) {
+		
+		if(bindingResult.hasErrors()) {
+			return "admin/adminAuthorReg";
+		}
+		
+		try {
+			authorService.saveAuthorFormDto(authorFormDto);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("errorMessage", "작가 등록 중 에러가 발생했습니다.");
+			return "admin/adminAuthorReg";
+		}
 		
 		return "redirect:/";
 	}

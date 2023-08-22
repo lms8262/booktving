@@ -2,9 +2,16 @@ package com.ezen.booktving.service;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.util.UUID;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
 import lombok.extern.java.Log;
 
@@ -46,4 +53,29 @@ public class FileService {
 			log.info("파일이 존재하지 않습니다.");
 		}
 	}
+	
+	//작가등록 파일업로드
+	@Value("${file:///C:/booktving/}")
+	private String uploadPath;
+	
+	public String authorUploadFile(MultipartFile file, String subDirectory) throws IOException {
+		UUID uuid = UUID.randomUUID();		
+		
+		String originalFileName = StringUtils.cleanPath(file.getOriginalFilename());
+		
+		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
+	    String savedFileName = uuid.toString() + extension;
+	    Path uploadDirectory = Path.of(uploadPath, subDirectory);
+		
+        try {
+            Path targetLocation = uploadDirectory.resolve(savedFileName);
+            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+            return savedFileName;
+        } catch (IOException e) {
+            throw new IOException("Failed to store file " + uploadDirectory, e);
+        }
+    }
+	
+	
+	
 }

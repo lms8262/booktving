@@ -3,7 +3,7 @@ package com.ezen.booktving.dto;
 import org.modelmapper.ModelMapper;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ezen.booktving.entity.AuthorBook;
+import com.ezen.booktving.entity.Author;
 
 import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
@@ -12,21 +12,24 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class AuthorBookDto {
+public class AuthorDto {
 
 
 	private Long id;
 	
 	@NotBlank(message = "필수입력 값입니다.")
-	private String bookName;
+	private String authorNameKo;
 	
 	@NotBlank(message = "필수입력 값입니다.")
-	private String bookSubTitle;
+	private String authorNameEg;
 	
 	@NotBlank(message = "필수입력 값입니다.")
-	private String bookIntrodution;
-
-	 private MultipartFile authorBookImgFile;
+	private String title;
+	
+	@NotBlank(message = "필수입력 값입니다.")
+	private String authorIntroduction;
+	
+	private MultipartFile authorImgFile;
 	
 	@NotBlank(message = "필수입력 값입니다.")
 	private String oriImgName;
@@ -36,12 +39,12 @@ public class AuthorBookDto {
 	
 	private static ModelMapper modelMapper = new ModelMapper();
 	
-	public AuthorBook creAuthorBook() {
-		return modelMapper.map(this, AuthorBook.class);
+	public Author createAuthor() {
+		return modelMapper.map(this, Author.class);
 	}
 	
-	public static AuthorBookDto of(AuthorBook authorBook) {
-		return modelMapper.map(authorBook, AuthorBookDto.class);
+	public static AuthorDto of(Author author) {
+		return modelMapper.map(author, AuthorDto.class);
 	}
 	
 }

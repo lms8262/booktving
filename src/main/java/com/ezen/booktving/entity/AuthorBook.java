@@ -1,7 +1,5 @@
 package com.ezen.booktving.entity;
 
-import com.ezen.booktving.constant.YesNoStatus;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -11,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -36,16 +35,15 @@ public class AuthorBook{
 	@Column(nullable = false)
 	private String bookIntrodution;
 	
-	@Column(nullable = false, unique = true)
+	@NotBlank(message = "필수입력 값입니다.")
 	private String imgName;
-	
-	@Column(nullable = false)
+		
+	@NotBlank(message = "필수입력 값입니다.")
 	private String oriImgName;
-	
-	@Column(nullable = false)
+		
+	@NotBlank(message = "필수입력 값입니다.")
 	private String imgUrl;
-	
-	
+		
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "author_id", nullable = false)
 	private Author author;
