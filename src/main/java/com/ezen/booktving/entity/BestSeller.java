@@ -23,7 +23,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-public class BestSeller {
+public class BestSeller  extends BaseTimeEntity {
 
 	@Id
 	@Column(name = "best_seller_id")

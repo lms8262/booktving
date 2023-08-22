@@ -28,14 +28,7 @@ public class AuthorDto {
 	
 	@NotBlank(message = "필수입력 값입니다.")
 	private String authorIntroduction;
-	
-	private MultipartFile authorImgFile;
-	
-	@NotBlank(message = "필수입력 값입니다.")
-	private String oriImgName;
-	
-	@NotBlank(message = "필수입력 값입니다.")
-	private String imgUrl;
+
 	
 	private static ModelMapper modelMapper = new ModelMapper();
 	

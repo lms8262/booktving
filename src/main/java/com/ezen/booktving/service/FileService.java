@@ -54,27 +54,7 @@ public class FileService {
 		}
 	}
 	
-	//작가등록 파일업로드
-	@Value("${file:///C:/booktving/}")
-	private String uploadPath;
 	
-	public String authorUploadFile(MultipartFile file, String subDirectory) throws IOException {
-		UUID uuid = UUID.randomUUID();		
-		
-		String originalFileName = StringUtils.cleanPath(file.getOriginalFilename());
-		
-		String extension = originalFileName.substring(originalFileName.lastIndexOf("."));
-	    String savedFileName = uuid.toString() + extension;
-	    Path uploadDirectory = Path.of(uploadPath, subDirectory);
-		
-        try {
-            Path targetLocation = uploadDirectory.resolve(savedFileName);
-            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
-            return savedFileName;
-        } catch (IOException e) {
-            throw new IOException("Failed to store file " + uploadDirectory, e);
-        }
-    }
 	
 	
 	

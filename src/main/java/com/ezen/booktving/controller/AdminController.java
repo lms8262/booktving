@@ -1,5 +1,6 @@
 package com.ezen.booktving.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -11,6 +12,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ezen.booktving.dto.AuthorFormDto;
 import com.ezen.booktving.dto.AuthorSearchDto;
@@ -104,14 +107,20 @@ public class AdminController {
 	
 	//추천작가 등록하기
 	@PostMapping(value = "/admin/authorReg")
-	public String authorNew(@Valid AuthorFormDto authorFormDto, BindingResult bindingResult, Model model) {
+	public String authorNew(@Valid AuthorFormDto authorFormDto, BindingResult bindingResult, Model model, 
+			@RequestParam("authorImgFile") MultipartFile authorImgFile, @RequestParam("authorBookImgFile") MultipartFile authorBookImgFile) {
 		
 		if(bindingResult.hasErrors()) {
 			return "admin/adminAuthorReg";
 		}
 		
+		if(authorImgFile == null) {
+			model.addAttribute("errorMessage", "이미지 등록은 필수입니다.");
+			return "admin/adminAuthorReg";
+		}
+		
 		try {
-			authorService.saveAuthorFormDto(authorFormDto);
+			authorService.saveAuthorFormDto(authorFormDto, authorImgFile, authorBookImgFile);
 			
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -124,10 +133,45 @@ public class AdminController {
 		
 	//추천작가 수정 페이지 보여주기
 	@GetMapping(value = "/admin/authorModify/{authorId}")
-	public String adminAuthorModify() {
+	public String adminAuthorModify(@PathVariable("authorId") Long authorId, Model model) {
+		
+		try {
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("errorMessage", "데이터를 가져올 때 에러가 발생했습니다.");
+			
+			model.addAttribute("authorFormDto", new AuthorFormDto());
+			return "admin/adminAuthorReg";
+		}
 		
 		return "admin/adminAuthorModify";
 	}
+	
+	//추천작가 수정등록하기
+	@PostMapping(value = "/admin/authorModify/{authorId}")
+	public String authorUpdate(@Valid AuthorFormDto authorFormDto, Model model, BindingResult bindingResult, 
+				@RequestParam("authorImgFile") MultipartFile authorImgFile, @RequestParam("authorBookImgFile") MultipartFile authorBookImgFile) {
+		
+		if(bindingResult.hasErrors()) {
+			return "admin/adminAuthorReg";
+		}
+		
+		if(authorImgFile == null && authorBookImgFile == null && authorFormDto.getId() == null ) {
+			model.addAttribute("errorMessage", "이미지는 필수 등록입니다.");
+			return "admin/adminAuthorReg";
+		}
+		
+		try {
+			authorService.updateAuthor(authorFormDto, authorImgFile);
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("errorMessage", "작가 정보 수정 중 에러가 발생했습니다.");
+			return "admin/adminAuthorReg";
+		}
+		return "redirect:/";
+	}
+	
 	
 	//문의관리 페이지 보여주기
 	@GetMapping(value = "/admin/question")
