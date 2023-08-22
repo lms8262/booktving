@@ -7,16 +7,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class CategoryController {
 	
 	//카테고리 메인 페이지 보여주기
-	@GetMapping(value = "/mainCategory")
-	public String MainCategory() {
+	@GetMapping(value = "/category/main")
+	public String mainCategory() {
 		
 		return "category/mainCategory";
 	}
 	
 	
 	//서브 카테고리 페이지 보여주기
-	@GetMapping(value= "/subCategory")
-	public String SubCategory() {
+	@GetMapping(value= "/category/sub")
+	public String subCategory() {
 		
 		return "category/subCategory";
 	}
