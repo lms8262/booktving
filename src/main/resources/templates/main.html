@@ -6,6 +6,9 @@
 <!-- main 페이지 CSS -->
 <th:block layout:fragment="css">
 	<link rel="stylesheet" type="text/css" href="/css/main.css" />
+	<!--
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
+	-->
 </th:block>
 
 <div layout:fragment="content">
@@ -24,14 +27,15 @@
 
 					</div>
 
+					<!-- 최종적으로 페이지 링크 걸어주기 -->
 					<!-- 이미지 슬라이드 -->
 					<div class="imgSlide-wrap imgslide container-fluid">
 					
-						<div class="slidelist">
+						<div class="slidelist swiper">
 						
-							<div class="slide-ul">
+							<div class="slide-ul swiper-wrapper">
 								<!-- 이미지슬라이드1 -->
-								<div class="contents-wrap slide-li">
+								<div class="contents-wrap slide-li swiper-slide">
 									<div class="slide-backgroun">
 										<img src="/images/backimg1.jpg" alt="배경이미지">
 									</div>
@@ -86,9 +90,11 @@
 									</div>
 								</div>
 							</div>
+							
+							<div class="swiper-button-prev"></div>
+  							<div class="swiper-button-next"></div>
+							
 						</div>
-						
-
 					</div>
 
 					<!-- 즐겨찾기 -->
@@ -139,116 +145,174 @@
 					</div>
 
 					<!-- 북티빙 Top 10 -->
-					<div class="top10-wrap container">
-						<h5>북티빙 Top 10</h5>
-						<div class="top10-submenu">
-							<p><a>일간</a></p><span>|</span>
-							<p><a>주간</a></p><span>|</span>
-							<p><a>연간</a></p><span>|</span>
-							<p><a>주간</a></p>
+					<div class="top10-wrap container-fluid">
+						<div class="container">
+							<h5>북티빙 Top 10</h5>
 						</div>
 						
-						<div class="top10-contents-wrap">
-
-							<div class="top10-contents">
-								<div class="position-relatiove">
-									<div class="top10-rank">
-										<h1 text="">2</h1>
-									</div>
-									<div class="top10-cover">
-										<a> 
-											<img src="" alt="도서커버" class="top10-cover-img">
-										</a>
-									</div>
-								</div>
-
-								<div class="row top10-contents-text">
-									<div class="top10-title-author">
-										<a href="" class="top10-title">제목</a>
-										<div class="top10-author">
-											<p class="author">저자<span>/</span></p>
-											<p class="publisher">출판사</p>
+						<div class="top10-contents-wrap container">	
+								<ul class="tabmenu ">
+									
+									<!-- 일간 -->
+									<li class="active"> <a href="#">일간&nbsp;&nbsp;&nbsp;&nbsp;<span>|</span></a>
+										<div class="rank-list">
+											<th:block th:each="dayRank, status : ${dayRanks}">
+												<div class="dayRank">
+													<div class="top10-contents">
+														<div class="top10-rank">
+															<a th:href="'/book/bookDetail/' + ${dayRank.isbn}">
+																<h1>[[${dayRank.num}]]</h1>
+															</a>
+														</div>
+														<div class="top10-cover">
+															<a th:href="'/book/bookDetail/' + ${dayRank.isbn}">
+																<img th:src="${dayRank.imgUrl}" th:alt="${dayRank.bookName}" class="top10-cover-img">
+															</a>
+														</div>
+													</div>
+									
+													<div class="row top10-contents-text">
+														<div class="top10-title-author">
+															<p class="top10-title">[[${dayRank.bookName}]]</p>
+															<div class="top10-author">
+																<p class="author">[[${dayRank.author}]] <span>&nbsp;/&nbsp;</span></p>
+																<p class="publisher">[[${dayRank.publisher}]]</p>
+															</div>
+														</div>
+													</div>
+												</div>
+											</th:block>
 										</div>
-									</div>
-								</div>
-							</div>
+									</li>
+									
+									<!-- 주간 -->
+									<li> <a href="#">주간&nbsp;&nbsp;&nbsp;&nbsp;<span>|</span></a>
+										<div class="rank-list ">
+											<th:block th:each="weekRank, status : ${weekRanks}">
+												<div class="weekRank">
+													<div class="top10-contents">
+														<div class="top10-rank">
+															<a th:href="'/book/bookDetail/' + ${weekRank.isbn}">
+																<h1>[[${weekRank.num}]]</h1>
+															</a>
+														</div>
+														<div class="top10-cover">
+															<a th:href="'/book/bookDetail/' + ${weekRank.isbn}">
+																<img th:src="${weekRank.imgUrl}" th:alt="${weekRank.bookName}" class="top10-cover-img">
+															</a>
+														</div>
+													</div>
+									
+													<div class="row top10-contents-text">
+														<div class="top10-title-author">
+															<p class="top10-title">[[${weekRank.bookName}]]</p>
+															<div class="top10-author">
+																<p class="author">[[${weekRank.author}]] <span>&nbsp;/&nbsp;</span></p>
+																<p class="publisher">[[${weekRank.publisher}]]</p>
+															</div>
+														</div>
+													</div>
+												</div>
+											</th:block>
+										</div>
+									</li>
+									
+									<!-- 월간 -->
+									<li> <a href="#">월간&nbsp;&nbsp;&nbsp;&nbsp;<span>|</span></a>
+										<div class="rank-list ">
+											<th:block th:each="monthRank, status : ${monthRanks}">
+												<div class="monthRank">
+													<div class="top10-contents">
+														<div class="top10-rank">
+															<a th:href="'/book/bookDetail/' + ${monthRank.isbn}">
+																<h1>[[${monthRank.num}]]</h1>
+															</a>
+														</div>
+														<div class="top10-cover">
+															<a th:href="'/book/bookDetail/' + ${monthRank.isbn}">
+																<img th:src="${monthRank.imgUrl}" th:alt="${monthRank.bookName}" class="top10-cover-img">
+															</a>
+														</div>
+													</div>
+									
+													<div class="row top10-contents-text">
+														<div class="top10-title-author">
+															<p class="top10-title">[[${monthRank.bookName}]]</p>
+															<div class="top10-author">
+																<p class="author">[[${monthRank.author}]] <span>&nbsp;/&nbsp;</span></p>
+																<p class="publisher">[[${monthRank.publisher}]]</p>
+															</div>
+														</div>
+													</div>
+												</div>
+											</th:block>
+										</div>
+									</li>
+									
+									<!-- 연간 -->
+									<li> <a href="#">연간&nbsp;&nbsp;</a> 
+									<div class="rank-list ">
+											<th:block th:each="yearRank, status : ${yearRanks}">
+										<div class="yearRank">
+												<div class="top10-contents">
+													<div class="top10-rank">
+														<a th:href="'/book/bookDetail/' + ${yearRank.isbn}">
+															<h1>[[${yearRank.num}]]</h1>
+														</a>
+													</div>
+													<div class="top10-cover">
+														<a th:href="'/book/bookDetail/' + ${yearRank.isbn}">
+															<img th:src="${yearRank.imgUrl}" th:alt="${yearRank.bookName}" class="top10-cover-img">
+														</a>
+													</div>
+												</div>
+										
+												<div class="row top10-contents-text">
+													<div class="top10-title-author">
+														<p class="top10-title">[[${yearRank.bookName}]]</p>
+														<div class="top10-author">
+															<p class="author">[[${yearRank.author}]] <span>&nbsp;/&nbsp;</span></p>
+															<p class="publisher">[[${yearRank.publisher}]]</p>
+														</div>
+													</div>
+												</div>
+												</div>
+											</th:block>
+										</div>
+									</li>
+								</ul>
 						</div>
+							
 						
 					</div>
 
 					<!-- NEW 북티빙 -->
 					<div class="new-wrap container">
-						<div >
+						<div>
 							<h5>NEW 북티빙</h5>
 						</div>
 						
 						<div class="row new-box-wrap">
-						<!-- 
+							
 							<th:block th:each="newBook, status : ${newBooks}">
-								<div class="new-top">
-									<div class="new-box col-md-6 mb-4 mr-2 ml-2">
-										<div class="new-book-text col-6">
-											<h4 class="new-book-title"></h4>
-											<div class="new-book-author-publishrer">
-												<p class="new-book-author">[[${newBook.author}]]/[[${newBook.publisher}]]</p>
-												<span class="col-1">/</span>
-												<p th:text="${newBook.publisher}" class="new-book-publisher col-7"></p>
+								<div class="new-box col-md-6 mb-4">
+									<a th:href="'/book/bookDetail/' + ${newBook.isbn}"> 
+										<div class="new-box-flex">
+											<div class="new-book-text">
+												<h4 class="new-book-title">[[${newBook.title}]]</h4>
+												<div class="new-book-author-publishrer">
+													<p class="new-book-author">[[${newBook.author}]]/[[${newBook.publisher}]]</p>
+												</div>
+												<p class="description" th:text="${newBook.description}"></p>
 											</div>
-											<p class="description" th:text="${newBook.description}"></p>
-										</div>
-										<div class="new-book-cover col-6">
-											<img alt="${newBook.title}" th:src="${newBook.imgUrl}">
-										</div>
-									</div>
-									
-									<div class="new-box col-md-6 mb-4 mr-2 ml-2">
-										<div class="new-book-text col-6">
-											<h4 th:text="${newBook.title}" class="new-book-title"></h4>
-											<div class="new-book-author-publishrer">
-												<p class="new-book-author">[[${newBook.author}]]/[[${newBook.publisher}]]</p>
-												<span class="col-1">/</span>
-												<p th:text="${newBook.publisher}" class="new-book-publisher col-7"></p>
+											<div class="new-book-cover">
+												<img alt="${newBook.title}" th:src="${newBook.imgUrl}">
 											</div>
-											<p class="description" th:text="${newBook.description}"></p>
 										</div>
-										<div class="new-book-cover col-6">
-											<img alt="${newBook.title}" th:src="${newBook.imgUrl}">
-										</div>
-									</div>
+									</a>
 								</div>
-								<div class="new-bottom">
-									<div class="new-box col-md-6 mb-4 mr-2 ml-2">
-										<div class="new-book-text col-6">
-											<h4 th:text="${newBook.title}" class="new-book-title"></h4>
-											<div class="new-book-author-publishrer">
-												<p class="new-book-author">[[${newBook.author}]]/[[${newBook.publisher}]]</p>
-												<span class="col-1">/</span>
-												<p th:text="${newBook.publisher}" class="new-book-publisher col-7"></p>
-											</div>
-											<p class="description" th:text="${newBook.description}"></p>
-										</div>
-										<div class="new-book-cover col-6">
-											<img alt="${newBook.title}" th:src="${newBook.imgUrl}">
-										</div>
-									</div>
-									
-									<div class="new-box col-md-6 mb-4 mr-2 ml-2">
-										<div class="new-book-text col-6">
-											<h4 th:text="${newBook.title}" class="new-book-title"></h4>
-											<div class="new-book-author-publishrer">
-												<p class="new-book-author">[[${newBook.author}]]/[[${newBook.publisher}]]</p>
-												<span class="col-1">/</span>
-												<p th:text="${newBook.publisher}" class="new-book-publisher col-7"></p>
-											</div>
-											<p class="description" th:text="${newBook.description}"></p>
-										</div>
-										<div class="new-book-cover col-6">
-											<img alt="${newBook.title}" th:src="${newBook.imgUrl}">
-										</div>
-									</div>
-								</div>
-							</th:block>	
-							 -->						
+							</th:block>
+								
 						</div>						
 					</div>
 
@@ -335,18 +399,38 @@
 <!-- main 페이지 javaScript -->
 <th:block layout:fragment="script">
 	
-	<script type="text/javascript">
-		jQuery(document).ready(function(){
+	<script>
+		
+		$(document).ready(function(){
 			
-			$('.slidelist').delay(3000);
-			$('.slidelist').animate({ marginLeft : -100% });
-			$('.slidelist').delay(3000);
-			$('.slidelist').animate({ marginLeft : -200% });
-			$('.slidelist').delay(3000);
-			$('.slidelist').animate({ marginLeft : 0 });
+			//이미지슬라이드
+			setInterval(function(){
+				
+				$('.slidelist').delay(5000);
+				$('.slidelist').animate({marginLeft : "-100%"});
+				$('.slidelist').delay(5000);
+				$('.slidelist').animate({marginLeft : "-200%"});
+				$('.slidelist').delay(5000);
+				$('.slidelist').animate({marginLeft : 0});
+				$('.slidelist').delay(1000);
+				
+			},5000);
 			
-			
+		
+			//북티빙 Top10		
+			$(function(){
+				
+				$('#myTab>li>button').click(function(){
+					$(this).parent().addClass("active").siblings().removeClass("active");
+					return false;				
+				});
+			});
+		
 		});
+		
+		
+		
+		
 	</script>
 	
 </th:block>

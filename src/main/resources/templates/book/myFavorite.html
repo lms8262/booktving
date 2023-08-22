@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+<head>
+	<th:block layout:fragment="css">
+		<link rel="stylesheet" type="text/css" href="/css/myFavorite.css" />
+	</th:block>
+
+	<div layout:fragment="content">
+		<div class="top">
+			<div class="content">
+				<div class="favorite-content">
+					<strong>My Favorite</strong>
+				</div>
+				<div class="favorite-menu">
+					<div class="count">
+						<p>총 [[${favoriteBooks.size()}]]권</p>
+						
+					</div>
+				</div>
+				<div class="favorite-book">
+					<div th:each="favoriteBook : ${favoriteBooks}" class="book">
+						<div class="book-image">
+
+						</div>
+						<div class="fav-info">
+							<div class="div-title">
+								<p class="title" th:text="${favoriteBook.book.bookName}"></p>
+							</div>
+							<div class="div-button">
+								<button type="button" class="menu2"><i
+										class="fa-solid fa-ellipsis-vertical"></i></button>
+							</div>
+						</div>
+						<div class="author">
+							<div class="div-author">
+								<p class="text-author" style="font-size: 5px; color: rgb(192, 192, 192)"
+									th:text="${favoriteBook.book.author}"></p>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+
+		</div>
+	</div>
+
+	<th:block layout:fragment="script">
+
+	</th:block>
+
+</html>

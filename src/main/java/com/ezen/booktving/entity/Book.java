@@ -7,10 +7,12 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import java.util.*;
 
 @Entity
 @Table(name = "book")
@@ -50,5 +52,8 @@ public class Book extends BaseTimeEntity {
 	
 	@Column(nullable = false)
 	private String category;
+	
+	@OneToMany(mappedBy = "book")
+	private Set<FavoriteBook> favoriteBooks = new HashSet<>();
 	
 }

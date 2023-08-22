@@ -2,7 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout1}">
+
 <head>
+
 <th:block layout:fragment="css">
 	<link rel="stylesheet" type="text/css" href="/css/bookDetail.css" />
 </th:block>
@@ -24,15 +26,16 @@
 			<div class="content">
 				<div class="book-content">
 					<div class="bookimg">
-						<img th:src="${book.bookImgDtoList[0].imgUrl}" class="img">
+						<img src="/images/book1.jpg" class="img">
 					</div>
 					<div class="bookdetail">
-						<h2 style="font-weight: bolder" th:text="${book.bookName}"></h2>
-						<p th:text="${book.author}"></p>
+						<h2 id="bookName" style="font-weight: bolder"
+							th:text="${book.bookName}"></h2>
+						<p id="author" th:text="${book.author}"></p>
 						<h5 style="font-weight: bold">책 소개</h5>
 						<p th:text="${book.bookIntroduction}"></p>
 						<div class=button>
-							<button type="button" class="like">
+							<button type="button" class="like" onclick="favoriteBook()">
 								<i class="fa-solid fa-heart"></i>&nbsp;찜하기
 							</button>
 							<button type="button" class="rent">
@@ -62,8 +65,8 @@
 							th:text="${book.publicationDate}"></strong>
 						</li>
 						<li data-v-4edfbce0="" class="slide-item">
-							<p data-v-4edfbce0="">ISBN</p> <strong data-v-4edfbce0=""
-							th:text="${book.isbn}"></strong>
+							<p id="isbn" data-v-4edfbce0="">ISBN</p> <strong
+							data-v-4edfbce0="" th:text="${book.isbn}"></strong>
 						</li>
 					</ul>
 				</div>
@@ -112,9 +115,8 @@
 							<img src="/images/name.jpg" class="profile-img">
 						</div>
 						<div class="review-content">
-							<p class="num" th:text="${book.bookReviewDtoList[0].id}">리뷰번호</p>
-							<a class="contents"
-								th:text="${book.bookReviewDtoList[0].content}">내용</a>
+							<p class="num">리뷰번호</p>
+							<a class="contents">내용</a>
 						</div>
 					</li>
 				</ul>
@@ -123,12 +125,11 @@
 						<img src="/images/profile.jpg" class="profile-img">
 					</div>
 					<div class="review-input">
-						<input type="text" placeholder="리뷰를 입력하세요.">
+						<input type="text" name="reviews" placeholder="리뷰를 입력하세요.">
 					</div>
 					<div class="review-register">
-						<button type="button" class="review-button">
-							등록하기
-						</button>
+						<button type="button" class="review-button" onclick="sendIt()">
+							등록하기</button>
 					</div>
 				</div>
 			</div>
@@ -139,6 +140,71 @@
 </div>
 
 <th:block layout:fragment="script">
+
+	<script th:inline="javascript">
+	
+	$(document).ready(function(){
+		
+	});
+	
+		var errorMessage = [[${errorMessage}]];
+		if (errorMessage != null) {
+			alert(errorMessage);
+		}
+
+		const sendIt = () => {
+
+			var f = document.myForm;
+
+			str = f.reviews.value;
+			str = str.trim();
+			if (!str) {
+				alert("\n내용을 입력하세요.");
+				f.reviews.focus();
+				return;
+			}
+
+			f.submit();
+
+		}
+		
+		var errorMessage = [[${errorMessage}]];
+        if (errorMessage != null) {
+            alert(errorMessage);
+        }
+
+        function favoriteBook() {
+           
+        	var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+        	
+        	var url = "/book/bookDetail/likeBook";
+        	
+            var paramData = {
+            		isbn = $("#isbn").val(),
+            		bookName = $("#bookName").val(),
+            		author = $("#author").val()
+            }
+            
+            var param = JSON.stringify(paramData);
+            
+            $.ajax({
+                type: "POST",
+                url: url,
+                contentType : "application/json",
+                data: param,
+                dataType : "json",
+				cache : false,
+				success : function(result, status) {
+					alert("주문이 완료 되었습니다." + result);
+					//location.href = '/';
+				},
+                error: function(xhr, textStatus, errorThrown) {
+                    alert("찜하기 실패: " + xhr.responseText);
+                }
+            });
+        }
+	</script>
 
 </th:block>
 

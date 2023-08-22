@@ -66,4 +66,22 @@ public class BookService {
 		return bookDto;
 						
 	}
+	
+	@Transactional
+	public String saveReview(BookReviewDto bookReviewDto) {
+		return bookReviewRepository.save(bookReviewDto.createBookReview()).getContent();
+	}
+	
+	@Transactional(readOnly = true)
+	public Book getBookByIsbn(String isbn) {
+	    return bookDetailRepository.findByIsbn(isbn);
+	            
+	}
+	
+	// isbn 값으로 해당 book 엔티티 데이터를 가져옴.
+	   @Transactional(readOnly = true)
+	   public Book getBook(String isbn){
+	      Book book = bookDetailRepository.findByIsbnOrderByIdAsc(isbn);
+	      return book;
+	   }
 }
