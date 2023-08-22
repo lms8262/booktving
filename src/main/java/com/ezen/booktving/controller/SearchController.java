@@ -48,7 +48,6 @@ public class SearchController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 		Pageable pageble = PageRequest.of(0, 30);
 		Slice<SearchBookDto> searchBookList = searchService.getSearchBookList(null, bookSearchDto, pageble);
 		Long searchCount = searchService.getSearchBookCount(bookSearchDto);

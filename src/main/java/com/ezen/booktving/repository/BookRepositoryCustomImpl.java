@@ -1,6 +1,10 @@
 package com.ezen.booktving.repository;
 
+import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,6 +24,7 @@ import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import jakarta.persistence.EntityManager;
+import javassist.bytecode.stackmap.TypeData.ClassName;
 
 public class BookRepositoryCustomImpl implements BookRepositoryCustom{
 
@@ -112,6 +117,20 @@ public class BookRepositoryCustomImpl implements BookRepositoryCustom{
 				.fetchOne();
 		
 		return count;
+	}
+
+	@Override
+	public Set<String> getAllBookIsbn() {
+		QBook book = QBook.book;
+		
+		List<String> content = queryFactory
+				.select(book.isbn)
+				.from(book)
+				.fetch();
+		
+		HashSet<String> allBookIsbn = new HashSet<>(content);
+		
+		return allBookIsbn;
 	}
 	
 }
