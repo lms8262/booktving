@@ -51,27 +51,27 @@
 											<div class="author-contents">
 												<label for="authorNameKo" class="author-label">작가명(한글)</label>
 												<br />
-												<input type="text" placeholder="작가명(한글)" th:field="*{authorDto.authorNameKo}" class="form-control col-12" />
+												<input type="text" placeholder="작가명(한글)" th:field="*{authorNameKo}" class="form-control col-12" />
 											</div>
 											<div class="author-contents">
 												<label for="authorNameEg" class="author-label">작가명(영문)</label>
 												<br />
-												<input rows="10" placeholder="작가명(영문)" th:field="*{authorDto.authorNameEg}" class="form-control col-12" />
+												<input rows="10" placeholder="작가명(영문)" th:field="*{authorNameEg}" class="form-control col-12" />
 											</div>
 											<div class="author-contents">
 												<label for="title" class="author-label">작가소개 타이틀</label>
 												<br />
-												<input rows="10" placeholder="작가를 한문장으로 소개해보세요" th:field="*{authorDto.title}" class="form-control col-12" />
+												<input rows="10" placeholder="작가를 한문장으로 소개해보세요" th:field="*{title}" class="form-control col-12" />
 											</div>
 											<div class="author-contents">
 												<label for="authorintroduction" class="author-label">작가소개</label>
 												<br />
-												<textarea rows="10" placeholder="작가를 소개하세요" th:field="*{authorDto.authorIntroduction}" class="form-control col-12" ></textarea>
+												<textarea rows="10" placeholder="작가를 소개하세요" th:field="*{authorIntroduction}" class="form-control col-12" ></textarea>
 											</div>
 											<div class="author-contents">
 												<div class="mb-3 filebox">
 													<label for="authorImgFile" class="form-label">작가 이미지 등록</label>
-													<input class="form-control" type="file" th:field="*{authorDto.authorImgFile}">
+													<input class="form-control" type="file" id="authorImgFile" name="authorImgFile">
 												</div>
 											</div>
 											
@@ -99,7 +99,7 @@
 											<div class="author-contents">
 												<div class="mb-3 filebox">
 													<label for="bookImgFile" class="form-label">도서 이미지 등록</label>
-													<input class="form-control" type="file" th:field="*{authorBookDtoList[0].authorBookImgFile}">
+													<input class="form-control" type="file" id="authorBookImgFile" name="authorBookImgFile">
 												</div>
 											</div>
 											
@@ -127,7 +127,7 @@
 											<div class="author-contents">
 												<div class="mb-3 filebox">
 													<label for="bookImgFile" class="form-label">도서 이미지 등록</label>
-													<input class="form-control" type="file" th:field="*{authorBookDtoList[1].authorBookImgFile}">
+													<input class="form-control" type="file" id="authorBookImgFile" name="authorBookImgFile">
 												</div>
 											</div>
 											
@@ -155,7 +155,7 @@
 											<div class="author-contents">
 												<div class="mb-3 filebox">
 													<label for="bookImgFile" class="form-label">도서 이미지 등록</label>
-													<input class="form-control" type="file" th:field="*{authorBookDtoList[2].authorBookImgFile}">
+													<input class="form-control" type="file" id="authorBookImgFile" name="authorBookImgFile">
 												</div>
 											</div>
 											
@@ -183,7 +183,7 @@
 											<div class="author-contents">
 												<div class="mb-3 filebox">
 													<label for="bookImgFile" class="form-label">도서 이미지 등록</label>
-													<input class="form-control" type="file" th:field="*{authorBookDtoList[3].authorBookImgFile}" >
+													<input class="form-control" type="file" id="authorBookImgFile" name="authorBookImgFile">
 												</div>
 											</div>
 											

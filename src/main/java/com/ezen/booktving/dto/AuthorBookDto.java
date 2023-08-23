@@ -28,13 +28,11 @@ public class AuthorBookDto {
 	
 	private AuthorBookImgDto authorBookImgId = new AuthorBookImgDto();
 	
-	private static ModelMapper modelMapper = new ModelMapper();
-	
-	public AuthorBook creAuthorBook() {
+	public AuthorBook creAuthorBook(ModelMapper modelMapper) {
 		return modelMapper.map(this, AuthorBook.class);
 	}
 	
-	public static AuthorBookDto of(AuthorBook authorBook) {
+	public static AuthorBookDto of(AuthorBook authorBook, ModelMapper modelMapper) {
 		return modelMapper.map(authorBook, AuthorBookDto.class);
 	}
 	

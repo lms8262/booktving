@@ -3,6 +3,7 @@ package com.ezen.booktving.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -36,7 +37,7 @@ public class AuthorService {
 	private final AuthorImgRepository authorImgRepository;
 	private final AuthorBookImgRepository authorBookImgRepository;
 	private final AuthorImgService authorImgService;
-	
+	private final ModelMapper modelMapper;
 	
 	//추천작가 관리페이지
 	@Transactional(readOnly = true)
@@ -51,7 +52,7 @@ public class AuthorService {
 	public Long saveAuthorFormDto(AuthorFormDto authorFormDto, MultipartFile authorImgFile, MultipartFile authorBookImgFile) throws Exception{
 	
 		//작가등록
-		Author author = authorFormDto.createAuthor();
+		Author author = authorFormDto.createAuthor(modelMapper);
 		authorRepository.save(author);
 		
 		//작가이미지 등록
@@ -60,7 +61,7 @@ public class AuthorService {
 		authorImgService.saveAuthorImg(authorImg, authorImgFile);
 		
 		//작가도서 등록
-		AuthorBook auhthorBook = authorFormDto.createAuthorBook();
+		AuthorBook auhthorBook = authorFormDto.createAuthorBook(modelMapper);
 		authorBookRepository.save(auhthorBook);
 		
 		//작가도서 이미지 등록
@@ -79,25 +80,25 @@ public class AuthorService {
 		Author author = authorRepository.findById(authorId)
 							.orElseThrow(EntityNotFoundException::new);
 		
-		AuthorFormDto authorFormDto = AuthorFormDto.of(author);
+		AuthorFormDto authorFormDto = AuthorFormDto.of(author, modelMapper);
 		
 		//작가이미지 정보 가져오기
 		AuthorImg authorImg = authorImgRepository.findByAuthorIdOrderByIdAsc(authorId);
-		AuthorImgDto authorImgDto = AuthorImgDto.of(authorImg);
+		AuthorImgDto authorImgDto = AuthorImgDto.of(authorImg, modelMapper);
         
 		//AuthorFormDto 에 작가이미지 정보 넣어주기
 		authorFormDto.setAuthorImgDto(authorImgDto);
 		
 		//작가도서 정보 가져오기
 		AuthorBookImg authorBookImg = authorBookImgRepository.findByAuthorBookIdOrderByIdAsc(authorId);
-		AuthorBookImgDto authorBookImgDto = AuthorBookImgDto.of(authorBookImg);
+		AuthorBookImgDto authorBookImgDto = AuthorBookImgDto.of(authorBookImg, modelMapper);
 
 		List<AuthorBook> authorBookList = authorBookRepository.findByAuthorIdOrderByIdAsc(authorId);
 		
 		List<AuthorBookDto> authorBookDtoList = new ArrayList<>();
 		for(AuthorBook authorBook :  authorBookList) {
 			
-			AuthorBookDto authorBookDto = AuthorBookDto.of(authorBook);
+			AuthorBookDto authorBookDto = AuthorBookDto.of(authorBook, modelMapper);
 			authorBookDto.setAuthorBookImgDto(authorBookImgDto);
 			
 			authorBookDtoList.add(authorBookDto);			

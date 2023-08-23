@@ -271,7 +271,7 @@ public class AdminController {
 	@PostMapping(value = "/admin/authorModify/{authorId}")
 	public String authorUpdate(@Valid AuthorFormDto authorFormDto, Model model, BindingResult bindingResult, 
 				@RequestParam("authorImgFile") MultipartFile authorImgFile, @RequestParam("authorBookImgFile") MultipartFile authorBookImgFile) {
-		
+		System.out.println(authorFormDto.getId());
 		if(bindingResult.hasErrors()) {
 			return "admin/adminAuthorReg";
 		}
@@ -286,6 +286,7 @@ public class AdminController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("errorMessage", "작가 정보 수정 중 에러가 발생했습니다.");
+			System.out.println("에러");
 			return "admin/adminAuthorReg";
 		}
 		return "redirect:/";

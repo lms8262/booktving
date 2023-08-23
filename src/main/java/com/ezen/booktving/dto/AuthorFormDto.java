@@ -33,19 +33,16 @@ public class AuthorFormDto {
 	
 	private List<Long> authorBookIds = new ArrayList<>();
 	
-	private static ModelMapper modelMapper = new ModelMapper();
-	
-	public Author createAuthor() {
+	public Author createAuthor(ModelMapper modelMapper) {
 		return modelMapper.map(this, Author.class);
 	}
 	
-	public AuthorBook createAuthorBook() {
+	public AuthorBook createAuthorBook(ModelMapper modelMapper) {
 		return modelMapper.map(this, AuthorBook.class);
 	}
 	
-	public static AuthorFormDto of(Author author) {
+	public static AuthorFormDto of(Author author, ModelMapper modelMapper) {
 		return modelMapper.map(author, AuthorFormDto.class);
 	}
-	
 	
 }
