@@ -45,6 +45,7 @@ public class SearchController {
 		
 		try {
 			apiService.saveBookWhenSearchByAladinApi(bookSearchDto);
+			searchService.addSearchKeyword(bookSearchDto);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

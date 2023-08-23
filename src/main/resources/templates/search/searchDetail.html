@@ -40,7 +40,7 @@
 		<h5>
 			검색결과&nbsp;&nbsp;<span>[[${searchCount}]]</span>
 		</h5>
-		<div class="container">
+		<div class="container d-flex">
 			<div id="search-data" class="row row-cols-1 row-cols-md-6 g-4">
 				
 				<th:block th:if="${!#lists.isEmpty(searchBookList.getContent())}" th:each="searchBook, status : ${searchBookList.getContent()}">
