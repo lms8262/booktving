@@ -32,8 +32,13 @@
 							<li class="menu slide-menu"><a href="javascript:;"> <span>나의정보</span>
 							</a>
 								<ul class="submenu">
-									<li><a href="/login/update"> <span>개인정보 수정</span>
+									<li><a href="/login" sec:authorize="isAnonymous()"> <span>개인정보
+												수정</span>
 									</a></li>
+									<li><a href="/login/update"
+										sec:authorize="isAuthenticated()"> <span>개인정보 수정</span>
+									</a></li>
+
 									<li><a href=""> <span>대여내역</span>
 									</a></li>
 									<li><a href=""> <span>이용권 관리</span>
@@ -44,9 +49,8 @@
 
 					<div class="col-lg-3">
 						<ul class="nav_right">
-							<li class="admin"><a href="/admin/book" class="admin-btn"
-								> <img alt="admin"
-									src="/images/admin.png">
+							<li class="admin"><a href="/admin/book" class="admin-btn">
+									<img alt="admin" src="/images/admin.png">
 							</a></li>
 							<li class="login"><a href="/login" class="login-btn"
 								sec:authorize="isAnonymous()"> <img alt="login"
