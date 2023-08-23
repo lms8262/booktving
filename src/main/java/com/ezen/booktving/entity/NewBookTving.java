@@ -23,7 +23,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 @NoArgsConstructor
 @AllArgsConstructor
-public class NewBookTving {
+public class NewBookTving  extends BaseTimeEntity{
 	
 	@Id
 	@Column(name = "new_book_tving_id")

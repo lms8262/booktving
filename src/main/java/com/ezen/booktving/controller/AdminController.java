@@ -1,33 +1,40 @@
 package com.ezen.booktving.controller;
 
-
 import java.security.Principal;
+
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ezen.booktving.dto.AdminRentHistBookDto;
+import com.ezen.booktving.dto.AuthorFormDto;
+import com.ezen.booktving.dto.AuthorSearchDto;
 import com.ezen.booktving.dto.BookRegFormDto;
 import com.ezen.booktving.dto.BookSearchDto;
+import com.ezen.booktving.entity.Author;
 import com.ezen.booktving.entity.Book;
 import com.ezen.booktving.entity.RentBook;
 import com.ezen.booktving.repository.RentRepository;
 import com.ezen.booktving.service.AdminBookRentHistService;
+import com.ezen.booktving.service.AuthorService;
 import com.ezen.booktving.service.BookRegService;
 
 import jakarta.validation.Valid;
@@ -37,6 +44,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AdminController {
 	
+  private final AuthorService authorService;
 	private final BookRegService bookRegService;
 	private final AdminBookRentHistService adminBookRentHistService;
 	
@@ -190,6 +198,101 @@ public class AdminController {
 		
 		return "admin/adminKeyword";
 	}
+	
+	//추천작가 관리 페이지 보여주기
+	@GetMapping(value = {"/admin/author", "/admin/author/{page}"})
+	public String adminAuthor(AuthorSearchDto authorSearchDto, @PathVariable("page") Optional<Integer> page, Model model) {
+		
+		try {
+			Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
+			Page<Author> authors = authorService.getAdminAuthorPage(authorSearchDto, pageable);
+
+			model.addAttribute("authors", authors);
+			model.addAttribute("authorSearchDto", authorSearchDto);
+			model.addAttribute("maxPage", 5);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "admin/adminAuthor";
+	}
+	
+	//추천작가 등록 페이지 보여주기
+	@GetMapping(value = "/admin/authorReg")
+	public String adminAuthorReg(Model model) {
+		model.addAttribute("authorFormDto", new AuthorFormDto());
+		
+		return "admin/adminAuthorReg";
+	}
+	
+	//추천작가 등록하기
+	@PostMapping(value = "/admin/authorReg")
+	public String authorNew(@Valid AuthorFormDto authorFormDto, BindingResult bindingResult, Model model, 
+			@RequestParam("authorImgFile") MultipartFile authorImgFile, @RequestParam("authorBookImgFile") MultipartFile authorBookImgFile) {
+		
+		if(bindingResult.hasErrors()) {
+			return "admin/adminAuthorReg";
+		}
+		
+		if(authorImgFile == null) {
+			model.addAttribute("errorMessage", "이미지 등록은 필수입니다.");
+			return "admin/adminAuthorReg";
+		}
+		
+		try {
+			authorService.saveAuthorFormDto(authorFormDto, authorImgFile, authorBookImgFile);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("errorMessage", "작가 등록 중 에러가 발생했습니다.");
+			return "admin/adminAuthorReg";
+		}
+		
+		return "redirect:/";
+	}
+		
+	//추천작가 수정 페이지 보여주기
+	@GetMapping(value = "/admin/authorModify/{authorId}")
+	public String adminAuthorModify(@PathVariable("authorId") Long authorId, Model model) {
+		
+		try {
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("errorMessage", "데이터를 가져올 때 에러가 발생했습니다.");
+			
+			model.addAttribute("authorFormDto", new AuthorFormDto());
+			return "admin/adminAuthorReg";
+		}
+		
+		return "admin/adminAuthorModify";
+	}
+	
+	//추천작가 수정등록하기
+	@PostMapping(value = "/admin/authorModify/{authorId}")
+	public String authorUpdate(@Valid AuthorFormDto authorFormDto, Model model, BindingResult bindingResult, 
+				@RequestParam("authorImgFile") MultipartFile authorImgFile, @RequestParam("authorBookImgFile") MultipartFile authorBookImgFile) {
+		
+		if(bindingResult.hasErrors()) {
+			return "admin/adminAuthorReg";
+		}
+		
+		if(authorImgFile == null && authorBookImgFile == null && authorFormDto.getId() == null ) {
+			model.addAttribute("errorMessage", "이미지는 필수 등록입니다.");
+			return "admin/adminAuthorReg";
+		}
+		
+		try {
+			authorService.updateAuthor(authorFormDto, authorImgFile);
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("errorMessage", "작가 정보 수정 중 에러가 발생했습니다.");
+			return "admin/adminAuthorReg";
+		}
+		return "redirect:/";
+	}
+	
 	
 	//문의관리 페이지 보여주기
 	@GetMapping(value = "/admin/question")

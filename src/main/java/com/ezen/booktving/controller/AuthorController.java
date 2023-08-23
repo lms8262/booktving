@@ -14,10 +14,10 @@ public class AuthorController {
 	}
 	
 	//작가 상세페이지 보여주기
-		@GetMapping(value = "/author/Detail")
-		public String authotDetail() {
+	@GetMapping(value = "/author/Detail")
+	public String authotDetail() {
 			
-			return "author/authorDetail";
-		}
+		return "author/authorDetail";
+	}
 	
 }
