@@ -2,6 +2,7 @@ package com.ezen.booktving.service;
 
 import java.io.File;
 import java.io.FileOutputStream;
+
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -53,9 +54,5 @@ public class FileService {
 			log.info("파일이 존재하지 않습니다.");
 		}
 	}
-	
-	
-	
-	
-	
+
 }

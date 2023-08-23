@@ -41,7 +41,7 @@ public class BookService {
 		Book book = bookDetailRepository.findByIsbnOrderByIdAsc(isbn);
 		
 		//책 이미지 가져오기
-		List<BookImg> bookImgList = bookImgRepository.findByIdOrderByIdAsc(book.getId());
+		List<BookImg> bookImgList = bookImgRepository.findByBookIdOrderByIdAsc(book.getId());
 		
 		//이미지 엔티티 객체 -> dto로 변환
 		List<BookImgDto> bookImgDtoList = new ArrayList<>();
