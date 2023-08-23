@@ -52,4 +52,11 @@ public class BookImg extends BaseTimeEntity {
 	@JoinColumn(name = "book_id", nullable = false)
 	private Book book;
 	
+	//이미지에 대한 정보를 업데이트 하는 메소드
+	public void updateBookImg(String oriImgName, String imgName, String imgUrl) {
+		this.oriImgName = oriImgName;
+		this.imgName = imgName;
+		this.imgUrl = imgUrl;
+	}
+
 }

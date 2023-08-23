@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="~{layouts/layout1}">
-	
-	 
-<!-- adminBook 페이지 CSS --> 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+
+<head>
+	<meta name="_csrf" th:content="${_csrf.token}" />
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
+
+<!-- adminBook 페이지 CSS -->
 <th:block layout:fragment="css">
-	<link rel="stylesheet" href="/css/adminBook.css" />	
+	<link rel="stylesheet" href="/css/adminBook.css" />
 </th:block>
 
 <div layout:fragment="content">
@@ -15,115 +20,170 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-12 section-wrap">
-				
+
 					<div class="row">
 						<nav class="menu col-lg-2">
 							<ul class="col-12">
-								<li><a href="/admin/book">도서관리</a></li>
+								<li><a href="/admin/books">도서관리</a></li>
 								<li><a href="/admin/member">회원관리</a></li>
-								<li><a href="/admin/rent">대출관리</a></li>
+								<li><a href="/admin/rents">대출관리</a></li>
 								<li><a href="/admin/keyword">키워드 관리</a></li>
+								<li><a href="/admin/author">추천작가 관리</a></li>
 								<li><a href="/admin/question">문의관리</a></li>
 								<li><a href="/admin/notice">공지관리</a></li>
 							</ul>
 						</nav>
-						
-						
+
+
 						<div class="admin-content col-lg-10">
 							<div class="container">
 								<div class="row">
 									<div class="col-12">
-										
+
 										<div class="top-title">
 											<h4>도서수정</h4>
 											<hr>
 										</div>
-										
-										
-										<form role="form" action="">
+
+
+										<form role="form"
+											th:action="@{'/admin/book/' + ${bookRegFormDto.id}}"
+											method="post" enctype="multipart/form-data"
+											th:object="${bookRegFormDto}" name="bookRegForm">
+
+											<input type="hidden" th:field="*{id}">
+
 											<div class="col-sm-1"></div>
 
 											<div class="col-sm-10">
 												<div class="bookReg-form-wrap">
-													<label for="bookName" class="book-reg-label">도서명</label>
-													<br />
-													<input type="text" placeholder="도서명 입력" class="book-name col-12" />
+													<label th:for="bookName" class="book-reg-label">도서명</label>
+													<br /> <input type="text" placeholder="도서명 입력"
+														class="book-name col-12" th:field="*{bookName}" />
+													<p th:if="${#fields.hasErrors('bookName')}"
+														th:errors="*{bookName}" class="fieldError">Incorrect
+														Data</p>
 												</div>
-												
+
 												<div class="bookReg-form-wrap">
-													<label for="author" class="book-reg-label">저자명</label>
-													<br />
-													<input type="text" placeholder="저자명 입력" class="col-6" />
+													<label th:for="author" class="book-reg-label">저자명</label> <br />
+													<input type="text" placeholder="저자명 입력" class="col-6"
+														th:field="*{author}" />
+													<p th:if="${#fields.hasErrors('author')}"
+														th:errors="*{author}" class="fieldError">Incorrect
+														Data</p>
 												</div>
-												
+
 												<div class="bookReg-form-wrap">
-													<label for="publisher" class="book-reg-label">출판사명</label>
-													<br />
-													<input type="text" placeholder="출판사명 입력" class="col-6" />
+													<label th:for="publisher" class="book-reg-label">출판사명</label>
+													<br /> <input type="text" placeholder="출판사명 입력"
+														class="col-6" th:field="*{publisher}" />
+													<p th:if="${#fields.hasErrors('publisher')}"
+														th:errors="*{publisher}" class="fieldError">Incorrect
+														Data</p>
 												</div>
-												
+
 												<div class="bookReg-form-wrap">
-													<label for="category" class="book-reg-label">카테고리</label>
-													<br />
-													<input type="text" placeholder="카테고리 입력" class="col-6" />
+													<label th:for="category" class="book-reg-label">카테고리</label>
+													<br /> <input type="text" placeholder="카테고리 입력"
+														class="col-6" th:field="*{category}" />
+													<p th:if="${#fields.hasErrors('category')}"
+														th:errors="*{category}" class="fieldError">Incorrect
+														Data</p>
 												</div>
-												
+
 												<div class="page-to-isbn">
 													<div class="bookReg-form-wrap">
-														<label for="page" class="book-reg-label">페이지 수</label>
-														<input type="text" placeholder="페이지 수 입력" />
+														<label th:for="page" class="book-reg-label">페이지 수</label>
+														<input type="text" placeholder="페이지 수 입력"
+															th:field="*{page}" />
+														<p th:if="${#fields.hasErrors('page')}"
+															th:errors="*{page}" class="fieldError">Incorrect Data</p>
 													</div>
-													
+
 													<div class="bookReg-form-wrap">
-														<label for="publicationDate" class="book-reg-label">발행일</label>
-														<input type="text" placeholder="발행일 입력" />
+														<label th:for="publicationDate" class="book-reg-label">발행일</label>
+														<input type="text" placeholder="발행일 입력"
+															th:field="*{publicationDate}" />
+														<p th:if="${#fields.hasErrors('publicationDate')}"
+															th:errors="*{publicationDate}" class="fieldError">Incorrect
+															Data</p>
 													</div>
-													
+
 													<div class="bookReg-form-wrap">
-														<label for="ISBN" class="book-reg-label">ISBN</label>
-														<input type="text" placeholder="ISBN 입력" />
+														<label th:for="ISBN" class="book-reg-label">ISBN</label> <input
+															type="text" placeholder="ISBN 입력" th:field="*{isbn}" readonly="readonly" />
+														<p th:if="${#fields.hasErrors('isbn')}"
+															th:errors="*{isbn}" class="fieldError">Incorrect Data</p>
 													</div>
-													
+
 												</div>
-												
+
 												<div class="bookReg-form-wrap">
-													<label for="bookIntroduction" class="book-reg-label">책소개</label>
-													<textarea rows="10" class="form-control book-introduction col-12" id="bookIntroduction"></textarea>
+													<label th:for="bookIntroduction" class="book-reg-label">책소개</label>
+													<textarea rows="10"
+														class="form-control book-introduction col-12"
+														id="bookIntroduction" th:field="*{bookIntroduction}"></textarea>
+													<p th:if="${#fields.hasErrors('bookIntroduction')}"
+														th:errors="*{bookIntroduction}" class="fieldError">Incorrect
+														Data</p>
 												</div>
-												
+
 												<div class="bookReg-form-wrap">
-													<label for="contents" class="book-reg-label">목차</label>
-													<textarea rows="10" class="form-control contents col-12" id="contents"></textarea>
-												</div>										
-											
-												<div class="imgbox" >
-													<div class="md-3">
-														<label for="formFile" class="form-label"></label>
-														<input class="form-control" type="file" id="BookImgFile" name="BookImgFile">
+													<label th:for="contents" class="book-reg-label">목차</label>
+													<textarea rows="10" class="form-control contents col-12"
+														id="contents" th:field="*{contents}"></textarea>
+													<p th:if="${#fields.hasErrors('contents')}"
+														th:errors="*{contents}" class="fieldError">Incorrect
+														Data</p>
+
+												</div>
+
+												<div class="imgbox">
+													<div class="md-3"
+														th:if="${not #lists.isEmpty(bookRegFormDto.bookImgDtoList)}"
+														th:each="bookImgDto, status: ${bookRegFormDto.bookImgDtoList}">
+														<label for="formFile" class="form-label"
+															th:text="${not #strings.isEmpty(bookImgDto.oriImgName)} ? ${bookImgDto.oriImgName} : '상품이미지' + ${status.index + 1}"></label>
+														<input type="hidden" name="bookImgIds"
+															th:value="${bookImgDto.id}"> <input
+															class="form-control" type="file" id="bookImgFile"
+															name="bookImgFile">
 													</div>
 												</div>
-												
+
 												<!-- 등록버튼  -->
 												<div class="form-group button col-12">
-													<div class="col-md-8"></div>
+													<div class="col-md-6"></div>
 													<div class="col-md-2">
-														<button type="button" class="btn reg_btn" style="width: 100px;">수정완료</button>
+														<button type="submit" class="btn reg_btn"
+															style="width: 100px;">수정완료</button>
 													</div>
 													<div class="col-md-2">
-														<button type="button" class="btn delete_btn" style="width: 100px;">취소하기</button>
+														<button type="button" class="btn delete_btn"
+															style="width: 100px;"
+															th:onclick="location.href='/admin/books'">목록으로</button>
+													</div>
+													<div class="col-md-2">
+														<button th:value="*{id}" type="button" class="btn delete_btn"
+															style="width: 100px;"
+															onclick="deleteBooks(this.value)">삭제하기</button>
 													</div>
 												</div>
 											</div>
-											
-											<div class="col-sm-1"></div>		
-											
+
+											<div class="col-sm-1"></div>
+
+
+											<input type="hidden" th:name="${_csrf.parameterName}"
+												th:value="${_csrf.token}">
 										</form>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				
+
 				</div>
 			</div>
 		</div>
@@ -135,7 +195,69 @@
 <!-- adminBook 페이지 javaScript -->
 <th:block layout:fragment="script">
 
-	<script>
+	<script th:inline="javascript">
+		
+	$(document).ready(function(){
+    	var errorMessage = [[${errorMessage}]];
+    	if(errorMessage != null){
+        	alert(errorMessage);
+    	}
+		
+		bindDomEvent(); //이벤트를 등록
+	});
+	
+	//파일 첨부시 확장자가 이미지 파일인지 검사한다.
+    function bindDomEvent(){
+        $(".custom-file-input").on("change", function() {
+            var fileName = $(this).val().split("\\").pop();  //이미지 파일명
+            var fileExt = fileName.substring(fileName.lastIndexOf(".")+1); // 확장자 추출
+            fileExt = fileExt.toLowerCase(); //소문자 변환
+
+            if(fileExt != "jpg" && fileExt != "jpeg" && fileExt != "gif" && fileExt != "png" && fileExt != "bmp"){
+                alert("이미지 파일만 등록이 가능합니다.");
+                return;
+            }
+
+            $(this).siblings(".custom-file-label").html(fileName);
+        });
+    }
+	
+    function deleteBooks(bookId) {
+		const deleteConf = confirm("삭제하시겠습니까?");
+		if(!deleteConf) return; //취소버튼 누르면
+		
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		
+		//request URL
+		var url = "/admin/book/" + bookId + "/delete";
+		
+		
+		$.ajax({
+			url : url, //request URL
+			type : "DELETE", //전송방식
+			contentType : "application/json",
+			beforeSend : function(xhr) {
+				//데이터를 전송하기 전에 헤더에 csrf 값을 설정
+				xhr.setRequestHeader(header, token);
+			},
+			dataType : "json",
+			cache : false,
+			success : function(result, status) {
+				location.href = '/admin/books';
+			},
+			error : function(jqXHR, status, error) {
+				if(jqXHR.status == '401') {
+					alert('로그인 후 이용해주세요.');
+					location.href = '/member/login';
+				} else {
+					alert(jqXHR.responseText);
+				}
+			}
+			
+		});
+	}
+	
 	
 	</script>
 </th:block>

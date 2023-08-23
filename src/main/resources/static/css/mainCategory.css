@@ -1,7 +1,19 @@
 @charset "UTF-8";
 
+
+* {
+	box-sizing: content-box !important;
+}
+
+.top {
+	box-sizing: content-box !important;
+}
+
+.content {
+	box-sizing: content-box !important; 
+}
+
 .category {
-	width: 50%;
 	padding-left: 10px;
 	padding-right: 10px;
 	padding-bottom: 10px;
@@ -16,8 +28,13 @@
 	margin-top: 30px;
 	padding-left: 10px;
 	cursor: pointer;
+	overflow: hidden;
 }
 
+
+.maincategoryimg {
+	rotate: 10deg;	
+}
 
 .category-maininfo {
 	width: 80%;

@@ -36,6 +36,8 @@ public class BookDto {
 	
 	private List<BookImgDto> bookImgDtoList = new ArrayList<>();
 	
+	private List<BookReviewDto> bookReviewDtoList = new ArrayList<>();
+	
 	private static ModelMapper modelMapper = new ModelMapper();
 	
 	public Book createBook() {

@@ -5,7 +5,7 @@ p {
 }
 
 .subCategory{
-	width: 50%;
+
 	padding-left: 10px;
 	padding-right: 10px;
 	padding-bottom: 10px;
@@ -20,6 +20,10 @@ p {
 	padding-left: 10px;
 }
 
+.subCategory-card {
+	box-shadow: 2px 2px 2px 2px lightgray;
+}
+
 .heartbtn {
 	border-radius: 8px;
 	width: 90px;
@@ -28,6 +32,7 @@ p {
 	background-color: #FFD360;
 	border-color: white;
 	color: white;
+	
 }
 
 .heartbtn:hover {
@@ -38,9 +43,16 @@ p {
 	border-color: white !important;
 }
 
+.heartbtn:focus {
+	border: none;
+	outline: none;
+	
+}
+
 
 .subcategoryimg {
 	padding: 5px;
+
 }
 
 .subCategory-2 {

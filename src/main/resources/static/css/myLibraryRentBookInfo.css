@@ -1,0 +1,154 @@
+@charset "UTF-8";
+
+.rentbookInfo {
+	flex-wrap: nowrap;
+}
+
+
+.bookInfo-sec1 {
+	margin: 0;
+	display: flex;
+	flex-direction: column;
+}
+
+.rent-btnbox1 {
+	margin-top: 10px;
+}
+
+.rent-btnbox2 {
+	margin-top: 15px;
+}
+
+.rent-btn {
+	padding-left: 70px;
+	padding-right: 70px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	border-radius: 5px;
+	border-color: white;
+	font-weight: bold;
+	font-size: 1.1rem;
+}
+
+.rent-read-btn {
+	background-color: #FFD360;
+}
+
+.rent-complete-btn {
+	background-color: #504C5B;
+	color: #FFD360;
+}
+
+.review {
+	margin-top: 60px;
+}
+
+.total-review {
+	margin: 0;
+}
+
+.review-sub1 {
+	margin: 0;
+}
+
+.review-sub2 {
+	margin-bottom: 40px;
+}
+
+.review-bar1 {
+	border: 1px solid gray;
+	border-radius: 5px;
+	margin: 0px;
+	width: 90%;
+	text-align: center;
+}
+
+.review-bar2 {
+	width: 90%;
+	padding: 10px;
+}
+
+.rentbook-btn1 {
+	width: 8%;
+	background-color: white;
+	border: 0;
+	color: red;
+	padding: 5px;
+	font-size: 19px;
+}
+
+.rentbook-btn2 {
+	border-radius: 5px;
+	border-color: white;
+	background-color: #FFD360;
+	color: white;
+	padding: 6px;
+	box-shadow: none !important;
+	font-size: 0.9rem;
+	width: 9%;
+}
+
+.review-h5 {
+	font-weight: 550;
+	font-size: 1.1rem;
+}
+
+.bookInfo-sec2 {
+	margin: 0;
+	margin-top: 50px;
+} 
+
+#bookName {
+	font-weight: bold;
+	font-size: 1.5rem;
+}
+
+#author {
+	font-weight: bold;
+	color: #636363;
+}
+
+#publisher {
+	font-weight: bold;
+	color: gray;
+}
+
+
+#bookinfo {
+	font-weight: bold;
+	font-size: 1.2rem;
+}
+
+#bookContent {
+	font-size: 0.9rem;
+	color: black;
+}
+
+#publication-date {
+	font-size: 0.9rem;
+}
+
+.rent-book-content {
+	margin-bottom: 0.5rem;
+}
+
+.rentbookcontent {
+	padding: 15px;
+}
+
+.rentbook-end-box {
+	display: flex;
+	justify-content: end;
+	margin-right: 55px;
+	padding-bottom: 50px;
+	
+	
+}
+
+.rentbook-list-btn {
+	border-radius: 5px;
+	border-color: white;
+    color: white;
+    background-color: #FFB800;
+    padding: 8px;
+}

@@ -1,0 +1,39 @@
+@charset "EUC-KR";
+/* Add your CSS styles here */
+	/* Global Styles */
+		.w3-content {
+			max-width: 800px;
+			margin: 0 auto;
+		}
+
+		.w3-container {
+			padding: 20px;
+			border-radius: 5px;
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+		}
+
+		.w3-center {
+			text-align: center;
+		}
+
+		.w3-large {
+			font-size: 24px;
+		}
+
+		.w3-margin-top {
+			margin-top: 20px;
+		}
+
+		/* Specific Styles */
+		.w3-card-4 {
+			background-color: #ffffff;
+		}
+
+		.result-message {
+			margin-top: 20px;
+			font-weight: bold;
+		}
+
+		.error-message {
+			color: red;
+		}

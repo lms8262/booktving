@@ -68,40 +68,41 @@
 					</ul>
 				</div>
 			</div>
-		
-		<div class="bookindex">
-			<p class="d-inline-flex gap-1">
-				<a class="btn btn-primary" data-bs-toggle="collapse"
-					href="#collapseExample" role="button" aria-expanded="false"
-					aria-controls="collapseExample"
-					style="background-color: white; color: black; border-style: none; font-weight: bolder">
-					목차 </a>
-			</p>
-			<div class="collapse" id="collapseExample">
-				<div class="card card-body" th:text="${book.contents}"></div>
+
+			<div class="bookindex">
+				<p class="d-inline-flex gap-1">
+					<a class="btn btn-primary" data-bs-toggle="collapse"
+						href="#collapseExample" role="button" aria-expanded="false"
+						aria-controls="collapseExample"
+						style="background-color: white; color: black; border-style: none; font-weight: bolder">
+						목차 </a>
+				</p>
+				<div class="collapse" id="collapseExample">
+					<div class="card card-body" th:text="${book.contents}"></div>
+				</div>
 			</div>
-		</div>
-		<div class="bookindex">
-			<p class="d-inline-flex gap-1">
-				<a class="btn btn-primary" data-bs-toggle="collapse"
-					href="#collapseExample" role="button" aria-expanded="false"
-					aria-controls="collapseExample"
-					style="background-color: white; color: black; border-style: none; font-weight: bolder">
-					저자 소개 </a>
+			<div class="bookindex">
+				<p class="d-inline-flex gap-1">
+					<a class="btn btn-primary" data-bs-toggle="collapse"
+						href="#collapseExample" role="button" aria-expanded="false"
+						aria-controls="collapseExample"
+						style="background-color: white; color: black; border-style: none; font-weight: bolder">
+						저자 소개 </a>
 
 
-			</p>
-			<div class="collapse" id="collapseExample">
-				<div class="card card-body">Some placeholder content for the
-					collapse component. This panel is hidden by default but revealed
-					when the user activates the relevant trigger.</div>
+				</p>
+				<div class="collapse" id="collapseExample">
+					<div class="card card-body">Some placeholder content for the
+						collapse component. This panel is hidden by default but revealed
+						when the user activates the relevant trigger.</div>
+				</div>
 			</div>
-		</div>
-		
-		<div class="bookindex bookindex-image">
-			<img src="/images/aladin.png" class="aladin">
-			<h6>알라딘</h6>
-		</div>
+
+			<div class="bookindex bookindex-image">
+				<img src="/images/aladin.png" class="aladin">
+				<h6>알라딘</h6>
+			</div>
+
 
 			<div class="review">
 				<h6 style="font-weight: bolder;">리뷰</h6>
@@ -111,14 +112,27 @@
 							<img src="/images/name.jpg" class="profile-img">
 						</div>
 						<div class="review-content">
-							<p>닉네임</p>
-							<a>가슴이 뭉클합니다</a>
+								<!-- <p class="num" th:text="${book.bookReviewDtoList[0].id}">리뷰번호</p> -->
+								<a class="contents"
+									th:text="${book.bookReviewDtoList[0].content}">내용</a>
 						</div>
 					</li>
 				</ul>
-				<div></div>
+				<div class="myreview">
+					<div class="myprofile">
+						<img src="/images/profile.jpg" class="profile-img">
+					</div>
+					<div class="review-input">
+						<input type="text" placeholder="리뷰를 입력하세요.">
+					</div>
+					<div class="review-register">
+						<button type="button" class="review-button">
+							등록하기
+						</button>
+					</div>
+				</div>
 			</div>
-			</th:block>
+		</th:block>
 	</div>
 
 
