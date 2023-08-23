@@ -10,11 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ezen.booktving.constant.YesNoStatus;
-import com.ezen.booktving.dto.BookImgDto;
 import com.ezen.booktving.dto.BookRentHistDto;
-import com.ezen.booktving.entity.Book;
-import com.ezen.booktving.entity.BookImg;
-import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.entity.RentBook;
 import com.ezen.booktving.repository.BookImgRepository;
 import com.ezen.booktving.repository.BookRepository;

@@ -53,7 +53,6 @@ public class AdminBookRentListRepositoryCustomImpl implements AdminBookRentListR
 		return null; //쿼리문 실행 x
 	}
 	
-	
 	@Override
 	public Page<RentBook> getAdminRentBookPage(BookSearchDto bookSearchDto, Pageable pageable) {
 		

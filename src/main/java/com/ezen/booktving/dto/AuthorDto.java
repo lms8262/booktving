@@ -1,11 +1,9 @@
 package com.ezen.booktving.dto;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.ezen.booktving.entity.Author;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
