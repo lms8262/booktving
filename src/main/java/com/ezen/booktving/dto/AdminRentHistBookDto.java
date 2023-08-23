@@ -4,7 +4,6 @@ import java.time.format.DateTimeFormatter;
 
 import org.modelmapper.ModelMapper;
 
-import com.ezen.booktving.entity.BookImg;
 import com.ezen.booktving.entity.RentBook;
 
 import lombok.Getter;

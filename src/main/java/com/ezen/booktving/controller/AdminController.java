@@ -31,8 +31,6 @@ import com.ezen.booktving.dto.BookRegFormDto;
 import com.ezen.booktving.dto.BookSearchDto;
 import com.ezen.booktving.entity.Author;
 import com.ezen.booktving.entity.Book;
-import com.ezen.booktving.entity.RentBook;
-import com.ezen.booktving.repository.RentRepository;
 import com.ezen.booktving.service.AdminBookRentHistService;
 import com.ezen.booktving.service.AuthorService;
 import com.ezen.booktving.service.BookRegService;

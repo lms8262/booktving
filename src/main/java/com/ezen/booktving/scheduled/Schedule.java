@@ -9,7 +9,6 @@ import java.util.List;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.ezen.booktving.entity.BestSeller;
 import com.ezen.booktving.repository.BestSellerRepository;
 import com.ezen.booktving.repository.NewBookTvingRepository;
 import com.ezen.booktving.service.ApiService;

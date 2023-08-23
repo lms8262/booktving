@@ -7,7 +7,6 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -17,13 +16,10 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import org.springframework.web.reactive.function.client.WebClient;
-
-import org.springframework.web.client.RestTemplate;
 
 import com.ezen.booktving.constant.YesNoStatus;
 import com.ezen.booktving.dto.BookSearchDto;

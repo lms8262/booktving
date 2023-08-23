@@ -1,7 +1,6 @@
 package com.ezen.booktving.entity;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 import com.ezen.booktving.constant.YesNoStatus;
 
