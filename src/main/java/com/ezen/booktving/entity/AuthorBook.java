@@ -1,7 +1,5 @@
 package com.ezen.booktving.entity;
 
-import com.ezen.booktving.dto.AuthorFormDto;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -11,7 +9,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -21,7 +18,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class AuthorBook  extends BaseTimeEntity{
+public class AuthorBook extends BaseTimeEntity{
 	
 	@Id
 	@Column(name = "author_book_id")

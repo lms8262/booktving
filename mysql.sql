@@ -10,6 +10,7 @@ select * from best_seller;
 select * from new_book_tving;
 select * from book;
 select * from book_img;
+
 select * from book_review;
 select * from member;
 select * from rent_book;
