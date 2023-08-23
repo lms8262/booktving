@@ -21,7 +21,7 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class BestSeller extends BaseTimeEntity {
+public class BestSeller extends BaseEntity {
 
 	@Id
 	@Column(name = "best_seller_id")

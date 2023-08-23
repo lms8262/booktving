@@ -6,6 +6,7 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -48,30 +49,54 @@ public class AuthorService {
 		return authorPage;
 	}
 	
-	//추천작가 등록 페이지
-	public Long saveAuthorFormDto(AuthorFormDto authorFormDto, MultipartFile authorImgFile, MultipartFile authorBookImgFile) throws Exception{
+	//추천작가 등록
+	public Long saveAuthor(AuthorFormDto authorFormDto, MultipartFile authorImgFile) throws Exception{
 	
 		//작가등록
-		Author author = authorFormDto.createAuthor(modelMapper);
+		Author author = authorFormDto.createAuthor();
 		authorRepository.save(author);
 		
 		//작가이미지 등록
 		AuthorImg authorImg = new AuthorImg();
 		authorImg.setAuthor(author);
-		authorImgService.saveAuthorImg(authorImg, authorImgFile);
+		authorImgService.saveAuthorImg(authorImg, authorImgFile);		
+		
+		return author.getId();
+	}
+	
+	//추천작가 도서등록에서 작가정보가져오기
+	public List<Author> listAll(){
+		List<Author> authorList = authorRepository.findAll(Sort.by(Sort.Direction.ASC, "authorNameKo"));
+		
+		List<AuthorFormDto> authorFormDtoList = new ArrayList<>();
+		
+		for(Author author : authorList) {
+			
+			AuthorFormDto authorFormDto = AuthorFormDto.of(author);
+			
+			authorFormDtoList.add(authorFormDto);			
+		}
+		
+		return authorList;
+	}
+	
+	//추천작가 도서등록
+	public Long saveAuthorBook(AuthorBookDto authorBookDto, MultipartFile authorBookImgFile) throws Exception {
 		
 		//작가도서 등록
-		AuthorBook auhthorBook = authorFormDto.createAuthorBook(modelMapper);
+		AuthorBook auhthorBook = authorBookDto.createAuthorBook();
 		authorBookRepository.save(auhthorBook);
-		
+				
 		//작가도서 이미지 등록
 		AuthorBookImg authorBookImg = new AuthorBookImg();
 		authorBookImg.setAuthorBook(auhthorBook);
 		authorImgService.saveAuthorBookImg(authorBookImg, authorBookImgFile);
 		
-		return author.getId();
+		return auhthorBook.getId();
 	}
 	
+	
+	/*
 	//작가 & 작가도서 정보 가져오기
 	@Transactional(readOnly = true)
 	public AuthorFormDto getAuthorInfo(Long authorId) {
@@ -149,6 +174,6 @@ public class AuthorService {
 		return savedAuthorBook.getId();
 		
 	}
-	
+	*/
 
 }

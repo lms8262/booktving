@@ -41,7 +41,7 @@
 										</div>
 										
 										
-										<form role="form" action="">
+										<form role="form" th:action="@{'/admin/author' + ${authors.number}}" method="get" th:object="${authors}" >
 											<!-- 도서관리 contents -->
 											<table class="table table-responsive-md ">						
 												<thead>
@@ -54,15 +54,14 @@
 													</tr>
 												</thead>
 												<tbody>
-													<tr>
+													<tr th:each="author, status : ${authors.getContent()}">
 														<td>
 															<input type="checkbox" value=""/> 
 														</td>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
+														<td class="authorId" th:text="${author.id}"></td>
+														<td class="authorNameKo" th:text="${author.authorNameKo}" ></td>
+														<td class="createdBy" th:text="${author.createdBy}"></td>
+														<td class="regTime" th:text="${author.regTime}"></td>
 													</tr>
 												</tbody>
 											</table>
