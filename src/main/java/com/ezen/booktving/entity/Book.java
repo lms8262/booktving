@@ -11,7 +11,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -20,6 +23,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Book extends BaseTimeEntity {
 	
 	@Id
@@ -40,22 +46,32 @@ public class Book extends BaseTimeEntity {
 	private String publisher;
 	
 	@Column(nullable = false)
-	private Integer page;
-	
-	@Column(nullable = false)
 	private LocalDate publicationDate;
 	
 	@Column(columnDefinition = "text", nullable = false)
 	private String bookIntroduction;
 	
+	@Column(nullable = false)
+	private String category;
+	
+	@Column(nullable = false)
+	private Integer page;
+	
 	@Column(columnDefinition = "text", nullable = false)
 	private String contents;
 	
 	@Column(nullable = false)
-	private String category;
+	private String reqAuthor;
 	
+	@Column(columnDefinition = "text", nullable = false)
+	private String authorInfo;
 	
-	
+	public void updateBookDetail(Integer page, String contents, String reqAuthor, String authorInfo) {
+		this.page = page;
+		this.contents = contents;
+		this.reqAuthor = reqAuthor;
+		this.authorInfo = authorInfo;
+
 	//book 엔티티 수정
 	public void updateBook(BookRegFormDto bookRegFormDto) {
 		this.bookName = bookRegFormDto.getBookName();
@@ -67,5 +83,6 @@ public class Book extends BaseTimeEntity {
 		this.bookIntroduction = bookRegFormDto.getBookIntroduction();
 		this.contents = bookRegFormDto.getContents();
 		this.category = bookRegFormDto.getCategory();
+
 	}
 }

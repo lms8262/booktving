@@ -23,6 +23,9 @@ public class SearchKeyword extends BaseTimeEntity {
 	private Long id;
 	
 	@Column(nullable = false)
+	private String searchKeywordType;
+	
+	@Column(nullable = false)
 	private String searchKeywordName;
 	
 }
