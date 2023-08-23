@@ -1,11 +1,9 @@
 package com.ezen.booktving.repository;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -31,7 +29,6 @@ import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import jakarta.persistence.EntityManager;
-import javassist.bytecode.stackmap.TypeData.ClassName;
 
 public class BookRepositoryCustomImpl implements BookRepositoryCustom{
 	
@@ -116,7 +113,7 @@ public class BookRepositoryCustomImpl implements BookRepositoryCustom{
 	}
 	
 	// 검색 조건에 따른 처리
-	private BooleanExpression searchByLike(String searchBy, String searchQuery) {
+	private BooleanExpression searchByLikeInSearchPage(String searchBy, String searchQuery) {
 		if(StringUtils.equals("Keyword", searchBy)) {
 			return QBook.book.bookName.like("%" + searchQuery + "%")
 					.or(QBook.book.author.like("%" + searchQuery + "%"))
@@ -154,7 +151,7 @@ public class BookRepositoryCustomImpl implements BookRepositoryCustom{
 				.from(bookImg)
 				.join(bookImg.book, book)
 				.where(ltBookId(lastBookId))
-				.where(searchByLike(bookSearchDto.getSearchBy(), bookSearchDto.getSearchQuery()))
+				.where(searchByLikeInSearchPage(bookSearchDto.getSearchBy(), bookSearchDto.getSearchQuery()))
 				.where(bookImg.repYn.eq(YesNoStatus.Y))
 				.orderBy(book.id.desc())
 				.limit(pageable.getPageSize() + 1)
@@ -178,7 +175,7 @@ public class BookRepositoryCustomImpl implements BookRepositoryCustom{
 				.select(Wildcard.count)
 				.from(bookImg)
 				.join(bookImg.book, book)
-				.where(searchByLike(bookSearchDto.getSearchBy(), bookSearchDto.getSearchQuery()))
+				.where(searchByLikeInSearchPage(bookSearchDto.getSearchBy(), bookSearchDto.getSearchQuery()))
 				.where(bookImg.repYn.eq(YesNoStatus.Y))
 				.fetchOne();
 		

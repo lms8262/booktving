@@ -1,7 +1,6 @@
 package com.ezen.booktving.entity;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import com.ezen.booktving.dto.BookRegFormDto;
 
@@ -71,6 +70,8 @@ public class Book extends BaseTimeEntity {
 		this.contents = contents;
 		this.reqAuthor = reqAuthor;
 		this.authorInfo = authorInfo;
+	
+	}
 
 	//book 엔티티 수정
 	public void updateBook(BookRegFormDto bookRegFormDto) {

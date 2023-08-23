@@ -7,7 +7,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.ezen.booktving.constant.Role;
 import com.ezen.booktving.dto.LoginFormDto;
 import com.ezen.booktving.dto.MemberFormDto;
-import com.ezen.booktving.dto.UpdateMember;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

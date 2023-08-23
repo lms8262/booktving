@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ezen.booktving.dto.LoginFormDto;
 import com.ezen.booktving.dto.MemberFormDto;
-import com.ezen.booktving.dto.UpdateMember;
 import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.repository.MemberRepository;
 

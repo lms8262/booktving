@@ -21,7 +21,6 @@ import com.ezen.booktving.repository.BookImgRepository;
 import com.ezen.booktving.repository.BookRepository;
 import com.ezen.booktving.repository.BookReviewRepository;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Service
