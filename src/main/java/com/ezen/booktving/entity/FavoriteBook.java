@@ -1,5 +1,8 @@
 package com.ezen.booktving.entity;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -44,16 +47,27 @@ public class FavoriteBook extends BaseTimeEntity {
 		return new FavoriteBook(member, book);
 	}
 	
-	public static FavoriteBook createFavoriteBook(Member member, Long bookId) {
+	private static List<FavoriteBook> favoriteBooks = new ArrayList<>();
+	
+	public void addFavoriteBook(FavoriteBook favoriteBook) {
+		this.favoriteBooks.add(favoriteBook);
+	}
+	
+	public static FavoriteBook createFavoriteBook(Member member, String isbn) {
 		FavoriteBook favoriteBook = new FavoriteBook();
 		favoriteBook.setMember(member);
 		
-		Book book = new Book();
-        book.setId(bookId);
-        favoriteBook.setBook(book);
+		/*Book book = new Book();
+        book.setId(id);
+        favoriteBook.setBook(book);*/
 		
 		return favoriteBook;
 		
 		
+	}
+
+	public void setBook(Book book) {
+		this.book = book;
+        book.getFavoriteBooks().add(this);		
 	}
 }

@@ -41,6 +41,11 @@ public class BookService {
 	public BookDto getBookDetail(String isbn) {
 		Book book = bookDetailRepository.findByIsbnOrderByIdAsc(isbn);
 		
+		if (book == null) {
+	        // 책 정보가 없을 경우 처리
+	        return null; // 또는 예외 처리 등의 로직을 추가
+	    }
+		
 		//책 이미지 가져오기
 		List<BookImg> bookImgList = bookImgRepository.findByIdOrderByIdAsc(book.getId());
 		

@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,23 +19,32 @@ import com.ezen.booktving.repository.FavoriteBookRepository;
 import com.ezen.booktving.repository.MemberRepository;
 
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 
 @Service
+@Transactional
+@RequiredArgsConstructor
 public class FavoriteBookService {
 	private final FavoriteBookRepository favoriteBookRepository;
 	private final BookRepository bookRepository;
 	private final MemberRepository memberRepository;
 
+	/*@Autowired
+    public FavoriteBookService(FavoriteBookRepository favoriteBookRepository, BookRepository bookRepository, MemberRepository memberRepository) {
+        this.favoriteBookRepository = favoriteBookRepository;
+        this.bookRepository = bookRepository;
+		this.memberRepository = memberRepository;
+    }*/
+	
 	//찜하기
 	public Long like(FavoriteBookDto favoriteBookDto, String email) {
 		
-		Book book = bookRepository.findById(favoriteBookDto.getId())
-									.orElseThrow(EntityNotFoundException::new);
+		Book book = bookRepository.findByIsbn(favoriteBookDto.getIsbn());
 		
 		Member member = memberRepository.findByEmail(email);
 		
 		List<FavoriteBook> favoriteBookList = new ArrayList<>();
-		FavoriteBook favoriteBook = FavoriteBook.createFavoriteBook(member, favoriteBookDto.getId());
+		FavoriteBook favoriteBook = FavoriteBook.createFavoriteBook(member, favoriteBookDto.getIsbn());
 		favoriteBookList.add(favoriteBook);
 		
 		favoriteBook.setBook(book);
@@ -42,12 +53,13 @@ public class FavoriteBookService {
 		return favoriteBook.getId();
 	}
 	
-    @Autowired
-    public FavoriteBookService(FavoriteBookRepository favoriteBookRepository, BookRepository bookRepository, MemberRepository memberRepository) {
-        this.favoriteBookRepository = favoriteBookRepository;
-        this.bookRepository = bookRepository;
-		this.memberRepository = memberRepository;
-    }
+	@Transactional
+	public Page<FavoriteBook> getFavoriteList(String email, Pageable pageable) {
+		Member member = memberRepository.findByEmail(email);
+		return favoriteBookRepository.findByMember(member, pageable);
+	}
+	
+    
 
     public List<FavoriteBook> getFavoriteBooksByMember(Member member) {
         return favoriteBookRepository.findByMember(member);

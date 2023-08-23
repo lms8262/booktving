@@ -13,8 +13,16 @@ import com.ezen.booktving.entity.FavoriteBook;
 import com.ezen.booktving.entity.Member;
 
 public interface FavoriteBookRepository extends JpaRepository<FavoriteBook, Long> {
-	 List<FavoriteBook> findByMember(Member member);
-	 FavoriteBook findByMemberAndBook(Member member, Book book);
-	 @Query("select o from FavoriteBook o where o.member = :member order by o.id desc")
-	 Page<FavoriteBook> findByMember(@Param("member") Member member, Pageable pageable);
+	List<FavoriteBook> findByMember(Member member);
+
+	FavoriteBook findByMemberAndBook(Member member, Book book);
+
+	@Query("select o from FavoriteBook o where o.member = :member order by o.id desc")
+	Page<FavoriteBook> findByMember(@Param("member") Member member, Pageable pageable);
+
+	@Query("select o from FavoriteBook o where o.member.email = :email order by o.id desc")
+	List<FavoriteBook> findFavoriteBooks(@Param("email") String email, Pageable pageable);
+
+	@Query("select count(o) from FavoriteBook o where o.member.email = :email")
+	Long countFavoriteBook(@Param("email") String email);
 }

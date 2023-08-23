@@ -69,14 +69,15 @@ public class BookController {
 			return new ResponseEntity<String>(sb.toString(), HttpStatus.BAD_REQUEST);
 		}
 
+		String email = principal.getName();
+		Long likeId;
 		try {
-	        String email = principal.getName();
-	        Long likeId = favoriteBookService.like(favoriteBookDto, email);
-	        return new ResponseEntity<>(likeId.toString(), HttpStatus.OK);
-	    } catch (Exception e) {
-	        return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-	    }
-		
+			likeId = favoriteBookService.like(favoriteBookDto, email);
+		} catch (Exception e) {
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+
+		}
+		return new ResponseEntity<Long>(likeId, HttpStatus.OK);
 	}
 
 	// 찜 목록
