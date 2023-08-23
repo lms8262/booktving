@@ -50,7 +50,7 @@
 	border-style: none;
 	background-color: #FFD360;
 	border-radius: 20px;
-	font-size: 15px;
+	font-size: 13px;
 }
 
 .rent {
@@ -59,7 +59,7 @@
 	border-style: none;
 	background-color: #FFD360;
 	border-radius: 20px;
-	font-size: 15px;
+	font-size: 13px;
 }
 
 .content .book-info-detail {
@@ -134,6 +134,7 @@ h6 {
 .review {
 	margin-top: 25px;
 	margin-left: 60px;
+	
 }
 
 .profile {
@@ -143,12 +144,21 @@ h6 {
 	padding-top: 20px;
 	padding-left: 0;
 	display: flex;
+	margin-top: 20px;
+}
+
+.myprofile {
+	width: 32px;
+	height: 32px;
+	margin-left: 0px;
+	margin-top: 10px;
 }
 
 .profile-img {
 	width: 32px;
 	height: 32px;
 	border-radius: 70px;
+	
 }
 
 .review-profile {
@@ -158,9 +168,46 @@ h6 {
 .review-content {
 	margin-left: 50px;
 	margin-top: -25px;
+	line-height: 1em;
 }
 
 span {
 	display: block;
 	font-size: 13px;
+}
+
+.myreview {
+	height: 70px;
+	width: 1050px;
+	display: flex;
+	margin: 0;
+	padding-top: 20px;
+	margin-right: 50px;
+}
+
+.review-input {
+	margin: 0;
+	padding-left: 10px;
+
+}
+
+input {
+	border: 1px solid #e4e4e4;
+	border-radius: 5px;
+	height: 50px;
+	width: 900px;
+}
+
+.review-register {
+	padding-left: 10px;
+	
+}
+
+.review-button {
+	width: 80px;
+	height: 35px;
+	border-style: none;
+	background-color: #FFD360;
+	height: 50px;
+	border-radius: 5px;
 }

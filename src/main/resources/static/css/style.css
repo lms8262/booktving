@@ -66,24 +66,29 @@ ul{
 }
 
 .nav_left{
-	width: 520px;
 	height: 40px;
 	line-height: 40px;
 	display: flex;
 	align-items: center;
+	justify-content: flex-start;
 	padding: 0;
 	margin: 0;	
-	position: relative;
 }
 
 nav .menu{
-	width: 120px;
+	width: auto;
 	height: 40px;
 	line-height: 40px;
 	display: block;	
 	padding: 0 !important;
-	margin: 0 !important;
+	margin: 0 10px !important;
 	text-align: center;
+	position: relative;
+}
+
+nav .menu a{
+	width: auto;
+	padding: 0 10px;
 }
 
 nav li:hover {
@@ -94,9 +99,7 @@ nav .submenu{
 	display: none;
 	width: 150px;
 	position:absolute; 
-	padding: 0;
-	top: 40px;
-	left: 435px;	
+	padding: 0;	
 	border: 1px solid #eee;
 	background-color: #fff;
 }
@@ -105,7 +108,6 @@ nav .slide-menu:hover .submenu{
 	display: block !important;
     z-index: 100 !important;
 }
-
 
 nav .submenu li {
 	padding: 5px 0;
@@ -121,13 +123,23 @@ nav .submenu li:hover{
 }
 
 .nav_right{
+	height: 40px;
+	line-height: 40px;
 	display: flex;
 	align-items: center;
-	justify-content:flex-end;
+	justify-content: flex-start;
 	padding: 0;
 	margin: 0;
 }
 
+.nav_right li {
+	width:auto;
+	margin: 0 10px;
+}
+
+.nav_right li a{
+	width: auto;
+}
 
 .admin-btn img{
 	width: 30px;
@@ -422,7 +434,7 @@ form nav {
 .footer-content{
 	height: 300px;
 	background-color: #FFD360;
-	padding: 30px 0;
+	padding: 50px 0;
 	display: block;
 	position: relative;
 }

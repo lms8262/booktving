@@ -1,4 +1,9 @@
 @charset "UTF-8";
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
 
 h5 {
 	font-weight: bold;
@@ -35,8 +40,8 @@ h5 {
 	width: 100%;
 }
 
-
 .contents-wrap{
+	display: block;
 	position: relative;	
 }
 
@@ -52,11 +57,12 @@ h5 {
 }
 
 .slide-contents{
-	display: flex;
+	display: flex;	
 	height: 320px;
 	position: absolute;
 	top: 50px;
-	left: 25%;
+	left: 50%;
+	transform: translateX(-50%);	
 }
 
 .img{
@@ -146,32 +152,67 @@ h5 {
 
 /* 북티빙 Top10 */
 .top10-wrap{
-	height: 450px;
+	height: 500px;
 	padding-top: 30px;
 }
 
-.top10-submenu{
-	display: flex;
-	width: 200px;
-	height: 30px;
-	line-height: 30px;
-	margin: 0;		
-	margin-left: 30px;
+.tab-content{
+	margin: 0;
 }
 
 .top10-contents-wrap {
 	display: flex;
-	width: 200px;
-	margin: 0;
+	justify-content:center;
+	width: 85%;
+	margin: 0 auto;
 	padding-top: 20px;
+}
+
+.tabmenu {
+	width: 100%;
+	display: flex;
+	height: 450px;
+	margin: 0;
+	padding: 0;
+}
+
+.tabmenu>li {
+	width: 70px;
+	line-height: 40px;
+	margin: 0;
+}
+
+.tabmenu>li>a{
+	display: block;
+	font-size: 14px;
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+.tabmenu>li>a:hover,
+.tabmenu>li>a:focus,
+.tabmenu>li>a:active {
+	font-weight: bold;
+}
+
+.tabmenu>li .rank-list{
+	display: flex;
+	height: 0;
+	overflow: hidden;
+	margin: 0 auto;
+}
+
+.tabmenu >li.active .rank-list{
+	display: flex;
+	width: 1500px;
+	height: 380px;
+	z-index: 100;
+	padding: 0;
+	margin-left: -180px;
 }
 
 .top10-contents {
 	margin: 5px;
-}
-
-.position-relatiove{
-	height: 225px;
 	position: relative;
 }
 
@@ -179,64 +220,56 @@ h5 {
 	display: block;
 	position: absolute;
 	bottom: 15px;
+	z-index: 50;
 }
 
 .top10-rank h1{
 	color: #fff;
-	-webkit-text-stroke: 2px #000;
-	font-weight: bold;
-	font-size: 60px;
+	-webkit-text-stroke: 2.5px #000;
+	font-weight: bolder;
+	font-size: 70px;
+	text-shadow: 2px 2px 2px #eee;
 }
 
 .top10-contents .top10-cover{
 	width: 170px;
-	height: 225px;
+	height: 230px;
 	overflow: hidden;
-	padding-left: 13px;
-	background-color: #000;
-	margin-left: 15px;
+	margin-left: 20px;
+	position: relative;
+}
+
+.top10-contents .top10-cover a{
+	width: 100%;
+	height: 100%;
+	position: absolute;	
 }
 
 .top10-contents .top10-cover img{
-	
+	width: 170px;
+	height: 230px;
 }
 
 .top10-contents-text {
 	width: 175px ;
 	margin: 0;
-	margin-top: 10px;
-}
-
-.top10-rank {
-	width: 30px;
-	display: flex;
-	align-items: center;
-	margin: 0;
 }
 
 .top10-title-author {
-	width: 130px;
+	width: 170px;
 	margin: 0;
-	padding-left: 15px;
-}
-
-.top10-title-author div{
-	padding: 0;
+	margin-left: 17px;
+	padding-left: 10px;
 	overflow: hidden;
   	white-space: nowrap;
   	text-overflow: ellipsis;
   	word-break: break-all;
 }
 
-.top10-title-author div a{
-	padding-left: 5px;
+.top10-title-author .top10-title{
 	margin: 0;
-	overflow: hidden;
-  	white-space: nowrap;
-  	text-overflow: ellipsis;
-  	word-break: break-all;
   	font-weight: bold;
-  	font-size: 12px;
+  	font-size: 13.5px;
 }
 
 .top10-title-author .top10-author{
@@ -245,49 +278,55 @@ h5 {
 
 .top10-title-author .top10-author p{
 	padding-left: 5px;
-	overflow: hidden;
-  	white-space: nowrap;
-  	text-overflow: ellipsis;
-  	word-break: break-all;
   	font-size: 12px;
   	margin: 0px;
   	padding: 0;
 }
+
+
 /* 북티빙 Top10 끝 */
 
 /* NEW 북티빙 */
 .new-wrap{
-	height: 550px;
+	height: 600px;
 	padding-left: 0;
 	padding-right: 0;
 	padding-top: 30px;
 }
 
 .new-wrap h5 {
-	margin-bottom: 20px;
+	margin-bottom: 50px;
 	padding-left: 15px;
 }
 .new-box-wrap{
 	display: flex;
-	white-space: nowrap;
+	width: auto;
+	padding: 0;
 	margin: 0 auto;
+	box-sizing: border-box;
+}
+
+.th-block-box{
 	padding: 0;
 }
 
 .new-box{
-	margin: 0;
-	display:flex;
+	box-sizing: border-box;
 	height: 200px;
+	margin: 0;
+}
+
+.new-box .new-box-flex {
+	display:flex;
+	margin: 0 5px;
 	background-color: #eee;
 	border-radius: 20px;
-	overflow: hidden;
-	padding: 0 30px 0 40px;
 }
 
 .new-book-text{
-	position: relative;
+	width: 50%;
 	padding: 40px 0;
-	margin: 0;
+	margin-left: 30px ;
 }
 .new-book-text .new-book-title {
 	height: 30px;
@@ -345,6 +384,7 @@ h5 {
 }
 
 .new-book-cover{
+	width: 50%;
 	margin : 0;
 	overflow: hidden;
 	padding: 0
@@ -508,6 +548,11 @@ h5 {
 	width: 30px;
 	display: flex;
 	align-items: center;
+	justify-content: center;
+	margin: 0;
+}
+
+.bestSeller-rank h2 {
 	margin: 0;
 }
 
@@ -524,6 +569,7 @@ h5 {
   	white-space: nowrap;
   	text-overflow: ellipsis;
   	word-break: break-all;
+  	margin: 0;
 }
 
 .bestSeller-title-author div a{
@@ -537,7 +583,7 @@ h5 {
   	font-size: 12px;
 }
 
-.bestSeller-title-author .bestSeller-author p{
+.bestSeller-title-author .bestSeller-author .author{
 	padding-left: 5px;
 	overflow: hidden;
   	white-space: nowrap;
