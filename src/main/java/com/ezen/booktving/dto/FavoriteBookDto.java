@@ -12,7 +12,7 @@ import lombok.*;
 @Setter
 public class FavoriteBookDto {
 
-	//private Long id;
+	private Long id;
 	
 	private String isbn;
 	

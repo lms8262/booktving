@@ -3,6 +3,7 @@ package com.ezen.booktving.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -37,32 +38,38 @@ public class FavoriteBookService {
     }*/
 	
 	//찜하기
-	public Long like(FavoriteBookDto favoriteBookDto, String email) {
+	public Long like(String userId, String isbn) {
+		Member member = memberRepository.findByUserId(userId);
+		Book book = bookRepository.findByIsbn(isbn);
 		
-		Book book = bookRepository.findByIsbn(favoriteBookDto.getIsbn());
+		FavoriteBook existingFavorite = favoriteBookRepository.findByMemberAndBook(member, book);
+	    if (existingFavorite != null) {
+	        // 해당 책은 이미 사용자의 찜목록에 있습니다.
+	        return -1L;
+	    }
 		
-		Member member = memberRepository.findByEmail(email);
+		FavoriteBook favoriteBook = FavoriteBook.createFavoriteBook(member, book);
 		
-		List<FavoriteBook> favoriteBookList = new ArrayList<>();
-		FavoriteBook favoriteBook = FavoriteBook.createFavoriteBook(member, favoriteBookDto.getIsbn());
-		favoriteBookList.add(favoriteBook);
-		
-		favoriteBook.setBook(book);
 		favoriteBookRepository.save(favoriteBook);
 		
 		return favoriteBook.getId();
 	}
 	
 	@Transactional
-	public Page<FavoriteBook> getFavoriteList(String email, Pageable pageable) {
-		Member member = memberRepository.findByEmail(email);
+	public Page<FavoriteBook> getFavoriteList(String userId, Pageable pageable) {
+		Member member = memberRepository.findByUserId(userId);
+		
 		return favoriteBookRepository.findByMember(member, pageable);
 	}
 	
     
 
-    public List<FavoriteBook> getFavoriteBooksByMember(Member member) {
-        return favoriteBookRepository.findByMember(member);
+    public List<FavoriteBookDto> getFavoriteBooksByMember(String userId) {
+    	Member member = memberRepository.findByUserId(userId);
+    	List<FavoriteBook> favoriteBooks = favoriteBookRepository.findByMember(member);
+    	List<FavoriteBookDto> favoriteBookDtos = favoriteBooks.stream().map(FavoriteBookDto::of)
+				.collect(Collectors.toList());
+        return favoriteBookDtos;
     }
 
     /*@Transactional
@@ -87,11 +94,18 @@ public class FavoriteBookService {
     	return favoriteBook.getBook();
     }
     
-    public void removeFavoriteBook(Member member, Book book) {
+    /*public void removeFavoriteBook(Member member, Book book) {
         FavoriteBook favoriteBook = favoriteBookRepository.findByMemberAndBook(member, book);
         if (favoriteBook != null) {
             favoriteBookRepository.delete(favoriteBook);
         }
+    }*/
+    
+    public void removeFavoriteBook(Long likeId) {
+    	FavoriteBook favoriteBook = favoriteBookRepository.findById(likeId)
+    						.orElseThrow(EntityNotFoundException::new);
+    	
+    	favoriteBookRepository.deleteById(likeId);
     }
     
    

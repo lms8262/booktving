@@ -53,7 +53,4 @@ public class Book extends BaseTimeEntity {
 	@Column(nullable = false)
 	private String category;
 	
-	@OneToMany(mappedBy = "book")
-	private Set<FavoriteBook> favoriteBooks = new HashSet<>();
-	
 }

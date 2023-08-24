@@ -2,6 +2,7 @@ package com.ezen.booktving.controller;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -11,11 +12,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ezen.booktving.dto.BookDto;
@@ -55,66 +58,35 @@ public class BookController {
 
 	// 도서 찜하기
 	@PostMapping(value = "/book/bookDetail/likeBook")
-	public @ResponseBody ResponseEntity like(@RequestBody @Valid FavoriteBookDto favoriteBookDto,
-			BindingResult bindingResult, Principal principal) {
+	public @ResponseBody ResponseEntity like(@RequestBody HashMap<String, String> map, Principal principal) {
+		String isbn = map.get("isbn");
+		String userId = principal.getName();
 
-		if (bindingResult.hasErrors()) {
-			StringBuilder sb = new StringBuilder();
-			List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+		Long id = favoriteBookService.like(userId, isbn);
 
-			for (FieldError fieldError : fieldErrors) {
-				sb.append(fieldError.getDefaultMessage());
-			}
-
-			return new ResponseEntity<String>(sb.toString(), HttpStatus.BAD_REQUEST);
-		}
-
-		String email = principal.getName();
-		Long likeId;
-		try {
-			likeId = favoriteBookService.like(favoriteBookDto, email);
-		} catch (Exception e) {
-			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
-
-		}
-		return new ResponseEntity<Long>(likeId, HttpStatus.OK);
+		return new ResponseEntity<Long>(id, HttpStatus.OK);
 	}
 
 	// 찜 목록
-	@RequestMapping(value = "/book/myFavorite")
-	public String favoriteBookList() {
-
-		return "/book/myFavorite";
-	}
-
-	@GetMapping(value = "/book/myFavorite/{memberId}")
-	public String myFavorite(Model model, @PathVariable("memberId") String memberId) {
-
-		Member member = memberRepository.findByUserId(memberId);
+	@GetMapping(value = "/book/myFavorite/{userId}")
+	public String myFavorite(Model model, Principal principal) {
+		String userId = principal.getName();
 
 		// 사용자의 찜한 도서 목록 가져오기
-		List<FavoriteBook> favoriteBooks = favoriteBookService.getFavoriteBooksByMember(member);
+		List<FavoriteBookDto> favoriteBookDtos = favoriteBookService.getFavoriteBooksByMember(userId);
 
-		// FavoriteBook 엔티티를 FavoriteBookDto로 변환하여 모델에 추가
-		List<FavoriteBookDto> favoriteBookDtos = favoriteBooks.stream().map(FavoriteBookDto::of)
-				.collect(Collectors.toList());
 		model.addAttribute("favoriteBooks", favoriteBookDtos);
 
 		return "book/myFavorite";
 	}
 
 	// 찜 삭제
-	@GetMapping(value = "/book/myFavorite/{userId}/remove/{favoriteBookId}")
-
-	public String removeFavoriteBook(@PathVariable("userId") String userId,
-			@PathVariable("favoriteBookId") Long favoriteBookId) {
-		Member member = memberRepository.findByUserId(userId);
-
-		Book book = favoriteBookService.getBookById(favoriteBookId);
-
-		favoriteBookService.removeFavoriteBook(member, book);
-
-		return "redirect:/book/myFavorite/{userId}";
+	@DeleteMapping("/book/myFavorite/remove/{id}")
+	public @ResponseBody ResponseEntity removeFavoriteBook(@PathVariable("id") Long id,
+			Principal principal) {
+		System.out.println("id: " + id);
+		favoriteBookService.removeFavoriteBook(id);
+		return new ResponseEntity<Long>(id, HttpStatus.OK);
 	}
 }
 

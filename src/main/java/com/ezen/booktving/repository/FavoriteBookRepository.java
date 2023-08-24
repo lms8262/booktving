@@ -20,9 +20,11 @@ public interface FavoriteBookRepository extends JpaRepository<FavoriteBook, Long
 	@Query("select o from FavoriteBook o where o.member = :member order by o.id desc")
 	Page<FavoriteBook> findByMember(@Param("member") Member member, Pageable pageable);
 
-	@Query("select o from FavoriteBook o where o.member.email = :email order by o.id desc")
-	List<FavoriteBook> findFavoriteBooks(@Param("email") String email, Pageable pageable);
+	void deleteByMemberAndBook(Member member, Book book);
+	
+	//@Query("select o from FavoriteBook o where o.member.email = :email order by o.id desc")
+	//List<FavoriteBook> findFavoriteBooks(@Param("email") String email, Pageable pageable);
 
-	@Query("select count(o) from FavoriteBook o where o.member.email = :email")
-	Long countFavoriteBook(@Param("email") String email);
+	//@Query("select count(o) from FavoriteBook o where o.member.email = :email")
+	//Long countFavoriteBook(@Param("email") String email);
 }

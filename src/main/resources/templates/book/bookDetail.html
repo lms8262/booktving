@@ -63,8 +63,8 @@
 							th:text="${book.publicationDate}"></strong>
 						</li>
 						<li data-v-4edfbce0="" class="slide-item">
-							<p id="isbn" data-v-4edfbce0="">ISBN</p> <strong
-							data-v-4edfbce0="" th:text="${book.isbn}"></strong>
+							<p data-v-4edfbce0="">ISBN</p> <strong
+							data-v-4edfbce0="" th:text="${book.isbn}" id="isbn" ></strong>
 						</li>
 					</ul>
 				</div>
@@ -156,9 +156,7 @@
 			var header = $("meta[name='_csrf_header']").attr("content");
 			var url = "/book/bookDetail/likeBook";
 			var data = {
-				isbn: $("#isbn").text(),     // Assuming that the ISBN is inside an element with id "isbn"
-				bookName: $("#bookName").text(), // Assuming that the book name is inside an element with id "bookName"
-				author: $("#author").text()  // Assuming that the author is inside an element with id "author"
+				isbn: $("#isbn").text()    // Assuming that the ISBN is inside an element with id "isbn"
 			};
 			$.ajax({
 				type: "POST",
@@ -171,10 +169,15 @@
 				dataType: "json",
 				cache: false,
 				success: function (result, status) {
-					alert("찜 등록이 완료되었습니다.");
+					if (result === -1) {
+		                alert("이미 찜한 책입니다.");
+		            } else {
+		                alert("찜 등록이 완료되었습니다.");
+		            }
 				},
 				error: function (xhr, textStatus, errorThrown) {
 					alert("찜하기 실패: " + xhr.responseText);
+					
 				}
 			});
 		}
