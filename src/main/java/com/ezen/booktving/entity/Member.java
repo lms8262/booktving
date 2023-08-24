@@ -66,6 +66,7 @@ public class Member extends BaseTimeEntity {
 		// MemberFormDto를 -> Member 엔티티 객체로 변환
 
 		Member member = new Member();
+		member.setAddress(loginFormDto.getAddress());
 		member.setUserId(loginFormDto.getUserId());
 		member.setMemberName(loginFormDto.getMemberName());
 		member.setEmail(loginFormDto.getEmail());
@@ -77,14 +78,14 @@ public class Member extends BaseTimeEntity {
 
 		return member;
 	}
-
+//비밀번호 업데이트
 	public String updatePassword(String pass, PasswordEncoder passwordEncoder) {
 		String password = passwordEncoder.encode(pass);
 		this.password = password;
 
 		return password;
 	}
-
+//비밀번호 제외 업데이트
 	public void updateMember(@Valid MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) {
 		this.email = memberFormDto.getEmail();
 		this.tel = memberFormDto.getTel();
