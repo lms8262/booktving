@@ -16,6 +16,8 @@ select * from member;
 select * from rent_book;
 select * from author;
 select * from author_book;
+select * from author_img;
+select * from author_book_img;
 
 update new_book_tving set description = "보기 드문 해부학 드로잉 입문서"  where new_book_tving_id = 1;
 update new_book_tving set description = "서로의 마음을 마주하고.."  where new_book_tving_id = 2;

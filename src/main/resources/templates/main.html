@@ -319,20 +319,27 @@
 					<!-- 북티빙이 사랑한 작가 -->
 					<div class="author-wrap">
 						<div class="container author">
-							<h5>북티빙이 사랑한 작가</h5>
+							<a href="/author/list">
+								<h5>북티빙이 사랑한 작가</h5>
+							</a>
 							
 							<div class="author-contents-wrap">
-								<div class="author-contents">
-									<a class="author-cover">
-										<img alt="작가이미지" src="">
-									</a>
-								</div>
-								<div class="row author-contents-text">
-									<div class="author-text">
-										<p class="author-name">작가 이름 자리</p>
-										<p class="sub-title">부제목 자리</p>
-									</div>								
-								</div>
+
+								<th:block th:each="author, status : ${authors}">							
+									<div class="authors">
+										<div class="author-contents">
+											<a th:href="'/author/Detail/' + ${author.id}" class="author-cover">
+												<img th:alt="${author.authorNameKo}" th:src="${author.imgUrl}">
+											</a>
+										</div>
+										<div class="row author-contents-text">
+											<div class="author-text">
+												<p th:text="${author.authorNameKo}" class="author-name">작가 이름 자리</p>
+												<p th:text="${author.title}" class="sub-title">부제목 자리</p>
+											</div>								
+										</div>
+									</div>
+								</th:block>
 							</div>
 
 						</div>

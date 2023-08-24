@@ -23,26 +23,16 @@
 						</div>
 							
 						<div class="row author-box">
-							<div class="author-list">
-								<a class="author-link" href="#">
-									<img alt="author" src="" />
-								</a>
-							</div>
-							<div class="author-list">
-								<a class="author-link" href="#">
-									<img alt="author" src="" />
-								</a>
-							</div>
-							<div class="author-list">
-								<a class="author-link" href="#">
-									<img alt="author" src="" />
-								</a>
-							</div>
-							<div class="author-list">
-								<a class="author-link" href="#">
-									<img alt="author" src="" />
-								</a>
-							</div>
+							<th:block th:each="author, status : ${authors.getContent()}" >
+								<div class="author-wrap col-md-3 mb-4">
+									<div class="author-list">
+										<a class="author-link" th:href="'/author/Detail/' + ${author.id}">
+											<img th:alt="${author.authorNameKo}" th:src="${author.imgUrl}" />
+										</a>
+									</div>
+								</div>
+							</th:block>
+							
 						</div>				
 						
 						<div class="bottom-logo">							
