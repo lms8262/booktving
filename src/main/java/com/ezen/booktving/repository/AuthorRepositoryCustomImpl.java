@@ -35,7 +35,7 @@ public class AuthorRepositoryCustomImpl implements AuthorRepositoryCustom {
 		return null;
 	}
 	
-	//추천작가 관리 페이지
+	//추천작가 관리 페이지-작가
 	@Override
 	public Page<Author> getAdminAuthorPage(AuthorSearchDto authorSearchDto, Pageable pageable) {
 		
@@ -51,7 +51,7 @@ public class AuthorRepositoryCustomImpl implements AuthorRepositoryCustom {
 						.where(searchByLike(authorSearchDto.getSearchBy(), authorSearchDto.getSearchQuery()))
 						.fetchOne();
 		
-		return new PageImpl<>(content, pageable, total);
+		return new PageImpl<>(content, pageable, total);		
 	}
 
 }

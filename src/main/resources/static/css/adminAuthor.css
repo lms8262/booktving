@@ -1,1 +1,20 @@
 @charset "UTF-8";
+
+
+
+.book_reg_btn {
+	background-color: #fff;
+	border: 1px solid #ffd360;
+	color: #ffd360;
+	font-weight: bold;
+	font-size: 12px;
+}
+
+
+.book_reg_btn:active,
+.book_reg_btn:focus,
+.book_reg_btn:hover {
+	color: #ffd360;
+	box-shadow: none;
+	outline: none;
+}

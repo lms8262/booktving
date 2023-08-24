@@ -10,7 +10,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
+import org.thymeleaf.util.StringUtils;
 
+import com.ezen.booktving.constant.Role;
 import com.ezen.booktving.dto.AuthorBookDto;
 import com.ezen.booktving.dto.AuthorBookImgDto;
 import com.ezen.booktving.dto.AuthorFormDto;
@@ -20,10 +22,12 @@ import com.ezen.booktving.entity.Author;
 import com.ezen.booktving.entity.AuthorBook;
 import com.ezen.booktving.entity.AuthorBookImg;
 import com.ezen.booktving.entity.AuthorImg;
+import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.repository.AuthorBookImgRepository;
 import com.ezen.booktving.repository.AuthorBookRepository;
 import com.ezen.booktving.repository.AuthorImgRepository;
 import com.ezen.booktving.repository.AuthorRepository;
+import com.ezen.booktving.repository.MemberRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -35,16 +39,15 @@ public class AuthorService {
 	
 	private final AuthorRepository authorRepository;
 	private final AuthorBookRepository authorBookRepository;
-	private final AuthorImgRepository authorImgRepository;
-	private final AuthorBookImgRepository authorBookImgRepository;
 	private final AuthorImgService authorImgService;
-	private final ModelMapper modelMapper;
+	private final MemberRepository memberRepository;
 	
 	//추천작가 관리페이지
 	@Transactional(readOnly = true)
 	public Page<Author> getAdminAuthorPage(AuthorSearchDto authorSearchDto, Pageable pageable){
 		
 		Page<Author> authorPage = authorRepository.getAdminAuthorPage(authorSearchDto, pageable);
+		
 		
 		return authorPage;
 	}
@@ -79,23 +82,21 @@ public class AuthorService {
 		
 		return authorList;
 	}
+
 	
 	//추천작가 도서등록
-	public Long saveAuthorBook(AuthorBookDto authorBookDto, MultipartFile authorBookImgFile) throws Exception {
+	public void saveAuthorBook(AuthorBookDto authorBookDto, MultipartFile authorBookImgFile) throws Exception {
 		
 		//작가도서 등록
 		AuthorBook auhthorBook = authorBookDto.createAuthorBook();
 		authorBookRepository.save(auhthorBook);
-				
+			
 		//작가도서 이미지 등록
 		AuthorBookImg authorBookImg = new AuthorBookImg();
 		authorBookImg.setAuthorBook(auhthorBook);
 		authorImgService.saveAuthorBookImg(authorBookImg, authorBookImgFile);
-		
-		return auhthorBook.getId();
 	}
-	
-	
+			
 	/*
 	//작가 & 작가도서 정보 가져오기
 	@Transactional(readOnly = true)
@@ -157,6 +158,7 @@ public class AuthorService {
 		
 	}
 	
+	//작가도서 정보 수정하기
 	public Long updateAuthorBook(AuthorBookDto authorBookDto, MultipartFile authorBookImgFile) throws Exception {
 		
 		AuthorBook savedAuthorBook = authorBookRepository.findById(authorBookDto.getId())
@@ -176,4 +178,21 @@ public class AuthorService {
 	}
 	*/
 
+	//현재 접속자가 관리자 인지
+	public boolean validateReg(Role role) {
+		Member curMember = memberRepository.findByRole(Role.ADMIN);
+		
+		if(curMember.getRole() != Role.ADMIN) {
+			return false;
+		}
+		return true;
+	}
+	
+	//작가정보 삭제
+	public void deleteAuthor(Long authorId) {
+		
+		Author author = authorRepository.findById(authorId).orElseThrow(EntityNotFoundException::new);
+		
+		authorRepository.delete(author);
+	}
 }

@@ -20,9 +20,12 @@ a {
 }
 a,
 a:hover,
-a:focus {
+a:focus,
+a:active {
   text-decoration: none;
   color: #000;
+  outline: none;
+  box-shadow: none;
 }
 
 a:hover,
@@ -216,6 +219,7 @@ nav .submenu li:hover{
 
 form{
 	margin-top: 40px;
+	margin-bottom:  50px;
 }
 
 table {
@@ -235,6 +239,11 @@ table>tbody:last-child {
 	border-bottom: none !important;		
 }
 
+.table tbody td{
+	text-align: center;
+	line-height: inherit;
+}
+
 .button{
 	display: flex;
 }
@@ -243,6 +252,13 @@ table>tbody:last-child {
 	padding: 0;
 	display: flex;
 	justify-content: flex-end;	
+}
+
+button:hover,
+button:active,
+button:focus {
+	outline: none !important;
+	box-shadow: none !important;
 }
 
 .button .btn{
