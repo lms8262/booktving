@@ -4,6 +4,8 @@ CREATE DATABASE booktving DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
 
 
 use booktving;
+select * from member;
+
 
 select * from best_seller;
 select * from new_book_tving;

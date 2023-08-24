@@ -44,16 +44,16 @@ public class SecurityConfig {
 				.requestMatchers(mvc.pattern("/category/**"), mvc.pattern("/search/**"), mvc.pattern("/question/**"),mvc.pattern("/author/**"), mvc.pattern("/book/**"),mvc.pattern("/mypage/**")).permitAll()
 				// 'admin'으로 시작하는 경로는 관리자만 접근가능하도록 설정
 				.requestMatchers(mvc.pattern("/admin/**")).permitAll()// hasRole("ADMIN")
-				.anyRequest().authenticated())// 그외 페이지는 모두 로그인 (인증을 받아야한다.)
-				.formLogin(formLogin -> formLogin// 2.로그인에 관련된 설정
+						.anyRequest().authenticated())// 그외 페이지는 모두 로그인 (인증을 받아야한다.)
+						.formLogin(formLogin -> formLogin// 2.로그인에 관련된 설정
 						.loginPage("/login")// 로그인페이지 URL설정
 						.defaultSuccessUrl("/")// 로그인 성공시 이동할 페이지
 						.usernameParameter("userId")// 로그인시 id로 사용할 파라메터 이름
 						.failureUrl("/login/error"))// 로그인 실패시 이동할 url
 				// .permitAll()
-				.logout(logout -> logout// 3.로그아웃에 관련된 설정
+						.logout(logout -> logout// 3.로그아웃에 관련된 설정
 						.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-            .logoutSuccessUrl("/"))// 로그아웃 성공시 이동할 URL
+						.logoutSuccessUrl("/"))// 로그아웃 성공시 이동할 URL
 				// .permitAll()
 				// 4.인증 되지 않은 사용자가 리소스에 접근했을때 설정(ex.로그인 안했는데 cart페이지에 접근..)
 				.exceptionHandling(handling -> handling.authenticationEntryPoint(new CustomAuthenticationEntryPoint()))
