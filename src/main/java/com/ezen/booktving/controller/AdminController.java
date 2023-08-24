@@ -1,7 +1,7 @@
 package com.ezen.booktving.controller;
 
 import java.security.Principal;
-
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ezen.booktving.constant.Role;
 import com.ezen.booktving.dto.AdminRentHistBookDto;
 import com.ezen.booktving.dto.AuthorBookDto;
 import com.ezen.booktving.dto.AuthorFormDto;
@@ -205,6 +206,7 @@ public class AdminController {
 		try {
 			Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
 			Page<Author> authors = authorService.getAdminAuthorPage(authorSearchDto, pageable);
+			
 
 			model.addAttribute("authors", authors);
 			model.addAttribute("authorSearchDto", authorSearchDto);
@@ -223,14 +225,6 @@ public class AdminController {
 		model.addAttribute("authorFormDto", new AuthorFormDto());
 		
 		return "admin/adminAuthorReg";
-	}
-	
-	//추천작가 도서등록 페이지 보여주기
-	@GetMapping(value = "/admin/authorBookReg")
-	public String adminAuthorBookReg(Model model) {
-		model.addAttribute("authorBookDto", new AuthorBookDto());
-		
-		return "admin/adminAuthorBookReg";
 	}
 	
 	//추천작가 등록하기
@@ -256,32 +250,8 @@ public class AdminController {
 			return "admin/adminAuthorReg";
 		}
 		
-		return "redirect:/";
+		return "redirect:/admin/author";
 	}
-	
-	//추천작가 도서 등록하기
-	public String authorBookNew(@Valid AuthorBookDto authorBookDto, BindingResult bindingResult, Model model,
-			@RequestParam("authorBookImgFile") MultipartFile authorBookImgFile) {
-		
-		if(bindingResult.hasErrors()) {
-			return "admin/adminAuthorBookReg";
-		}
-
-		if(authorBookImgFile == null) {
-			model.addAttribute("errorMessage", "이미지 등록은 필수입니다.");
-			return "admin/adminAuthorBookReg";
-		}
-		
-		try {
-			authorService.saveAuthorBook(authorBookDto, authorBookImgFile);
-		} catch (Exception e) {
-			e.printStackTrace();
-			model.addAttribute("errorMessage", "작가도서 등록 중 에러가 발생했습니다.");
-			return "admin/adminAuthorBookReg";
-		}
-		return "redirect:/";
-	}
-	
 	
 	/*
 	//추천작가 수정 페이지 보여주기
@@ -300,6 +270,7 @@ public class AdminController {
 		
 		return "admin/adminAuthorModify";
 	}
+	
 	
 	//추천작가 수정등록하기
 	@PostMapping(value = "/admin/authorModify/{authorId}")
@@ -327,6 +298,53 @@ public class AdminController {
 	}
 	
 	*/
+	
+	//작가정보 
+	@DeleteMapping("/admin/author/{authorId}/delete")
+	public @ResponseBody ResponseEntity deleteOrder(@PathVariable("authorId") Long authorId, Principal principal) {
+		//관리자확인
+		if(!authorService.validateReg(Role.ADMIN)) {
+			return new ResponseEntity<String>("주문 삭제 권한이 없습니다.", HttpStatus.FORBIDDEN);
+		}
+		
+		//작가정보 삭제
+		authorService.deleteAuthor(authorId);
+		
+		return new ResponseEntity<Long>(authorId, HttpStatus.OK);
+	}
+	
+	
+	//추천작가 도서등록 페이지 보여주기
+	@GetMapping(value = "/admin/authorBookReg/{authorId}")
+	public String adminAuthorBookReg(Model model, @PathVariable("authorId") Long authorId) {
+						
+		List<Author> listAuthor = authorService.listAll();
+		
+		model.addAttribute("authorBookDto", new AuthorBookDto());
+		model.addAttribute("listAuthor", listAuthor);
+			
+		return "admin/adminAuthorBookReg";
+	}
+	
+	//추천작가 도서 등록하기
+	@PostMapping(value = "/admin/authorBookReg")
+	public String authorBookNew(@Valid AuthorBookDto authorBookDto, BindingResult bindingResult, Model model,
+			@RequestParam("authorBookImgFile") MultipartFile authorBookImgFile) {
+		
+		if(bindingResult.hasErrors()) {
+			return "admin/adminAuthorBookReg";
+		}
+			
+		try {
+			authorService.saveAuthorBook(authorBookDto, authorBookImgFile);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("errorMessage", "작가도서 등록 중 에러가 발생했습니다.");
+			return "admin/adminAuthorBookReg";
+		}
+		return "redirect:/admin/author";
+	}
 	
 	//문의관리 페이지 보여주기
 	@GetMapping(value = "/admin/question")

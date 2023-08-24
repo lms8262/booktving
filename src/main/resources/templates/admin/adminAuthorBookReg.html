@@ -41,131 +41,53 @@
 										</div>
 										
 										
-										<form role="form" action="/admin/authorBookReg" method="post" enctype="multipart/form-data"												>
+										<form role="form" action="/admin/authorBookReg"  method="post" enctype="multipart/form-data"	
+													th:object="${authorBookDto}" name="authorBookFormDto">							
 											
 											
 											<div class="form-group row">
 												<div class="dropdown col-md-12">
-													<label class="text-black col-md-2"> 작가명</label>
-													<select  id="authorName" class="form-control col-md-10">
-														<option value="">작가명을 선택하세요</option>
-														<option>
+													<label th:for="authorName" class="text-black col-md-1 authorName">작가명</label>
+													<br />
+													
+													<select th:field="*{author.id}" class="form-control col-md-3 authorName-select">
+														<option th:each="author : ${listAuthor}"
+           														 th:value="${author.id}"
+           														 th:text="${author.authorNameKo}">
 														</option>
-													</select>
-												</div>
-											</div>
-											
-											<!-- 작가도서정보 등록 --> <!-- 도서1 -->
-											<div>
-												<p class="book-title">도서1</p>
-											</div>
-											<div class="author-contents">
-												<label for="bookName" class="author-label">도서명</label>
-												<br />
-												<input type="text" placeholder="도서제목을 입력하세요" class="form-control col-12" />
-											</div>
-											<div class="author-contents">
-												<label for="bookSubtitle" class="author-label">도서소개 타이틀</label>
-												<br />
-												<input rows="10" placeholder="작가의 도서소개 타이틀" class="form-control col-12" />
-											</div>
-											<div class="author-contents">
-												<label for="bookIntrodution" class="author-label">도서소개</label>
-												<br />
-												<input rows="10" placeholder="도서를 소개하세요"class="form-control col-12" />
-											</div>
-											<div class="author-contents">
-												<div class="mb-3 filebox">
-													<label for="bookImgFile" class="form-label">도서 이미지 등록</label>
-													<input class="form-control" type="file" id="authorBookImgFile" name="authorBookImgFile">
+													</select> 
+													
+													
 												</div>
 											</div>
 											
 											<hr>
 											
-											<!-- 작가도서정보 등록 --> <!-- 도서2 -->
-											<div>
-												<p class="book-title">도서2</p>
-											</div>
+										
+												
+											<!-- 작가도서정보 등록 -->
 											<div class="author-contents">
 												<label for="bookName" class="author-label">도서명</label>
 												<br />
-												<input type="text" placeholder="도서제목을 입력하세요" class="form-control col-12" />
+												<input type="text" th:field="*{bookName}" placeholder="도서제목을 입력하세요" class="form-control col-12" />
 											</div>
 											<div class="author-contents">
 												<label for="bookSubtitle" class="author-label">도서소개 타이틀</label>
 												<br />
-												<input rows="10" placeholder="작가의 도서소개 타이틀"  class="form-control col-12" />
+												<input type="text" th:field="*{bookSubTitle}" placeholder="작가의 도서소개 타이틀" class="form-control col-12" />
 											</div>
 											<div class="author-contents">
 												<label for="bookIntrodution" class="author-label">도서소개</label>
 												<br />
-												<input rows="10" placeholder="도서를 소개하세요"  class="form-control col-12" />
+												<input type="text" th:field="*{bookIntrodution}" placeholder="도서를 소개하세요"class="form-control col-12" />
 											</div>
 											<div class="author-contents">
 												<div class="mb-3 filebox">
-													<label for="bookImgFile" class="form-label">도서 이미지 등록</label>
-													<input class="form-control" type="file" id="authorBookImgFile" name="authorBookImgFile">
+													<label for="bookImgFile" class="form-label">도서이미지 등록</label>
+													<input class="form-control" type="file" id="authorBookImgFile" name="authorBookImgFile" multiple="multiple">
 												</div>
 											</div>
-											
-											<hr>
-											
-											<!-- 작가도서정보 등록 --> <!-- 도서3 -->
-											<div>
-												<p class="book-title">도서3</p>
-											</div>
-											<div class="author-contents">
-												<label for="bookName" class="author-label">도서명</label>
-												<br />
-												<input type="text" placeholder="도서제목을 입력하세요"  class="form-control col-12" />
-											</div>
-											<div class="author-contents">
-												<label for="bookSubtitle" class="author-label">도서소개 타이틀</label>
-												<br />
-												<input rows="10" placeholder="작가의 도서소개 타이틀"class="form-control col-12" />
-											</div>
-											<div class="author-contents">
-												<label for="bookIntrodution" class="author-label">도서소개</label>
-												<br />
-												<input rows="10" placeholder="도서를 소개하세요" class="form-control col-12" />
-											</div>
-											<div class="author-contents">
-												<div class="mb-3 filebox">
-													<label for="bookImgFile" class="form-label">도서 이미지 등록</label>
-													<input class="form-control" type="file" id="authorBookImgFile" name="authorBookImgFile">
-												</div>
-											</div>
-											
-											<hr>
-											
-											<!-- 작가도서정보 등록 --> <!-- 도서4 -->
-											<div>
-												<p class="book-title">도서4</p>
-											</div>
-											<div class="author-contents">
-												<label for="bookName" class="author-label">도서명</label>
-												<br />
-												<input type="text" placeholder="도서제목을 입력하세요"  class="form-control col-12" />
-											</div>
-											<div class="author-contents">
-												<label for="bookSubtitle" class="author-label">도서소개 타이틀</label>
-												<br />
-												<input rows="10" placeholder="작가의 도서소개 타이틀"  class="form-control col-12" />
-											</div>
-											<div class="author-contents">
-												<label for="bookIntrodution" class="author-label">도서소개</label>
-												<br />
-												<input rows="10" placeholder="도서를 소개하세요"  class="form-control col-12" />
-											</div>
-											<div class="author-contents">
-												<div class="mb-3 filebox">
-													<label for="bookImgFile" class="form-label">도서 이미지 등록</label>
-													<input class="form-control" type="file" id="authorBookImgFile" name="authorBookImgFile">
-												</div>
-											</div>
-																						
-											
+												
 
 											<!-- 등록버튼  -->
 											<div class="form-group button col-12">
@@ -206,8 +128,11 @@
 			alert(errorMessage);
 		}
 		bindDomEvent();
+		
 	
 	});
+	
+	
 	
 	function bindDomEvent(){
 		$(".custom-file-input").on("chand", function(){

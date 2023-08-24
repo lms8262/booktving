@@ -6,7 +6,7 @@
 	 
 <!-- adminBook 페이지 CSS --> 
 <th:block layout:fragment="css">
-	<link rel="stylesheet" href="/css/adminMember.css" />	
+	<link rel="stylesheet" href="/css/adminAuthor.css" />	
 </th:block>
 
 <div layout:fragment="content">
@@ -41,7 +41,7 @@
 										</div>
 										
 										
-										<form role="form" th:action="@{'/admin/author' + ${authors.number}}" method="get" th:object="${authors}" >
+										<form role="form" th:action="@{'/admin/author/' + ${authors.number}}" method="get" th:object="${authors}" >
 											<!-- 도서관리 contents -->
 											<table class="table table-responsive-md ">						
 												<thead>
@@ -51,6 +51,7 @@
 														<th scope="col">작가명</th>
 														<th scope="col">작성자</th>
 														<th scope="col">등록일</th>
+														<th scope="col">도서등록</th>
 													</tr>
 												</thead>
 												<tbody>
@@ -58,10 +59,13 @@
 														<td>
 															<input type="checkbox" value=""/> 
 														</td>
-														<td class="authorId" th:text="${author.id}"></td>
-														<td class="authorNameKo" th:text="${author.authorNameKo}" ></td>
-														<td class="createdBy" th:text="${author.createdBy}"></td>
-														<td class="regTime" th:text="${author.regTime}"></td>
+														<td scope="col" class="authorId" th:text="${author.id}"></td>
+														<td scope="col" class="authorNameKo" th:text="${author.authorNameKo}" ></td>
+														<td scope="col" class="createdBy" th:text="${author.createdBy}"></td>
+														<td scope="col" class="regTime" th:text="${#temporals.format(author.regTime, 'yyyy-MM-dd')}"></td>
+														<td scope="col" class="book-reg">
+															<a class="btn reg_btn book_reg_btn" style="width: 50px;" th:href="'/admin/authorBookReg/' + ${author.id}">등록</a>
+														</td>
 													</tr>
 												</tbody>
 											</table>
@@ -102,32 +106,31 @@
 
 
 											<!-- paging 부분 -->
-											<!-- 개발 후 medel key 으로 수정해서 사용하세요
-											<nav th:with="start=${(items.number / maxPage) * maxPage + 1}, 
-														  end = (${ ((items.totalPages == 0)) ? 1 :	(start + (maxPage -1) < items.totalPages ?
-											  			  start + (maxPage - 1) : items.totalPages)})" 						
+											<nav th:with="start=${(authors.number / maxPage) * maxPage + 1}, 
+														  end = (${ ((authors.totalPages == 0)) ? 1 :	(start + (maxPage -1) < authors.totalPages ?
+											  			  start + (maxPage - 1) : authors.totalPages)})" 						
 															aria-label="...">
 												<ul class="pagination d-flex justify-content-center">
 						  
-												    <li class="page-item " th:classappend="${items.first} ? 'disabled'">
-												      	<a class="page-link page-item" th:onclick="'javascript:page(' + ${items.number - 1} + ')'">◀</a>
+												    <li class="page-item " th:classappend="${authors.first} ? 'disabled'">
+												      	<a class="page-link page-item" th:onclick="'javascript:page(' + ${authors.number - 1} + ')'">◀</a>
 													</li>
 
 													<li class="page-item"
 														th:each="page: ${#numbers.sequence(start, end)}"
-														th:classappend="${items.number eq page -1} ? 'active' : '' ">
+														th:classappend="${authors.number eq page -1} ? 'active' : '' ">
 														<a class="page-link" th:inline="text"
 														th:onclick="'javascript:page(' + ${page - 1} + ')'">
 															[[${page}]] </a>
 													</li>
 
-													<li class="page-item" th:classappend="${items.last} ? 'disabled'"><a
-														class="page-link page-item" th:onclick="'javascript:page(' + ${items.number + 1} + ')'">▶</a>
+													<li class="page-item" th:classappend="${authors.last} ? 'disabled'"><a
+														class="page-link page-item" th:onclick="'javascript:page(' + ${authors.number + 1} + ')'">▶</a>
 														</li>
 
 												</ul>
 											</nav>
-											-->
+											
 											
 										</form>
 									</div>
@@ -148,7 +151,7 @@
 <th:block layout:fragment="script">
 
 	<script>
-	/*  개발 후 검색 항목에 맞게 수정해서 사용하세요
+	
 	$(document).ready(function(){
 		$("#searchBtn").on("click", function(e){
 			e.preventDefault(); 
@@ -169,8 +172,47 @@
 					  + "&searchBy=" + searchBy
 					  + "&searchQuery=" + searchQuery
 	}	
-	 */
+	
+	 
+	function deleteAuthor(authorId){
+		const deleteConf = confirm("삭제하시겠습니까?");			
+		if(!deleteConf) return; //취소버튼 누르면
+			
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+			
+		//request URL
+		var url = "/admin/author/" + authorId + "/delete";
+			
+		$.ajax({
+			url : url,  //request URL
+			type : "DELETE",  //전송방식
+			contentType : "application/json",
+			beforeSend : function(xhr) {
+				//데이터를 전송하기 전에 헤더에 csrf 값을 설정
+				xhr.setRequestHeader(header, token)
+			},
+			dataType : "json",
+			cache : false,
+			success : function(result, status) {
+				//주문 취소내역 삭제 후 구매내역 페이지로 이동시켜준다.
+				location.href = '/admin/author';
+			},
+			error : function(jqXHR, status, error) {
+				if(jqXHR.status == '401'){
+					alert('로그인 후 이용해주세요. 관리자만 삭제 할 수 있습니다.')
+					location.href = '/login';
+				} else {
+					// sb.toString() 의 에러메세지 출력(responseText 는 ResponseEntity 에서 받아온 값을 출력)
+					alert(jqXHR.responseText);   
+				}
+			}
+		});
+	}	 
+	 
 	</script>
+	
+	
 </th:block>
 
 </html>
