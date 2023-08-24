@@ -340,46 +340,6 @@ form nav {
 }
 /* 회원정보 페이지 끝 */
 
-
-/* 키워드 관리페이지 */
-.explanation{
-	font-size: 12px;
-}
-
-.keyword_reg{
-	display: flex;
-	margin-bottom: 60px;
-}
-
-.reg-box{
-	display: flex;
-	padding: 0;
-	margin-top: 40px;
-}
-
-.reg-box label{
-	padding: 0;
-	margin: 0;
-	line-height: 38px;
-}
-
-.reg-box input{
-	border-radius: 0;	
-}
-
-.reg-box button{
-	padding: 0;
-	margin-left: 10px;
-	border-radius: 20px;
-	color: #fff;
-	font-weight: bold;
-}
-
-.reg-box button:hover{
-	color: #fff;
-}
-/* 키워드 관리페이지 끝*/
-
 /* 문의답변 페이지 */
 
 .answer-title{

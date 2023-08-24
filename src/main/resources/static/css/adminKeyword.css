@@ -1,1 +1,76 @@
 @charset "UTF-8";
+/* 추천 키워드 관리 페이지 */
+.explanation{
+	font-size: 12px;
+}
+
+.keywordForm {
+	display: flex;
+	margin: 0 0 40px 0;
+}
+
+.reg-box{
+	display: flex;
+	padding: 0;
+	margin: 20px 0 0 0;
+}
+
+.reg-box label{
+	padding: 0;
+	line-height: 38px;
+}
+
+.keyword-type {
+	margin-right: 15px;
+}
+
+.keyword-name {
+	margin-left: 30px; 
+}
+
+.reg-box button{
+	padding: 0;
+	margin-left: 10px;
+	border-radius: 20px;
+	color: #fff;
+	font-weight: bold;
+}
+
+.reg-box button:hover{
+	color: #fff;
+}
+
+.rec-keyword-list > tr > td {
+	text-align: center;
+}
+
+.searchForm {
+	margin: 0;
+}
+
+/* 인기 키워드 관리 페이지 */
+.list-wrap {
+	margin-top: 30px;
+}
+
+.list-wrap > h5 {
+	display: flex;
+	justify-content: space-between;
+	border-bottom: 1px solid silver;
+	padding-bottom: 10px;
+}
+
+#appendBtn {
+	margin-left: 10px;
+	border-radius: 10px;
+	color: #fff;
+	font-weight: bold;
+}
+
+#deleteBtn {
+	background-color: #6a6a6a;
+	margin-left: 10px;
+	border-radius: 10px;
+	color: #fff;
+	font-weight: bold;
+}

@@ -23,17 +23,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ezen.booktving.dto.AdminRentHistBookDto;
 import com.ezen.booktving.dto.AuthorFormDto;
 import com.ezen.booktving.dto.AuthorSearchDto;
 import com.ezen.booktving.dto.BookRegFormDto;
 import com.ezen.booktving.dto.BookSearchDto;
+import com.ezen.booktving.dto.KeywordDto;
+import com.ezen.booktving.dto.KeywordFormDto;
 import com.ezen.booktving.entity.Author;
 import com.ezen.booktving.entity.Book;
 import com.ezen.booktving.service.AdminBookRentHistService;
 import com.ezen.booktving.service.AuthorService;
 import com.ezen.booktving.service.BookRegService;
+import com.ezen.booktving.service.KeyWordService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -42,9 +46,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AdminController {
 	
-  private final AuthorService authorService;
+	private final AuthorService authorService;
 	private final BookRegService bookRegService;
 	private final AdminBookRentHistService adminBookRentHistService;
+	private final KeyWordService keyWordService;
 	
 	//도서관리 페이지 보여주기 
 	@GetMapping(value = {"/admin/books", "/admin/books/{page}"})
@@ -190,11 +195,41 @@ public class AdminController {
 	}
 	
 	
-	//키워드관리 페이지 보여주기
-	@GetMapping(value = "/admin/keyword")
-	public String adminKeyword() {
+	// 추천 키워드 관리 페이지 보여주기
+	@GetMapping(value = "/admin/keyword/recommend")
+	public String adminRecommendKeyword(@RequestParam(required = false) String searchKeywordName, @RequestParam Optional<Integer> page, Model model) {
 		
-		return "admin/adminKeyword";
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 5);
+		Page<KeywordDto> keywordDtoList = keyWordService.getRecommendKeywordList(searchKeywordName, pageable);
+		
+		model.addAttribute("keywordDtoList", keywordDtoList);
+		return "admin/adminRecommendKeyword";
+	}
+	
+	// 추천 키워드 등록
+	@PostMapping(value = "/admin/keyword/recommend/append")
+	public String appendRecommendKeyword(@Valid KeywordFormDto keywordFormDto, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+		if(bindingResult.hasErrors()) {
+			redirectAttributes.addFlashAttribute("errorMessage", bindingResult.getFieldError().getDefaultMessage());
+			return "redirect:/admin/keyword/recommend";
+		}
+		
+		try {
+			keyWordService.appendRecommendKeyword(keywordFormDto);
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+			return "redirect:/admin/keyword/recommend";
+		}
+		
+		return "redirect:/admin/keyword/recommend";
+	}
+	
+	// 인기 키워드 관리 페이지 보여주기
+	@GetMapping(value = "/admin/keyword/popular")
+	public String adminPopularKeyword() {
+		
+		return "admin/adminPopularKeyword";
 	}
 	
 	//추천작가 관리 페이지 보여주기

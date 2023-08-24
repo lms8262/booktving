@@ -28,11 +28,10 @@
 							<li class="menu slide-menu"><a href="javascript:;"> <span>나의정보</span></a>
 
 								<ul class="submenu">
-									<li><a href="/login" sec:authorize="isAnonymous()"> <span>개인정보
+									<li sec:authorize="isAnonymous()"><a href="/login" > <span>개인정보
 												수정</span>
 									</a></li>
-									<li><a href="/login/update"
-										sec:authorize="isAuthenticated()"> <span>개인정보 수정</span>
+									<li sec:authorize="isAuthenticated()"><a href="/login/update"> <span>개인정보 수정</span>
 									</a></li>
 									<li><a href="/mypage/rentlist"> <span>대여내역</span>
 									</a></li>
