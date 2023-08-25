@@ -37,6 +37,9 @@ ul{
 	list-style: none
 }
 
+.site-wrap {
+	padding: 0;
+}
 
 /* sec: header */
 .header-section{

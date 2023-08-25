@@ -402,7 +402,7 @@ h5 {
 
 /* 북티빙이 사랑한 작가 */
 .author-wrap{
-	height: 450px;
+	height: 480px;
 	background-color: #ebfff8;
 }
 
@@ -411,6 +411,8 @@ h5 {
 }
 
 .author-contents-wrap{
+	display: flex;
+	justify-content:space-between;
 	width:250px;
 	margin: 0;
 	margin-top: 30px;
@@ -420,13 +422,14 @@ h5 {
 	width: 250px;
 	height: 250px;
 	overflow: hidden;	
-	background-color: #000;
+	border: 1px solid #ddd;
 	border-radius: 15px;
 	margin: 0;
 	padding: 0;
 }
 
 .author-cover img{
+	width: 255px;
 }
 
 .author-contents-text{
@@ -438,10 +441,25 @@ h5 {
 	margin: 0;
 }
 
+.author-text p {
+	height: 25px;
+}
+
+
 .author-text .author-name{
 	font-size: 20px;
 	font-weight: bold;
-	margin-bottom: 5px;
+	margin: 0 7px 5px 0;
+}
+
+.author-text .author-name-eg{
+	font-size: 15px;
+	font-weight: normal;
+	line-height: 25px;
+}
+
+.author-text .sub-title{
+	font-size: 12px;
 }
 
 /* 북티빙이 사랑한 작가 끝 */
@@ -451,6 +469,7 @@ h5 {
 	padding: 0;
 	padding-top: 30px;
 	height: 450px;
+	margin-top: 20px;
 }
 
 .bestSeller-title-box{

@@ -6,9 +6,7 @@
 <!-- main 페이지 CSS -->
 <th:block layout:fragment="css">
 	<link rel="stylesheet" type="text/css" href="/css/main.css" />
-	<!--
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
-	-->
+	
 </th:block>
 
 <div layout:fragment="content">
@@ -161,7 +159,7 @@
 													<div class="top10-contents">
 														<div class="top10-rank">
 															<a th:href="'/book/bookDetail/' + ${dayRank.isbn}">
-																<h1>[[${dayRank.num}]]</h1>
+																<h1> [[${dayRank.num}]] </h1>
 															</a>
 														</div>
 														<div class="top10-cover">
@@ -325,8 +323,8 @@
 							
 							<div class="author-contents-wrap">
 
-								<th:block th:each="author, status : ${authors}">							
-									<div class="authors">
+								<th:block th:each="author, status : ${authors}">	
+									<div class="authors mr-4">
 										<div class="author-contents">
 											<a th:href="'/author/Detail/' + ${author.id}" class="author-cover">
 												<img th:alt="${author.authorNameKo}" th:src="${author.imgUrl}">
@@ -334,8 +332,9 @@
 										</div>
 										<div class="row author-contents-text">
 											<div class="author-text">
-												<p th:text="${author.authorNameKo}" class="author-name">작가 이름 자리</p>
-												<p th:text="${author.title}" class="sub-title">부제목 자리</p>
+												<p th:text="${author.authorNameKo}" class="author-name author-name-ko"></p>
+												<p th:text="${author.authorNameEg}" class="author-name author-name-eg"></p>
+												<p th:utext="${author.title}" class="sub-title"></p>
 											</div>								
 										</div>
 									</div>
