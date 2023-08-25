@@ -8,8 +8,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.ezen.booktving.dto.AuthorDtoList;
+import com.ezen.booktving.dto.AuthorFormDto;
 import com.ezen.booktving.service.AuthorService;
 
 import lombok.RequiredArgsConstructor;
@@ -34,9 +36,14 @@ public class AuthorController {
 	}
 	
 	//작가 상세페이지 보여주기
-	@GetMapping(value = {"/author/Detail", "/author/Detail/{authorId}"})
-	public String authotDetail() {
+	@GetMapping(value = "/author/Detail/{authorId}")
+	public String authotDetail(Model model, @PathVariable("authorId") Long authorId) {
 			
+		AuthorFormDto authorDto = authorService.getAuthorDtl(authorId);
+		
+		model.addAttribute("author", authorDto);
+		model.addAttribute("authorBooks", authorDto.getAuthorBookDtoList());
+				
 		return "author/authorDetail";
 	}
 	

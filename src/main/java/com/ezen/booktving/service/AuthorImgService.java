@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthorImgService {
 	
-	private String authorImgLocation = "C:/booktving/author";
+	private String authorImgLocation = "c:/booktving/author";
 	private final AuthorImgRepository authorImgRepository;
 	private final AuthorBookImgRepository authorBookImgRepository;
 	private final FileService fileService;
@@ -30,7 +30,7 @@ public class AuthorImgService {
 		
 		if(!StringUtils.isEmpty(oriImgName)) {
 			imgName = fileService.uploadFile(authorImgLocation, oriImgName, authorImgFile.getBytes());
-			imgUrl = "/image/booktving/author/" + imgName;
+			imgUrl = "/image/author/" + imgName;
 		}
 		
 		authorImg.updateAuthorImg(oriImgName, imgName, imgUrl);
@@ -49,7 +49,7 @@ public class AuthorImgService {
 			
 			String oriImgName = authorImgFile.getOriginalFilename();
 			String imgName = fileService.uploadFile(authorImgLocation, oriImgName, authorImgFile.getBytes());
-			String imgUrl = "/image/booktving/author/" + imgName;
+			String imgUrl = "/image/author/" + imgName;
 			
 			savedAuthorImg.updateAuthorImg(oriImgName, imgName, imgUrl);
 			
@@ -63,7 +63,7 @@ public class AuthorImgService {
 		
 		if(!StringUtils.isEmpty(oriImgName)) {
 			imgName = fileService.uploadFile(authorImgLocation, oriImgName, authorBookImgFile.getBytes());
-			imgUrl = "/image/booktving/author/" + imgName;
+			imgUrl = "/image/author/" + imgName;
 		}
 		
 		authorBookImg.updateAuthorImg(oriImgName, imgName, imgUrl);
@@ -82,7 +82,7 @@ public class AuthorImgService {
 			
 			String oriImgName = authorBookImgFile.getOriginalFilename();
 			String imgName = fileService.uploadFile(authorImgLocation, oriImgName, authorBookImgFile.getBytes());
-			String imgUrl = "/image/booktving/author/" + imgName;
+			String imgUrl = "/image/author/" + imgName;
 			
 			savedAuthorBookImg.updateAuthorImg(oriImgName, imgName, imgUrl);
 			

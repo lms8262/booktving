@@ -35,14 +35,13 @@ public class AuthorFormDto {
 	private AuthorImgDto authorImgDto = new AuthorImgDto();
 	
 	private AuthorImgDto authorImgId = new AuthorImgDto();
+
 	
-	public static ModelMapper modelMapper = new ModelMapper();
-	
-	public Author createAuthor() {
+	public Author createAuthor(ModelMapper modelMapper) {
 		return modelMapper.map(this, Author.class);
 	}
 	
-	public static AuthorFormDto of(Author author) {
+	public static AuthorFormDto of(Author author, ModelMapper modelMapper) {
 		return modelMapper.map(author, AuthorFormDto.class);
 	}
 	

@@ -14,5 +14,5 @@ public interface AuthorRepositoryCustom {
 	Page<Author> getAdminAuthorPage(AuthorSearchDto authorSearchDto, Pageable pageable);
 	
 	Page<AuthorDtoList> getAuthorPage(Pageable pageable);
-	
+		
 }

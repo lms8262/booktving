@@ -18,7 +18,7 @@ public class AuthorBookImgDto {
 	private String oriImgName;
 	
 	private String imgUrl;
-
+	
 	public static AuthorBookImgDto of(AuthorBookImg authorBookImg, ModelMapper modelMapper) {
 		return modelMapper.map(authorBookImg, AuthorBookImgDto.class);
 	}

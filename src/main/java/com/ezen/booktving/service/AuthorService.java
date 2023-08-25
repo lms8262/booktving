@@ -40,8 +40,11 @@ public class AuthorService {
 	
 	private final AuthorRepository authorRepository;
 	private final AuthorBookRepository authorBookRepository;
+	private final AuthorImgRepository authorImgRepository;
+	private final AuthorBookImgRepository authorBookImgRepository;
 	private final AuthorImgService authorImgService;
 	private final MemberRepository memberRepository;
+	private final ModelMapper modelMapper;
 	
 	
 	//추천작가 목록 페이지
@@ -66,7 +69,7 @@ public class AuthorService {
 	public Long saveAuthor(AuthorFormDto authorFormDto, MultipartFile authorImgFile) throws Exception{
 	
 		//작가등록
-		Author author = authorFormDto.createAuthor();
+		Author author = authorFormDto.createAuthor(modelMapper);
 		authorRepository.save(author);
 		
 		//작가이미지 등록
@@ -85,7 +88,7 @@ public class AuthorService {
 		
 		for(Author author : authorList) {
 			
-			AuthorFormDto authorFormDto = AuthorFormDto.of(author);
+			AuthorFormDto authorFormDto = AuthorFormDto.of(author, modelMapper);
 			
 			authorFormDtoList.add(authorFormDto);			
 		}
@@ -97,7 +100,7 @@ public class AuthorService {
 	public void saveAuthorBook(AuthorBookDto authorBookDto, MultipartFile authorBookImgFile) throws Exception {
 		
 		//작가도서 등록
-		AuthorBook auhthorBook = authorBookDto.createAuthorBook();
+		AuthorBook auhthorBook = authorBookDto.createAuthorBook(modelMapper);
 		authorBookRepository.save(auhthorBook);
 			
 		//작가도서 이미지 등록
@@ -105,7 +108,40 @@ public class AuthorService {
 		authorBookImg.setAuthorBook(auhthorBook);
 		authorImgService.saveAuthorBookImg(authorBookImg, authorBookImgFile);
 	}
+		
+	//작가,도서 정보 가져오기
+	@Transactional(readOnly = true)
+	public AuthorFormDto getAuthorDtl(Long authorId) {
+		
+		//작가정보 가져오기
+		Author author = authorRepository.findById(authorId).orElseThrow(EntityNotFoundException::new);
+		AuthorFormDto authorFormDto = AuthorFormDto.of(author, modelMapper);
+		
+		//작가이미지 정보 가져오기
+		AuthorImg authorImg = authorImgRepository.findByAuthorIdOrderByIdAsc(authorId);
+		AuthorImgDto authorImgDto = AuthorImgDto.of(authorImg, modelMapper);
+		
+		authorFormDto.setAuthorImgDto(authorImgDto);
+		
+		//작가도서 정보 가져오기
+		List<AuthorBook> authorBooks = authorBookRepository.findByAuthorIdOrderByIdAsc(authorId);
+		
+		List<AuthorBookDto> authorBookDtoList = new ArrayList<>();
+		for(AuthorBook authorBook : authorBooks) {
+			AuthorBookDto authorBookDto = AuthorBookDto.of(authorBook, modelMapper);
 			
+			//작가도서이미지 정보 가져오기
+			AuthorBookImg authorBookImg = authorBookImgRepository.findByAuthorBookIdOrderByIdAsc(authorBook.getId());
+			AuthorBookImgDto authorBookImgDto = AuthorBookImgDto.of(authorBookImg, modelMapper);
+			
+			authorBookDto.setAuthorBookImgDto(authorBookImgDto);			
+			authorBookDtoList.add(authorBookDto);
+		}		
+		
+		authorFormDto.setAuthorBookDtoList(authorBookDtoList);
+		return authorFormDto;
+	}
+	
 	//현재 접속자가 관리자 인지
 	public boolean validateReg(Role role) {
 		Member curMember = memberRepository.findByRole(Role.ADMIN);
