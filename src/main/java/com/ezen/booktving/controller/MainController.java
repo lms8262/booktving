@@ -36,22 +36,22 @@ public class MainController {
 		//북티빙 top10
 		Pageable pageable3 = PageRequest.of(page.isPresent() ? page.get() : 0, 7);
 		
-		//일간
-		Page<BookTvingTop10Dto> dayRanks = bookService.getDayBookRankList(pageable3);
-		model.addAttribute("dayRanks", dayRanks);
-		
-		//주간
-		Page<BookTvingTop10Dto> weekRanks = bookService.getDayBookRankList(pageable3);
-		model.addAttribute("weekRanks", weekRanks);
-		
-		//월간
-		Page<BookTvingTop10Dto> monthRanks = bookService.getDayBookRankList(pageable3);
-		model.addAttribute("monthRanks", monthRanks);
-		
-		//연간
-		Page<BookTvingTop10Dto> yearRanks = bookService.getDayBookRankList(pageable3);
-		model.addAttribute("yearRanks", yearRanks);
-		
+			//일간
+			Page<BookTvingTop10Dto> dayRanks = bookService.getDayBookRankList(pageable3);
+			model.addAttribute("dayRanks", dayRanks);
+			
+			//주간
+			Page<BookTvingTop10Dto> weekRanks = bookService.getDayBookRankList(pageable3);
+			model.addAttribute("weekRanks", weekRanks);
+			
+			//월간
+			Page<BookTvingTop10Dto> monthRanks = bookService.getDayBookRankList(pageable3);
+			model.addAttribute("monthRanks", monthRanks);
+			
+			//연간
+			Page<BookTvingTop10Dto> yearRanks = bookService.getDayBookRankList(pageable3);
+			model.addAttribute("yearRanks", yearRanks);
+			
 		
 		//NEW 북티빙		
 		//상위 4개만 가져오기

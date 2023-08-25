@@ -58,6 +58,7 @@ public class AuthorRepositoryCustomImpl implements AuthorRepositoryCustom {
 		return new PageImpl<>(content, pageable, total);		
 	}
 
+	//메인페이지-북티빙이 사랑한 작가
 	@Override
 	public Page<AuthorDtoList> getAuthorPage(Pageable pageable) {
 		
@@ -70,7 +71,7 @@ public class AuthorRepositoryCustomImpl implements AuthorRepositoryCustom {
 															author.authorNameEg,
 															author.title,
 															author.authorIntroduction,
-															authorImg.imgName
+															authorImg.imgUrl
 															)
 													)
 													.from(authorImg)
