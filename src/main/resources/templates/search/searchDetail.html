@@ -43,7 +43,7 @@
 		<div class="container d-flex">
 			<div id="search-data" class="row row-cols-1 row-cols-md-6 g-4">
 				
-				<th:block th:if="${!#lists.isEmpty(searchBookList.getContent())}" th:each="searchBook, status : ${searchBookList.getContent()}">
+				<th:block th:if="${!#lists.isEmpty(searchBookList.getContent())}" th:each="searchBook : ${searchBookList.getContent()}">
 					<div class="search-card col">
 						<div class="card">
 							<a th:href="@{/search/detail/update/} + ${searchBook.isbn}">

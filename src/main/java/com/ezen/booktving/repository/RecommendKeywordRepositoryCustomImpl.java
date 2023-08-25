@@ -39,7 +39,6 @@ public class RecommendKeywordRepositoryCustomImpl implements RecommendKeywordRep
 		
 		List<RecommendKeyword> content = queryFactory
 								   .selectFrom(recommendKeyword)
-								   .orderBy(recommendKeyword.updateTime.desc())
 								   .where(recommendKeywordNameLike(searchKeywordName))
 								   .orderBy(recommendKeyword.updateTime.desc())
 								   .offset(pageable.getOffset())

@@ -1,7 +1,7 @@
 package com.ezen.booktving.controller;
 
 import java.security.Principal;
-
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,6 +39,7 @@ import com.ezen.booktving.service.AuthorService;
 import com.ezen.booktving.service.BookRegService;
 import com.ezen.booktving.service.KeyWordService;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -199,10 +200,11 @@ public class AdminController {
 	@GetMapping(value = "/admin/keyword/recommend")
 	public String adminRecommendKeyword(@RequestParam(required = false) String searchKeywordName, @RequestParam Optional<Integer> page, Model model) {
 		
-		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 5);
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
 		Page<KeywordDto> keywordDtoList = keyWordService.getRecommendKeywordList(searchKeywordName, pageable);
 		
 		model.addAttribute("keywordDtoList", keywordDtoList);
+		model.addAttribute("maxPage", 5);
 		return "admin/adminRecommendKeyword";
 	}
 	
@@ -225,10 +227,42 @@ public class AdminController {
 		return "redirect:/admin/keyword/recommend";
 	}
 	
+	// 추천 키워드 끌어올리기 기능
+	@PostMapping(value = "/admin/keyword/recommend/pullUp")
+	@ResponseBody
+	public ResponseEntity pullUpRecommendKeyword(@RequestParam(value = "keywordIdList[]") List<Long> keywordIdList) {
+		Collections.reverse(keywordIdList);
+		
+		try {			
+			keyWordService.pullUpRecommendKeyword(keywordIdList);
+		} catch (EntityNotFoundException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	// 추천 키워드 삭제하는 기능
+	@DeleteMapping(value = "/admin/keyword/recommend/delete")
+	@ResponseBody
+	public ResponseEntity deleteRecommendKeyword(@RequestParam(value = "keywordIdList[]") List<Long> keywordIdList) {
+		try {
+			keyWordService.deleteRecommendKeyword(keywordIdList);
+		} catch (EntityNotFoundException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
 	// 인기 키워드 관리 페이지 보여주기
 	@GetMapping(value = "/admin/keyword/popular")
-	public String adminPopularKeyword() {
+	public String adminPopularKeyword(Model model) {
+		List<KeywordDto> searchKeywordList = keyWordService.getSearchKeywordTop50();
 		
+		model.addAttribute("searchKeywordList", searchKeywordList);
 		return "admin/adminPopularKeyword";
 	}
 	

@@ -48,6 +48,10 @@
 	margin: 0;
 }
 
+.paging-bar {
+	margin-bottom: 50px;
+}
+
 /* 인기 키워드 관리 페이지 */
 .list-wrap {
 	margin-top: 30px;
@@ -56,8 +60,6 @@
 .list-wrap > h5 {
 	display: flex;
 	justify-content: space-between;
-	border-bottom: 1px solid silver;
-	padding-bottom: 10px;
 }
 
 #appendBtn {
@@ -69,6 +71,30 @@
 
 #deleteBtn {
 	background-color: #6a6a6a;
+	margin-left: 10px;
+	border-radius: 10px;
+	color: #fff;
+	font-weight: bold;
+}
+
+.pop-keyword-list {
+	font-size: 12px;
+}
+
+.pop-keyword-list th, 
+.pop-keyword-list td {
+	padding: 0.5rem;
+}
+
+.pop-keyword-list > tbody > tr > td {
+	text-align: center;
+}
+
+.moveBtn {
+	padding: 3px 9px;
+}
+
+#saveBtn {
 	margin-left: 10px;
 	border-radius: 10px;
 	color: #fff;

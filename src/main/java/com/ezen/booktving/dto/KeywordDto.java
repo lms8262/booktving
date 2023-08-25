@@ -3,12 +3,15 @@ package com.ezen.booktving.dto;
 import java.time.format.DateTimeFormatter;
 
 import com.ezen.booktving.entity.RecommendKeyword;
+import com.querydsl.core.annotations.QueryProjection;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class KeywordDto {
 	
 	private Long id;
@@ -41,5 +44,19 @@ public class KeywordDto {
 		keywordDto.setUpdateTime(recommendKeyword.getUpdateTime().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm")));
 		
 		return keywordDto;
+	}
+	
+	public static KeywordDto createKeywordDtoOfSearchMain(RecommendKeyword recommendKeyword) {
+		// id, updateTime은 필요 없어서 안 넣어줌
+		KeywordDto keywordDto = new KeywordDto();
+		keywordDto.setKeywordType(recommendKeyword.getRecommendKeywordType());
+		keywordDto.setKeywordName(recommendKeyword.getRecommendKeywordName());
+		return keywordDto;
+	}
+	
+	@QueryProjection
+	public KeywordDto(String keywordType, String keywordName) {
+		this.keywordType = keywordType;
+		this.keywordName = keywordName;
 	}
 }

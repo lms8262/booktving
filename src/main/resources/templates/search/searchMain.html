@@ -31,30 +31,19 @@
 		</div>
 	</div>
 	<div>
-		<div class="search_recommend container">		
+		<div class="search_recommend container" th:if="${not #lists.isEmpty(recommendKeywordList)}">		
 			<h5>
 				북티빙 추천 검색어
 			</h5>
 			<div>
 				<ul class="recommend-list d-flex flex-wrap">
-					<li><a>히가시노게이고</a></li>
-					<li><a>삼국지</a></li>
-					<li><a>토지</a></li>
-					<li><a>투자</a></li>
-					<li><a>베르나르</a></li>
-					<li><a>프로그래밍</a></li>
-					<li><a>프레젠테이션</a></li>
-					<li><a>글쓰기</a></li>
-					<li><a>성공</a></li>
-					<li><a>습관</a></li>
-					<li><a>공부</a></li>
-					<li><a>미래</a></li>
-					<li><a>세이노</a></li>
-					<li><a>집중력</a></li>
-					<li><a>커뮤니케이션</a></li>
+					<li th:each="recommendKeyword : ${recommendKeywordList}">
+						<a th:href="'/search/detail?searchBy=' + ${recommendKeyword.keywordType} + '&searchQuery=' + ${recommendKeyword.keywordName}">[[${recommendKeyword.keywordName}]]</a>
+					</li>
 				</ul>
 			</div>
 		</div>
+		<p class="text-center mt-4" th:unless="${not #lists.isEmpty(recommendKeywordList)}">등록된 추천 키워드가 없습니다.</p>
 	</div>
 	<div>
 		<div class="search_popular container d-flex">

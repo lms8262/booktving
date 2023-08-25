@@ -2,6 +2,7 @@ package com.ezen.booktving.controller;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.data.domain.PageRequest;
@@ -18,8 +19,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ezen.booktving.dto.BookSearchDto;
+import com.ezen.booktving.dto.KeywordDto;
 import com.ezen.booktving.dto.SearchBookDto;
 import com.ezen.booktving.service.ApiService;
+import com.ezen.booktving.service.KeyWordService;
 import com.ezen.booktving.service.SearchService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
@@ -32,10 +35,15 @@ public class SearchController {
 	
 	private final ApiService apiService;
 	private final SearchService searchService;
+	private final KeyWordService keyWordService;
 	
 	@GetMapping(value = "/search/main")
 	public String searchMain(Model model) {
+		List<KeywordDto> recommendKeywordList = keyWordService.getRecommendKeywordLatest15();
+		
 		model.addAttribute("bookSearchDto", new BookSearchDto());
+		model.addAttribute("recommendKeywordList", recommendKeywordList);
+		
 		return "search/searchMain";
 	}
 	

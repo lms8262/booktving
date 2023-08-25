@@ -19,9 +19,10 @@ select * from author;
 select * from author_book;
 select * from search_keyword;
 select * from recommend_keyword;
-delete from recommend_keyword where recommend_keyword_id = 1;
-insert into recommend_keyword(recommend_keyword_type, recommend_keyword_name) values("Title", "세이노의 가르침");
-insert into recommend_keyword(recommend_keyword_type, recommend_keyword_name) values("Keyword", "세이노의 가르침");
+select * from popular_keyword;
+
+select s.search_keyword_type, s.search_keyword_name
+from search_keyword s group by s.search_keyword_type, s.search_keyword_name order by count(s.search_keyword_name) desc;
 
 update new_book_tving set description = "보기 드문 해부학 드로잉 입문서"  where new_book_tving_id = 1;
 update new_book_tving set description = "서로의 마음을 마주하고.."  where new_book_tving_id = 2;

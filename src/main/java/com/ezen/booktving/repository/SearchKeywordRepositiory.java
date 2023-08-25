@@ -4,6 +4,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.ezen.booktving.entity.SearchKeyword;
 
-public interface SearchKeywordRepositiory extends JpaRepository<SearchKeyword, Long>{
+public interface SearchKeywordRepositiory extends JpaRepository<SearchKeyword, Long>, SearchKeywordRepositioryCustom {
 
 }

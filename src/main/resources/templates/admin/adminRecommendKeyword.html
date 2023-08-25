@@ -2,6 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="~{layouts/layout1}">
+
+<head>
+	<meta name="_csrf" th:content="${_csrf.token}" />
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
 	
 <th:block layout:fragment="css">
 	<link rel="stylesheet" href="/css/adminKeyword.css" />
@@ -37,7 +42,7 @@
 										<div class="top-title">
 											<h4>추천 키워드 관리</h4>
 											<hr>
-											<p class="explanation">추천 키워드는 가장 최근에 등록한 10개만 노출됩니다.</p>
+											<p class="explanation">추천 키워드는 가장 최근에 등록한 15개만 노출됩니다.</p>
 										</div>
 										
 										<form action="/admin/keyword/recommend/append" method="post" class="keywordForm">
@@ -58,13 +63,12 @@
 										
 										
 											<!-- 도서관리 contents -->
-											<table class="table table-responsive-md ">						
+											<table class="table table-responsive-md" th:if="${not #lists.isEmpty(keywordDtoList.getContent())}">						
 												<thead>
 													<tr>
 														<th scope="col">
-															<input type="checkbox" value="" id="check-all"/> 
+															<input type="checkbox" id="check-all"/> 
 														</th>
-														<th scope="col">등록ID</th>
 														<th scope="col">키워드 타입</th>
 														<th scope="col">키워드명</th>
 														<th scope="col">등록일</th>
@@ -73,9 +77,8 @@
 												<tbody class="rec-keyword-list">
 													<tr th:each="keyword, status: ${keywordDtoList.getContent()}">
 														<td>
-															<input type="checkbox" th:id="check- + ${keyword.id}"/> 
+															<input type="checkbox" th:id="check- + ${keyword.id}" name="check" th:value="${keyword.id}"/> 
 														</td>
-														<td>[[${keyword.id}]]</td>
 														<td>[[${keyword.keywordType}]]</td>
 														<td>[[${keyword.keywordName}]]</td>
 														<td>[[${keyword.updateTime}]]</td>
@@ -83,24 +86,22 @@
 												</tbody>
 											</table>
 											
-											<!-- 등록버튼  -->
-											<div class="form-group button col-12">
+											<div class="form-group button col-12" th:if="${not #lists.isEmpty(keywordDtoList.getContent())}">
 												<div class="col-md-8"></div>
 												<div class="col-md-2">
-													<button type="button" class="btn reg_btn" style="width: 110px;">끌어올리기</button>
+													<button type="button" class="btn reg_btn" style="width: 110px;" onclick="pullUp()">끌어올리기</button>
 												</div>
 												<div class="col-md-2">
-													<button type="button" class="btn delete_btn" style="width: 100px;">삭제하기</button>
+													<button type="button" class="btn delete_btn" style="width: 100px;" onclick="deleteRecommendKeyword()">삭제하기</button>
 												</div>
 											</div>
 
-											<!-- 검색 bar 부분 -->
-											<div class="row search-bar" style="height: 40px;">
+											<div class="row search-bar" style="height: 40px;" th:if="${not #lists.isEmpty(keywordDtoList.getContent())}">
 												<div class="col-lg-2"></div>
 												<div class="col-lg-6">
 													<form action="/admin/keyword/recommend" method="get" class="searchForm">
 														<div class="d-flex">
-															<input type="text" class="form-control col-sm-10" placeholder="키워드명 입력" name="searchKeywordName">
+															<input type="text" class="form-control col-sm-10" placeholder="키워드명 입력" id="searchKeywordName" name="searchKeywordName">
 															<button id="searchBtn" type="submit" class="btn search-btn col-sm-2">검색</button>
 														</div>
 													</form>
@@ -108,35 +109,33 @@
 												<div class="col-lg-2"></div>
 											</div>
 
-
-											<!-- paging 부분 -->
-											<!-- 개발 후 medel key 으로 수정해서 사용하세요
-											<nav th:with="start=${(items.number / maxPage) * maxPage + 1}, 
-														  end = (${ ((items.totalPages == 0)) ? 1 :	(start + (maxPage -1) < items.totalPages ?
-											  			  start + (maxPage - 1) : items.totalPages)})" 						
-															aria-label="...">
+											<nav th:with="start=${(keywordDtoList.number / maxPage) * maxPage + 1}, 
+														  end = (${ ((keywordDtoList.totalPages == 0)) ? 1 : (start + (maxPage -1) < keywordDtoList.totalPages ?
+											  			  start + (maxPage - 1) : keywordDtoList.totalPages)})" 
+											  			  class = "d-flex paging-bar" aria-label="..."
+											  			  th:if="${not #lists.isEmpty(keywordDtoList.getContent())}">
 												<ul class="pagination d-flex justify-content-center">
 						  
-												    <li class="page-item " th:classappend="${items.first} ? 'disabled'">
-												      	<a class="page-link page-item" th:onclick="'javascript:page(' + ${items.number - 1} + ')'">◀</a>
+												    <li class="page-item " th:classappend="${keywordDtoList.first} ? 'disabled'">
+												      	<a class="page-link page-item" th:onclick="'javascript:page(' + ${keywordDtoList.number - 1} + ')'">◀</a>
 													</li>
-
+	
 													<li class="page-item"
 														th:each="page: ${#numbers.sequence(start, end)}"
-														th:classappend="${items.number eq page -1} ? 'active' : '' ">
+														th:classappend="${keywordDtoList.number eq page -1} ? 'active' : '' ">
 														<a class="page-link" th:inline="text"
 														th:onclick="'javascript:page(' + ${page - 1} + ')'">
 															[[${page}]] </a>
 													</li>
-
-													<li class="page-item" th:classappend="${items.last} ? 'disabled'"><a
-														class="page-link page-item" th:onclick="'javascript:page(' + ${items.number + 1} + ')'">▶</a>
+	
+													<li class="page-item" th:classappend="${keywordDtoList.last} ? 'disabled'"><a
+														class="page-link page-item" th:onclick="'javascript:page(' + ${keywordDtoList.number + 1} + ')'">▶</a>
 														</li>
-
+	
 												</ul>
 											</nav>
-											-->
 											
+											<p class="text-center" th:unless="${not #lists.isEmpty(keywordDtoList.getContent())}">현재 등록된 추천 키워드가 없습니다.</p>
 									</div>
 								</div>
 							</div>
@@ -152,10 +151,145 @@
 
 <th:block layout:fragment="script">
 	<script th:inline="javascript">
-		var errorMessage = [[${errorMessage}]];
+		$(document).ready(function(){
+			var errorMessage = [[${errorMessage}]];
+			
+			if(errorMessage != null) {
+				alert(errorMessage);
+			}
+			
+			$("#searchBtn").on("click", function(e){
+				e.preventDefault(); // submit되는걸 방지
+				page(0);
+			});
+			
+			$("#check-all").on("click", function(e) {
+				if($("#check-all").is(":checked")) {
+					$("input[name=check]").prop("checked", true);
+				} else {
+					$("input[name=check]").prop("checked", false);
+				}
+			});
+			
+			$("input[name=check]").on("click", function(e) {
+				var total = $("input[name=check]").length;
+				var checked = $("input[name=check]:checked").length;
+				
+				if(total != checked) {
+					$("#check-all").prop("checked", false);
+				} else {
+					$("#check-all").prop("checked", true);
+				}
+			});
+			
+		});
 		
-		if(errorMessage != null) {
-			alert(errorMessage);
+		function page(page) {
+			// 검색어 가져오기
+			var searchKeywordName = $("#searchKeywordName").val();
+			
+			// 주소 이동
+			location.href = "/admin/keyword/recommend" 
+							+ "?page=" + page 
+							+ "&searchKeywordName=" + searchKeywordName;
+		}
+		
+		function pullUp() {
+			if($("input[name=check]:checked").length <= 0) {
+				alert("끌어올릴 키워드를 하나 이상 선택해주세요.");
+				return;
+			};
+			
+			const pullUpConf = confirm("선택한 추천 키워드를 끌어올리시겠습니까?");
+			
+			if(!pullUpConf) return;
+			
+			let token = $("meta[name='_csrf']").attr("content");
+	        let header = $("meta[name='_csrf_header']").attr("content");
+			
+			let keywordIdList = [];
+			
+			$("input[name=check]:checked").each(function(i) {
+				keywordIdList.push($(this).val());
+			});
+			
+			let objParams = {
+				"keywordIdList" : keywordIdList
+			};
+			
+			$.ajax({
+	            url : "/admin/keyword/recommend/pullUp",
+	            type : "POST",
+	            contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+	            data : objParams,
+	            beforeSend : function(xhr){
+	                // 데이터를 전송하기 전에 헤더에 csrf값을 설정
+	                xhr.setRequestHeader(header, token);
+	            },
+	            cache   : false,
+	            success  : function(result, status){
+	            	console.log("성공");
+	            	alert("선택한 키워드를 끌어올렸습니다.");
+	                location.href='/admin/keyword/recommend';
+	            },
+	            error : function(jqXHR, status, error){
+	                if(jqXHR.status == '401'){
+	                    alert('로그인 후 이용해주세요');
+	                    location.href='/login';
+	                } else{
+	                    alert(jqXHR.responseText);
+	                }
+	            }
+	        });
+		}
+		
+		function deleteRecommendKeyword() {
+			if($("input[name=check]:checked").length <= 0) {
+				alert("삭제할 키워드를 하나 이상 선택해주세요.");
+				return;
+			};
+			
+			const deleteConf = confirm("선택한 추천 키워드를 삭제하시겠습니까?");
+			
+			if(!deleteConf) return;
+			
+			let token = $("meta[name='_csrf']").attr("content");
+	        let header = $("meta[name='_csrf_header']").attr("content");
+	        
+			let keywordIdList = [];
+			
+			
+			$("input[name=check]:checked").each(function(i) {
+				keywordIdList.push($(this).val());
+			});
+			
+			let objParams = {
+				"keywordIdList" : keywordIdList
+			};
+	        
+	        $.ajax({
+	            url : "/admin/keyword/recommend/delete",
+	            type : "DELETE",
+	            contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+	            data : objParams,
+	            beforeSend : function(xhr){
+	                // 데이터를 전송하기 전에 헤더에 csrf값을 설정
+	                xhr.setRequestHeader(header, token);
+	            },
+	            cache   : false,
+	            success  : function(result, status){
+	            	alert("선택한 키워드를 삭제했습니다.");
+	                location.href='/admin/keyword/recommend';
+	            },
+	            error : function(jqXHR, status, error){
+	                if(jqXHR.status == '401'){
+	                    alert('로그인 후 이용해주세요');
+	                    location.href='/login';
+	                } else{
+	                    alert(jqXHR.responseText);
+	                }
+	            }
+	        });
 		}
 		
 	</script>
