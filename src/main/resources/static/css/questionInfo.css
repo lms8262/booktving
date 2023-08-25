@@ -18,10 +18,18 @@
 	padding-left: 400px;
 }
 
+.question-content > strong > a {
+	font-size: 20px;
+}
+
 .question-content > p {
 	margin: 0;
 	padding-left: 50px;
-	padding-top: 1px;
+	padding-top: 3px;
+}
+
+.question-content > p > a{
+	font-size: 15px;
 }
 
 .question-box {
@@ -84,4 +92,7 @@
 	display: block;
 	background-color: white;
 	margin-top: 250px;
+	width: 100px;
+	font-size: 15px;
+	line-height: 25px 0;
 }

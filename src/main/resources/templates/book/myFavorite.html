@@ -33,8 +33,8 @@
 							<li class="menu slide-menu2"><a href="#"><i
 									class="fa-solid fa-ellipsis-vertical"></i> </a>
 								<ul class="submenu2">
-									<li><a href="javascript:void(0);" th:value="${favoriteBook.id}"
-										onclick="removeFavoriteBook(id)"><span>삭제</span>
+									<li><a href="javascript:void(0);"
+										th:value="${favoriteBook.id}" onclick="removeFavoriteBook(id)"><span>삭제</span>
 									</a></li>
 								</ul></li>
 						</div>
@@ -56,6 +56,12 @@
 
 <th:block layout:fragment="script">
 	<script th:inline="javascript">
+	$(document).ready(function () {
+	});
+	var errorMessage = [[${errorMessage}]];
+	if (errorMessage != null) {
+		alert(errorMessage);
+	}
 		function removeFavoriteBook(id) {
 			/*  var confirmDelete = confirm("이 책을 찜 목록에서 삭제하시겠습니까?");
 

@@ -7,4 +7,90 @@
 </style>
 </th:block>
 
+<div layout:fragment="content">
+	<div class="top">
+		<div class="content">
+			<div class="create-question">
+				<strong><a href="/question/questionInfo">고객센터</a></strong>
+				<p>
+					<a href="/question/questionCreate">1:1 문의</a>
+				</p>
+			</div>
+			<div class="que1">
+				<strong>1:1 문의</strong>
+			</div>
+			<div class="buttons">
+				<button type="button" class="qna-create"
+					onclick="location.href='/question/questionCreate'">
+					&nbsp;문의하기</button>
+				<button type="button" class="qna-list"
+					onclick="location.href='/question/questionList'">
+					&nbsp;문의내역보기</button>
+			</div>
+
+			<form action="/question/questionCreate" method="post" name="myForm"
+				enctype="multipart/form-data">
+				<input type="hidden" th:name="${_csrf.parameterName}"
+					th:value="${_csrf.token}">
+				<div id="created">
+
+					<div class="div-title" style="border: #016e9f; text-align: center;">
+						<dl>
+							<dd>
+								<input type="text" name="title" size="35" maxlength="100"
+									class="boxTF" placeholder="제목을 입력하세요." />
+							</dd>
+						</dl>
+					</div>
+
+					<div class="div-content"
+						style="border-radius: 10px; border: #016e9f; margin-top: 30px;">
+						<dl>
+							<dd>
+								<input type="text" name="content" size="35" maxlength="50"
+									class="boxTF2" placeholder="내용을 입력하세요." />
+							</dd>
+						</dl>
+					</div>
+				</div>
+			</form>
+			<div class="qna-create">
+				<input type="button" value="등록하기" class="qna-register"
+					onclick="sendIt()" />
+			</div>
+		</div>
+	</div>
+</div>
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+	 var errorMessage = [[${errorMessage}]];
+	    if(errorMessage != null){
+	        alert(errorMessage);
+	    }
+	    
+	    const sendIt = () => {
+			
+			var f = document.myForm;
+			
+			str = f.title.value;
+			str = str.trim();
+			if(!str){
+				alert("\n제목을 입력하세요.");
+				f.title.focus();
+				return;
+			}
+			
+			str = f.content.value;
+			str = str.trim();
+			if(!str){
+				alert("\n내용을 입력하세요.");
+				f.content.focus();
+				return;
+			}
+
+			f.submit();
+
+		}
+	</script>
+</th:block>
 </html>
