@@ -6,7 +6,6 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -175,11 +174,11 @@ public class LoginCotroller {
 		return "redirect:/";
 	}
 
-	@DeleteMapping(value = "/login/member/{memberId}/delete")
-	public @ResponseBody ResponseEntity deleteMenu(@PathVariable("memberId") Long memberId) {
-
-		memberService.deleteMenu(memberId);
-		return new ResponseEntity<Long>(memberId, HttpStatus.OK);
+//회원탈퇴
+	@DeleteMapping(value = "/login/delete/{userId}")
+	public @ResponseBody ResponseEntity deleteMember2(@PathVariable("userId") String userId) {
+		memberService.deleteMember2(userId);
+		return new ResponseEntity<String>(userId, HttpStatus.OK);
+		
 	}
-
 }

@@ -78,6 +78,7 @@ public class Member extends BaseTimeEntity {
 
 		return member;
 	}
+
 //비밀번호 업데이트
 	public String updatePassword(String pass, PasswordEncoder passwordEncoder) {
 		String password = passwordEncoder.encode(pass);
@@ -85,6 +86,7 @@ public class Member extends BaseTimeEntity {
 
 		return password;
 	}
+
 //비밀번호 제외 업데이트
 	public void updateMember(@Valid MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) {
 		this.email = memberFormDto.getEmail();
