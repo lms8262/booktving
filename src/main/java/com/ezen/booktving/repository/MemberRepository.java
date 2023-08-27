@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.ezen.booktving.constant.Role;
 import com.ezen.booktving.entity.Member;
 
-public interface MemberRepository extends JpaRepository<Member, Long> {
+public interface MemberRepository extends JpaRepository<Member, Long>, MemberRepositoryCustom {
 	Member findByUserId(String userId);
 
 	Member findByMemberNameAndEmail(String memberName, String email);
@@ -21,5 +21,15 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 	 */
 	
 	Member findByRole(Role role);
+
+	Member findByMemberName(String name);
+
+
+
+
+
+	
+
+	
 
 }
