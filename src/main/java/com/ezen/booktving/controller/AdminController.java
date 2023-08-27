@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.method.P;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -254,21 +255,17 @@ public class AdminController {
 	}
 	
 	//작가정보 삭제
-	@PostMapping("/admin/author/delete")
-	public @ResponseBody ResponseEntity deleteAuthor(@RequestParam List<String> authorIds, Principal principal) {
-		//관리자확인
-		if(!authorService.validateReg(Role.ADMIN)) {
-			return new ResponseEntity<String>("주문 삭제 권한이 없습니다.", HttpStatus.FORBIDDEN);
-		}
-		
+	@DeleteMapping("/admin/author/delete")
+	public String deleteAuthor(@RequestParam(name = "chBoxs", required = false)Long[] chBoxs ) {
+			
 		//작가정보 삭제
-		for(int i=0; i<authorIds.size(); i++) {
-			Long authorId = Long.valueOf(authorIds.get(i));
-			authorService.deleteAuthor(authorId);
+		if(chBoxs != null && chBoxs.length> 0) {
+			for(Long authorId : chBoxs) {
+				authorService.deleteAuthor(authorId);
+			}
 		}
-		
-		return new ResponseEntity<Long>(HttpStatus.OK);
-}
+		return "redirect:/admin/author";
+	}
 	
 	//추천작가 도서등록 페이지 보여주기
 	@GetMapping(value = "/admin/authorBookReg/{authorId}")

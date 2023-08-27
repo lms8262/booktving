@@ -57,7 +57,7 @@
 
 /* 북티빙이 사랑한 작가-상세페이지 */
 .author-detail-wrap{
-	background-image: url("/images/author-bgimg.jpg");
+	background-image: url("/images/author/author-bgimg.jpg");
 	background-repeat: no-repeat;
 	background-size: cover;
 }

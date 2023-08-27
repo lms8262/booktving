@@ -1,8 +1,6 @@
 package com.ezen.booktving.dto;
 
-import org.modelmapper.ModelMapper;
 
-import com.ezen.booktving.entity.Author;
 import com.querydsl.core.annotations.QueryProjection;
 
 import lombok.Getter;

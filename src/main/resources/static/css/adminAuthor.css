@@ -5,6 +5,15 @@
 	line-height: inherit;
 }
 
+.pagination li{
+	margin: 0;
+}
+
+.pagination .page-item.active .page-link {
+	color: #fff;
+	background-color: #ffd360;
+	border-color: #ffd360;
+}
 
 .book_reg_btn {
 	background-color: #fff;

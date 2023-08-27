@@ -18,13 +18,13 @@
 					<div class="container">
 						
 						<div class="top-title">
-							<img class="icorn" alt="icorn" src="/images/pen.png" />
+							<img class="icorn" alt="icorn" src="/images/author/pen.png" />
 							<h4>북티빙이 사랑한 작가</h4>
 						</div>
 							
 						<div class="row author-box">
 							<th:block th:each="author, status : ${authors.getContent()}" >
-								<div class="author-wrap col-md-3 mb-2">
+								<div class="author-wrap col-md-3 mb-4">
 									<div class="author-list">
 										<a class="author-link" th:href="'/author/Detail/' + ${author.id}">
 											<img th:alt="${author.authorNameKo}" th:src="${author.imgUrl}" />
@@ -37,7 +37,7 @@
 						
 						<div class="bottom-logo">							
 							<a class="logo-link" href="/author/list">
-								<img alt="logo" src="/images/logo.png" />
+								<img alt="logo" src="/images/author/logo.png" />
 							</a>							
 						</div>
 						

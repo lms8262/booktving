@@ -56,13 +56,16 @@ h5 {
 	margin-top: -200px;
 }
 
-.slide-contents{
+.slide-contents-wrap{
 	display: flex;	
+	justify-content: center;
 	height: 320px;
+}
+
+.slide-content{
+	display: flex;
 	position: absolute;
 	top: 50px;
-	left: 50%;
-	transform: translateX(-50%);	
 }
 
 .img{
@@ -154,6 +157,7 @@ h5 {
 .top10-wrap{
 	height: 500px;
 	padding-top: 30px;
+	position:relative; 
 }
 
 .tab-content{
@@ -208,7 +212,9 @@ h5 {
 	height: 380px;
 	z-index: 100;
 	padding: 0;
-	margin-left: -180px;
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
 }
 
 .top10-contents {
@@ -328,6 +334,7 @@ h5 {
 	padding: 40px 0;
 	margin-left: 30px ;
 }
+
 .new-book-text .new-book-title {
 	height: 30px;
 	padding: 0;
@@ -412,27 +419,38 @@ h5 {
 
 .author-contents-wrap{
 	display: flex;
-	justify-content:space-between;
-	width:250px;
-	margin: 0;
-	margin-top: 30px;
+	width: auto;
+	padding: 0;
+	margin: 0 auto;
+	margin-top: 40px;
+	box-sizing: border-box;
 }
 
-.author-contents-wrap .author-contents{
-	width: 250px;
+.author-contents-wrap .authors{
+	box-sizing: border-box;
 	height: 250px;
-	overflow: hidden;	
-	border: 1px solid #ddd;
-	border-radius: 15px;
 	margin: 0;
-	padding: 0;
 }
+
+.authors .author-contents-box{
+	margin: 0 5px;
+	border-radius: 15px;
+}
+
+.author-contents{
+	border: 1px solid #ddd;
+	padding:0;
+	height: 225px;
+	overflow: hidden;
+}
+
 
 .author-cover img{
-	width: 255px;
+	width: 100%;
 }
 
 .author-contents-text{
+	width:100%;
 	margin-top: 10px;
 	padding-left: 20px;
 }
@@ -444,7 +462,6 @@ h5 {
 .author-text p {
 	height: 25px;
 }
-
 
 .author-text .author-name{
 	font-size: 20px;
@@ -540,10 +557,9 @@ h5 {
 
 .bestSeller-contents-wrap {
 	display: flex;
-	width: 170px;
+	justify-content: center;
 	margin: 0;
 	padding-top: 20px;
-	padding-left: 10px;
 }
 
 .bestSeller-contents {

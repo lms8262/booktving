@@ -3,6 +3,10 @@
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="~{layouts/layout1}">
 	
+<head>
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
 	 
 <!-- adminBook 페이지 CSS --> 
 <th:block layout:fragment="css">
@@ -48,7 +52,7 @@
 													<tr>
 														<th scope="col">
 															<label class="checkbox-inline">
-																<input id="allCheck" type="checkbox" name="allCheck" onclick="allChecked()" />
+																<input type="checkbox" name="checkAll" id="checkAll" value="" />
 															</label>
 														</th>
 														<th scope="col">작가 아이디</th>
@@ -62,7 +66,7 @@
 													<tr th:each="author, status : ${authors.getContent()}">
 														<td>
 															<label class="checkbox-inline">
-																<input type="checkbox" name="chBox" class="chBox" onclick="chkClicked()" th:value="${author.id}" />
+																<input type="checkbox" th:name="chBoxs" class="chBox" id="chBoxs" th:value="${author.id}" />
 															</label>
 														</td>
 														<td scope="col" class="authorId" th:text="${author.id}"></td>
@@ -76,6 +80,33 @@
 												</tbody>
 											</table>
 											
+											<!-- paging 부분 -->
+											<div>
+												<nav th:with="start=${(authors.number / maxPage) * maxPage + 1}, 
+															  end = (${ ((authors.totalPages == 0)) ? 1 :	(start + (maxPage -1) < authors.totalPages ?
+												  			  start + (maxPage - 1) : authors.totalPages)})" 						
+																aria-label="...">
+													<ul class="pagination d-flex justify-content-center">
+							  
+													    <li class="page-item " th:classappend="${authors.first} ? 'disabled'">
+													      	<a class="page-link page-item" th:onclick="'javascript:page(' + ${authors.number - 1} + ')'">이전</a>
+														</li>
+	
+														<li class="page-item"
+															th:each="page: ${#numbers.sequence(start, end)}"
+															th:classappend="${authors.number eq page -1} ? 'active' : '' ">
+															<a class="page-link" th:inline="text"
+															th:onclick="'javascript:page(' + ${page - 1} + ')'">
+																[[${page}]] </a>
+														</li>
+	
+														<li class="page-item" th:classappend="${authors.last} ? 'disabled'"><a
+															class="page-link page-item" th:onclick="'javascript:page(' + ${authors.number + 1} + ')'">다음</a>
+															</li>	
+													</ul>
+												</nav>												
+											</div>
+											
 											<!-- 등록버튼  -->
 											<div class="form-group button col-12">
 												<div class="col-md-8"></div>
@@ -83,7 +114,7 @@
 													<button type="button" class="btn reg_btn" style="width: 100px;" onclick="location.href='/admin/authorReg'">등록하기</button>
 												</div>
 												<div class="col-md-2">
-													<button type="button" onclick="deleteAuthor()" class="btn delete_btn" style="width: 100px;">삭제하기</button>
+													<button type="submit" name="deleteAuthor" id="deleteAuthor" class="btn delete_btn" style="width: 100px;">삭제하기</button>
 												</div>
 											</div>
 
@@ -108,35 +139,7 @@
 													</div>
 												</div>
 												<div class="col-lg-2"></div>
-											</div>
-
-
-											<!-- paging 부분 -->
-											<nav th:with="start=${(authors.number / maxPage) * maxPage + 1}, 
-														  end = (${ ((authors.totalPages == 0)) ? 1 :	(start + (maxPage -1) < authors.totalPages ?
-											  			  start + (maxPage - 1) : authors.totalPages)})" 						
-															aria-label="...">
-												<ul class="pagination d-flex justify-content-center">
-						  
-												    <li class="page-item " th:classappend="${authors.first} ? 'disabled'">
-												      	<a class="page-link page-item" th:onclick="'javascript:page(' + ${authors.number - 1} + ')'">◀</a>
-													</li>
-
-													<li class="page-item"
-														th:each="page: ${#numbers.sequence(start, end)}"
-														th:classappend="${authors.number eq page -1} ? 'active' : '' ">
-														<a class="page-link" th:inline="text"
-														th:onclick="'javascript:page(' + ${page - 1} + ')'">
-															[[${page}]] </a>
-													</li>
-
-													<li class="page-item" th:classappend="${authors.last} ? 'disabled'"><a
-														class="page-link page-item" th:onclick="'javascript:page(' + ${authors.number + 1} + ')'">▶</a>
-														</li>
-
-												</ul>
-											</nav>
-											
+											</div>											
 											
 										</form>
 									</div>
@@ -155,29 +158,92 @@
 
 <!-- adminBook 페이지 javaScript -->
 <th:block layout:fragment="script">
-	<script src="/resources/js/jquery-3.3.1.min.js"></script>
+	
+	<script src="/js/jquery-3.3.1.min.js"></script>
 	<script>
 	
 	$(document).ready(function(){
 		$("#searchBtn").on("click", function(e){
 			e.preventDefault(); 
 			page(0); 
-		});			
+		});	
+		
+		$("#checkAll").on('click', function(){
+			checkAll();
+		});	
+		
+		$("#deleteAuthor").on('click', function(){
+			deleteAuthor();
+		});
+			
 	});
 	
+	//페이징
 	function page(page){
 		
-		var searchDateType = $("#searchDateType").val();
-		var searchSellStatus = $("#searchSellStatus").val();
 		var searchBy = $("#searchBy").val();
 		var searchQuery = $("#searchQuery").val();
 		
-		location.href = "/admin/adminBook/" + page 
-					  + "?searchDateType=" +  searchDateType 
-					  + "&searchSellStatus=" + searchSellStatus
-					  + "&searchBy=" + searchBy
-					  + "&searchQuery=" + searchQuery
+		location.href = "/admin/author/" + page 
+					  + "?searchBy=" + searchBy
+					  + "&searchQuery=" + searchQuery;
 	}	
+	
+	//전체 체크
+	function checkAll(){
+		if($("#checkAll").prop("checked")){
+			$("input[name=chBoxs]").prop("checked", true);
+		} else {
+			$("input[name=chBoxs]").prop("checked", false);
+		}
+	}
+	
+	//삭제
+	function deleteAuthor(){
+	    const deleteConf = confirm("삭제하시겠습니까?");
+	    if(!deleteConf) return;
+	
+	    var token = $("meta[name='_csrf']").attr("content");
+	    var header = $("meta[name='_csrf_header']").attr("content");
+	
+	    var cnt = $("input[name=chBoxs]:checked").length;
+	    var arr = new Array();
+	
+	    $("input[name=chBoxs]:checked").each(function(){
+	        arr.push($(this).attr('value'));
+	    });
+	    
+	    if(cnt == 0){
+	        alert("선택된 작가가 없습니다.");
+	    } else {
+	        var url = "/admin/author/delete";
+	
+	        $.ajax({
+	            type: "DELETE",
+	            url: url,
+	            data: JSON.stringify(arr), // 선택한 작가 ID 배열을 JSON 형태로 전달
+	            contentType: "application/json",
+	            
+	            beforeSend: function(xhr) {
+	                xhr.setRequestHeader(header, token);
+	            },
+	           
+	            dataType: "json",
+	            cache: false,
+	            success: function(result, status) {
+	                location.reload(); // 성공 시 페이지 새로고침
+	            },
+	            error: function(jqXHR, status, error) {
+	                if(jqXHR.status == '401'){
+	                    alert('로그인 후 이용해주세요.')
+	                    location.href = '/members/login';
+	                } else {
+	                    alert(jqXHR.responseText);
+	                }
+	            }
+	        });
+	    }
+	}
 	
 	 
 	</script>

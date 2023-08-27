@@ -142,24 +142,9 @@ public class AuthorService {
 		return authorFormDto;
 	}
 	
-	//현재 접속자가 관리자 인지
-	public boolean validateReg(Role role) {
-		Member curMember = memberRepository.findByRole(Role.ADMIN);
-		
-		if(curMember.getRole() != Role.ADMIN) {
-			return false;
-		}
-		return true;
-	}
-	
 	//작가정보 삭제
-	@Transactional
-	public Author deleteAuthor(Long authorId) {
+	public void deleteAuthor(Long authorId) {
 		
-		Author author = authorRepository.findById(authorId).get();
-		
-		authorRepository.delete(author);
-		
-		return author;
+		authorRepository.deleteById(authorId);
 	}
 }

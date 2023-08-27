@@ -19,7 +19,7 @@
 					<div class="container section-wrap-author">
 						<div>
 							<div class="author-pictogram">
-								<img alt="픽토그램" src="/images/pen.png">
+								<img alt="픽토그램" src="/images/author/pen.png">
 							</div>
 							
 							<div class="author-picture">
@@ -39,7 +39,8 @@
 								</div>
 								<div class="author-info-content" th:text="${author.authorIntroduction}"></div>
 							</div>
-							<div class="author-book-wrap">
+							
+							<div class="author-book-wrap" th:if="${not #strings.isEmpty(authorBooks)}" >
 								<div class="author-book-title">
 									<h5>대표저서</h5>
 									<div class="author-deco-bar"></div>
