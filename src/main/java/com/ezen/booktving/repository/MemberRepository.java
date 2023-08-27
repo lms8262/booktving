@@ -2,6 +2,7 @@ package com.ezen.booktving.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import com.ezen.booktving.constant.Role;
 import com.ezen.booktving.entity.Member;
 
 public interface MemberRepository extends JpaRepository<Member, Long>, MemberRepositoryCustom {
@@ -18,6 +19,8 @@ public interface MemberRepository extends JpaRepository<Member, Long>, MemberRep
 	 * @Select("SELECT SELECT MID FROM member WHERE MID= #{mid}") String
 	 * checkIdUser(@Param("mid")String mid);
 	 */
+	
+	Member findByRole(Role role);
 
 	Member findByMemberName(String name);
 

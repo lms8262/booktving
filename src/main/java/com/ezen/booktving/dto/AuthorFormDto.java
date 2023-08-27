@@ -6,8 +6,9 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 
 import com.ezen.booktving.entity.Author;
-import com.ezen.booktving.entity.AuthorBook;
+import com.querydsl.core.annotations.QueryProjection;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,12 +18,16 @@ public class AuthorFormDto {
 
 	private Long id;
 	
+	@NotBlank(message = "필수 입력 값입니다.")
 	private String authorNameKo;
 	
+	@NotBlank(message = "필수 입력 값입니다.")
 	private String authorNameEg;
 	
+	@NotBlank(message = "필수 입력 값입니다.")
 	private String title;
 	
+	@NotBlank(message = "필수 입력 값입니다.")
 	private String authorIntroduction;
 	
 	private List<AuthorBookDto> authorBookDtoList = new ArrayList<>();
@@ -30,20 +35,13 @@ public class AuthorFormDto {
 	private AuthorImgDto authorImgDto = new AuthorImgDto();
 	
 	private AuthorImgDto authorImgId = new AuthorImgDto();
+
 	
-	private List<Long> authorBookIds = new ArrayList<>();
-	
-	private static ModelMapper modelMapper = new ModelMapper();
-	
-	public Author createAuthor() {
+	public Author createAuthor(ModelMapper modelMapper) {
 		return modelMapper.map(this, Author.class);
 	}
 	
-	public AuthorBook createAuthorBook() {
-		return modelMapper.map(this, AuthorBook.class);
-	}
-	
-	public static AuthorFormDto of(Author author) {
+	public static AuthorFormDto of(Author author, ModelMapper modelMapper) {
 		return modelMapper.map(author, AuthorFormDto.class);
 	}
 	
