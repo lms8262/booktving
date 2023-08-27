@@ -10,25 +10,24 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import org.thymeleaf.util.StringUtils;
 
-import com.ezen.booktving.constant.Role;
 import com.ezen.booktving.dto.AuthorBookDto;
 import com.ezen.booktving.dto.AuthorBookImgDto;
 import com.ezen.booktving.dto.AuthorDtoList;
 import com.ezen.booktving.dto.AuthorFormDto;
 import com.ezen.booktving.dto.AuthorImgDto;
 import com.ezen.booktving.dto.AuthorSearchDto;
+import com.ezen.booktving.dto.FavoriteAuthorDto;
 import com.ezen.booktving.entity.Author;
 import com.ezen.booktving.entity.AuthorBook;
 import com.ezen.booktving.entity.AuthorBookImg;
 import com.ezen.booktving.entity.AuthorImg;
-import com.ezen.booktving.entity.Member;
+import com.ezen.booktving.entity.FavoriteAuthor;
 import com.ezen.booktving.repository.AuthorBookImgRepository;
 import com.ezen.booktving.repository.AuthorBookRepository;
 import com.ezen.booktving.repository.AuthorImgRepository;
 import com.ezen.booktving.repository.AuthorRepository;
-import com.ezen.booktving.repository.MemberRepository;
+import com.ezen.booktving.repository.FavoriteAuthorRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -43,8 +42,8 @@ public class AuthorService {
 	private final AuthorImgRepository authorImgRepository;
 	private final AuthorBookImgRepository authorBookImgRepository;
 	private final AuthorImgService authorImgService;
-	private final MemberRepository memberRepository;
 	private final ModelMapper modelMapper;
+	private final FavoriteAuthorRepository favoriteAuthorRepository;
 	
 	
 	//추천작가 목록 페이지
@@ -60,7 +59,6 @@ public class AuthorService {
 	public Page<Author> getAdminAuthorPage(AuthorSearchDto authorSearchDto, Pageable pageable){
 		
 		Page<Author> authorPage = authorRepository.getAdminAuthorPage(authorSearchDto, pageable);
-		
 		
 		return authorPage;
 	}
@@ -147,4 +145,13 @@ public class AuthorService {
 		
 		authorRepository.deleteById(authorId);
 	}
+	
+	//찜한 작가 리스트 가져오기
+	public Page<FavoriteAuthorDto> getMyLibraryAuthorList(String userId, Pageable pageable){
+		
+		Page<FavoriteAuthorDto> favoriteAuthorDtoPage = favoriteAuthorRepository.findFavoriteAuthor(userId, pageable);
+		
+		return favoriteAuthorDtoPage;
+	}
+	
 }

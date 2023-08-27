@@ -66,14 +66,27 @@
 						<!-- bookcase -->
 						<div class="container bookcase-wrap">
 							<div class="bookcase-box">
-								<div>
+								<div class="bookcase-box-title">
 									<img class="myLibrary-pictogram" src="/images/myLibrary/book.png" alt="Book case" />
 									<span class="myLibrary-title">Book case</span>
 									<span class="myLibrary-more">
 										<a href="/mylibrary/rentList">more</a>
 									</span>
 								</div>
-								<div class="deco-bar"></div>
+								
+								<div class="rent-book-wrap" th:if="${not #lists.isEmpty(rentBooks)}">
+									<!-- 대여한 도서 보여주기 -->
+									<div class="rent-book" th:each="rentBook, status : ${rentBooks}">
+										<img th:src="${rentBook.imgUrl}" alt="${rentBook.bookName}" />
+									</div>
+								</div>
+								<div th:if="${#lists.isEmpty(rentBooks)}">
+									<p class="author-book-null">
+										대여한 도서가 없습니다.
+									</p>
+								</div>
+								
+								<div class="rent-book-deco-bar"></div>
 							</div>
 						</div>
 						
@@ -81,14 +94,27 @@
 						<!-- favorite -->
 						<div class="container favorite-wrap">
 							<div class="favorite-box">
-								<div>
+								<div class="favorite-box-title">
 									<img class="myLibrary-pictogram" src="/images/myLibrary/favorite.png" alt="Favorite" />
 									<span class="myLibrary-title">Favorite</span>
 									<span class="myLibrary-more">
 										<a href="/mylibrary/rentList">more</a>
 									</span>
 								</div>
-								<div class="deco-bar"></div>
+								
+								<div class="favorite-book-wrap">
+									<!-- 찜한 도서 보여주기 -->
+									<div class="favorite-book">
+										<img src="" alt="" />
+									</div>
+								</div>
+								<div>
+									<p class="favorite-book-null">
+										찜한 도서가 없습니다.
+									</p>
+								</div>
+								
+								<div class="favorite-book-deco-bar"></div>
 							</div>
 						</div>
 						
@@ -96,14 +122,27 @@
 						<!-- author -->
 						<div class="container author-wrap">
 							<div class="author-box">
-								<div>
+								<div class="author-box-title">
 									<img class="myLibrary-pictogram" src="/images/myLibrary/pen.png" alt="Author" />
 									<span class="myLibrary-title">Author</span>
 									<span class="myLibrary-more">
 										<a href="/mylibrary/rentList">more</a>
 									</span>
 								</div>
-								<div class="deco-bar"></div>
+								
+								<div class="favorite-author-wrap">
+									<!-- 찜한 작가 보여주기 -->
+									<div class="favorite-author">
+										<img src="" alt="" />
+									</div>
+								</div>
+								<div>
+									<p class="favorite-author-null">
+										찜한 작가가 없습니다.
+									</p>
+								</div>
+								
+								<div class="favorite-author-deco-bar"></div>
 							</div>
 						</div>						
 					</div>

@@ -14,8 +14,6 @@ import com.ezen.booktving.dto.MyLibraryRentBookInfoDto;
 import com.ezen.booktving.dto.MyLibraryRentBookListDto;
 import com.ezen.booktving.entity.RentBook;
 import com.ezen.booktving.repository.BookImgRepository;
-import com.ezen.booktving.repository.BookRepository;
-import com.ezen.booktving.repository.MemberRepository;
 import com.ezen.booktving.repository.RentRepository;
 
 import lombok.RequiredArgsConstructor;
@@ -25,8 +23,6 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 public class MyLibraryRentBookService {
 	private final RentRepository rentRepository;
-	private final BookRepository bookRepository;
-	private final MemberRepository memberRepository;
 	private final BookImgRepository bookImgRepository;
 	
 	

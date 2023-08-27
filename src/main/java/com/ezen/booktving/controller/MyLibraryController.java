@@ -6,12 +6,16 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import com.ezen.booktving.dto.FavoriteAuthorDto;
 import com.ezen.booktving.dto.MyLibraryRentBookListDto;
+import com.ezen.booktving.service.AuthorService;
 import com.ezen.booktving.service.MyLibraryRentBookService;
 
 import lombok.RequiredArgsConstructor;
@@ -21,21 +25,37 @@ import lombok.RequiredArgsConstructor;
 public class MyLibraryController {
 	
 	private final MyLibraryRentBookService myLibraryRentBookService;
+	private final AuthorService authorService;
 	
 	
 	//나의서재 메인화면
 	@GetMapping(value = "/mylibrary")
-	public String myLibrary(Optional<Integer> page, Model model) {
+	public String myLibrary(Optional<Integer> page, Model model, @AuthenticationPrincipal UserDetails userDetails) {
 		
-		//bookcase
+		if(userDetails != null) {
+			
+			Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 5);
+
+			//bookcase
+			Page<MyLibraryRentBookListDto> rentBooks = myLibraryRentBookService.getMyLibraryRentBookList(userDetails.getUsername(), pageable);
+			model.addAttribute("rentBooks", rentBooks);
+			
+			//favorite
+			
+			
+			
+			//author
+			Page<FavoriteAuthorDto> favoriteAuthors = authorService.getMyLibraryAuthorList(userDetails.getUsername(), pageable);
+			model.addAttribute("favoriteAuthors", favoriteAuthors);
+			
+			
+			return "mylibrary/mylibraryMain";
+		} else {
+			
+			return "redirect:/login/login";
+		}
 		
 		
-		//favorite
-		
-		
-		//author
-		
-		return "mylibrary/mylibraryMain";
 	}
 	
 	//나의 서재 대여도서 리스트
