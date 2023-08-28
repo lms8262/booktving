@@ -1,8 +1,5 @@
 package com.ezen.booktving.entity;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -12,7 +9,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "book_review")
@@ -30,11 +29,9 @@ public class BookReview {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "book_id", nullable = false)
-	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Book book;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id", nullable = false)
-	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Member member;
 }
