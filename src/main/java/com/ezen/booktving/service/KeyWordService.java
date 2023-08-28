@@ -87,7 +87,7 @@ public class KeyWordService {
 		return keywordDtoList;
 	}
 	
-	// 인기 키워드 관리 페이지에 보여줄 DB 검색 순위 Top
+	// DB 검색 순위 Top
 	@Transactional(readOnly = true)
 	public List<KeywordDto> getSearchKeywordTop(Long limit) {
 		return searchKeywordRepositiory.getSearchKeywordTop(limit);

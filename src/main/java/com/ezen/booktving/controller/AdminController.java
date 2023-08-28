@@ -257,15 +257,6 @@ public class AdminController {
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
 	
-	// 인기 키워드 관리 페이지 보여주기
-	@GetMapping(value = "/admin/keyword/popular")
-	public String adminPopularKeyword(Model model) {
-		List<KeywordDto> searchKeywordList = keyWordService.getSearchKeywordTop(50L);
-		
-		model.addAttribute("searchKeywordList", searchKeywordList);
-		return "admin/adminPopularKeyword";
-	}
-	
 	//추천작가 관리 페이지 보여주기
 	@GetMapping(value = {"/admin/author", "/admin/author/{page}"})
 	public String adminAuthor(AuthorSearchDto authorSearchDto, @PathVariable("page") Optional<Integer> page, Model model) {
