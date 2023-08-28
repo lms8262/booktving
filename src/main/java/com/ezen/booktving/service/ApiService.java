@@ -119,12 +119,13 @@ public class ApiService {
     private String getJsonStringOfSearchBook(BookSearchDto bookSearchDto, int start) {
     	String ttbKey = "ttblyczang41056001";
     	String query = bookSearchDto.getSearchQuery();
+    	System.out.println(query);
     	String queryType = bookSearchDto.getSearchBy();
     	int maxResults = 50;
     	String cover = "Big";
     	String output = "JS";
     	String version = "20131101";
-    		
+    	
 		String result = webClient.get()
 		    	.uri(uriBuilder -> uriBuilder
 		    			.path("/ItemSearch.aspx")
@@ -146,10 +147,12 @@ public class ApiService {
     }
     
     // 검색시 책 + 이미지 저장하는 메소드
-    @Transactional
     private void saveBookWhenSearch(JsonNode rootNode, Set<String> allBookIsbn) throws IOException {
     	List<Book> saveBookList = new ArrayList<>();
     	List<BookImg> saveBookImgList = new ArrayList<>();
+    	if(rootNode.get("item") == null) {
+    		return;
+    	}
     	for(JsonNode itemNode : rootNode.get("item")) {
         	String isbn13 = itemNode.get("isbn13").textValue();
         	// isb13이 비어있거나, db에서 가져온 책 isbn 목록에 있으면 패스
@@ -172,7 +175,6 @@ public class ApiService {
             		.build();
         	
         	saveBookList.add(book);
-        	//bookRepository.save(book);
         	
         	// 이미지 path를 통해서 생성 후 저장
             String imgPath = itemNode.get("cover").textValue();
@@ -196,7 +198,6 @@ public class ApiService {
             						.build();
             
             saveBookImgList.add(bookImg);
-            //bookImgRepository.save(bookImg);
         }
     	bookRepository.saveAll(saveBookList);
     	bookImgRepository.saveAll(saveBookImgList);
@@ -210,12 +211,11 @@ public class ApiService {
 		
     	ObjectMapper objectMapper = new ObjectMapper();
         JsonNode rootNode = objectMapper.readTree(result);
-        long start = System.currentTimeMillis();
+        
         saveBookWhenSearch(rootNode, allBookIsbn);
-        long end = System.currentTimeMillis();
-        long time = end - start;
-        System.out.println("걸린 시간: " + time + " ms");
-	    
+        if(rootNode.get("item") == null) {
+    		return;
+    	}
         // 총 데이터 개수에 따른 api 요청 횟수를 계산(1회당 데이터 50개)
         int totalResults = rootNode.get("totalResults").intValue();
         int totalPage = (totalResults / 50) + 1 > 4 ? 4 : (totalResults / 50);

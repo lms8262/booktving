@@ -260,7 +260,7 @@ public class AdminController {
 	// 인기 키워드 관리 페이지 보여주기
 	@GetMapping(value = "/admin/keyword/popular")
 	public String adminPopularKeyword(Model model) {
-		List<KeywordDto> searchKeywordList = keyWordService.getSearchKeywordTop50();
+		List<KeywordDto> searchKeywordList = keyWordService.getSearchKeywordTop(50L);
 		
 		model.addAttribute("searchKeywordList", searchKeywordList);
 		return "admin/adminPopularKeyword";

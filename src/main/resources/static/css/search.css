@@ -40,7 +40,7 @@
 /* searchMain.html */
 .search_recommend > h5 {
 	font-weight: bold;
-	margin: 10px 0;
+	margin: 30px 0px 20px;
 }
 
 .recommend-list {
@@ -57,13 +57,18 @@
 	border-radius: 40px;
 }
 
+.popular-wrap {
+	border-top: 1px solid #eee;
+	margin-bottom: 40px;
+}
+
 .popular-title {
 	margin: 0;
 }
 
 .popular-title > h5 {
 	font-weight: bold;
-	margin-right: 10px;
+	margin: 30px 0px 10px 0px;
 }
 
 .popular-title > small {
@@ -82,6 +87,10 @@
 .popular-list > li > a {
 	font-weight: bold;
 	font-size: 18px;
+}
+
+.popular-list > li > a > span {
+	font-weight: normal;
 }
 
 /* searchDetail.html */

@@ -40,9 +40,11 @@ public class SearchController {
 	@GetMapping(value = "/search/main")
 	public String searchMain(Model model) {
 		List<KeywordDto> recommendKeywordList = keyWordService.getRecommendKeywordLatest15();
+		List<String> popularKeywordList = keyWordService.getSearchKeywordNameTop(10L);
 		
 		model.addAttribute("bookSearchDto", new BookSearchDto());
 		model.addAttribute("recommendKeywordList", recommendKeywordList);
+		model.addAttribute("popularKeywordList", popularKeywordList);
 		
 		return "search/searchMain";
 	}

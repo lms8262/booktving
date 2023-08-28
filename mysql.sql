@@ -17,12 +17,16 @@ select * from member;
 select * from rent_book;
 select * from author;
 select * from author_book;
+delete from search_keyword where search_keyword_id = 56;
 select * from search_keyword;
 select * from recommend_keyword;
 select * from popular_keyword;
 
 select s.search_keyword_type, s.search_keyword_name
 from search_keyword s group by s.search_keyword_type, s.search_keyword_name order by count(s.search_keyword_name) desc;
+
+select s.search_keyword_name, count(s.search_keyword_name)
+from search_keyword s where s.search_keyword_type != 'Publisher' group by s.search_keyword_name order by count(s.search_keyword_name) desc;
 
 update new_book_tving set description = "보기 드문 해부학 드로잉 입문서"  where new_book_tving_id = 1;
 update new_book_tving set description = "서로의 마음을 마주하고.."  where new_book_tving_id = 2;

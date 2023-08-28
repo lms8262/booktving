@@ -18,7 +18,7 @@ public class SearchKeywordRepositioryCustomImpl implements SearchKeywordRepositi
 	}
 	
 	@Override
-	public List<KeywordDto> getSearchKeywordTop50() {
+	public List<KeywordDto> getSearchKeywordTop(Long limit) {
 		QSearchKeyword searchKeyword = QSearchKeyword.searchKeyword;
 		
 		List<KeywordDto> searchKeywordList = queryFactory
@@ -31,10 +31,26 @@ public class SearchKeywordRepositioryCustomImpl implements SearchKeywordRepositi
 				.from(searchKeyword)
 				.groupBy(searchKeyword.searchKeywordType, searchKeyword.searchKeywordName)
 				.orderBy(searchKeyword.searchKeywordName.count().desc())
-				.limit(50)
+				.limit(limit)
 				.fetch();
 											
 		return searchKeywordList;
+	}
+
+	@Override
+	public List<String> getSearchKeywordNameTop(Long limit) {
+		QSearchKeyword searchKeyword = QSearchKeyword.searchKeyword;
+		
+		List<String> popularKeywordNameList = queryFactory
+				.select(searchKeyword.searchKeywordName)
+				.from(searchKeyword)
+				.where(searchKeyword.searchKeywordType.ne("Publisher"))
+				.groupBy(searchKeyword.searchKeywordName)
+				.orderBy(searchKeyword.searchKeywordName.count().desc())
+				.limit(limit)
+				.fetch();
+		
+		return popularKeywordNameList;
 	}
 	
 }

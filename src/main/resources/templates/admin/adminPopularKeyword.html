@@ -40,85 +40,52 @@
 											<p class="explanation">인기 키워드를 관리하는 페이지입니다.</p>
 										</div>
 										
-										<div class="d-flex">
-											<div class="col-6 list-wrap" th:if="${not #lists.isEmpty(searchKeywordList)}">
+										<div class="d-flex mb-4">
+											<div class="col-12 list-wrap" th:if="${not #lists.isEmpty(searchKeywordList)}">
 												<h5>
 													DB 검색 순위
-													<button type="button" class="btn reg_btn" id="appendBtn">추가</button>
+													<button type="button" class="btn reg_btn" id="deleteBtn">삭제</button>
 												</h5>
 												
 												<table class="table table-responsive-md pop-keyword-list">						
 													<thead>
 														<tr>
-															<th scope="col">
-																<input type="checkbox" id="check-all"/> 
-															</th>
-															<th scope="col">순위</th>
-															<th scope="col">타입</th>
-															<th scope="col">키워드명</th>
+														<th scope="col">
+															<input type="checkbox" id="dbCheck-all" name="dbCheck-all"/>
+														</th> 
+														<th scope="col">순위</th>
+														<th scope="col">타입</th>
+														<th scope="col">키워드명</th>
 														</tr>
 													</thead>
 													<tbody>
-														<tr th:each="searchKeyword, status : ${searchKeywordList}">
-															<td>
-																<input type="checkbox" th:id="check- + ${status.count}" name="check" /> 
-															</td>
-															<td>[[${status.count}]]</td>
-															<td th:if="${#strings.equals(searchKeyword.keywordType, 'Keyword')}">제목+저자</td>
-															<td th:if="${#strings.equals(searchKeyword.keywordType, 'Title')}">제목</td>
-															<td th:if="${#strings.equals(searchKeyword.keywordType, 'Author')}">저자</td>
-															<td th:if="${#strings.equals(searchKeyword.keywordType, 'Publisher')}">출판사</td>
-															<td>[[${searchKeyword.keywordName}]]</td>
-														</tr>
+														<th:block th:each="searchKeyword, status : ${searchKeywordList}">
+															<tr class="keywordList" th:id="keywordList + ${status.count}">
+																<td>
+																	<input type="checkbox" name="dbCheck" />
+																</td> 
+																<td>[[${status.count}]]</td>
+																<td th:if="${#strings.equals(searchKeyword.keywordType, 'Keyword')}">제목+저자</td>
+																<td th:if="${#strings.equals(searchKeyword.keywordType, 'Title')}">제목</td>
+																<td th:if="${#strings.equals(searchKeyword.keywordType, 'Author')}">저자</td>
+																<td th:if="${#strings.equals(searchKeyword.keywordType, 'Publisher')}">출판사</td>
+																<td class="db-keyword-name">[[${searchKeyword.keywordName}]]</td>
+															</tr>
+														</th:block>
 													</tbody>
 												</table>
+												
+												<nav class = "d-flex paging-bar" aria-label="...">
+													<ul class="pagination d-flex justify-content-center">
+														<li class="page-item" th:each="page: ${#numbers.sequence(1, (searchKeywordList.size%10) == 0 ? (searchKeywordList.size/10) : (searchKeywordList.size/10)+1)}">
+															<a class="page-link" th:onclick="goPage([[${page-1}]])">[[${page}]]</a>
+														</li>
+													</ul>
+												</nav>
 												
 												<p th:unless="${not #lists.isEmpty(searchKeywordList)}">DB에 저장된 검색기록이 없습니다.</p>
 											</div>
-											<div class="col-6 list-wrap">
-												<h5>
-													사용자 검색 순위
-													<button type="button" class="btn" id="deleteBtn">삭제</button>
-												</h5>
-												<table class="table table-responsive-md pop-keyword-list">						
-													<thead>
-														<tr>
-															<th scope="col">
-																<input type="checkbox" id="check-all"/> 
-															</th>
-															<th scope="col">순위</th>
-															<th scope="col">타입</th>
-															<th scope="col">키워드명</th>
-															<th scope="col">위치</th>
-														</tr>
-													</thead>
-													<tbody>
-														<tr>
-															<td>
-																<input type="checkbox" name="check"/> 
-															</td>
-															<td>1</td>
-															<td>제목+저자</td>
-															<td>상냥한 저승사자를 기르는 법</td>
-															<td>
-																<div class="btn-group" role="group" aria-label="Vertical button group">
-																	<button type="button" class="btn reg_btn moveBtn">
-																		<i class="fa-solid fa-caret-up fa-xs" style="color: #000000;"></i>
-																	</button>
-																	<button type="button" class="btn reg_btn moveBtn">
-																		<i class="fa-solid fa-caret-down fa-xs" style="color: #000000;"></i>
-																	</button>
-																</div>
-															</td>
-														</tr>
-													</tbody>
-												</table>
-												
-												<div class="d-flex justify-content-end">
-													<button type="button" class="btn reg_btn" id="saveBtn">저장</button>
-												</div>
-												
-											</div>
+											
 										</div>
 										
 									</div>
@@ -135,6 +102,60 @@
 </div>
 
 <th:block layout:fragment="script">
+	<script th:inline="javascript">
+		let list = [[${searchKeywordList.size()}]];
+		
+		$(document).ready(function(){
+			// 페이징 처리
+			for(a=1; a<=list; a++) {
+				$("#keywordList"+a).hide();
+			}
+			
+			for(b=1; b<=10; b++) {
+				$("#keywordList"+b).show();
+			}
+			
+			// db 검색순위 체크박스 전체 체크
+			$("#dbCheck-all").on("click", function(e) {
+				if($("#dbCheck-all").is(":checked")) {
+					$(".keywordList:not([style*='display: none']) input[name=dbCheck]").prop("checked", true);
+				} else {
+					$(".keywordList:not([style*='display: none']) input[name=dbCheck]").prop("checked", false);
+				}
+			});
+			
+			$("input[name=dbCheck]").on("click", function(e) {
+				let total = $(".keywordList:not([style*='display: none']) input[name=dbCheck]").length;
+				let checked = $(".keywordList:not([style*='display: none']) input[name=dbCheck]:checked").length;
+				
+				if(total != checked) {
+					$("#dbCheck-all").prop("checked", false);
+				} else {
+					$("#dbCheck-all").prop("checked", true);
+				}
+			});
+			
+		});
+		
+		// 페이징 처리
+		function goPage(page) {
+			let firstIndex = (page*10)+1;
+			let lastIndex = (page+1)*10;
+			
+			for(c=1; c<=list; c++) {
+				if($("#keywordList"+c).css("display") != "none") $("#keywordList"+c).hide();
+			}
+			
+			for(d=firstIndex ; d<=lastIndex ; d++){
+				$("#keywordList"+d).show();
+			}
+			
+			$("input[name=dbCheck-all]").prop("checked", false);
+			$("input[name=dbCheck]").prop("checked", false);
+			
+		}
+		
+	</script>
 </th:block>
 
 </html>

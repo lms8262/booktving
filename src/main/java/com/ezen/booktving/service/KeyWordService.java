@@ -74,6 +74,7 @@ public class KeyWordService {
 	}
 	
 	// searchMain 페이지에 보여줄 추천 키워드 15개(최신순)
+	@Transactional(readOnly = true)
 	public List<KeywordDto> getRecommendKeywordLatest15() {
 		List<RecommendKeyword> recommendKeywordList = recommendKeywordRepository.findTop15ByOrderByUpdateTimeDesc();
 		
@@ -86,9 +87,16 @@ public class KeyWordService {
 		return keywordDtoList;
 	}
 	
-	// 인기 키워드 관리 페이지에 보여줄 DB 검색 순위
-	public List<KeywordDto> getSearchKeywordTop50() {
-		return searchKeywordRepositiory.getSearchKeywordTop50();
+	// 인기 키워드 관리 페이지에 보여줄 DB 검색 순위 Top
+	@Transactional(readOnly = true)
+	public List<KeywordDto> getSearchKeywordTop(Long limit) {
+		return searchKeywordRepositiory.getSearchKeywordTop(limit);
+	}
+	
+	// searchMain 페이지에 보여줄 인기 키워드 Top(출판사 제외)
+	@Transactional(readOnly = true)
+	public List<String> getSearchKeywordNameTop(Long limit) {
+		return searchKeywordRepositiory.getSearchKeywordNameTop(limit);
 	}
 	
 }

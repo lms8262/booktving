@@ -60,13 +60,7 @@
 .list-wrap > h5 {
 	display: flex;
 	justify-content: space-between;
-}
-
-#appendBtn {
-	margin-left: 10px;
-	border-radius: 10px;
-	color: #fff;
-	font-weight: bold;
+	line-height: 38px;
 }
 
 #deleteBtn {
@@ -83,20 +77,10 @@
 
 .pop-keyword-list th, 
 .pop-keyword-list td {
-	padding: 0.5rem;
+	padding: 1rem 0.5rem;
+	vertical-align: middle;
 }
 
 .pop-keyword-list > tbody > tr > td {
 	text-align: center;
-}
-
-.moveBtn {
-	padding: 3px 9px;
-}
-
-#saveBtn {
-	margin-left: 10px;
-	border-radius: 10px;
-	color: #fff;
-	font-weight: bold;
 }

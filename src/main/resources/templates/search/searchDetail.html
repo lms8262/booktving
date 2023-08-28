@@ -15,7 +15,7 @@
 <div layout:fragment="content">
 	<div class="search_wrap">
 		<div class="container">
-			<form class="search-form" method="get" action="/search/detail">
+			<form class="search-form" method="get" action="/search/detail" name="searchForm">
 				<div class="search-select">
 					<select id="searchBy" name="searchBy">
 						<option value="Keyword">제목+저자</option>
@@ -25,7 +25,7 @@
 					</select>
 				</div>
 				<div class="search-input d-flex container">
-					<button id="searchBtn" type="submit">
+					<button id="searchBtn" type="button">
 						<img alt="search" src="/images/search.png">
 					</button>
 					<div class="d-flex align-items-center">
@@ -40,11 +40,11 @@
 		<h5>
 			검색결과&nbsp;&nbsp;<span>[[${searchCount}]]</span>
 		</h5>
-		<div class="container d-flex">
-			<div id="search-data" class="row row-cols-1 row-cols-md-6 g-4">
+		<div class="container">
+			<div id="search-data" class="row row-cols-md-6 g-4">
 				
 				<th:block th:if="${!#lists.isEmpty(searchBookList.getContent())}" th:each="searchBook : ${searchBookList.getContent()}">
-					<div class="search-card col">
+					<div class="search-card col-2">
 						<div class="card">
 							<a th:href="@{/search/detail/update/} + ${searchBook.isbn}">
 								<img th:src="${searchBook.imgUrl}" class="card-img-top" alt="이미지">
@@ -83,12 +83,6 @@
 			$("#searchBtn").on("click", function(e) {
 				e.preventDefault(); // submit 방지
 				
-				var searchQuery = $("#searchQuery").val();
-				if(searchQuery.replace(/\s| /gi, "").length == 0) {
-					alert("검색어는 필수로 입력해주세요.");
-					return false;
-				}
-				
 				search();
 				
 			});
@@ -113,12 +107,16 @@
 		});
 		
 		function search() {
-			var searchBy = $("#searchBy").val();
 			var searchQuery = $("#searchQuery").val();
 			
-			location.href = "/search/detail"
-							+ "?searchBy=" + searchBy
-							+ "&searchQuery=" + searchQuery; 
+			if(searchQuery.replace(/\s| /gi, "").length == 0) {
+				alert("검색어는 필수로 입력해주세요.");
+				return false;
+			}
+			
+			const f = document.searchForm;
+			f.submit();
+			
 		}
 		
 		function requestNextSearchBookList() {
@@ -168,7 +166,7 @@
 		// 가져온 데이터 화면에 추가
 		function addNextBookList(contents) {
 			for(let i = 0; i < contents.length; i++) {
-				var appendData = `<div class="search-card col">
+				var appendData = `<div class="search-card col-2">
 					<div class="card">
 					<a href="/search/detail/update/${contents[i].isbn}">
 						<img src="${contents[i].imgUrl}" class="card-img-top" alt="이미지">
