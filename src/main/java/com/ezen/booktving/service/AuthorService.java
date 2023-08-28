@@ -17,7 +17,7 @@ import com.ezen.booktving.dto.AuthorDtoList;
 import com.ezen.booktving.dto.AuthorFormDto;
 import com.ezen.booktving.dto.AuthorImgDto;
 import com.ezen.booktving.dto.AuthorSearchDto;
-import com.ezen.booktving.dto.FavoriteAuthorDto;
+import com.ezen.booktving.dto.FavoriteAuthorListDto;
 import com.ezen.booktving.entity.Author;
 import com.ezen.booktving.entity.AuthorBook;
 import com.ezen.booktving.entity.AuthorBookImg;
@@ -147,9 +147,9 @@ public class AuthorService {
 	}
 	
 	//찜한 작가 리스트 가져오기
-	public Page<FavoriteAuthorDto> getMyLibraryAuthorList(String userId, Pageable pageable){
+	public Page<FavoriteAuthorListDto> getMyLibraryAuthorList(String memberId, Pageable pageable){
 		
-		Page<FavoriteAuthorDto> favoriteAuthorDtoPage = favoriteAuthorRepository.findFavoriteAuthor(userId, pageable);
+		Page<FavoriteAuthorListDto> favoriteAuthorDtoPage = favoriteAuthorRepository.findFavoriteAuthor(memberId, pageable);
 		
 		return favoriteAuthorDtoPage;
 	}

@@ -12,7 +12,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -20,6 +23,9 @@ import lombok.ToString;
 @Table(name = "favorite_author")
 @Getter
 @Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @ToString
 public class FavoriteAuthor extends BaseTimeEntity {
 	
@@ -35,6 +41,7 @@ public class FavoriteAuthor extends BaseTimeEntity {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "author_id", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Author author;
 	
 }

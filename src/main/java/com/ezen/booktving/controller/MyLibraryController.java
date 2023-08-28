@@ -13,7 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
-import com.ezen.booktving.dto.FavoriteAuthorDto;
+import com.ezen.booktving.dto.FavoriteAuthorListDto;
 import com.ezen.booktving.dto.MyLibraryRentBookListDto;
 import com.ezen.booktving.service.AuthorService;
 import com.ezen.booktving.service.MyLibraryRentBookService;
@@ -45,14 +45,14 @@ public class MyLibraryController {
 			
 			
 			//author
-			Page<FavoriteAuthorDto> favoriteAuthors = authorService.getMyLibraryAuthorList(userDetails.getUsername(), pageable);
+			Page<FavoriteAuthorListDto> favoriteAuthors = authorService.getMyLibraryAuthorList(userDetails.getUsername(), pageable);
 			model.addAttribute("favoriteAuthors", favoriteAuthors);
 			
 			
 			return "mylibrary/mylibraryMain";
 		} else {
 			
-			return "redirect:/login/login";
+			return "redirect:/login";
 		}
 		
 		

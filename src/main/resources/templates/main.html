@@ -158,7 +158,7 @@
 								<ul class="tabmenu">
 									
 									<!-- 일간 -->
-									<li class="active"> <a href="#">일간&nbsp;&nbsp;&nbsp;&nbsp;<span>|</span></a>
+									<li class="active" th:if="${not #lists.isEmpty(dayRanks)}"> <a href="#">일간&nbsp;&nbsp;&nbsp;&nbsp;<span>|</span></a>
 										<div class="rank-list day-box">
 											<th:block th:each="dayRank, status : ${dayRanks}">
 												<div class="dayRank">
@@ -190,7 +190,7 @@
 									</li>
 									
 									<!-- 주간 -->
-									<li> <a href="#">주간&nbsp;&nbsp;&nbsp;&nbsp;<span>|</span></a>
+									<li th:if="${not #lists.isEmpty(weekRanks)}"> <a href="#">주간&nbsp;&nbsp;&nbsp;&nbsp;<span>|</span></a>
 										<div class="rank-list week-box">
 											<th:block th:each="weekRank, status : ${weekRanks}">
 												<div class="weekRank">
@@ -222,7 +222,7 @@
 									</li>
 									
 									<!-- 월간 -->
-									<li> <a href="#">월간&nbsp;&nbsp;&nbsp;&nbsp;<span>|</span></a>
+									<li th:if="${not #lists.isEmpty(monthRanks)}"> <a href="#">월간&nbsp;&nbsp;&nbsp;&nbsp;<span>|</span></a>
 										<div class="rank-list month-box">
 											<th:block th:each="monthRank, status : ${monthRanks}">
 												<div class="monthRank">
@@ -254,32 +254,32 @@
 									</li>
 									
 									<!-- 연간 -->
-									<li> <a href="#">연간&nbsp;&nbsp;</a> 
-									<div class="rank-list year-box">
+									<li th:if="${not #lists.isEmpty(yearRanks)}"> <a href="#">연간&nbsp;&nbsp;</a> 
+										<div class="rank-list year-box">
 											<th:block th:each="yearRank, status : ${yearRanks}">
-										<div class="yearRank">
-												<div class="top10-contents">
-													<div class="top10-rank">
-														<a th:href="'/book/bookDetail/' + ${yearRank.isbn}">
-															<h1>[[${yearRank.num}]]</h1>
-														</a>
-													</div>
-													<div class="top10-cover">
-														<a th:href="'/book/bookDetail/' + ${yearRank.isbn}">
-															<img th:src="${yearRank.imgUrl}" th:alt="${yearRank.bookName}" class="top10-cover-img">
-														</a>
-													</div>
-												</div>
-										
-												<div class="row top10-contents-text">
-													<div class="top10-title-author">
-														<p class="top10-title">[[${yearRank.bookName}]]</p>
-														<div class="top10-author">
-															<p class="author">[[${yearRank.author}]] <span>&nbsp;/&nbsp;</span></p>
-															<p class="publisher">[[${yearRank.publisher}]]</p>
+												<div class="yearRank">
+													<div class="top10-contents">
+														<div class="top10-rank">
+															<a th:href="'/book/bookDetail/' + ${yearRank.isbn}">
+																<h1>[[${yearRank.num}]]</h1>
+															</a>
+														</div>
+														<div class="top10-cover">
+															<a th:href="'/book/bookDetail/' + ${yearRank.isbn}">
+																<img th:src="${yearRank.imgUrl}" th:alt="${yearRank.bookName}" class="top10-cover-img">
+															</a>
 														</div>
 													</div>
-												</div>
+										
+													<div class="row top10-contents-text">
+														<div class="top10-title-author">
+															<p class="top10-title">[[${yearRank.bookName}]]</p>
+															<div class="top10-author">
+																<p class="author">[[${yearRank.author}]] <span>&nbsp;/&nbsp;</span></p>
+																<p class="publisher">[[${yearRank.publisher}]]</p>
+															</div>
+														</div>
+													</div>
 												</div>
 											</th:block>
 										</div>

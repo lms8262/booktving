@@ -1,9 +1,19 @@
 package com.ezen.booktving.dto;
 
-public interface FavoriteAuthorDto {
-	
-	long getId();
-	String getImgUrl();
-	String getAuthorNameKo();
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+public class FavoriteAuthorDto {
+
+	private String memberId;
+	
+	private String authorId;
 }
