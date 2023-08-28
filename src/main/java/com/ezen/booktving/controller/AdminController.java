@@ -151,7 +151,8 @@ public class AdminController {
 
 	// 회원관리 페이지 보여주기
 	@GetMapping(value = "/admin/member")
-	public String adminMemberMng(MemberSearchDto membersearchDto, @PathVariable("page") @RequestParam(name = "page", required = false, defaultValue = "0") int page,
+	public String adminMemberMng(MemberSearchDto membersearchDto,
+			@PathVariable("page") @RequestParam(name = "page", required = false, defaultValue = "0") int page,
 			Model model) {
 		Pageable pageable = PageRequest.of(page, 3);
 		Page<Member> members = memberService.getAdminMemberPage(membersearchDto, pageable);
@@ -160,7 +161,8 @@ public class AdminController {
 		model.addAttribute("maxPage", 5);
 		return "admin/adminMemberMng";
 	}
-	//회원 관리 삭제
+
+	// 회원 관리 삭제
 	@DeleteMapping(value = "/admin/member/{memberId}/delete")
 	public @ResponseBody ResponseEntity deleteMember(@PathVariable("memberId") Long memberId) {
 		memberService.deleteMember(memberId);
