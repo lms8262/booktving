@@ -2,6 +2,7 @@ package com.ezen.booktving.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -56,7 +57,7 @@ public class BookService {
 			bookImgDtoList.add(bookImgDto);
 		}
 		
-		List<BookReview> bookReviewList = bookReviewRepository.findByIdOrderByIdAsc(book.getId());
+		List<BookReview> bookReviewList = bookReviewRepository.findByBookIdOrderByIdAsc(book.getId());
 		
 		List<BookReviewDto> bookReviewDtoList = new ArrayList<>();
 		for(BookReview bookReview : bookReviewList) {
@@ -74,12 +75,19 @@ public class BookService {
 	
 	@Transactional
 	public String saveReview(BookReviewDto bookReviewDto) {
-		return bookReviewRepository.save(bookReviewDto.createBookReview()).getContent();
-	}
+		 
+	        return bookReviewRepository.save(bookReviewDto.createBookReview()).getContent();
+	    }
 	
 	@Transactional(readOnly = true)
 	public Book getBookByIsbn(String isbn) {
 	    return bookDetailRepository.findByIsbn(isbn);
+	            
+	}
+	
+	@Transactional(readOnly = true)
+	public Optional<Book> getBookById(Long id) {
+	    return bookDetailRepository.findById(id);
 	            
 	}
 	

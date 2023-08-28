@@ -63,8 +63,8 @@
 							th:text="${book.publicationDate}"></strong>
 						</li>
 						<li data-v-4edfbce0="" class="slide-item">
-							<p data-v-4edfbce0="">ISBN</p> <strong
-							data-v-4edfbce0="" th:text="${book.isbn}" id="isbn" ></strong>
+							<p data-v-4edfbce0="">ISBN</p> <strong data-v-4edfbce0=""
+							th:text="${book.isbn}" id="isbn"></strong>
 						</li>
 					</ul>
 				</div>
@@ -99,32 +99,37 @@
 				<img src="/images/aladin.png" class="aladin">
 				<h6>알라딘</h6>
 			</div>
+			
 			<div class="review">
 				<h6 style="font-weight: bolder;">리뷰</h6>
-				<ul class="review-profile">
+				<ul class="review-profile" th:if="${reviews.isEmpty()}">
 					<li>
+						<p>등록된 리뷰가 없습니다.</p>
+					</li>
+				</ul>
+				<ul class="review-profile" th:unless="${reviews.isEmpty()}">
+					<li th:each="review : ${reviews}">
 						<div class="profile">
 							<img src="/images/name.jpg" class="profile-img">
 						</div>
 						<div class="review-content">
-							<p class="num">리뷰번호</p>
-							<a class="contents">내용</a>
+							<p class="num" th:text="${review.reviewNumber}"></p>
+							<a class="contents" th:text="${review.content}"></a>
 						</div>
 					</li>
 				</ul>
-				<div class="myreview">
-					<div class="myprofile">
-						<img src="/images/profile.jpg" class="profile-img">
-					</div>
-					<div class="review-input">
-						<input type="text" name="reviews" placeholder="리뷰를 입력하세요.">
-					</div>
-					<div class="review-register">
-						<button type="button" class="review-button" onclick="sendIt()">
-							등록하기</button>
-					</div>
-				</div>
 			</div>
+			<form action="/book/bookDetail/{isbn}/review" method="post"
+				name="myForm" enctype="multipart/form-data" class="review-form">
+				<input type="hidden" th:name="${_csrf.parameterName}"
+					th:value="${_csrf.token}">
+				<div class="review-input">
+					<input type="text" name="reviews" placeholder="리뷰를 입력하세요.">
+				</div>
+				<div class="review-register">
+					<button type="button" class="review-button" onclick="sendIt()">등록하기</button>
+				</div>
+			</form>
 		</th:block>
 	</div>
 </div>

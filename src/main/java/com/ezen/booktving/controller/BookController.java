@@ -82,27 +82,18 @@ public class BookController {
 
 	// 찜 삭제
 	@DeleteMapping("/book/myFavorite/remove/{id}")
-	public @ResponseBody ResponseEntity removeFavoriteBook(@PathVariable("id") Long id,
-			Principal principal) {
+	public @ResponseBody ResponseEntity removeFavoriteBook(@PathVariable("id") Long id, Principal principal) {
 		System.out.println("id: " + id);
 		favoriteBookService.removeFavoriteBook(id);
 		return new ResponseEntity<Long>(id, HttpStatus.OK);
 	}
-}
 
-// 리뷰 작성
-/*
- * @PostMapping(value = "book/bookDetail/{isbn}/createReview") public String
- * createReview(@PathVariable("isbn") String isbn, BookReviewDto bookReviewDto)
- * {
- * 
- * Book book = bookService.getBookByIsbn(isbn); // BookService를 통해 책 정보 가져오기
- * 
- * Member member = new Member(); member.setMemberName("ㅇㅇ");
- * bookReviewDto.setMember(member); bookReviewDto.setBook(book);
- * bookService.saveReview(bookReviewDto); // 리뷰 저장
- * 
- * return "redirect:/book/bookDetail/{isbn}";
- * 
- * }
- */
+	// 리뷰
+	@PostMapping(value = "/book/bookDetail/{isbn}/review")
+	public String reviewCreate(BookReviewDto bookReviewDto, @PathVariable("isbn") String isbn) {
+		Book book = bookService.getBookByIsbn(isbn); // 해당 Book 엔티티 가져오기
+		bookReviewDto.setBook(book); // BookReviewDto에 Book 엔티티 설정
+		bookService.saveReview(bookReviewDto);
+		return "redirect:/book/bookDetail/{isbn}";
+	}
+}
