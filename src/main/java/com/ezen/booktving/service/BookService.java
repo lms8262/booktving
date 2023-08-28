@@ -16,6 +16,7 @@ import com.ezen.booktving.dto.BookTvingTop10Dto;
 import com.ezen.booktving.entity.Book;
 import com.ezen.booktving.entity.BookImg;
 import com.ezen.booktving.entity.BookReview;
+import com.ezen.booktving.entity.RentBook;
 import com.ezen.booktving.repository.BookDetailRepository;
 import com.ezen.booktving.repository.BookImgRepository;
 import com.ezen.booktving.repository.BookRepository;
@@ -98,4 +99,5 @@ public class BookService {
 			
 		return bookTvingTop10Page;
 	}
+	
 }

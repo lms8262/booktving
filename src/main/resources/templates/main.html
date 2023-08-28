@@ -104,7 +104,7 @@
 					<!-- 즐겨찾기 -->
 					<div class="bookMark-wrap container">
 						<div class="bookMark">
-							<a href="#">
+							<a href="/mylibrary">
 								<div class="booMark-img">
 									<i class="fa-solid fa-book-bookmark fa-xl"
 										style="color: #000000;"></i>
@@ -138,7 +138,7 @@
 								<p class="bookMark-text">팔로잉</p>
 							</a>
 						</div>
-						<div class="bookMark">
+						<div class="bookMark" th:if="${not #lists.isEmpty(rentBooks)}">
 							<a href="#">
 								<div class="booMark-img">
 									<p class="icron">10</p>
@@ -149,145 +149,143 @@
 					</div>
 
 					<!-- 북티빙 Top 10 -->
-					<div class="top10-wrap container-fluid">
+					<div class="top10-wrap container-fluid" th:if="${not #lists.isEmpty(rentBooks)}">
 						<div class="container">
 							<h5>북티빙 Top 10</h5>
 						</div>
 						
-						<div class="top10-contents-wrap container">	
-								<ul class="tabmenu">
+						<div class="top10-contents-wrap container" >	
+							<ul class="tabmenu">
 									
-									<!-- 일간 -->
-									<li class="active" th:if="${not #lists.isEmpty(dayRanks)}"> <a href="#">일간&nbsp;&nbsp;&nbsp;&nbsp;<span>|</span></a>
-										<div class="rank-list day-box">
-											<th:block th:each="dayRank, status : ${dayRanks}">
-												<div class="dayRank">
-													<div class="top10-contents">
-														<div class="top10-rank">
-															<a th:href="'/book/bookDetail/' + ${dayRank.isbn}">
-																<h1> [[${dayRank.num}]] </h1>
-															</a>
-														</div>
-														<div class="top10-cover">
-															<a th:href="'/book/bookDetail/' + ${dayRank.isbn}">
-																<img th:src="${dayRank.imgUrl}" th:alt="${dayRank.bookName}" class="top10-cover-img">
-															</a>
-														</div>
+								<!-- 일간 -->
+								<li class="active" th:if="${not #lists.isEmpty(dayRanks)}"> <a href="#">일간&nbsp;&nbsp;&nbsp;&nbsp;<span>|</span></a>
+									<div class="rank-list day-box">
+										<th:block th:each="dayRank, status : ${dayRanks}">
+											<div class="dayRank">
+												<div class="top10-contents">
+													<div class="top10-rank">
+														<a th:href="'/book/bookDetail/' + ${dayRank.isbn}">
+															<h1> [[${dayRank.num}]] </h1>
+														</a>
 													</div>
-									
-													<div class="row top10-contents-text">
-														<div class="top10-title-author">
-															<p class="top10-title">[[${dayRank.bookName}]]</p>
-															<div class="top10-author">
-																<p class="author">[[${dayRank.author}]] <span>&nbsp;/&nbsp;</span></p>
-																<p class="publisher">[[${dayRank.publisher}]]</p>
-															</div>
+													<div class="top10-cover">
+														<a th:href="'/book/bookDetail/' + ${dayRank.isbn}">
+															<img th:src="${dayRank.imgUrl}" th:alt="${dayRank.bookName}" class="top10-cover-img">
+														</a>
+													</div>
+												</div>
+								
+												<div class="row top10-contents-text">
+													<div class="top10-title-author">
+														<p class="top10-title">[[${dayRank.bookName}]]</p>
+														<div class="top10-author">
+															<p class="author">[[${dayRank.author}]] <span>&nbsp;/&nbsp;</span></p>
+															<p class="publisher">[[${dayRank.publisher}]]</p>
 														</div>
 													</div>
 												</div>
-											</th:block>
-										</div>
-									</li>
+											</div>
+										</th:block>
+									</div>
+								</li>
 									
-									<!-- 주간 -->
-									<li th:if="${not #lists.isEmpty(weekRanks)}"> <a href="#">주간&nbsp;&nbsp;&nbsp;&nbsp;<span>|</span></a>
-										<div class="rank-list week-box">
-											<th:block th:each="weekRank, status : ${weekRanks}">
-												<div class="weekRank">
-													<div class="top10-contents">
-														<div class="top10-rank">
-															<a th:href="'/book/bookDetail/' + ${weekRank.isbn}">
-																<h1>[[${weekRank.num}]]</h1>
-															</a>
-														</div>
-														<div class="top10-cover">
-															<a th:href="'/book/bookDetail/' + ${weekRank.isbn}">
-																<img th:src="${weekRank.imgUrl}" th:alt="${weekRank.bookName}" class="top10-cover-img">
-															</a>
-														</div>
+								<!-- 주간 -->
+								<li th:if="${not #lists.isEmpty(weekRanks)}"> <a href="#">주간&nbsp;&nbsp;&nbsp;&nbsp;<span>|</span></a>
+									<div class="rank-list week-box">
+										<th:block th:each="weekRank, status : ${weekRanks}">
+											<div class="weekRank">
+												<div class="top10-contents">
+													<div class="top10-rank">
+														<a th:href="'/book/bookDetail/' + ${weekRank.isbn}">
+															<h1>[[${weekRank.num}]]</h1>
+														</a>
 													</div>
-									
-													<div class="row top10-contents-text">
-														<div class="top10-title-author">
-															<p class="top10-title">[[${weekRank.bookName}]]</p>
-															<div class="top10-author">
-																<p class="author">[[${weekRank.author}]] <span>&nbsp;/&nbsp;</span></p>
-																<p class="publisher">[[${weekRank.publisher}]]</p>
-															</div>
+													<div class="top10-cover">
+														<a th:href="'/book/bookDetail/' + ${weekRank.isbn}">
+															<img th:src="${weekRank.imgUrl}" th:alt="${weekRank.bookName}" class="top10-cover-img">
+														</a>
+													</div>
+												</div>
+								
+												<div class="row top10-contents-text">
+													<div class="top10-title-author">
+														<p class="top10-title">[[${weekRank.bookName}]]</p>
+														<div class="top10-author">
+															<p class="author">[[${weekRank.author}]] <span>&nbsp;/&nbsp;</span></p>
+															<p class="publisher">[[${weekRank.publisher}]]</p>
 														</div>
 													</div>
 												</div>
-											</th:block>
-										</div>
-									</li>
+											</div>
+										</th:block>
+									</div>
+								</li>
 									
-									<!-- 월간 -->
-									<li th:if="${not #lists.isEmpty(monthRanks)}"> <a href="#">월간&nbsp;&nbsp;&nbsp;&nbsp;<span>|</span></a>
-										<div class="rank-list month-box">
-											<th:block th:each="monthRank, status : ${monthRanks}">
-												<div class="monthRank">
-													<div class="top10-contents">
-														<div class="top10-rank">
-															<a th:href="'/book/bookDetail/' + ${monthRank.isbn}">
-																<h1>[[${monthRank.num}]]</h1>
-															</a>
-														</div>
-														<div class="top10-cover">
-															<a th:href="'/book/bookDetail/' + ${monthRank.isbn}">
-																<img th:src="${monthRank.imgUrl}" th:alt="${monthRank.bookName}" class="top10-cover-img">
-															</a>
-														</div>
+								<!-- 월간 -->
+								<li th:if="${not #lists.isEmpty(monthRanks)}"> <a href="#">월간&nbsp;&nbsp;&nbsp;&nbsp;<span>|</span></a>
+									<div class="rank-list month-box">
+										<th:block th:each="monthRank, status : ${monthRanks}">
+											<div class="monthRank">
+												<div class="top10-contents">
+													<div class="top10-rank">
+														<a th:href="'/book/bookDetail/' + ${monthRank.isbn}">
+															<h1>[[${monthRank.num}]]</h1>
+														</a>
 													</div>
-									
-													<div class="row top10-contents-text">
-														<div class="top10-title-author">
-															<p class="top10-title">[[${monthRank.bookName}]]</p>
-															<div class="top10-author">
-																<p class="author">[[${monthRank.author}]] <span>&nbsp;/&nbsp;</span></p>
-																<p class="publisher">[[${monthRank.publisher}]]</p>
-															</div>
+													<div class="top10-cover">
+														<a th:href="'/book/bookDetail/' + ${monthRank.isbn}">
+															<img th:src="${monthRank.imgUrl}" th:alt="${monthRank.bookName}" class="top10-cover-img">
+														</a>
+													</div>
+												</div>
+								
+												<div class="row top10-contents-text">
+													<div class="top10-title-author">
+														<p class="top10-title">[[${monthRank.bookName}]]</p>
+														<div class="top10-author">
+															<p class="author">[[${monthRank.author}]] <span>&nbsp;/&nbsp;</span></p>
+															<p class="publisher">[[${monthRank.publisher}]]</p>
 														</div>
 													</div>
 												</div>
-											</th:block>
-										</div>
-									</li>
-									
-									<!-- 연간 -->
-									<li th:if="${not #lists.isEmpty(yearRanks)}"> <a href="#">연간&nbsp;&nbsp;</a> 
-										<div class="rank-list year-box">
-											<th:block th:each="yearRank, status : ${yearRanks}">
-												<div class="yearRank">
-													<div class="top10-contents">
-														<div class="top10-rank">
-															<a th:href="'/book/bookDetail/' + ${yearRank.isbn}">
-																<h1>[[${yearRank.num}]]</h1>
-															</a>
-														</div>
-														<div class="top10-cover">
-															<a th:href="'/book/bookDetail/' + ${yearRank.isbn}">
-																<img th:src="${yearRank.imgUrl}" th:alt="${yearRank.bookName}" class="top10-cover-img">
-															</a>
-														</div>
+											</div>
+										</th:block>
+									</div>
+								</li>
+								
+								<!-- 연간 -->
+								<li th:if="${not #lists.isEmpty(yearRanks)}"> <a href="#">연간&nbsp;&nbsp;</a> 
+									<div class="rank-list year-box">
+										<th:block th:each="yearRank, status : ${yearRanks}">
+											<div class="yearRank">
+												<div class="top10-contents">
+													<div class="top10-rank">
+														<a th:href="'/book/bookDetail/' + ${yearRank.isbn}">
+															<h1>[[${yearRank.num}]]</h1>
+														</a>
 													</div>
-										
-													<div class="row top10-contents-text">
-														<div class="top10-title-author">
-															<p class="top10-title">[[${yearRank.bookName}]]</p>
-															<div class="top10-author">
-																<p class="author">[[${yearRank.author}]] <span>&nbsp;/&nbsp;</span></p>
-																<p class="publisher">[[${yearRank.publisher}]]</p>
-															</div>
+													<div class="top10-cover">
+														<a th:href="'/book/bookDetail/' + ${yearRank.isbn}">
+															<img th:src="${yearRank.imgUrl}" th:alt="${yearRank.bookName}" class="top10-cover-img">
+														</a>
+													</div>
+												</div>
+									
+												<div class="row top10-contents-text">
+													<div class="top10-title-author">
+														<p class="top10-title">[[${yearRank.bookName}]]</p>
+														<div class="top10-author">
+															<p class="author">[[${yearRank.author}]] <span>&nbsp;/&nbsp;</span></p>
+															<p class="publisher">[[${yearRank.publisher}]]</p>
 														</div>
 													</div>
 												</div>
-											</th:block>
-										</div>
-									</li>
-								</ul>
+											</div>
+										</th:block>
+									</div>
+								</li>
+							</ul>
 						</div>
-							
-						
 					</div>
 
 					<!-- NEW 북티빙 -->
@@ -307,7 +305,7 @@
 												<div class="new-book-author-publishrer">
 													<p class="new-book-author">[[${newBook.author}]]/[[${newBook.publisher}]]</p>
 												</div>
-												<p class="description" th:text="${newBook.description}"></p>
+												<p class="description" th:utext="${newBook.description}"></p>
 											</div>
 											<div class="new-book-cover">
 												<img alt="${newBook.title}" th:src="${newBook.imgUrl}">
@@ -324,7 +322,7 @@
 					<div class="author-wrap">
 						<div class="container author">
 							<a href="/author/list">
-								<h5>북티빙이 사랑한 작가</h5>
+								<h5>북티빙이 사랑한 작가 <span class="author-more">more</span></h5>
 							</a>
 							
 							<div class="author-contents-wrap">

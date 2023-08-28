@@ -1,6 +1,7 @@
 package com.ezen.booktving.controller;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -15,6 +16,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.ezen.booktving.dto.FavoriteAuthorListDto;
 import com.ezen.booktving.dto.MyLibraryRentBookListDto;
+import com.ezen.booktving.entity.FavoriteAuthor;
+import com.ezen.booktving.entity.FavoriteBook;
+import com.ezen.booktving.entity.RentBook;
 import com.ezen.booktving.service.AuthorService;
 import com.ezen.booktving.service.MyLibraryRentBookService;
 
@@ -37,14 +41,23 @@ public class MyLibraryController {
 			Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 5);
 
 			//bookcase
+			//isEmpty
+			List<RentBook> rentBookList = myLibraryRentBookService.listAll(userDetails.getUsername()) ;
+			model.addAttribute("rentBookList", rentBookList);
+			//not isEmpty
 			Page<MyLibraryRentBookListDto> rentBooks = myLibraryRentBookService.getMyLibraryRentBookList(userDetails.getUsername(), pageable);
 			model.addAttribute("rentBooks", rentBooks);
 			
 			//favorite
-			
-			
+			//isEmpty
+			//List<FavoriteBook> favoriteBookList = ;
+			//not isEmpty
 			
 			//author
+			//isEmpty
+			List<FavoriteAuthor> favoriteAuthorList = authorService.listAll(userDetails.getUsername());
+			model.addAttribute("favoriteAuthorList", favoriteAuthorList);
+			//not isEmpty
 			Page<FavoriteAuthorListDto> favoriteAuthors = authorService.getMyLibraryAuthorList(userDetails.getUsername(), pageable);
 			model.addAttribute("favoriteAuthors", favoriteAuthors);
 			

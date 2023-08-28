@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ezen.booktving.constant.YesNoStatus;
+import com.ezen.booktving.dto.AdminRentHistBookDto;
 import com.ezen.booktving.dto.MyLibraryRentBookInfoDto;
 import com.ezen.booktving.dto.MyLibraryRentBookListDto;
 import com.ezen.booktving.entity.RentBook;
@@ -63,5 +64,18 @@ public class MyLibraryRentBookService {
 		
 		return new PageImpl<>(myLibraryRentBookInfoDtos, pageable, totalCount);
 	} 
+	
+	//로그인한 사용자의 도서대여정보 가져오기
+	public List<RentBook> listAll(String userId){
+		List<RentBook> rentBookList = rentRepository.findRentByMember(userId);
+		
+		List<AdminRentHistBookDto> rentBookDtoList = new ArrayList<>();
+		
+		for(RentBook rentBook : rentBookList) {
+			AdminRentHistBookDto rentBookDto = AdminRentHistBookDto.of(rentBook);
+			rentBookDtoList.add(rentBookDto);
+		}
+		return rentBookList;
+	}
 	
 }

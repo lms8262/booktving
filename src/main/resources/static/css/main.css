@@ -331,7 +331,7 @@ h5 {
 
 .new-book-text{
 	width: 50%;
-	padding: 40px 0;
+	padding: 40px 0 20px 0;
 	margin-left: 30px ;
 }
 
@@ -385,9 +385,10 @@ h5 {
 
 .new-book-text .description{
 	position: absolute;
-	bottom: 40px;
+	bottom: 20px;
 	margin: 0;
 	font-size: 15px;
+	font-weight: bold;
 }
 
 .new-book-cover{
@@ -417,6 +418,19 @@ h5 {
 	padding-top: 30px;
 }
 
+.author-more{
+	width: 40px;
+	height: 20px;
+	line-height: 19px;
+	background-color: #ddd;
+	border-radius: 30px;
+	text-align: center;
+	float: right;
+	margin-right: 20px;
+	color: #000;
+	font-size: 10px;
+}
+
 .author-contents-wrap{
 	display: flex;
 	width: auto;
@@ -443,7 +457,6 @@ h5 {
 	height: 225px;
 	overflow: hidden;
 }
-
 
 .author-cover img{
 	width: 100%;

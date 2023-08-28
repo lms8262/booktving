@@ -183,6 +183,12 @@
     width: 100%;
 }
 
+.author-book-null-wrap {
+	display: flex;
+	justify-content:center; 
+	margin-top: 60px;
+}
+
 .rent-book-deco-bar{
 	width: 90%;
 	height: 10px;
@@ -232,6 +238,12 @@
 	box-shadow: 3px 3px 5px #ccc;
 }
 
+.favorite-book-null-wrap {
+	display: flex;
+	justify-content:center; 
+	margin-top: 60px;
+}
+
 .favorite-book-deco-bar{
 	width: 90%;
 	height: 10px;
@@ -278,6 +290,12 @@
 	border-radius: 7px 7px 0 0;
 	z-index: 1;
 	box-shadow: 3px 3px 5px #ccc;
+}
+
+.favorite-author-null-wrap {
+	display: flex;
+	justify-content:center; 
+	margin-top: 60px;
 }
 
 .favorite-author-deco-bar{

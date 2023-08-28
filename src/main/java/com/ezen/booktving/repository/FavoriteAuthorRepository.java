@@ -1,6 +1,8 @@
 package com.ezen.booktving.repository;
 
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -29,4 +31,6 @@ public interface FavoriteAuthorRepository extends JpaRepository<FavoriteAuthor, 
 	@Query(value = "select count(*) from favorite_author where member_id\\:=userId order by reg_time", nativeQuery = true)
 	Long countFavoriteAuthor(@Param("userId") String userId);
 	
+	@Query("select f from FavoriteAuthor f where f.member.userId = :userId")
+	List<FavoriteAuthor> findFavoriteAuthorByMember(@Param("userId") String userId);
 }
