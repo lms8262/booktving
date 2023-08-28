@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+<head>
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
+
+
+<th:block layout:fragment="css">
+	<link rel="stylesheet" href="/css/myLibraryRentBookInfo	.css" />
+</th:block>
+
+<div layout:fragment="content">
+
+	<div class="top">
+		<div class="container">
+			<div class="row">
+				<div class="col-12 section-wrap">
+					<div class="row">
+
+						<div class="col-lg-12">
+							<div class="container">
+								<div class="row">
+									<div class="col-12">
+
+
+										<div class="top-title">
+											<h4>대여한 도서 상세페이지</h4>
+											<hr>
+										</div>
+
+
+										<!--나의 서재 대여도서 상세페이지 -->
+										<div class="container">
+											<div class="col">
+												<div class="col-xxl-6 rentbookinfo">
+													<div class="container">
+														<div class="row rentbookInfo">
+															<div class="row-xl-3 bookInfo-sec1">
+																<div>
+																	<img alt="이미지" src="/images/categorytestimg1.jpg">
+																</div>
+																<div class="rent-btnbox1">
+																	<button class="rent-read-btn rent-btn">바로 읽기</button>
+																</div>
+																<div class="rent-btnbox2">
+																	<button class="rent-complete-btn rent-btn">독서
+																		완료</button>
+																</div>
+															</div>
+															<div class="row-xl-9 bookInfo-sec2">
+																<div class="container">
+																	<div class="col">
+																		<div class="col-md-12">
+																			<h4 id="bookName">미생물 전쟁</h4>
+																			<p class="rent-book-content" id="author">저자 : 아일사 와일드</p>
+																			<p class="rent-book-content" id="publisher">출판사 : 반니</p>
+																			<p class="rent-book-content" id="publication-date">출간일 : 2022/03/03</p>
+																		</div>
+
+																		<div class="col-md- rentbookcontent">
+																			<h4 id="bookinfo">책소개</h4>
+																			<div id="bookContent-box">
+																				<p id="bookContent">Lorem ipsum dolor sit amet, consectetur
+																					adipiscing elit, sed do eiusmod tempor incididunt
+																					ut labore et dolore magna aliqua. Nisl tincidunt
+																					eget nullam non. Quis hendrerit dolor magna eget
+																					est lorem ipsum dolor sit. Volutpat odio facilisis
+																					mauris sit amet massa. Commodo odio aenean sed
+																					adipiscing diam donec adipiscing tristique. Mi eget
+																					mauris pharetra et. Non tellus orci ac auctor
+																					augue. Elit at imperdiet dui accumsan sit. Ornare
+																					arcu dui vivamus arcu felis. Egestas integer eget
+																					aliquet nibh praesent. In hac habitasse platea
+																					dictumst quisque sagittis purus. Pulvinar elementum
+																					integer enim neque volutpat ac.</p>
+																			</div>
+																		</div>
+																		
+
+																	</div>
+
+																</div>
+															</div>
+
+														</div>
+													</div>
+												</div>
+
+												<div class="col-xxl-6 review">
+													<div class="container">
+														<div class="col">
+															<div class="col-lg- total-review review-sub1">
+																<h5 class="review-h5">나의 한줄 리뷰</h5>
+																<div style="display: flex; margin-bottom: 20px;">
+																	<div class="review-bar1">dd</div>
+																	<button class="rentbook-btn1">x</button>
+																</div>
+																<div style="display: flex;">
+																	<input class="review-bar2" type="text">
+																	<button class="rentbook-btn2">작성하기</button>
+																</div>
+															</div>
+
+															<div class="col-lg- total-review review-sub2">
+																<h5 class="review-h5" style="margin-top: 50px;">나의
+																	한 문장</h5>
+																<div style="display: flex; margin-bottom: 20px;">
+																	<div class="review-bar1">dd</div>
+																	<button class="rentbook-btn1">x</button>
+																</div>
+																<div style="display: flex;">
+																	<input class="review-bar2" type="text">
+																	<button class="rentbook-btn2">작성하기</button>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+
+											</div>
+											<div class="rentbook-end-box">
+												<button class="rentbook-list-btn" onclick="location.href='/mylibrary/rentList'">목록으로</button>
+											</div>
+										</div>
+
+
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</html>

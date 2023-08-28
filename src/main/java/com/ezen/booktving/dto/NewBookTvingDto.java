@@ -1,15 +1,9 @@
 package com.ezen.booktving.dto;
 
-import java.util.List;
-
 import org.modelmapper.ModelMapper;
 
 import com.ezen.booktving.entity.NewBookTving;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;

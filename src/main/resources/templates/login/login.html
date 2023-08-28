@@ -8,9 +8,6 @@
 </style>
 </th:block>
 <div layout:fragment="content">
-	<!-- <div>
-		<img class="backgroung-img" src="/images/login.jpg">
-	</div> -->
 	<div class="limiter">
 		<div class="container-login100">
 			<div class="wrap-login100">
@@ -20,8 +17,7 @@
 						class="login100-form-title p-b-48"> <i
 						class="zmdi zmdi-font"></i>
 					</span>
-					<div class="wrap-input100 validate-input"
-						data-validate="Valid email is: a@b.c">
+					<div class="wrap-input100 validate-input">
 						<label th:for="userid" class="focus-input100"></label> <input
 							class="input100" type="text" id="userId" name="userId"
 							placeholder="ID">
@@ -39,12 +35,14 @@
 						</div>
 						<p th:if="${loginErrorMsg}" class="error"
 							th:text="${loginErrorMsg}"></p>
-						<label style="padding-right: 300px; padding-top: 10px"><input
-							type="checkbox" name="id_save" id="id_save" />ID 기억</label>
-
-
+						<div style="display: block; margin-right: 200px">
+							<label> <input type="checkbox" name="id_save"
+								id="id_save" />ID 기억
+							</label> <label for="remember-me"><span> <input
+									type="checkbox" name="remember-me"></span> 자동 로그인 </label>
+						</div>
 					</div>
-					<div class="text-center p-t-115">
+					<div class="text-center p-t-115" style="padding-top: 50px">
 						<span class="txt1"> 회원이 아니세요? </span> <a class="txt2"
 							href="/login/new"> 회원가입 </a>
 
@@ -73,6 +71,15 @@
 		$(document).ready(function() {
 			var userInputId = getCookie("userInputId");
 			var setCookieYN = getCookie("setCookieYN");
+			/*  	var rememberMe = getCookie("remember-me");
+
+				if (rememberMe != null) {
+					$("#remember-me").prop("checked", true);
+					location.href = "/";
+				}
+				if ($("#remember-me").is(":unchecked")) {
+					deleteCookie("remember-me");
+				}  */
 
 			if (setCookieYN === 'Y') {
 				$("#id_save").prop("checked", true);
@@ -86,53 +93,24 @@
 					var userInputId = $("#userId").val();
 					setCookie("userInputId", userInputId, 60);
 					setCookie("setCookieYN", "Y", 60);
-					console.log("생성");
 				} else {
 					deleteCookie("userInputId");
 					deleteCookie("setCookieYN");
-					console.log("삭제");
 				}
 			});
 
-			var loginErrorMsg = /*[[${loginErrorMsg}]]*/null;
-			if (loginErrorMsg !== null) {
-				alert(loginErrorMsg);
+		});
+		$(document).ready(function() {
+			var rememberMe = getCookie("remember-me");
+
+			if (rememberMe != null) {
+				$("#remember-me").prop("checked", true);
+				location.href = "/";
+			}
+			if ($("#remember-me").is(":unchecked")) {
+				deleteCookie("remember-me");
 			}
 		});
-
-		/* //쿠키값 Set
-		function setCookie(cookieName, value, exdays) {
-			var exdate = new Date();
-			exdate.setDate(exdate.getDate() + exdays);
-			var cookieValue = escape(value)
-					+ ((exdays == null) ? "" : "; expires="
-							+ exdate.toGMTString());
-			document.cookie = cookieName + "=" + cookieValue;
-		}
-
-		//쿠키값 Delete
-		function deleteCookie(cookieName) {
-			var expireDate = new Date();
-			expireDate.setDate(expireDate.getDate() - 1);
-			document.cookie = cookieName + "= " + "; expires="
-					+ expireDate.toGMTString();
-		}
-
-		//쿠키값 가져오기
-		function getCookie(cookie_name) {
-			var x, y;
-			var val = document.cookie.split(';');
-
-			for (var i = 0; i < val.length; i++) {
-				x = val[i].substr(0, val[i].indexOf('='));
-				y = val[i].substr(val[i].indexOf('=') + 1);
-				x = x.replace(/^\s+|\s+$/g, ''); // 앞과 뒤의 공백 제거하기
-
-				if (x == cookie_name) {
-					return unescape(y); // unescape로 디코딩 후 값 리턴
-				}
-			}
-		} */
 	</script>
 
 </th:block>

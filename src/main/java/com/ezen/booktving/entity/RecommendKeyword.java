@@ -22,6 +22,9 @@ public class RecommendKeyword extends BaseTimeEntity {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@Column(nullable = false)
+	private String recommendKeywordType;
+	
 	@Column(nullable = false, unique = true)
 	private String recommendKeywordName;
 	

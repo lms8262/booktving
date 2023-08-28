@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+.table tbody td{
+	text-align: center;
+	line-height: inherit;
+}
+
+.pagination li{
+	margin: 0;
+}
+
+.pagination .page-item.active .page-link {
+	color: #fff;
+	background-color: #ffd360;
+	border-color: #ffd360;
+}
+
+.book_reg_btn {
+	background-color: #fff;
+	border: 1px solid #ffd360;
+	color: #ffd360;
+	font-weight: bold;
+	font-size: 12px;
+}
+
+
+.book_reg_btn:active,
+.book_reg_btn:focus,
+.book_reg_btn:hover {
+	color: #ffd360;
+	box-shadow: none;
+	outline: none;
+}
