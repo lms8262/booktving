@@ -1,7 +1,11 @@
 package com.ezen.booktving.dto;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 import org.modelmapper.ModelMapper;
 
+import com.ezen.booktving.constant.QuestionStatus;
 import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.entity.Question;
 
@@ -23,8 +27,12 @@ public class QuestionDto {
 	
 	private Member member;
 	
-	private static ModelMapper modelMapper = new ModelMapper();
+	private LocalDate questionDate;
 	
+	private QuestionStatus questionStatus;
+	
+	private static ModelMapper modelMapper = new ModelMapper();
+		
 	public Question createQuestion() {
 		return modelMapper.map(this, Question.class);
 	}

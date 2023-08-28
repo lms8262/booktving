@@ -1,10 +1,9 @@
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout1}">
 <th:block layout:fragment="css">
 	<link rel="stylesheet" type="text/css" href="/css/questionList.css" />
 	<style>
-</style>
+	</style>
 </th:block>
 
 <div layout:fragment="content">
@@ -20,23 +19,21 @@
 				<strong>1:1 문의</strong>
 			</div>
 			<div class="buttons_list">
-				<button type="button" class="qna-create_list"
-					onclick="location.href='/question/questionCreate'">
+				<button type="button" class="qna-create_list" onclick="location.href='/question/questionCreate'">
 					&nbsp;문의하기</button>
-				<button type="button" class="qna-list_list"
-					onclick="location.href='/question/questionList'">
+				<button type="button" class="qna-list_list" onclick="location.href='/question/questionList'">
 					&nbsp;문의내역보기</button>
 			</div>
-			<div class="qna-contents">
+			<div class="qna-contents" th:each="question : ${questionList}">
 				<div class="qna-status">
-					<div class="status">답변대기중</div>
+					<div class="status"><p th:text="${question.questionStatus.krName}"></p></div>
 					<button type="button" class="delete" onclick=" ">삭제</button>
 				</div>
 				<div class="title">
 					<p>
-						<a href="" style="font-size: 16px; font-weight: bold">문의 드립니다.</a>
+						<a th:href="@{/question/questionDetail/{id}(id=${question.id})}" style="font-size: 16px; font-weight: bold" th:text="${question.title}"></a>
 					</p>
-					<p style="color: gray; font-size: 13px">2023-08-04</p>
+					<p style="color: gray; font-size: 13px" th:text="${question.questionDate}"></p>
 				</div>
 			</div>
 		</div>
@@ -45,12 +42,13 @@
 
 <th:block layout:fragment="script">
 	<script th:inline="javascript">
-	$(document).ready(function () {
-	});
-	var errorMessage = [[${errorMessage}]];
-	if (errorMessage != null) {
-		alert(errorMessage);
-	}
+		$(document).ready(function () {
+		});
+		var errorMessage = [[${errorMessage}]];
+		if (errorMessage != null) {
+			alert(errorMessage);
+		}
 	</script>
 </th:block>
+
 </html>
