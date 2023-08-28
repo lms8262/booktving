@@ -23,6 +23,7 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
 	private final UserDetailsService userDetailsService;
 
 	private final DataSource dataSource;
@@ -31,7 +32,7 @@ public class SecurityConfig {
 	MvcRequestMatcher.Builder mvc(HandlerMappingIntrospector introspector) {
 		return new MvcRequestMatcher.Builder(introspector);
 	}
-
+	
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
 
@@ -64,7 +65,6 @@ public class SecurityConfig {
 
 		return http.build();
 	}
-
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -76,3 +76,4 @@ public class SecurityConfig {
 		return jdbcTokenRepository;
 	}
 }
+

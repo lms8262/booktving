@@ -95,8 +95,7 @@ public class BookRepositoryCustomImpl implements BookRepositoryCustom{
 	
 	@Override
 	public Page<BookDto> getBookDto(BookSearchDto bookSearchDto, Pageable pageable) {
-		// TODO Auto-generated method stub
-		return null;
+		return getBookDto(bookSearchDto, pageable);
 	}
 	
 	// no-offset 처리를 위한 메소드

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+<head>
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+<th:block layout:fragment="css">
+	<link rel="stylesheet" type="text/css" href="/css/myFavorite.css" />
+</th:block>
+
+<div layout:fragment="content">
+	<div class="top">
+		<div class="content">
+			<div class="favorite-content">
+				<strong>My Favorite</strong>
+			</div>
+			<div class="favorite-menu">
+				<div class="count">
+					<p>총 [[${favoriteBooks.size()}]]권</p>
+
+				</div>
+			</div>
+			<div class="favorite-book">
+				<div th:each="favoriteBook : ${favoriteBooks}" class="book">
+					<div class="book-image"></div>
+					<div class="fav-info">
+						<div class="div-title">
+							<p class="title" th:text="${favoriteBook.book.bookName}"></p>
+						</div>
+						<div class="menu">
+							<li class="menu slide-menu2"><a href="#"><i
+									class="fa-solid fa-ellipsis-vertical"></i> </a>
+								<ul class="submenu2">
+									<li><a href="javascript:void(0);"
+										th:value="${favoriteBook.id}" onclick="removeFavoriteBook(id)"><span>삭제</span>
+									</a></li>
+								</ul></li>
+						</div>
+					</div>
+					<div class="author">
+						<div class="div-author">
+							<p class="text-author"
+								style="font-size: 5px; color: rgb(192, 192, 192)"
+								th:text="${favoriteBook.book.author}"></p>
+						</div>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+	$(document).ready(function () {
+	});
+	var errorMessage = [[${errorMessage}]];
+	if (errorMessage != null) {
+		alert(errorMessage);
+	}
+		function removeFavoriteBook(id) {
+			/*  var confirmDelete = confirm("이 책을 찜 목록에서 삭제하시겠습니까?");
+
+			if (!confirmDelete)
+				return;*/
+
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+
+			var url = "/book/myFavorite/remove/{id}"
+
+			$.ajax({
+				url : url,
+				type : "DELETE",
+				contentType : "application/json",
+				beforeSend : function(xhr) {
+					//데이터를 전송하기 전에 헤더에 csrf 값을 설정
+					xhr.setRequestHeader(header, token);
+				},
+				dataType : "json",
+				cache : false,
+				success: function(data) {
+	                // 요청이 성공한 경우의 처리
+	                console.log("삭제가 완료되었습니다.", data);
+	            },
+	            error: function(error) {
+	                // 요청이 실패한 경우의 처리
+	                console.error("삭제에 실패하였습니다", error);
+	            }
+			})
+		}
+	</script>
+</th:block>
+</html>

@@ -8,6 +8,6 @@ import com.ezen.booktving.entity.BookReview;
 
 public interface BookReviewRepository extends JpaRepository<BookReview, Long> {
 
-	List<BookReview> findByIdOrderByIdAsc(Long reviewId);
+	 List<BookReview> findByBookIdOrderByIdAsc(Long bookId);
 	
 }
