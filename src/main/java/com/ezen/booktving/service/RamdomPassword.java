@@ -57,11 +57,9 @@ public class RamdomPassword {
 		return "비밀번호가 업데이트되었습니다";
 	}
 
-	
+	public String passwordFind(String Email, String userId) {
 
-	public String passwordFind(String email) {
-
-		Member member = memberRepository.findByEmail(email);
+		Member member = findByUserIdAndEmail(userId, Email);
 
 		if (member == null) {
 			return "일치하는 사용자가 없습니다";
@@ -69,6 +67,15 @@ public class RamdomPassword {
 
 		return member.getPassword();
 	}
+
+	
+
+	private Member findByUserIdAndEmail(String userId, String email) {
+		// TODO Auto-generated method stub
+		return memberRepository.findByUserIdAndEmail(userId, email);
+	}
+
+
 
 	private final JavaMailSender javaMailSender;
 
