@@ -21,7 +21,7 @@ import lombok.ToString;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class NewBookTving extends BaseTimeEntity{
+public class NewBookTving extends BaseEntity{
 	
 	@Id
 	@Column(name = "new_book_tving_id")

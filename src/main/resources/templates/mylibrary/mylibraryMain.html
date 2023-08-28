@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+<head>
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
+
+
+<th:block layout:fragment="css">
+	<link rel="stylesheet" href="/css/myLibraryMain.css" />
+</th:block>
+
+<div layout:fragment="content">
+
+	<div class="top">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="container-fluid section-wrap">
+					
+					<div class="mylibrary-top">
+						<div class="container profile-box">
+							<div class="col-2">
+								<div class="profile-img-box">
+									<img alt="프로필" src="/images/myLibrary/profile.png">
+								</div>
+							</div>
+							<div class="col-4">
+								<p>님의 서재</p>
+								<p>팔로잉 5 |  팔로워 2 </p>
+							</div>
+							<div class="col-6"></div>
+						</div>						
+					</div>
+
+					<!-- myLibrary 메뉴 -->
+					<div class="container myLibrary-menu-wrap">
+						<div class="myLibrary-menu-box">
+							<div class="col-3"></div>
+							<div class="col-6">
+								<nav class="myLibrary-nav">
+									<ul class="myLibrary-menu1">
+										<li> <a href="/mylibrary/rentList">Book case</a> </li> <span>&nbsp;|</span>
+										<li> <a href="">Favorite</a> </li> <span>&nbsp;|</span> 
+										<li> <a href="">Author</a> </li> <span>&nbsp;|</span>
+										<li> <a href="">Challenge</a> </li>
+									</ul>
+									<ul class="myLibrary-menu2">
+										<li> <a href="/mylibrary/rentList">Book case</a> </li> <span>&nbsp;|</span>
+										<li> <a href="">Favorite</a> </li> <span>&nbsp;|</span> 
+										<li> <a href="">Author</a> </li> <span>&nbsp;|</span>
+										<li> <a href="">Challenge</a> </li>
+									</ul>
+								</nav>
+							</div>
+							<div class="col-3"></div>
+						</div>
+					</div>
+					
+					
+					<!-- 나의서재  contents -->
+					
+					<div class="myLibrary-contents-wrap">
+						<!-- bookcase -->
+						<div class="container bookcase-wrap">
+							<div class="bookcase-box">
+								<div>
+									<img class="myLibrary-pictogram" src="/images/myLibrary/book.png" alt="Book case" />
+									<span class="myLibrary-title">Book case</span>
+									<span class="myLibrary-more">
+										<a href="/mylibrary/rentList">more</a>
+									</span>
+								</div>
+								<div class="deco-bar"></div>
+							</div>
+						</div>
+						
+						
+						<!-- favorite -->
+						<div class="container favorite-wrap">
+							<div class="favorite-box">
+								<div>
+									<img class="myLibrary-pictogram" src="/images/myLibrary/favorite.png" alt="Favorite" />
+									<span class="myLibrary-title">Favorite</span>
+									<span class="myLibrary-more">
+										<a href="/mylibrary/rentList">more</a>
+									</span>
+								</div>
+								<div class="deco-bar"></div>
+							</div>
+						</div>
+						
+						
+						<!-- author -->
+						<div class="container author-wrap">
+							<div class="author-box">
+								<div>
+									<img class="myLibrary-pictogram" src="/images/myLibrary/pen.png" alt="Author" />
+									<span class="myLibrary-title">Author</span>
+									<span class="myLibrary-more">
+										<a href="/mylibrary/rentList">more</a>
+									</span>
+								</div>
+								<div class="deco-bar"></div>
+							</div>
+						</div>						
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+<th:block layout:fragment="script">
+	<script>
+	
+	
+	
+	</script>
+	
+</th:block>
+
+</html>

@@ -19,16 +19,7 @@ public class AuthorBookImgDto {
 	
 	private String imgUrl;
 	
-	private AuthorBookImgDto authorBookImgId = new AuthorBookImgDto();
-	
-	
-	private static ModelMapper modelMapper = new ModelMapper();
-	
-	public AuthorBookImg createAuthorBookImg() {
-		return modelMapper.map(this, AuthorBookImg.class);
-	}
-	
-	public static AuthorBookImgDto of(AuthorBookImg authorBookImg) {
+	public static AuthorBookImgDto of(AuthorBookImg authorBookImg, ModelMapper modelMapper) {
 		return modelMapper.map(authorBookImg, AuthorBookImgDto.class);
 	}
 

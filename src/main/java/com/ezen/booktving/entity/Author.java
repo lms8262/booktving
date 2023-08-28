@@ -18,7 +18,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Author  extends BaseTimeEntity{
+public class Author  extends BaseEntity{
 	
 	@Id
 	@Column(name = "author_id")
