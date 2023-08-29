@@ -16,3 +16,4 @@ public interface BookImgRepository extends JpaRepository<BookImg, Long>{
 	BookImg findByBookIdAndRepYn(Long bookId, YesNoStatus repYn);
 
 }
+

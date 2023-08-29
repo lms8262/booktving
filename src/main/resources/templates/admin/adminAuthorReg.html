@@ -22,7 +22,7 @@
 					<div class="row">
 						<nav class="menu col-lg-2">
 							<ul class="col-12">
-								<li><a href="/admin/book">도서관리</a></li>
+								<li><a href="/admin/books">도서관리</a></li>
 								<li><a href="/admin/member">회원관리</a></li>
 								<li><a href="/admin/rent">대출관리</a></li>
 								<li><a href="/admin/keyword/recommend">추천 키워드 관리</a></li>
@@ -51,141 +51,30 @@
 											<div class="author-contents">
 												<label for="authorNameKo" class="author-label">작가명(한글)</label>
 												<br />
-												<input type="text" placeholder="작가명(한글)" th:field="*{authorDto.authorNameKo}" class="form-control col-12" />
+												<input type="text" placeholder="작가명(한글)" th:field="*{authorNameKo}" class="form-control col-12" />
 											</div>
 											<div class="author-contents">
 												<label for="authorNameEg" class="author-label">작가명(영문)</label>
 												<br />
-												<input rows="10" placeholder="작가명(영문)" th:field="*{authorDto.authorNameEg}" class="form-control col-12" />
+												<input type="text" placeholder="작가명(영문)" th:field="*{authorNameEg}" class="form-control col-12" />
 											</div>
 											<div class="author-contents">
 												<label for="title" class="author-label">작가소개 타이틀</label>
 												<br />
-												<input rows="10" placeholder="작가를 한문장으로 소개해보세요" th:field="*{authorDto.title}" class="form-control col-12" />
+												<input type="text" placeholder="작가를 한문장으로 소개해보세요" th:field="*{title}" class="form-control col-12" />
 											</div>
 											<div class="author-contents">
 												<label for="authorintroduction" class="author-label">작가소개</label>
 												<br />
-												<textarea rows="10" placeholder="작가를 소개하세요" th:field="*{authorDto.authorIntroduction}" class="form-control col-12" ></textarea>
+												<textarea type="text" rows="10" placeholder="작가를 소개하세요" th:field="*{authorIntroduction}" class="form-control col-12" ></textarea>
 											</div>
 											<div class="author-contents">
 												<div class="mb-3 filebox">
 													<label for="authorImgFile" class="form-label">작가 이미지 등록</label>
-													<input class="form-control" type="file" th:field="*{authorDto.authorImgFile}">
+													<input class="form-control" type="file" id="authorImgFile" name="authorImgFile">
 												</div>
 											</div>
 											
-											<hr>
-											
-											<!-- 작가도서정보 등록 --> <!-- 도서1 -->
-											<div>
-												<p class="book-title">도서1</p>
-											</div>
-											<div class="author-contents">
-												<label for="bookName" class="author-label">도서명</label>
-												<br />
-												<input type="text" placeholder="도서제목을 입력하세요" th:field="*{authorBookDtoList[0].bookName}" class="form-control col-12" />
-											</div>
-											<div class="author-contents">
-												<label for="bookSubtitle" class="author-label">도서소개 타이틀</label>
-												<br />
-												<input rows="10" placeholder="작가의 도서소개 타이틀" th:field="*{authorBookDtoList[0].bookSubTitle}" class="form-control col-12" />
-											</div>
-											<div class="author-contents">
-												<label for="bookIntrodution" class="author-label">도서소개</label>
-												<br />
-												<input rows="10" placeholder="도서를 소개하세요" th:field="*{authorBookDtoList[0].bookIntrodution}" class="form-control col-12" />
-											</div>
-											<div class="author-contents">
-												<div class="mb-3 filebox">
-													<label for="bookImgFile" class="form-label">도서 이미지 등록</label>
-													<input class="form-control" type="file" th:field="*{authorBookDtoList[0].authorBookImgFile}">
-												</div>
-											</div>
-											
-											<hr>
-											
-											<!-- 작가도서정보 등록 --> <!-- 도서2 -->
-											<div>
-												<p class="book-title">도서2</p>
-											</div>
-											<div class="author-contents">
-												<label for="bookName" class="author-label">도서명</label>
-												<br />
-												<input type="text" placeholder="도서제목을 입력하세요" th:field="*{authorBookDtoList[1].bookName}" class="form-control col-12" />
-											</div>
-											<div class="author-contents">
-												<label for="bookSubtitle" class="author-label">도서소개 타이틀</label>
-												<br />
-												<input rows="10" placeholder="작가의 도서소개 타이틀" th:field="*{authorBookDtoList[1].bookSubTitle}" class="form-control col-12" />
-											</div>
-											<div class="author-contents">
-												<label for="bookIntrodution" class="author-label">도서소개</label>
-												<br />
-												<input rows="10" placeholder="도서를 소개하세요" th:field="*{authorBookDtoList[1].bookIntrodution}" class="form-control col-12" />
-											</div>
-											<div class="author-contents">
-												<div class="mb-3 filebox">
-													<label for="bookImgFile" class="form-label">도서 이미지 등록</label>
-													<input class="form-control" type="file" th:field="*{authorBookDtoList[1].authorBookImgFile}">
-												</div>
-											</div>
-											
-											<hr>
-											
-											<!-- 작가도서정보 등록 --> <!-- 도서3 -->
-											<div>
-												<p class="book-title">도서3</p>
-											</div>
-											<div class="author-contents">
-												<label for="bookName" class="author-label">도서명</label>
-												<br />
-												<input type="text" placeholder="도서제목을 입력하세요" th:field="*{authorBookDtoList[2].bookName}" class="form-control col-12" />
-											</div>
-											<div class="author-contents">
-												<label for="bookSubtitle" class="author-label">도서소개 타이틀</label>
-												<br />
-												<input rows="10" placeholder="작가의 도서소개 타이틀" th:field="*{authorBookDtoList[2].bookSubTitle}" class="form-control col-12" />
-											</div>
-											<div class="author-contents">
-												<label for="bookIntrodution" class="author-label">도서소개</label>
-												<br />
-												<input rows="10" placeholder="도서를 소개하세요" th:field="*{authorBookDtoList[2].bookIntrodution}" class="form-control col-12" />
-											</div>
-											<div class="author-contents">
-												<div class="mb-3 filebox">
-													<label for="bookImgFile" class="form-label">도서 이미지 등록</label>
-													<input class="form-control" type="file" th:field="*{authorBookDtoList[2].authorBookImgFile}">
-												</div>
-											</div>
-											
-											<hr>
-											
-											<!-- 작가도서정보 등록 --> <!-- 도서4 -->
-											<div>
-												<p class="book-title">도서4</p>
-											</div>
-											<div class="author-contents">
-												<label for="bookName" class="author-label">도서명</label>
-												<br />
-												<input type="text" placeholder="도서제목을 입력하세요" th:field="*{authorBookDtoList[3].bookName}" class="form-control col-12" />
-											</div>
-											<div class="author-contents">
-												<label for="bookSubtitle" class="author-label">도서소개 타이틀</label>
-												<br />
-												<input rows="10" placeholder="작가의 도서소개 타이틀" th:field="*{authorBookDtoList[3].bookSubTitle}" class="form-control col-12" />
-											</div>
-											<div class="author-contents">
-												<label for="bookIntrodution" class="author-label">도서소개</label>
-												<br />
-												<input rows="10" placeholder="도서를 소개하세요" th:field="*{authorBookDtoList[3].bookIntrodution}" class="form-control col-12" />
-											</div>
-											<div class="author-contents">
-												<div class="mb-3 filebox">
-													<label for="bookImgFile" class="form-label">도서 이미지 등록</label>
-													<input class="form-control" type="file" th:field="*{authorBookDtoList[3].authorBookImgFile}" >
-												</div>
-											</div>
 											
 											
 

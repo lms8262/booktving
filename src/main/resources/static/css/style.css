@@ -20,9 +20,12 @@ a {
 }
 a,
 a:hover,
-a:focus {
+a:focus,
+a:active {
   text-decoration: none;
   color: #000;
+  outline: none;
+  box-shadow: none;
 }
 
 a:hover,
@@ -34,6 +37,9 @@ ul{
 	list-style: none
 }
 
+.site-wrap {
+	padding: 0;
+}
 
 /* sec: header */
 .header-section{
@@ -178,6 +184,11 @@ nav .submenu li:hover{
 	padding-left: 20px;
 }
 
+.section-wrap .menu li a {
+	height: 40px;
+	line-height: 40px; 
+}
+
 .section-wrap .menu li:hover {
 	background-color: #fff;
 	font-weight: bold;
@@ -190,7 +201,7 @@ nav .submenu li:hover{
 	border-radius: 20px 0 0 20px;
 }
 
-.section-wrap .menu li::after {
+.section-wrap .menu li:active {
 	background-color: #fff;
 	font-weight: bold;
 	border-radius: 20px 0 0 20px;
@@ -211,6 +222,7 @@ nav .submenu li:hover{
 
 form{
 	margin-top: 40px;
+	margin-bottom:  50px;
 }
 
 table {
@@ -230,6 +242,11 @@ table>tbody:last-child {
 	border-bottom: none !important;		
 }
 
+.table tbody td{
+	text-align: center;
+	line-height: inherit;
+}
+
 .button{
 	display: flex;
 }
@@ -238,6 +255,13 @@ table>tbody:last-child {
 	padding: 0;
 	display: flex;
 	justify-content: flex-end;	
+}
+
+button:hover,
+button:active,
+button:focus {
+	outline: none !important;
+	box-shadow: none !important;
 }
 
 .button .btn{

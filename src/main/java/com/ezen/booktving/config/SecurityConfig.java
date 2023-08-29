@@ -22,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
+
 	private final UserDetailsService userDetailsService;
 
 	private final DataSource dataSource;
@@ -30,7 +31,7 @@ public class SecurityConfig {
 	MvcRequestMatcher.Builder mvc(HandlerMappingIntrospector introspector) {
 		return new MvcRequestMatcher.Builder(introspector);
 	}
-
+	
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
 
@@ -40,7 +41,7 @@ public class SecurityConfig {
 				.requestMatchers(mvc.pattern("/"), mvc.pattern("/membership/**"), mvc.pattern("/login/**")).permitAll()
 				.requestMatchers(mvc.pattern("/favicon.ico"), mvc.pattern("/error"),mvc.pattern("/image/**")).permitAll()
 				.requestMatchers(mvc.pattern("/findid"),mvc.pattern("/findpw")).permitAll()
-				.requestMatchers(mvc.pattern("/category/**"), mvc.pattern("/search/**"), mvc.pattern("/question/**"),mvc.pattern("/author/**"), mvc.pattern("/book/**"),mvc.pattern("/mypage/**")).permitAll()
+				.requestMatchers(mvc.pattern("/category/**"), mvc.pattern("/search/**"), mvc.pattern("/question/**"),mvc.pattern("/author/**"), mvc.pattern("/book/**"), mvc.pattern("/mylibrary/**") ,mvc.pattern("/mypage/**")).permitAll()
 				// 'admin'으로 시작하는 경로는 관리자만 접근가능하도록 설정
 				.requestMatchers(mvc.pattern("/admin/**")).permitAll()// hasRole("ADMIN")
 						.anyRequest().authenticated())// 그외 페이지는 모두 로그인 (인증을 받아야한다.)
@@ -63,7 +64,6 @@ public class SecurityConfig {
 
 		return http.build();
 	}
-
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -75,3 +75,4 @@ public class SecurityConfig {
 		return jdbcTokenRepository;
 	}
 }
+

@@ -19,13 +19,7 @@ public class AuthorImgDto {
 	
 	private String imgUrl;
 	
-	private static ModelMapper modelMapper = new ModelMapper();
-	
-	public AuthorImg createAuthorImg() {
-		return modelMapper.map(this, AuthorImg.class);
-	}
-	
-	public static AuthorImgDto of(AuthorImg authorImg) {
+	public static AuthorImgDto of(AuthorImg authorImg, ModelMapper modelMapper) {
 		return modelMapper.map(authorImg, AuthorImgDto.class);
 	}
 	

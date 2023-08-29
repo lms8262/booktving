@@ -1,21 +1,19 @@
 package com.ezen.booktving.repository;
 
 import java.time.LocalDateTime;
+import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-
 import org.springframework.data.domain.Slice;
 import org.springframework.data.domain.SliceImpl;
-
 import org.thymeleaf.util.StringUtils;
 
 import com.ezen.booktving.constant.YesNoStatus;
 import com.ezen.booktving.dto.BookDto;
 import com.ezen.booktving.dto.BookSearchDto;
-
 import com.ezen.booktving.dto.QSearchBookDto;
 import com.ezen.booktving.dto.SearchBookDto;
 import com.ezen.booktving.entity.Book;
@@ -24,7 +22,6 @@ import com.ezen.booktving.entity.QBookImg;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.Wildcard;
-
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
 import jakarta.persistence.EntityManager;
@@ -98,8 +95,7 @@ public class BookRepositoryCustomImpl implements BookRepositoryCustom{
 	
 	@Override
 	public Page<BookDto> getBookDto(BookSearchDto bookSearchDto, Pageable pageable) {
-		// TODO Auto-generated method stub
-		return null;
+		return getBookDto(bookSearchDto, pageable);
 	}
 	
 	// no-offset 처리를 위한 메소드

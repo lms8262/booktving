@@ -22,6 +22,22 @@ public class MyLibraryController {
 	
 	private final MyLibraryRentBookService myLibraryRentBookService;
 	
+	
+	//나의서재 메인화면
+	@GetMapping(value = "/mylibrary")
+	public String myLibrary(Optional<Integer> page, Model model) {
+		
+		//bookcase
+		
+		
+		//favorite
+		
+		
+		//author
+		
+		return "mylibrary/mylibraryMain";
+	}
+	
 	//나의 서재 대여도서 리스트
 	@GetMapping(value= {"/mylibrary/rentList", "/mylibrary/rentList/{page}"})
 	public String myLibraryRentList(@PathVariable("page") Optional<Integer> page, Principal principal, Model model) {

@@ -1,6 +1,5 @@
 package com.ezen.booktving.entity;
 
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -20,12 +19,12 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Challenge extends BaseTimeEntity {
-	
+
 	@Id
 	@Column(name = "challenge_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id", nullable = false)
 	private Member member;

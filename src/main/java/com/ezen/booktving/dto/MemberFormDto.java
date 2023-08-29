@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import org.hibernate.validator.constraints.Length;
 import org.modelmapper.ModelMapper;
 
+import com.ezen.booktving.constant.Role;
 import com.ezen.booktving.entity.Member;
 
 import jakarta.validation.constraints.Email;
@@ -17,7 +18,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MemberFormDto {
-	//private Long id;
+	// private Long id;
 
 	@NotBlank(message = "아이디는 필수 입력 값입니다.")
 	private String userId;
@@ -35,12 +36,14 @@ public class MemberFormDto {
 
 	@NotEmpty(message = "전화번호는 필수 입력 값입니다.")
 	private String tel;
-	
+
 	@NotEmpty(message = "주소는 필수 입력 값입니다.")
 	private String address;
 
 	@NotNull(message = "생년월일은 필수 입력 값입니다.")
 	private LocalDate birth;
+
+	private Role role;
 
 	private static ModelMapper modelMapper = new ModelMapper();
 
@@ -48,4 +51,9 @@ public class MemberFormDto {
 		return modelMapper.map(member, MemberFormDto.class);
 	}
 
+	public Member createMember() {
+		return modelMapper.map(this, Member.class);
+	}
+
 }
+
