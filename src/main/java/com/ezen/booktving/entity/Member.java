@@ -17,7 +17,10 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -26,6 +29,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 public class Member extends BaseTimeEntity {
 
 	@Id
@@ -53,10 +57,19 @@ public class Member extends BaseTimeEntity {
 
 	@Column(nullable = false)
 	private String address;
+	
+	@Column(nullable = false)
+	private String addressNo;
+	
+	@Column(nullable = false)
+	private String addressDetail;
 
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	private Role role;
+
+	private String provider;
+	private String providerId;
 
 	public static Member createMember(LoginFormDto loginFormDto, PasswordEncoder passwordEncoder) {
 
@@ -67,11 +80,15 @@ public class Member extends BaseTimeEntity {
 
 		Member member = new Member();
 		member.setAddress(loginFormDto.getAddress());
+		member.setAddressDetail(loginFormDto.getAddressDetail());
+		member.setAddressNo(loginFormDto.getAddressNo());
 		member.setUserId(loginFormDto.getUserId());
 		member.setMemberName(loginFormDto.getMemberName());
 		member.setEmail(loginFormDto.getEmail());
 		member.setBirth(loginFormDto.getBirth());
 		member.setTel(loginFormDto.getTel());
+		member.setProvider(loginFormDto.getProvider());
+		member.setProviderId(loginFormDto.getProviderId());
 		member.setPassword(password);
 		/* member.setRole(Role.ADMIN); //관리자로 가입할때 */
 		member.setRole(Role.USER);// 일반 사용자로 가입할때
@@ -100,6 +117,24 @@ public class Member extends BaseTimeEntity {
 		if (memberFormDto.getPassword() != null) {
 			this.password = passwordEncoder.encode(memberFormDto.getPassword());
 		}
+	}
+
+	@Builder(builderClassName = "MemberDetailRegister", builderMethodName = "MemberDetailRegister")
+	public Member(String memberName, String password, String email, Role role) {
+		this.memberName = memberName;
+		this.password = password;
+		this.email = email;
+		this.role = role;
+	}
+
+	@Builder(builderClassName = "OAuth2Register", builderMethodName = "oauth2Register")
+	public Member(String memberName, String password, String email, Role role, String provider, String providerId) {
+		this.memberName = memberName;
+		this.password = password;
+		this.email = email;
+		this.role = role;
+		this.provider = provider;
+		this.providerId = providerId;
 	}
 
 }
