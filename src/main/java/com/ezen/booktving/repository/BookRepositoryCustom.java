@@ -1,8 +1,5 @@
 package com.ezen.booktving.repository;
 
-import java.util.Set;
-
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
@@ -24,8 +21,6 @@ public interface BookRepositoryCustom {
 	// 검색시 데이터 총 갯수
 	Long getSearchBookCount(BookSearchDto bookSearchDto);
 	
-	Set<String> getAllBookIsbn();
-
 }
 
 

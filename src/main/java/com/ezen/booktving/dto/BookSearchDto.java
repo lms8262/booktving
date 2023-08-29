@@ -12,5 +12,5 @@ import lombok.Setter;
 public class BookSearchDto {
 	
 	private String searchBy;
-	private String searchQuery = "";
+	private String searchQuery;
 }
