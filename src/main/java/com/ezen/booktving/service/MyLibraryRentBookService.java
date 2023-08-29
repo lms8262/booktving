@@ -25,8 +25,6 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 public class MyLibraryRentBookService {
 	private final RentRepository rentRepository;
-	private final BookRepository bookRepository;
-	private final MemberRepository memberRepository;
 	private final BookImgRepository bookImgRepository;
 	
 	

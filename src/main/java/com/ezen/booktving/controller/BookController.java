@@ -22,12 +22,11 @@ import com.ezen.booktving.dto.BookDto;
 import com.ezen.booktving.dto.BookReviewDto;
 import com.ezen.booktving.dto.FavoriteBookDto;
 import com.ezen.booktving.entity.Book;
-import com.ezen.booktving.repository.MemberRepository;
-
 import com.ezen.booktving.service.ApiService;
 import com.ezen.booktving.service.BookService;
 import com.ezen.booktving.service.FavoriteBookService;
-import com.ezen.booktving.service.MemberService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -36,14 +35,22 @@ import lombok.RequiredArgsConstructor;
 public class BookController {
 
 	private final BookService bookService;
-	private final ApiService apiService;
 	private final FavoriteBookService favoriteBookService;
-	private final MemberService memberService;
-	private final MemberRepository memberRepository;
-
+	private final ApiService apiService;
+	
 	// 도서상세 페이지
 	@GetMapping(value = "/book/bookDetail/{isbn}") // 개발 후 경로 변경 {isbn}
 	public String bookDetail(Model model, @PathVariable("isbn") String isbn) {
+		
+		try {
+			// db에 책 상세정보 있는지 확인 후 없으면 api 호출해서 업데이트
+			apiService.updateBookDetailByAladinApi(isbn);
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		
 		BookDto bookDto = bookService.getBookDetail(isbn);
 		List<BookReviewDto> bookReviewDtoList = new ArrayList<BookReviewDto>();
 		model.addAttribute("reviews", bookReviewDtoList);

@@ -8,7 +8,6 @@ import org.springframework.data.domain.Pageable;
 import org.thymeleaf.util.StringUtils;
 
 import com.ezen.booktving.dto.AuthorDtoList;
-import com.ezen.booktving.dto.AuthorFormDto;
 import com.ezen.booktving.dto.AuthorSearchDto;
 import com.ezen.booktving.dto.QAuthorDtoList;
 import com.ezen.booktving.entity.Author;
@@ -87,7 +86,5 @@ public class AuthorRepositoryCustomImpl implements AuthorRepositoryCustom {
 		
 		return new PageImpl<>(content, pageable, total);
 	}
-	
-	
 
 }

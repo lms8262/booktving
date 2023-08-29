@@ -46,10 +46,10 @@
 				<th:block th:if="${!#lists.isEmpty(searchBookList.getContent())}" th:each="searchBook : ${searchBookList.getContent()}">
 					<div class="search-card col-2">
 						<div class="card">
-							<a th:href="@{/search/detail/update/} + ${searchBook.isbn}">
+							<a th:href="@{/book/bookDetail/} + ${searchBook.isbn}">
 								<img th:src="${searchBook.imgUrl}" class="card-img-top" alt="이미지">
 							</a>
-							<a th:href="@{/search/detail/update/} + ${searchBook.isbn}">
+							<a th:href="@{/book/bookDetail/} + ${searchBook.isbn}">
 								<div class="card-body" th:data-last-book-id="${searchBook.id}">
 									<h5 class="card-title">[[${searchBook.bookName}]]</h5>
 									<p class="card-text">[[${searchBook.author}]]</p>
@@ -168,10 +168,10 @@
 			for(let i = 0; i < contents.length; i++) {
 				var appendData = `<div class="search-card col-2">
 					<div class="card">
-					<a href="/search/detail/update/${contents[i].isbn}">
+					<a href="/book/bookDetail/${contents[i].isbn}">
 						<img src="${contents[i].imgUrl}" class="card-img-top" alt="이미지">
 					</a>
-					<a href="/search/detail/update/${contents[i].isbn}">
+					<a href="/book/bookDetail/update/${contents[i].isbn}">
 						<div class="card-body" data-last-book-id="${contents[i].id}">
 							<h5 class="card-title">${contents[i].bookName}</h5>
 							<p class="card-text">${contents[i].author}</p>

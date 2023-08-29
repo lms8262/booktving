@@ -32,7 +32,6 @@ public class BookService {
 	@Autowired
 	private final BookRepository bookRepository;
 	private final BookDetailRepository bookDetailRepository;
-	private final BookImgService bookImgService;
 	private final BookImgRepository bookImgRepository;
 	private final BookReviewRepository bookReviewRepository;
 	
@@ -90,11 +89,11 @@ public class BookService {
 	}
 	
 	// isbn 값으로 해당 book 엔티티 데이터를 가져옴.
-	   @Transactional(readOnly = true)
-	   public Book getBook(String isbn){
-	      Book book = bookDetailRepository.findByIsbnOrderByIdAsc(isbn);
-	      return book;
-	   }
+   @Transactional(readOnly = true)
+   public Book getBook(String isbn){
+      Book book = bookDetailRepository.findByIsbnOrderByIdAsc(isbn);
+      return book;
+   }
 	
 	//북티빙 Top10
 	//일간

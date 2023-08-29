@@ -55,9 +55,9 @@ public class ApiService {
         list = (JSONArray) jsonObject.get("item");
         
         for (int k = 0; k < list.size(); k++) {
-        	  JSONObject contents = (JSONObject) list.get(k);
+        	JSONObject contents = (JSONObject) list.get(k);
         	
-        	  String aladinApiAuthor = contents.get("author").toString();
+        	String aladinApiAuthor = contents.get("author").toString();
             String processedAuthor = extractAuthorName(aladinApiAuthor);
         	
             bestSellerRepository.save(
@@ -75,7 +75,7 @@ public class ApiService {
     }
     
     //main 페이지 - NEW 북티빙 api
-    public void getNewBookTving(String result) throws ParseException {
+    public void getNewBookTving(String result) throws ParseException, IOException {
     	
     	JSONArray list = null;
     	
@@ -85,6 +85,12 @@ public class ApiService {
     	
     	for(int k = 0; k < list.size(); k++) {
     		JSONObject contents = (JSONObject) list.get(k);
+    		
+    		String isbn13 = (String)contents.get("isbn13");
+        	// isbn13이 비어있거나, db에 이미 있으면 패스
+        	if(isbn13.equals("") || bookRepository.findByIsbn(isbn13) != null) {
+        		continue;
+        	}
     		
     		String aladinApiAuthor = contents.get("author").toString();
     		String processedAuthor = extractAuthorName(aladinApiAuthor);
@@ -98,7 +104,47 @@ public class ApiService {
     							.imgUrl(contents.get("cover").toString())
     							.link(contents.get("link").toString())
     							.build()
-    		);    		
+    		);
+    		
+    		// newBookTving 저장할때 book, bookImg도 같이 저장
+        	Book book = Book.builder()
+        			.bookName((String)contents.get("title"))
+            		.isbn((String)contents.get("isbn13"))
+            		.author((String)contents.get("author"))
+            		.publisher((String)contents.get("publisher"))
+            		.publicationDate(LocalDate.parse((String)contents.get("pubDate"), DateTimeFormatter.ISO_DATE))
+            		.bookIntroduction((String)contents.get("description"))
+            		.category((String)contents.get("categoryName"))
+            		.page(0)
+            		.contents("")
+            		.reqAuthor("")
+            		.authorInfo("")
+            		.build();
+        	
+        	bookRepository.save(book);
+        	
+        	// 이미지 path를 통해서 생성 후 저장
+            String imgPath = (String)contents.get("cover");
+            String oriImgName = imgPath.substring(imgPath.lastIndexOf("/") + 1);
+            String extension = oriImgName.substring(oriImgName.lastIndexOf("."));
+            String imgName = book.getIsbn() + extension;
+            String imgUrl = "/image/book/" + imgName;
+            String format = extension.substring(extension.lastIndexOf(".") + 1);
+            
+            URL url = new URL(imgPath);
+            BufferedImage image = ImageIO.read(url);
+            
+            ImageIO.write(image, format, new File("C:/booktving/book/" + imgName));
+            
+            BookImg bookImg = BookImg.builder()
+            						.imgName(imgName)
+            						.oriImgName(oriImgName)
+            						.repYn(YesNoStatus.Y)
+            						.imgUrl(imgUrl)
+            						.book(book)
+            						.build();
+            
+            bookImgRepository.save(bookImg);
     	}
     }
 
@@ -116,7 +162,6 @@ public class ApiService {
     private String getJsonStringOfSearchBook(BookSearchDto bookSearchDto, int start) {
     	String ttbKey = "ttblyczang41056001";
     	String query = bookSearchDto.getSearchQuery();
-    	System.out.println(query);
     	String queryType = bookSearchDto.getSearchBy();
     	int maxResults = 50;
     	String cover = "Big";

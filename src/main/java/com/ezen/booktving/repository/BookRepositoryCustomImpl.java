@@ -1,7 +1,6 @@
 package com.ezen.booktving.repository;
 
 import java.time.LocalDateTime;
-import java.util.HashSet;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -109,29 +108,24 @@ public class BookRepositoryCustomImpl implements BookRepositoryCustom{
 	
 	// 검색 조건에 따른 처리
 	private BooleanExpression searchByLikeInSearchPage(String searchBy, String searchQuery) {
+		String searchQueryReplace = searchQuery.replaceAll("\\s", "");
+		
 		if(StringUtils.equals("Keyword", searchBy)) {
-			return QBook.book.bookName.like("%" + searchQuery + "%")
-					.or(QBook.book.author.like("%" + searchQuery + "%"))
-					.or(QBook.book.reqAuthor.like("%" + searchQuery + "%"))
-					.or(Expressions.stringTemplate("replace({0},' ','')", QBook.book.bookName).like("%" + searchQuery + "%"))
-					.or(Expressions.stringTemplate("replace({0},' ','')", QBook.book.author).like("%" + searchQuery + "%"))
-					.or(Expressions.stringTemplate("replace({0},' ','')", QBook.book.reqAuthor).like("%" + searchQuery + "%"));
+			return Expressions.stringTemplate("replace({0},' ','')", QBook.book.bookName).like("%" + searchQueryReplace + "%")
+					.or(Expressions.stringTemplate("replace({0},' ','')", QBook.book.author).like("%" + searchQueryReplace + "%"))
+					.or(Expressions.stringTemplate("replace({0},' ','')", QBook.book.reqAuthor).like("%" + searchQueryReplace + "%"));
 		}
 		
 		if(StringUtils.equals("Title", searchBy)) {
-			return QBook.book.bookName.like("%" + searchQuery + "%")
-					.or(Expressions.stringTemplate("replace({0},' ','')", QBook.book.bookName).like("%" + searchQuery + "%"));
+			return Expressions.stringTemplate("replace({0},' ','')", QBook.book.bookName).like("%" + searchQueryReplace + "%");
 		}
 		if(StringUtils.equals("Author", searchBy)) {
-			return QBook.book.author.like("%" + searchQuery + "%")
-					.or(QBook.book.reqAuthor.like("%" + searchQuery + "%"))
-					.or(Expressions.stringTemplate("replace({0},' ','')", QBook.book.author).like("%" + searchQuery + "%"))
-					.or(Expressions.stringTemplate("replace({0},' ','')", QBook.book.reqAuthor).like("%" + searchQuery + "%"));
+			return Expressions.stringTemplate("replace({0},' ','')", QBook.book.author).like("%" + searchQueryReplace + "%")
+					.or(Expressions.stringTemplate("replace({0},' ','')", QBook.book.reqAuthor).like("%" + searchQueryReplace + "%"));
 		}
 			
 		if(StringUtils.equals("Publisher", searchBy)) {
-			return QBook.book.publisher.like("%" + searchQuery + "%")
-					.or(Expressions.stringTemplate("replace({0},' ','')", QBook.book.publisher).like("%" + searchQuery + "%"));
+			return Expressions.stringTemplate("replace({0},' ','')", QBook.book.publisher).like("%" + searchQueryReplace + "%");
 		}
 		
 		return null;

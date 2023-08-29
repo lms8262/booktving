@@ -14,11 +14,16 @@ select * from book_review;
 select * from member;
 select * from rent_book;
 select * from author;
+select * from author_img;
 select * from author_book;
+select * from author_book_img;
 delete from search_keyword where search_keyword_id = 56;
 select * from search_keyword;
 select * from recommend_keyword;
-select * from popular_keyword;
+select * from member_commutation;
+insert into member_commutation(member_id, reg_time, update_time, end_date) values(1, now(), now(), date_add(now(), interval 1 MONTH));
+
+select * from commutation_ticket;
 
 select s.search_keyword_type, s.search_keyword_name
 from search_keyword s group by s.search_keyword_type, s.search_keyword_name order by count(s.search_keyword_name) desc;

@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.ezen.booktving.dto.BookRentHistDto;
+import com.ezen.booktving.dto.MemberCommutationDto;
+import com.ezen.booktving.service.CommutationService;
 import com.ezen.booktving.service.MypageRentBookService;
 
 import lombok.RequiredArgsConstructor;
@@ -21,10 +23,13 @@ import lombok.RequiredArgsConstructor;
 public class MypageController {
 	
 	private final MypageRentBookService mypageRentBookService;
+	private final CommutationService commutationService;
 	
 	@GetMapping(value = {"/mypage/rentlist", "/mypage/rentlist/{page}"})
 	public String rentList(@PathVariable("page") Optional<Integer> page, Principal principal, Model model) {
-		
+		if(principal == null) {
+			return "redirect:/login";
+		}
 		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 3);
 		
 		//2. 서비스 호출
@@ -36,4 +41,17 @@ public class MypageController {
 		
 		return "mypage/rentList";
 	}
+	
+	@GetMapping(value = "/mypage/commutation")
+	public String myCommutation(Principal principal, Model model) {
+		if(principal == null) {
+			return "redirect:/login";
+		}
+		
+		MemberCommutationDto memberCommutationInfo = commutationService.getMemberCommutationInfo(principal.getName());
+		model.addAttribute("memberCommutationInfo", memberCommutationInfo);
+		
+		return "mypage/myCommutation";
+	}
+	
 }
