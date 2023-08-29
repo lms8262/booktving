@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+<th:block layout:fragment="css">
+	<link rel="stylesheet" type="text/css" href="/css/questionInfo.css" />
+	<style>
+</style>
+</th:block>
+
+<div layout:fragment="content">
+	<div class="top">
+		<div class="content">
+			<div class="question-content">
+				<strong><a href="/question/questionInfo">고객센터</a></strong>
+				<p>
+					<a href="/question/questionCreate">1:1 문의</a>
+				</p>
+			</div>
+			<div class="question-box">
+				<div class="question-info">
+					<strong>무엇을 도와드릴까요?</strong>
+					<p class="p1">
+						고객센터 070-7777-7777<br> 평일 10:00 ~ 18:00<br> 점심시간 13:00 ~
+						14:00<br> 토 / 일 / 공휴일 Day off
+					</p>
+					<p class="p2">
+						※코로나19로 인해 고객센터 운영을 최소화 하고 있습니다.<br> 통화 연결이 어려우니 1:1 문의하기를
+						이용해주세요.
+					</p>
+				</div>
+				<div class="que-box">
+					<strong>1:1 문의내역</strong>
+					<div class="que">
+						<!-- 사용자가 인증되었는지 확인 -->
+						<th:block sec:authorize="isAuthenticated()">
+							<a th:href="@{/question/questionCreate}" class="qna"> 1:1
+								문의하기 </a>
+						</th:block>
+						<th:block sec:authorize="not isAuthenticated()">
+							<!-- 사용자가 인증되지 않은 경우 알림을 표시 -->
+							<button type="button" class="qna" onclick="showLoginAlert()">
+								1:1 문의하기</button>
+						</th:block>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<th:block layout:fragment="script">
+		<script th:inline="javascript">
+		 function showLoginAlert() {
+		        alert("로그인 후 이용해주세요.");
+		    }
+		</script>
+	</th:block>
+</html>

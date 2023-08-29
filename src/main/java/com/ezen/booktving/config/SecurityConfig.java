@@ -11,7 +11,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.rememberme.JdbcTokenRepositoryImpl;
 import org.springframework.security.web.authentication.rememberme.PersistentTokenRepository;
 import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
@@ -23,6 +22,7 @@ import com.ezen.booktving.service.PrincipalOauth2UserService;
 @Configuration // Bean 객체를 싱글톤으로 객체를 관리해준다.
 @EnableWebSecurity
 public class SecurityConfig {
+
 	private final UserDetailsService userDetailsService;
 	private final PrincipalOauth2UserService principalOauth2UserService;
 	private final DataSource dataSource;
@@ -38,7 +38,7 @@ public class SecurityConfig {
 	MvcRequestMatcher.Builder mvc(HandlerMappingIntrospector introspector) {
 		return new MvcRequestMatcher.Builder(introspector);
 	}
-
+	
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
 
@@ -78,7 +78,6 @@ public class SecurityConfig {
 
 		return http.build();
 	}
-
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -91,3 +90,4 @@ public class SecurityConfig {
 	}
 
 }
+

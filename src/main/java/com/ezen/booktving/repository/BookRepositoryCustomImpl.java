@@ -3,7 +3,6 @@ package com.ezen.booktving.repository;
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -21,6 +20,7 @@ import com.ezen.booktving.entity.Book;
 import com.ezen.booktving.entity.QBook;
 import com.ezen.booktving.entity.QBookImg;
 import com.querydsl.core.types.dsl.BooleanExpression;
+import com.querydsl.core.types.dsl.Expressions;
 import com.querydsl.core.types.dsl.Wildcard;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 
@@ -95,8 +95,7 @@ public class BookRepositoryCustomImpl implements BookRepositoryCustom{
 	
 	@Override
 	public Page<BookDto> getBookDto(BookSearchDto bookSearchDto, Pageable pageable) {
-		// TODO Auto-generated method stub
-		return null;
+		return getBookDto(bookSearchDto, pageable);
 	}
 	
 	// no-offset 처리를 위한 메소드
@@ -113,18 +112,26 @@ public class BookRepositoryCustomImpl implements BookRepositoryCustom{
 		if(StringUtils.equals("Keyword", searchBy)) {
 			return QBook.book.bookName.like("%" + searchQuery + "%")
 					.or(QBook.book.author.like("%" + searchQuery + "%"))
-					.or(QBook.book.reqAuthor.like("%" + searchQuery + "%"));
+					.or(QBook.book.reqAuthor.like("%" + searchQuery + "%"))
+					.or(Expressions.stringTemplate("replace({0},' ','')", QBook.book.bookName).like("%" + searchQuery + "%"))
+					.or(Expressions.stringTemplate("replace({0},' ','')", QBook.book.author).like("%" + searchQuery + "%"))
+					.or(Expressions.stringTemplate("replace({0},' ','')", QBook.book.reqAuthor).like("%" + searchQuery + "%"));
 		}
 		
 		if(StringUtils.equals("Title", searchBy)) {
-			return QBook.book.bookName.like("%" + searchQuery + "%");
+			return QBook.book.bookName.like("%" + searchQuery + "%")
+					.or(Expressions.stringTemplate("replace({0},' ','')", QBook.book.bookName).like("%" + searchQuery + "%"));
 		}
 		if(StringUtils.equals("Author", searchBy)) {
-			return QBook.book.author.like("%" + searchQuery + "%").or(QBook.book.reqAuthor.like("%" + searchQuery + "%"));
+			return QBook.book.author.like("%" + searchQuery + "%")
+					.or(QBook.book.reqAuthor.like("%" + searchQuery + "%"))
+					.or(Expressions.stringTemplate("replace({0},' ','')", QBook.book.author).like("%" + searchQuery + "%"))
+					.or(Expressions.stringTemplate("replace({0},' ','')", QBook.book.reqAuthor).like("%" + searchQuery + "%"));
 		}
 			
 		if(StringUtils.equals("Publisher", searchBy)) {
-			return QBook.book.publisher.like("%" + searchQuery + "%");
+			return QBook.book.publisher.like("%" + searchQuery + "%")
+					.or(Expressions.stringTemplate("replace({0},' ','')", QBook.book.publisher).like("%" + searchQuery + "%"));
 		}
 		
 		return null;
@@ -178,18 +185,4 @@ public class BookRepositoryCustomImpl implements BookRepositoryCustom{
 		return count;
 	}
 
-	@Override
-	public Set<String> getAllBookIsbn() {
-		QBook book = QBook.book;
-		
-		List<String> content = queryFactory
-				.select(book.isbn)
-				.from(book)
-				.fetch();
-		
-		HashSet<String> allBookIsbn = new HashSet<>(content);
-		
-		return allBookIsbn;
-	}
-	
 }

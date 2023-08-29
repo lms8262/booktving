@@ -33,9 +33,9 @@ public class LoginFormDto {
 
 	@NotBlank(message = "주소는 필수 입력 값입니다.")
 	private String address;
-	
+
 	private String addressNo;
-	
+
 	private String addressDetail;
 
 	private String Provider;
