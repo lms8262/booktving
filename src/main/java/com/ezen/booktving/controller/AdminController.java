@@ -27,13 +27,17 @@ import com.ezen.booktving.dto.AuthorSearchDto;
 import com.ezen.booktving.dto.BookRegFormDto;
 import com.ezen.booktving.dto.BookSearchDto;
 import com.ezen.booktving.dto.MemberSearchDto;
+import com.ezen.booktving.dto.NoticeDto;
+import com.ezen.booktving.dto.NoticeSearchDto;
 import com.ezen.booktving.entity.Author;
 import com.ezen.booktving.entity.Book;
 import com.ezen.booktving.entity.Member;
+import com.ezen.booktving.entity.Notice;
 import com.ezen.booktving.service.AdminBookRentHistService;
 import com.ezen.booktving.service.AuthorService;
 import com.ezen.booktving.service.BookRegService;
 import com.ezen.booktving.service.MemberService;
+import com.ezen.booktving.service.NoticeService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -46,6 +50,7 @@ public class AdminController {
 	private final BookRegService bookRegService;
 	private final AdminBookRentHistService adminBookRentHistService;
 	private final MemberService memberService;
+	private final NoticeService noticeService;
 
 	// 도서관리 페이지 보여주기
 	@GetMapping(value = { "/admin/books", "/admin/books/{page}" })
@@ -322,25 +327,87 @@ public class AdminController {
 		return "admin/adminAnswer";
 	}
 
-	// 공지관리 페이지 보여주기
-	@GetMapping(value = "/admin/notice")
-	public String adminNotice() {
+	//공지사항 관리페이지, 공지사항 페이지 보여주기
+	@GetMapping(value = {"/admin/notice", "/admin/notice/{page}", "/notice"})
+	public String adminNotice(NoticeSearchDto noticeSearchDto, @PathVariable("page") Optional<Integer> page, Model model) {
 
+		try {
+			Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
+			Page<Notice> notices = noticeService.getAdminNoticePage(noticeSearchDto, pageable);
+			
+			model.addAttribute("notices", notices);
+			model.addAttribute("noticeSearchDto", noticeSearchDto);
+			model.addAttribute("maxPage", 5);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
 		return "admin/adminNotice";
 	}
 
 	// 공지사항 등록 페이지 보여주기
 	@GetMapping(value = "/admin/noticeReg")
-	public String adminNoticeReg() {
-
+	public String adminNoticeReg(Model model) {
+		model.addAttribute("noticeDto", new NoticeDto());
+		
 		return "admin/adminNoticeReg";
 	}
 
+	
+	//공지사항 등록하기
+	@PostMapping(value = "/admin/noticeReg")
+	public String noticeNew(@Valid NoticeDto noticeDto, BindingResult bindingResult, Model model) {
+		
+		if(bindingResult.hasErrors()) {
+			return "admin/adminNoticeReg";
+		}
+		
+		try {
+			noticeService.saveNotice(noticeDto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("errorMessage", "공지사항 등록 중 에러가 발생했습니다.");
+			
+			return "admin/adminNotice";
+		}
+		return "redirect:/admin/adminNotice";
+	}
+	
 	// 공지사항 수정 페이지 보여주기
-	@GetMapping(value = "/admin/noticeModify")
-	public String adminNoticeModify() {
+	@GetMapping(value = "/admin/notice/{noticeId}")
+	public String adminNoticeModify(@PathVariable("noticeId") Long noticeId, Model model) {
 
+		try {
+			NoticeDto noticeDto = noticeService.getNoticeDtl(noticeId);
+			model.addAttribute("noticeDto", noticeDto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("errorMessage", "공지사항 정보를 가져올 때 에러가 발생했습니다.");
+			
+			model.addAttribute("noticeDto", new NoticeDto());
+			
+			return "admin/adminNoticeReg";
+		}
+		
 		return "admin/adminNoticeModify";
 	}
 
+	//공지사항 수정하기
+	@PostMapping(value = "/admin/notice/(noticeId)")
+	public String noticeUpdate(@Valid NoticeDto noticeDto, Model model, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			return "admin/adminNoticeReg";
+		}
+		
+		try {
+			noticeService.updateNotice(noticeDto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("errorMessage", "공지사항 수정 중 에러가 발생했습니다.");
+			return "admin/adminNoticeReg";
+		}
+		return "redirect:/admin/notice";
+		
+	}
 }

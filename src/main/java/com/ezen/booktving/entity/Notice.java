@@ -1,6 +1,7 @@
 package com.ezen.booktving.entity;
 
 import com.ezen.booktving.constant.NoticeGroup;
+import com.ezen.booktving.dto.NoticeDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -35,5 +36,12 @@ public class Notice extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	private NoticeGroup noticeGroup;
+	
+	//notice 수정
+	public void updateNotice(NoticeDto noticeDto) {
+		this.title = noticeDto.getTitle();
+		this.content = noticeDto.getContent();
+		this.noticeGroup = noticeDto.getNoticeGroup();
+	}
 	
 }

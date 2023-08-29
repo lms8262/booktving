@@ -27,6 +27,7 @@ public class AdminRentHistBookDto {
 	
 	private static ModelMapper modelMapper = new ModelMapper();
 	
+	public AdminRentHistBookDto() {	}
 	
 	public AdminRentHistBookDto(RentBook rentBook) {
 		this.id = rentBook.getId();
@@ -36,12 +37,12 @@ public class AdminRentHistBookDto {
 		this.userId = rentBook.getMember().getUserId();
 		this.userName = rentBook.getMember().getMemberName();
 	}
-	
+	/*
 	//dto - > entity로 바꿈
 	public RentBook createRentBook() {
 		return modelMapper.map(this, RentBook.class);
 	}
-	
+	*/
 	//entity -> dto로 바꿈
 	public static AdminRentHistBookDto of(RentBook rentBook) {
 		return modelMapper.map(rentBook, AdminRentHistBookDto.class);

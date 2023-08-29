@@ -60,7 +60,7 @@ public class ApiService {
         for (int k = 0; k < list.size(); k++) {
         	  JSONObject contents = (JSONObject) list.get(k);
         	
-        	  String aladinApiAuthor = contents.get("author").toString();
+        	String aladinApiAuthor = contents.get("author").toString();
             String processedAuthor = extractAuthorName(aladinApiAuthor);
         	
             bestSellerRepository.save(

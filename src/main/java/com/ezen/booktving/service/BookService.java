@@ -21,6 +21,7 @@ import com.ezen.booktving.repository.BookDetailRepository;
 import com.ezen.booktving.repository.BookImgRepository;
 import com.ezen.booktving.repository.BookRepository;
 import com.ezen.booktving.repository.BookReviewRepository;
+import com.ezen.booktving.repository.RentRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -30,11 +31,10 @@ import lombok.RequiredArgsConstructor;
 public class BookService {
 
 	@Autowired
-	private final BookRepository bookRepository;
 	private final BookDetailRepository bookDetailRepository;
-	private final BookImgService bookImgService;
 	private final BookImgRepository bookImgRepository;
 	private final BookReviewRepository bookReviewRepository;
+	private final RentRepository rentRepository;
 	
 	@Transactional(readOnly = true)
 	public BookDto getBookDetail(String isbn) {
@@ -71,7 +71,7 @@ public class BookService {
 	//일간
 	public Page<BookTvingTop10Dto> getDayBookRankList(Pageable pageable) {
 		
-		Page<BookTvingTop10Dto> bookTvingTop10Page = bookRepository.getDayBookRankList(pageable);
+		Page<BookTvingTop10Dto> bookTvingTop10Page = rentRepository.getDayBookRankList(pageable);
 		
 		return bookTvingTop10Page;
 	}
@@ -79,7 +79,7 @@ public class BookService {
 	//주간
 	public Page<BookTvingTop10Dto> getWeekBookRankList(Pageable pageable) {
 			
-		Page<BookTvingTop10Dto> bookTvingTop10Page = bookRepository.getWeekBookRankList(pageable);
+		Page<BookTvingTop10Dto> bookTvingTop10Page = rentRepository.getWeekBookRankList(pageable);
 			
 		return bookTvingTop10Page;
 	}
@@ -87,7 +87,7 @@ public class BookService {
 	//월간
 	public Page<BookTvingTop10Dto> getMonthBookRankList(Pageable pageable) {
 			
-		Page<BookTvingTop10Dto> bookTvingTop10Page = bookRepository.getMonthBookRankList(pageable);
+		Page<BookTvingTop10Dto> bookTvingTop10Page = rentRepository.getMonthBookRankList(pageable);
 			
 		return bookTvingTop10Page;
 	}
@@ -95,7 +95,7 @@ public class BookService {
 	//연간
 	public Page<BookTvingTop10Dto> getYearBookRankList(Pageable pageable) {
 			
-		Page<BookTvingTop10Dto> bookTvingTop10Page = bookRepository.getYearBookRankList(pageable);
+		Page<BookTvingTop10Dto> bookTvingTop10Page = rentRepository.getYearBookRankList(pageable);
 			
 		return bookTvingTop10Page;
 	}
