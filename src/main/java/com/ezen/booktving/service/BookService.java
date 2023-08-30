@@ -69,33 +69,33 @@ public class BookService {
 	
 	//북티빙 Top10
 	//일간
-	public Page<BookTvingTop10Dto> getDayBookRankList(Pageable pageable) {
+	public List<BookTvingTop10Dto> getDayBookRankList() {
 		
-		Page<BookTvingTop10Dto> bookTvingTop10Page = rentRepository.getDayBookRankList(pageable);
+		List<BookTvingTop10Dto> bookTvingTop10Page = rentRepository.getDayBookRankList();
 		
 		return bookTvingTop10Page;
 	}
 	
 	//주간
-	public Page<BookTvingTop10Dto> getWeekBookRankList(Pageable pageable) {
+	public List<BookTvingTop10Dto> getWeekBookRankList() {
 			
-		Page<BookTvingTop10Dto> bookTvingTop10Page = rentRepository.getWeekBookRankList(pageable);
+		List<BookTvingTop10Dto> bookTvingTop10Page = rentRepository.getWeekBookRankList();
 			
 		return bookTvingTop10Page;
 	}
 		
 	//월간
-	public Page<BookTvingTop10Dto> getMonthBookRankList(Pageable pageable) {
+	public List<BookTvingTop10Dto> getMonthBookRankList() {
 			
-		Page<BookTvingTop10Dto> bookTvingTop10Page = rentRepository.getMonthBookRankList(pageable);
+		List<BookTvingTop10Dto> bookTvingTop10Page = rentRepository.getMonthBookRankList();
 			
 		return bookTvingTop10Page;
 	}
 		
 	//연간
-	public Page<BookTvingTop10Dto> getYearBookRankList(Pageable pageable) {
+	public List<BookTvingTop10Dto> getYearBookRankList() {
 			
-		Page<BookTvingTop10Dto> bookTvingTop10Page = rentRepository.getYearBookRankList(pageable);
+		List<BookTvingTop10Dto> bookTvingTop10Page = rentRepository.getYearBookRankList();
 			
 		return bookTvingTop10Page;
 	}

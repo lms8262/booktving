@@ -19,8 +19,11 @@
 					<!-- 공지사항 -->
 					<div class="container">
 
-						<nav class="notice-wrap">
-							<i class="fa-solid fa-volume-high" style="color: #000000;"></i> <span></span>
+						<nav class="notice-wrap" th:each="notice, status : ${notice}">
+							<a ><!-- th:href="'/book/bookDetail/' + ${notice.id}" -->
+								<i class="fa-solid fa-volume-high" style="color: #000000;"></i> 
+								<span th:text="${title}"></span>
+							</a>
 						</nav>
 
 					</div>
@@ -112,6 +115,7 @@
 									<p class="bookMark-text">나의서재</p>
 							</a>
 						</div>
+						
 						<div class="bookMark">
 							<a href="#">
 								<div class="booMark-img">
@@ -120,6 +124,8 @@
 								<p class="bookMark-text">찜한도서</p>
 							</a>
 						</div>
+						
+						<!-- 
 						<div class="bookMark">
 							<a href="#">
 								<div class="booMark-img">
@@ -129,7 +135,9 @@
 								<p class="bookMark-text">찜한작가</p>
 							</a>
 						</div>
-						<div class="bookMark">
+						 -->
+						 
+						<div class="bookMark" >
 							<a href="#">
 								<div class="booMark-img">
 									<i class="fa-solid fa-person-circle-plus fa-xl"
@@ -158,7 +166,7 @@
 							<ul class="tabmenu">
 									
 								<!-- 일간 -->
-								<li class="active" th:if="${not #lists.isEmpty(dayRanks)}"> <a href="#">일간&nbsp;&nbsp;&nbsp;&nbsp;<span>|</span></a>
+								<li th:if="${not #lists.isEmpty(dayRanks)}" th:classappend="${not #lists.isEmpty(dayRanks)} ? 'active' : ''"> <a href="#">일간&nbsp;&nbsp;&nbsp;&nbsp;<span>|</span></a>
 									<div class="rank-list day-box">
 										<th:block th:each="dayRank, status : ${dayRanks}">
 											<div class="dayRank">
@@ -190,7 +198,7 @@
 								</li>
 									
 								<!-- 주간 -->
-								<li th:if="${not #lists.isEmpty(weekRanks)}"> <a href="#">주간&nbsp;&nbsp;&nbsp;&nbsp;<span>|</span></a>
+								<li  th:if="${not #lists.isEmpty(weekRanks)}" th:classappend="${not #lists.isEmpty(weekRanks)} ? 'active' : ''"> <a href="#">주간&nbsp;&nbsp;&nbsp;&nbsp;<span>|</span></a>
 									<div class="rank-list week-box">
 										<th:block th:each="weekRank, status : ${weekRanks}">
 											<div class="weekRank">
@@ -222,7 +230,7 @@
 								</li>
 									
 								<!-- 월간 -->
-								<li th:if="${not #lists.isEmpty(monthRanks)}"> <a href="#">월간&nbsp;&nbsp;&nbsp;&nbsp;<span>|</span></a>
+								<li th:if="${not #lists.isEmpty(monthRanks)}" th:classappend="${not #lists.isEmpty(monthRanks)} ? 'active' : ''"> <a href="#">월간&nbsp;&nbsp;&nbsp;&nbsp;<span>|</span></a>
 									<div class="rank-list month-box">
 										<th:block th:each="monthRank, status : ${monthRanks}">
 											<div class="monthRank">
@@ -254,7 +262,7 @@
 								</li>
 								
 								<!-- 연간 -->
-								<li th:if="${not #lists.isEmpty(yearRanks)}"> <a href="#">연간&nbsp;&nbsp;</a> 
+								<li th:if="${not #lists.isEmpty(yearRanks)}" th:classappend="${not #lists.isEmpty(yearRanks)} ? 'active' : ''"> <a href="#">연간&nbsp;&nbsp;</a> 
 									<div class="rank-list year-box">
 										<th:block th:each="yearRank, status : ${yearRanks}">
 											<div class="yearRank">

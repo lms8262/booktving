@@ -3,6 +3,7 @@ package com.ezen.booktving.dto;
 import org.modelmapper.ModelMapper;
 
 import com.ezen.booktving.constant.NoticeGroup;
+import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.entity.Notice;
 
 import jakarta.validation.constraints.NotBlank;

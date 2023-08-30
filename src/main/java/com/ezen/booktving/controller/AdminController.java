@@ -326,7 +326,7 @@ public class AdminController {
 
 		return "admin/adminAnswer";
 	}
-
+	
 	//공지사항 관리페이지, 공지사항 페이지 보여주기
 	@GetMapping(value = {"/admin/notice", "/admin/notice/{page}", "/notice"})
 	public String adminNotice(NoticeSearchDto noticeSearchDto, @PathVariable("page") Optional<Integer> page, Model model) {
@@ -353,7 +353,6 @@ public class AdminController {
 		
 		return "admin/adminNoticeReg";
 	}
-
 	
 	//공지사항 등록하기
 	@PostMapping(value = "/admin/noticeReg")
@@ -369,9 +368,9 @@ public class AdminController {
 			e.printStackTrace();
 			model.addAttribute("errorMessage", "공지사항 등록 중 에러가 발생했습니다.");
 			
-			return "admin/adminNotice";
+			return "admin/adminNoticeReg";
 		}
-		return "redirect:/admin/adminNotice";
+		return "redirect:/admin/notice";
 	}
 	
 	// 공지사항 수정 페이지 보여주기

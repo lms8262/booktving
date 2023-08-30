@@ -22,7 +22,7 @@
 
 							<li class="menu"><a href="/category/main"> <span>카테고리</span></a></li>
 							<li class="menu"><a href="/search/main"> <span>검색</span></a></li>
-							<li class="menu"><a href=""> <span>문의하기</span></a></li>
+							<li class="menu"><a href="/question/questionInfo"> <span>문의하기</span></a></li>
 							<li class="menu"><a href=""> <span>팔로우</span></a></li>
 							<li class="menu"><a href="/mylibrary"> <span>나의서재</span></a></li>
 							<li class="menu slide-menu"><a href="javascript:;"> <span>나의정보</span></a>
@@ -31,12 +31,11 @@
 									<li><a href="/login" sec:authorize="isAnonymous()"> <span>개인정보
 												수정</span>
 									</a></li>
-									<li><a href="/login/update"
-										sec:authorize="isAuthenticated()"> <span>개인정보 수정</span>
+									<li><a href="/login/update" sec:authorize="isAuthenticated()"> <span>개인정보 수정</span>
 									</a></li>
 									<li><a href="/mypage/rentlist"> <span>대여내역</span>
 									</a></li>
-									<li><a href=""> <span>이용권 관리</span>
+									<li><a href="/mypage/commutation"> <span>이용권 관리</span>
 									</a></li>
 								</ul></li>
 						</ul>
