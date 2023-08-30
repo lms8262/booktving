@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="~{layouts/layout1}">
-	
-	 
-<!-- adminBook 페이지 CSS --> 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+
+<!-- adminBook 페이지 CSS -->
 <th:block layout:fragment="css">
-	<link rel="stylesheet" href="/css/adminMember.css" />	
+	<link rel="stylesheet" href="/css/adminQuestion.css" />
 </th:block>
 
 <div layout:fragment="content">
@@ -15,7 +15,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-12 section-wrap">
-				
+
 					<div class="row">
 						<nav class="menu col-lg-2">
 							<ul class="col-12">
@@ -28,52 +28,53 @@
 								<li><a href="/admin/notice">공지관리</a></li>
 							</ul>
 						</nav>
-						
-						
+
+
 						<div class="admin-content col-lg-10">
 							<div class="container">
 								<div class="row">
 									<div class="col-12">
-										
+
 										<div class="top-title">
 											<h4>문의관리</h4>
 											<hr>
 										</div>
-										
-										
+
+
 										<form role="form" action="">
 											<!-- 도서관리 contents -->
-											<table class="table table-responsive-md ">						
+											<table class="table table-responsive-md ">
 												<thead>
 													<tr>
-														<th scope="col"></th>
+														<th scope="col"><input type="checkbox" id="checkall"
+															value=""></th>
 														<th scope="col">NO.</th>
 														<th scope="col">제목</th>
-														<th scope="col">회원이름</th>
+														<th scope="col">회원번호</th>
 														<th scope="col">등록일</th>
 													</tr>
 												</thead>
 												<tbody>
-													<tr>
-														<td>
-															<input type="checkbox" value=""/> 
-														</td>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
+													<tr th:each="question : ${questionList}">
+														<td class="adminmenu_td"><input type="checkbox" id="askChkBox" value="" /></td>
+														<td class="adminmenu_td" th:text="${question.id}" th:href="@{/question/questionDetail/{id}(id=${question.id})}"></td>
+														<td	class="adminmenu_td" th:text="${question.title}"></td>
+														<td class="adminmenu_td" th:text="${question.member.userId}"></td>
+														<td class="adminmenu_td" th:text="${question.questionDate}"></td>
 													</tr>
 												</tbody>
 											</table>
-											
+
 											<!-- 등록버튼  -->
 											<div class="form-group button col-12">
 												<div class="col-md-8"></div>
 												<div class="col-md-2">
-													<button type="button" class="btn reg_btn" style="width: 100px;">답변등록</button>
+													<button type="button" class="btn reg_btn"
+														style="width: 100px;">답변등록</button>
 												</div>
 												<div class="col-md-2">
-													<button type="button" class="btn delete_btn" style="width: 100px;">삭제</button>
+													<button type="button" class="btn delete_btn"
+														style="width: 100px;">삭제</button>
 												</div>
 											</div>
 
@@ -93,8 +94,10 @@
 												</div>
 												<div class="col-lg-6">
 													<div style="display: flex;">
-														<input type="text" class="form-control col-sm-10" placeholder="검색어 입력">
-														<button id="searchBtn" type="submit" class="btn search-btn col-sm-2">검색</button>
+														<input type="text" class="form-control col-sm-10"
+															placeholder="검색어 입력">
+														<button id="searchBtn" type="submit"
+															class="btn search-btn col-sm-2">검색</button>
 													</div>
 												</div>
 												<div class="col-lg-2"></div>
@@ -128,14 +131,14 @@
 												</ul>
 											</nav>
 											-->
-											
+
 										</form>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				
+
 				</div>
 			</div>
 		</div>
@@ -148,28 +151,29 @@
 <th:block layout:fragment="script">
 
 	<script>
-	/*  개발 후 검색 항목에 맞게 수정해서 사용하세요
-	$(document).ready(function(){
-		$("#searchBtn").on("click", function(e){
-			e.preventDefault(); 
-			page(0); 
-		});			
-	});
-	
-	function page(page){
+		/*  개발 후 검색 항목에 맞게 수정해서 사용하세요
+		$(document).ready(function(){
+			$("#searchBtn").on("click", function(e){
+				e.preventDefault(); 
+				page(0); 
+			});			
+		});
 		
-		var searchDateType = $("#searchDateType").val();
-		var searchSellStatus = $("#searchSellStatus").val();
-		var searchBy = $("#searchBy").val();
-		var searchQuery = $("#searchQuery").val();
-		
-		location.href = "/admin/adminBook/" + page 
-					  + "?searchDateType=" +  searchDateType 
-					  + "&searchSellStatus=" + searchSellStatus
-					  + "&searchBy=" + searchBy
-					  + "&searchQuery=" + searchQuery
-	}	
-	 */
+		function page(page){
+			
+			var searchDateType = $("#searchDateType").val();
+			var searchSellStatus = $("#searchSellStatus").val();
+			var searchBy = $("#searchBy").val();
+			var searchQuery = $("#searchQuery").val();
+			
+			location.href = "/admin/adminBook/" + page 
+						  + "?searchDateType=" +  searchDateType 
+						  + "&searchSellStatus=" + searchSellStatus
+						  + "&searchBy=" + searchBy
+						  + "&searchQuery=" + searchQuery
+		}	
+		 */
+		 
 	</script>
 </th:block>
 
