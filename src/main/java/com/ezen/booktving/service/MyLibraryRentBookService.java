@@ -14,9 +14,7 @@ import com.ezen.booktving.dto.MyLibraryRentBookInfoDto;
 import com.ezen.booktving.dto.MyLibraryRentBookListDto;
 import com.ezen.booktving.entity.RentBook;
 import com.ezen.booktving.repository.BookImgRepository;
-import com.ezen.booktving.repository.BookRepository;
-import com.ezen.booktving.repository.MemberRepository;
-import com.ezen.booktving.repository.RentRepository;
+import com.ezen.booktving.repository.RentBookRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Transactional
 public class MyLibraryRentBookService {
-	private final RentRepository rentRepository;
+	private final RentBookRepository rentBookRepository;
 	private final BookImgRepository bookImgRepository;
 	
 	
@@ -32,9 +30,9 @@ public class MyLibraryRentBookService {
 	@Transactional(readOnly = true)
 	public Page<MyLibraryRentBookListDto> getMyLibraryRentBookList(String userId, Pageable pageable) {
 		
-		List<RentBook> rentbooks = rentRepository.findRents(userId, pageable);
+		List<RentBook> rentbooks = rentBookRepository.findRents(userId, pageable);
 		
-		Long totalCount = rentRepository.countRent(userId);
+		Long totalCount = rentBookRepository.countRent(userId);
 		
 		List<MyLibraryRentBookListDto> myLibraryRentBookListDtos = new ArrayList<>();
 		
@@ -51,9 +49,9 @@ public class MyLibraryRentBookService {
 	@Transactional(readOnly = true)
 	public Page<MyLibraryRentBookInfoDto> getMyLibraryRentBookInfo(String userId, Pageable pageable) {
 		
-		List<RentBook> rentbookInfo = rentRepository.findRents(userId, pageable);
+		List<RentBook> rentbookInfo = rentBookRepository.findRents(userId, pageable);
 		
-		Long totalCount = rentRepository.countRent(userId);
+		Long totalCount = rentBookRepository.countRent(userId);
 		
 		List<MyLibraryRentBookInfoDto> myLibraryRentBookInfoDtos  = new ArrayList<>();
 		

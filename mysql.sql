@@ -23,6 +23,8 @@ select * from recommend_keyword;
 select * from member_commutation;
 insert into member_commutation(member_id, reg_time, update_time, end_date) values(1, now(), now(), date_add(now(), interval 1 MONTH));
 
+insert into rent_book(member_id, book_id, reg_time, rent_date, update_time, complete_yn) values(1, 1, now(), now(), now(), 'N');
+
 select * from commutation_ticket;
 
 select s.search_keyword_type, s.search_keyword_name
