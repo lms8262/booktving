@@ -17,18 +17,14 @@ import com.ezen.booktving.dto.AuthorDtoList;
 import com.ezen.booktving.dto.AuthorFormDto;
 import com.ezen.booktving.dto.AuthorImgDto;
 import com.ezen.booktving.dto.AuthorSearchDto;
-import com.ezen.booktving.dto.FavoriteAuthorDto;
-import com.ezen.booktving.dto.FavoriteAuthorListDto;
 import com.ezen.booktving.entity.Author;
 import com.ezen.booktving.entity.AuthorBook;
 import com.ezen.booktving.entity.AuthorBookImg;
 import com.ezen.booktving.entity.AuthorImg;
-import com.ezen.booktving.entity.FavoriteAuthor;
 import com.ezen.booktving.repository.AuthorBookImgRepository;
 import com.ezen.booktving.repository.AuthorBookRepository;
 import com.ezen.booktving.repository.AuthorImgRepository;
 import com.ezen.booktving.repository.AuthorRepository;
-import com.ezen.booktving.repository.FavoriteAuthorRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -44,7 +40,6 @@ public class AuthorService {
 	private final AuthorBookImgRepository authorBookImgRepository;
 	private final AuthorImgService authorImgService;
 	private final ModelMapper modelMapper;
-	private final FavoriteAuthorRepository favoriteAuthorRepository;
 	
 	
 	//추천작가 목록 페이지
@@ -147,25 +142,6 @@ public class AuthorService {
 		authorRepository.deleteById(authorId);
 	}
 	
-	//찜한 작가 리스트 가져오기
-	public Page<FavoriteAuthorListDto> getMyLibraryAuthorList(String memberId, Pageable pageable){
 		
-		Page<FavoriteAuthorListDto> favoriteAuthorDtoPage = favoriteAuthorRepository.findFavoriteAuthor(memberId, pageable);
-		
-		return favoriteAuthorDtoPage;
-	}
-	
-	//로그인한 사용자의 도서대여정보 가져오기
-	public List<FavoriteAuthor> listAll(String UserId){
-		List<FavoriteAuthor> favoriteAuthorList = favoriteAuthorRepository.findFavoriteAuthorByMember(UserId);
-		
-		List<FavoriteAuthorDto> favoriteAuthorDtoList = new ArrayList<>();		
-		for(FavoriteAuthor favoriteAuthor : favoriteAuthorList) {
-			FavoriteAuthorDto favoriteAuthorDto = FavoriteAuthorDto.of(favoriteAuthor);
-			favoriteAuthorDtoList.add(favoriteAuthorDto);
-		}
-		
-		return favoriteAuthorList;
-	}
 	
 }

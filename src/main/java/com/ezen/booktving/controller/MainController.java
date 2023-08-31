@@ -40,10 +40,9 @@ public class MainController {
 	public String main(Optional<Integer> page, Model model) {
 		
 		//공지사항
-		Pageable pageable3 = PageRequest.of(page.isPresent() ? page.get() : 0 , 1);
-		Page<Notice> notice = noticeService.getMainNoticePage(pageable3);
-		model.addAttribute("notice", notice);
-		
+		List<Notice> notices = noticeService.getMainNoticePage();
+		model.addAttribute("notices", notices);
+						
 		//북티빙 top10
 		//th:if="${not #lists.isEmpty(rentBooks)}"
 		List<RentBook> rentBooks = adminBookRentHistService.listAll();

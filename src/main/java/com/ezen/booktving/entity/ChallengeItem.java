@@ -39,4 +39,15 @@ public class ChallengeItem extends BaseTimeEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "challenge_id", nullable = false)
 	private Challenge challenge;
+	
+	
+	public static ChallengeItem challengeItem(Integer targetMount, YesNoStatus success, Challenge challenge ) {
+		
+		ChallengeItem challengeItem = new ChallengeItem();
+		challengeItem.setChallenge(challenge);
+		challengeItem.setTargetMount(targetMount);
+		challengeItem.setSuccess(success);
+		
+		return challengeItem;
+	}
 }

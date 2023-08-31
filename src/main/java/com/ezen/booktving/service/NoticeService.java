@@ -1,6 +1,8 @@
 package com.ezen.booktving.service;
 
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,11 +25,11 @@ import lombok.RequiredArgsConstructor;
 public class NoticeService {
 	private final NoticeRepository noticeRepository;  
 	private final ModelMapper modelMapper;
-	private final MemberRepository memberRepository;
 	
+
 	//메인페이지 공지사항
-	public Page<Notice> getMainNoticePage(Pageable pageable){
-		Page<Notice> noticePage = noticeRepository.getMainNoticePage(pageable);
+	public List<Notice> getMainNoticePage(){
+		List<Notice> noticePage = noticeRepository.getMainNoticePage();
 		
 		return noticePage;
 	}

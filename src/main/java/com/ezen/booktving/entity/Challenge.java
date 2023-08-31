@@ -28,4 +28,11 @@ public class Challenge extends BaseTimeEntity {
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id", nullable = false)
 	private Member member;
+	
+	public static Challenge createChallenge(Member member) {
+		Challenge challenge = new Challenge();
+		challenge.setMember(member);
+		
+		return challenge;
+	}
 }

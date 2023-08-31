@@ -52,19 +52,4 @@ public class NoticeRepositoryCustomImpl implements NoticeRepositoryCustom {
 		return new PageImpl<>(content, pageable, total);
 	}
 
-	//메인페이지 공지사항
-	@Override
-	public Page<Notice> getMainNoticePage(Pageable pageable) {
-		
-		List<Notice> content = queryFactory.selectFrom(QNotice.notice)
-				.orderBy(QNotice.notice.id.desc()).offset(pageable.getOffset()).limit(pageable.getPageSize()).fetch();
-
-		long total = queryFactory.select(Wildcard.count).from(QNotice.notice).fetchOne();
-
-		return new PageImpl<>(content, pageable, total);
-		
-	}
-
-
-
 }

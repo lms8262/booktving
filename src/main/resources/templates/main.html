@@ -16,10 +16,12 @@
 				<div class="section-wrap">
 
 					<!-- 공지사항 -->
-					<div class="container">
+					<div class="container notice-wrap">
 
-						<nav class="notice-wrap" th:each="notice, status : ${notice}">
-							<a ><!-- th:href="'/book/bookDetail/' + ${notice.id}" -->
+						<nav class="notice-box"
+							 th:if="${not #lists.isEmpty(notices)}"
+							 th:each="notice, status : ${notices}">
+							<a th:href="'/notice/' + ${notice.id}" >
 								<i class="fa-solid fa-volume-high" style="color: #000000;"></i> 
 								<span th:text="${title}"></span>
 							</a>
@@ -36,64 +38,69 @@
 							<div class="slide-ul swiper-wrapper">
 								<!-- 이미지슬라이드1 -->
 								<div class="contents-wrap slide-li swiper-slide">
-									<div class="slide-backgroun">
-										<img src="/images/main/backimg1.jpg" alt="배경이미지">
-									</div>
-									<div class="container slide-contents-wrap">
-										<div class="slide-content">
-											<div class="img">
-												<a> <img src="/images/main/slideimg1.jpg" alt="이미지슬라이드">
-												</a>
-											</div>
-											<div class="text">
-												<p class="hot">HOT</p>
-												<h6 class="h6">EZEN북티빙시대 도서추천!</h6>
-												<p class="p">에디터가 추천하는</p>
-												<p class="p felx-end">이달의 추천</p>
+									<a href="/book/bookDetail/9791198243447">
+										<div class="slide-backgroun">
+											<img src="/images/main/backimg1.jpg" alt="배경이미지">
+										</div>
+										<div class="container slide-contents-wrap">
+											<div class="slide-content">
+												<div class="img">
+													<img src="/images/main/slideimg1.jpg" alt="이미지슬라이드">
+												</div>
+												<div class="text">
+													<p class="hot">HOT</p>
+													<h6 class="h6">EZEN북티빙시대 도서추천!</h6>
+													<p class="p">에디터가 추천하는</p>
+													<p class="p felx-end">이달의 추천</p>
+												</div>
 											</div>
 										</div>
-									</div>
+									</a>
 								</div>
 		
 								
 								 <!-- 이미지슬라이드2  -->
 								<div class="contents-wrap slide-li">
-									<div class="slide-backgroun">
-										<img src="/images/main/backimg3.jpg" alt="배경이미지">
-									</div>
-									<div class="container slide-contents-wrap">
-										<div class="slide-content">
-											<div class="img">
-												<a> <img src="/images/main/slideimg3.jpg" alt="이미지슬라이드"> </a>
-											</div>
-											<div class="text">
-												<p class="hot">HOT</p>
-												<h6 class="h6">장난꾸러기 푸바오</h6>
-												<p class="p">아가 판다 푸바오의</p>
-												<p class="p">성장 포토 에세이</p>
-											</div>
-										</div>								
-									</div>
+									<a href="/book/bookDetail/9791165796396">
+										<div class="slide-backgroun">
+											<img src="/images/main/backimg3.jpg" alt="배경이미지">
+										</div>
+										<div class="container slide-contents-wrap">
+											<div class="slide-content">
+												<div class="img">
+													<img src="/images/main/slideimg3.jpg" alt="이미지슬라이드">
+												</div>
+												<div class="text">
+													<p class="hot">HOT</p>
+													<h6 class="h6">장난꾸러기 푸바오</h6>
+													<p class="p">아가 판다 푸바오의</p>
+													<p class="p">성장 포토 에세이</p>
+												</div>
+											</div>								
+										</div>
+									</a>
 								</div>
 		
 								<!--  이미지슬라이드3  -->
 								<div class="contents-wrap slide-li">
-									<div class="slide-backgroun">
-										<img src="/images/main/backimg2.jpg" alt="배경이미지">
-									</div>
-									<div class="container slide-contents-wrap">
-										<div class="slide-content">
-											<div class="img">
-												<a> <img src="/images/main/slideimg2.jpg" alt="이미지슬라이드"> </a>
-											</div>
-											<div class="text">
-												<p class="hot">HOT</p>
-												<h6 class="h6">희대의 이야기꾼</h6>
-												<p class="p">일본 추리소설의 아이콘</p>
-												<p class="p">그를 알고 싶다</p>
-											</div>
-										</div>								
-									</div>
+									<a href="/author/detail/7">
+										<div class="slide-backgroun">
+											<img src="/images/main/backimg2.jpg" alt="배경이미지">
+										</div>
+										<div class="container slide-contents-wrap">
+											<div class="slide-content">
+												<div class="img">
+													<img src="/images/main/slideimg2.jpg" alt="이미지슬라이드">
+												</div>
+												<div class="text">
+													<p class="hot">HOT</p>
+													<h6 class="h6">희대의 이야기꾼</h6>
+													<p class="p">일본 추리소설의 아이콘</p>
+													<p class="p">그를 알고 싶다</p>
+												</div>
+											</div>								
+										</div>
+									</a>
 								</div>
 							</div>
 							
@@ -116,35 +123,14 @@
 						</div>
 						
 						<div class="bookMark">
-							<a href="/book/myFavorite/" >
-								<div class="booMark-img">
-									<i class="fa-solid fa-heart fa-xl" style="color: #000000;"></i>
+							<a href="/search/main" >
+								<div class="booMark-img bookMark-search-img">
+									<img src="/images/search.png" alt="검색" />
 								</div>
-								<p class="bookMark-text">찜한도서</p>
+								<p class="bookMark-text">도서검색</p>
 							</a>
 						</div>
 						
-						<!-- 
-						<div class="bookMark">
-							<a href="#">
-								<div class="booMark-img">
-									<i class="fa-solid fa-address-card fa-xl"
-										style="color: #000000;"></i>
-								</div>
-								<p class="bookMark-text">찜한작가</p>
-							</a>
-						</div>
-						 -->
-						 
-						<div class="bookMark" >
-							<a href="#">
-								<div class="booMark-img">
-									<i class="fa-solid fa-person-circle-plus fa-xl"
-										style="color: #000000;"></i>
-								</div>
-								<p class="bookMark-text">팔로잉</p>
-							</a>
-						</div>
 						<div class="bookMark" th:if="${not #lists.isEmpty(rentBooks)}">
 							<a href="#">
 								<div class="booMark-img">

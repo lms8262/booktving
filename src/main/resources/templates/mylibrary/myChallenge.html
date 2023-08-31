@@ -28,9 +28,8 @@
 									<img alt="프로필" src="/images/myLibrary/profile.png">
 								</div>
 							</div>
-							<div class="col-4">
-								<p>님의 서재</p>
-								<p>팔로잉 5 |  팔로워 2 </p>
+							<div class="col-4 user-info-box">
+								<p class="user-info">[[${user.memberName}]]<span>&nbsp;님의 서재</spans></p>
 							</div>
 							<div class="col-6"></div>
 						</div>						
@@ -40,11 +39,13 @@
 					<div class="challenge-wrap" >
 					
 						<div class="container challengeNew-box">
-							<p class="challenge-text">님 나만의 챌린지를 시작해 보세요.</p>
-							<div class="challenge-link-wrap">
-								<a class="challenge-new-link">
-									챌린지 생성 +
-								</a>
+							<div class="challenge-text-wrap">
+								<p class="challenge-text"> <strong> [[${user.memberName}]] </strong> &nbsp;님 나만의 챌린지를 시작해 보세요.</p>
+								<div class="challenge-link-wrap">
+									<a class="challenge-new-link" href="/mylibrary/myChallenge/new">
+										챌린지 생성 <sapn> <i class="fa-solid fa-circle-plus" style="color: #555555;"></i> </sapn>
+									</a>
+								</div>
 							</div>
 						</div>
 					</div>

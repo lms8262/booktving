@@ -11,7 +11,7 @@ h5 {
 }
 
 /* 공지사항 */
-.notice-wrap{
+.notice-box{
 	height: 40px;
 	line-height: 40px;
 	padding-left: 30px;
@@ -151,6 +151,15 @@ h5 {
 	text-align: center;
 	font-size: 15px;
 }
+
+.bookMark-search-img img{
+	height: 45px;
+	line-height: 45px;
+	font-weight: bold;
+	font-size: 20px;
+	margin: 0;
+}
+
 /* 즐겨찾기 끝 */
 
 /* 북티빙 Top10 */

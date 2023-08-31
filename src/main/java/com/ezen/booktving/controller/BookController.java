@@ -36,10 +36,7 @@ import lombok.RequiredArgsConstructor;
 public class BookController {
 
 	private final BookService bookService;
-	private final ApiService apiService;
 	private final FavoriteBookService favoriteBookService;
-	private final MemberService memberService;
-	private final MemberRepository memberRepository;
 
 	// 도서상세 페이지
 	@GetMapping(value = "/book/bookDetail/{isbn}") // 개발 후 경로 변경 {isbn}

@@ -15,12 +15,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.ezen.booktving.dto.FavoriteAuthorListDto;
 import com.ezen.booktving.dto.MyLibraryRentBookListDto;
-import com.ezen.booktving.entity.FavoriteAuthor;
-import com.ezen.booktving.entity.FavoriteBook;
+import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.entity.RentBook;
-import com.ezen.booktving.service.AuthorService;
+import com.ezen.booktving.service.MemberService;
 import com.ezen.booktving.service.MyLibraryRentBookService;
 
 import lombok.RequiredArgsConstructor;
@@ -30,7 +28,7 @@ import lombok.RequiredArgsConstructor;
 public class MyLibraryController {
 	
 	private final MyLibraryRentBookService myLibraryRentBookService;
-	private final AuthorService authorService;
+	private final MemberService memberService;
 	
 	
 	//나의서재 메인화면
@@ -43,25 +41,18 @@ public class MyLibraryController {
 
 			//bookcase
 			//isEmpty
-			List<RentBook> rentBookList = myLibraryRentBookService.listAll(userDetails.getUsername()) ;
+			List<RentBook> rentBookList = myLibraryRentBookService.listAll(userDetails.getUsername());
 			model.addAttribute("rentBookList", rentBookList);
 			//not isEmpty
 			Page<MyLibraryRentBookListDto> rentBooks = myLibraryRentBookService.getMyLibraryRentBookList(userDetails.getUsername(), pageable);
 			model.addAttribute("rentBooks", rentBooks);
 			
-			//favorite
+			//favoriteBook
 			//isEmpty
 			//List<FavoriteBook> favoriteBookList = ;
 			//not isEmpty
 			
-			//author
-			//isEmpty
-			List<FavoriteAuthor> favoriteAuthorList = authorService.listAll(userDetails.getUsername());
-			model.addAttribute("favoriteAuthorList", favoriteAuthorList);
-			//not isEmpty
-			Page<FavoriteAuthorListDto> favoriteAuthors = authorService.getMyLibraryAuthorList(userDetails.getUsername(), pageable);
-			model.addAttribute("favoriteAuthors", favoriteAuthors);
-			
+						
 			return "mylibrary/mylibraryMain";
 		} else {
 			
@@ -82,7 +73,7 @@ public class MyLibraryController {
 		model.addAttribute("rentBooks", myLibraryRentBookListDtoList);
 		model.addAttribute("maxPage", 5);
 		
-		return "mylibrary/myLibraryList";
+		return "mylibrary/myLibraryRentBookList";
 	}
 	
 	
@@ -95,13 +86,28 @@ public class MyLibraryController {
 	
 	//나의챌린지 페이지
 	@GetMapping(value = "/mylibrary/myChallenge")
-	public String myChallenge() {
+	public String myChallenge(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+		
+		
+		Member user = memberService.listAll(userDetails.getUsername());
+		model.addAttribute("user", user);
 		
 		return "mylibrary/myChallenge";
 	}
 	
+	//나의챌린지 생성 페이지
+	@GetMapping(value = "/mylibrary/myChallenge/new")
+	public String myChallengeNewPage(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+		
+		Member user = memberService.listAll(userDetails.getUsername());
+		model.addAttribute("user", user);
+		
+		
+		
+		return "mylibrary/myChallengeNew";
+	}
 	
-	//나의챌린지 생성하기 페이지
+	//나의챌린지 생성하기
 	@PostMapping(value = "/mylibrary/myChallenge/new")
 	public String myChallengeNew() {
 		return "mylibrary/myChallenge";

@@ -10,7 +10,7 @@
 
 
 <th:block layout:fragment="css">
-	<link rel="stylesheet" href="/css/myLibraryMain.css" />
+	<link rel="stylesheet" href="/css/myChallenge.css" />
 </th:block>
 
 <div layout:fragment="content">
@@ -20,7 +20,46 @@
 			<div class="row">
 				<div class="container-fluid section-wrap">
 					
-					
+					<div class="container myChallenge-wrap">
+						
+						<div class="title-box">
+							<h4>나만의 챌린지 만들기</h4>
+							<hr>
+						</div>
+						
+						<div class="challenge-content-wrap">
+							<p class="content1">목표를 스스로 세우고 달성할 수 있어요.</p>
+							<p class="content2">독서 목표량을 설정하고 달성해 보세요. 만들어진 챌린지를 수행하면서 성취감을 느껴보세요.</p>
+							<p class="content3"> <strong>[[${user.memberName}]]</strong> 님의 독서를 응원합니다 !</p>
+							<p class="content4">[챌린지 수행방법]</p>
+							<p class="content5">1.&nbsp;&nbsp;&nbsp;대여한 도서 목록에서 책을 읽을 수 있어요.</p>
+							<p class="content6">2.&nbsp;&nbsp;&nbsp;다 읽은 책의 ‘완료’ 버튼을 누르세요.</p>
+							<p class="content7">3.&nbsp;&nbsp;&nbsp;나의 독서량에 반영됩니다.</p>
+						</div>
+						
+						
+						<form role="form" action="" method="post" >
+							<div class="challenge-target-wrap">
+								<div class="challenge-target-box">
+									<img src="/images/myLibrary/profile.png" alt="이미지" />
+									<p> <strong>[[${user.memberName}]]</strong> <span>&nbsp;님의 목표 독서량을 설정하세요.</span> </p>
+								</div>
+								<div class="challenge-target-bar col-11">
+									<label for="customRange1" class="form-label"></label>
+									<input type="range" class="form-range col-12" id="customRange1" min="0" max="10" step="1" value="5" oninput="document.getElementById('value1').innerHTML=this.value;" />
+									<span id="value1"></span>
+								</div>
+								<div class="button-box">
+									<button type="submit" >설정완료</button>
+								</div>
+								<div class="deco-img-box">
+									<img alt="deco-img" src="/images/myLibrary/deco-img.png" />
+								</div>
+							</div>
+						
+						</form>
+						
+					</div>
 					
 				</div>
 			</div>
@@ -31,11 +70,7 @@
 
 
 <th:block layout:fragment="script">
-	<script>
-	
-	
-	
-	</script>
+
 	
 </th:block>
 

@@ -34,6 +34,17 @@
 	width:100%;
 }
 
+.user-info-box {
+	display: flex;
+	align-items: center;
+	padding: 0;
+}
+
+.user-info{
+	margin: 0;	
+}
+
+
 
 /* 나의서재 메뉴 영역 */
 .myLibrary-menu-wrap{
