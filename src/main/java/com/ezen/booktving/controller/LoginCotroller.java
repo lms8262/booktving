@@ -175,10 +175,15 @@ public class LoginCotroller {
 	}
 
 //회원탈퇴
-	@DeleteMapping(value = "/login/delete/{userId}")
-	public @ResponseBody ResponseEntity deleteMember2(@PathVariable("userId") String userId) {
-		memberService.deleteMember2(userId);
-		return new ResponseEntity<String>(userId, HttpStatus.OK);
-		
+	@DeleteMapping(value = "/login/{userId}/delete")
+	public ResponseEntity<String> deleteMember2(@PathVariable("userId") String userId ,Principal principal) {
+		try {
+			memberService.deleteMember2(userId);
+			return new ResponseEntity<>("탈퇴했습니다.", HttpStatus.OK);
+		}
+
+		catch (Exception e) {
+			return new ResponseEntity<>("Error deleting member: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		}
 	}
 }

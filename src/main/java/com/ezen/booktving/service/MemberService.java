@@ -134,10 +134,12 @@ public class MemberService implements UserDetailsService {
 	}
 
 //회원정보 수정 회원탈퇴
+	@Transactional
 	public void deleteMember2(String userId) {
 		Member member = memberRepository.findByUserId(userId);
-
+		if (member == null) {
+			throw new EntityNotFoundException("Member not found");
+		}
 		memberRepository.delete(member);
 	}
-
 }

@@ -19,25 +19,18 @@
 					<!-- 개발 후 로그인 전/후 메뉴 sec:authorize코드 추가예정  -->
 					<div class="col-lg-7 menu-box">
 						<ul class="nav_left">
-
 							<li class="menu"><a href="/category/main"> <span>카테고리</span></a></li>
 							<li class="menu"><a href="/search/main"> <span>검색</span></a></li>
 							<li class="menu"><a href="/question/questionInfo"> <span>문의하기</span></a></li>
 							<li class="menu"><a href=""> <span>팔로우</span></a></li>
 							<li class="menu"><a href="/mylibrary"> <span>나의서재</span></a></li>
 							<li class="menu slide-menu"><a href="javascript:;"> <span>나의정보</span></a>
-
 								<ul class="submenu">
-									<li><a href="/login" sec:authorize="isAnonymous()"> <span>개인정보
-												수정</span>
-									</a></li>
-									<li><a href="/login/update" sec:authorize="isAuthenticated()"> <span>개인정보 수정</span>
-									</a></li>
-									<li><a href="/mypage/rentlist"> <span>대여내역</span>
-									</a></li>
-									<li><a href="/mypage/commutation"> <span>이용권 관리</span>
-									</a></li>
-								</ul></li>
+									<li sec:authorize="isAnonymous()"><a href="/login" > <span>개인정보 수정</span> </a></li>
+									<li><a href="/mypage/rentlist"> <span>대여내역</span> </a></li>
+									<li><a href="/mypage/commutation"> <span>이용권 관리</span> </a></li>
+								</ul>
+							</li>
 						</ul>
 					</div>
 

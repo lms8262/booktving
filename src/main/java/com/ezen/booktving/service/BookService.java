@@ -2,6 +2,7 @@ package com.ezen.booktving.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -40,6 +41,11 @@ public class BookService {
 	public BookDto getBookDetail(String isbn) {
 		Book book = bookDetailRepository.findByIsbnOrderByIdAsc(isbn);
 		
+		if (book == null) {
+	        // 책 정보가 없을 경우 처리
+	        return null; // 또는 예외 처리 등의 로직을 추가
+	    }
+		
 		//책 이미지 가져오기
 		List<BookImg> bookImgList = bookImgRepository.findByBookIdOrderByIdAsc(book.getId());
 		
@@ -50,7 +56,7 @@ public class BookService {
 			bookImgDtoList.add(bookImgDto);
 		}
 		
-		List<BookReview> bookReviewList = bookReviewRepository.findByIdOrderByIdAsc(book.getId());
+		List<BookReview> bookReviewList = bookReviewRepository.findByBookIdOrderByIdAsc(book.getId());
 		
 		List<BookReviewDto> bookReviewDtoList = new ArrayList<>();
 		for(BookReview bookReview : bookReviewList) {
@@ -66,6 +72,30 @@ public class BookService {
 						
 	}
 	
+	@Transactional
+	public String saveReview(BookReviewDto bookReviewDto) {
+		 
+	        return bookReviewRepository.save(bookReviewDto.createBookReview()).getContent();
+	    }
+	
+	@Transactional(readOnly = true)
+	public Book getBookByIsbn(String isbn) {
+	    return bookDetailRepository.findByIsbn(isbn);
+	            
+	}
+	
+	@Transactional(readOnly = true)
+	public Optional<Book> getBookById(Long id) {
+	    return bookDetailRepository.findById(id);
+	            
+	}
+	
+	// isbn 값으로 해당 book 엔티티 데이터를 가져옴.
+	   @Transactional(readOnly = true)
+	   public Book getBook(String isbn){
+	      Book book = bookDetailRepository.findByIsbnOrderByIdAsc(isbn);
+	      return book;
+	   }
 	
 	//북티빙 Top10
 	//일간

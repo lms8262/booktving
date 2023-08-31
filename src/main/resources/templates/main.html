@@ -6,7 +6,6 @@
 <!-- main 페이지 CSS -->
 <th:block layout:fragment="css">
 	<link rel="stylesheet" type="text/css" href="/css/main.css" />
-	
 </th:block>
 
 <div layout:fragment="content">
@@ -117,7 +116,7 @@
 						</div>
 						
 						<div class="bookMark">
-							<a href="#">
+							<a href="/book/myFavorite/" >
 								<div class="booMark-img">
 									<i class="fa-solid fa-heart fa-xl" style="color: #000000;"></i>
 								</div>
@@ -437,8 +436,7 @@
 			
 		
 			//북티빙 Top10		
-			$(function(){
-				
+			$(function(){				
 				$('.tabmenu>li>a').click(function(){
 					$(this).parent().addClass("active").siblings().removeClass("active");
 					return false;				

@@ -19,6 +19,7 @@ public class BookImgService {
 	
 	private String bookImgLocation = "c:/booktving/book";
 	private final BookImgRepository bookImgRepository;
+
 	private final FileService fileService;
 	
 	
