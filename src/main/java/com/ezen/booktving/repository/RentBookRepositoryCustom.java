@@ -8,4 +8,6 @@ import com.ezen.booktving.entity.RentBook;
 
 public interface RentBookRepositoryCustom {
 	Page<RentBook> getAdminRentBookPage(BookSearchDto bookSearchDto, Pageable pageable);
+	
+	RentBook getRentBookByUserIdAndIsbn(String userId, String isbn);
 }

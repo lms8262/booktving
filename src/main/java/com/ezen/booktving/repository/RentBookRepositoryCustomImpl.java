@@ -8,6 +8,8 @@ import org.springframework.data.domain.Pageable;
 import org.thymeleaf.util.StringUtils;
 
 import com.ezen.booktving.dto.BookSearchDto;
+import com.ezen.booktving.entity.QBook;
+import com.ezen.booktving.entity.QMember;
 import com.ezen.booktving.entity.QRentBook;
 import com.ezen.booktving.entity.RentBook;
 import com.querydsl.core.types.dsl.BooleanExpression;
@@ -52,6 +54,23 @@ public class RentBookRepositoryCustomImpl implements RentBookRepositoryCustom{
 			.fetchOne();
 		
 		return new PageImpl<>(content, pageable, total);
+	}
+
+	@Override
+	public RentBook getRentBookByUserIdAndIsbn(String userId, String isbn) {
+		QRentBook rentBook = QRentBook.rentBook;
+		QMember member = QMember.member;
+		QBook book = QBook.book;
+		
+		RentBook content = queryFactory
+				.selectFrom(rentBook)
+				.join(rentBook.member, member)
+				.join(rentBook.book, book)
+				.where(member.userId.eq(userId))
+				.where(book.isbn.eq(isbn))
+				.fetchOne();
+		
+		return content;
 	}
 	
 	

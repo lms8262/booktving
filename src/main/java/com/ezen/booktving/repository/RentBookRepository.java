@@ -15,5 +15,6 @@ public interface RentBookRepository extends JpaRepository<RentBook, Long>, RentB
 	List<RentBook> findRents(@Param("userId") String userId, Pageable pageable);
 	
 	@Query("select count(r) from RentBook r where r.member.userId = :userId")
-	Long countRent(@Param("userId") String userId);	
+	Long countRent(@Param("userId") String userId);
+	
 }

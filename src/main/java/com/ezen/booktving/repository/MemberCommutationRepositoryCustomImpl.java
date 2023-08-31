@@ -2,6 +2,7 @@ package com.ezen.booktving.repository;
 
 import com.ezen.booktving.dto.MemberCommutationDto;
 import com.ezen.booktving.dto.QMemberCommutationDto;
+import com.ezen.booktving.entity.MemberCommutation;
 import com.ezen.booktving.entity.QMember;
 import com.ezen.booktving.entity.QMemberCommutation;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -28,6 +29,20 @@ public class MemberCommutationRepositoryCustomImpl implements MemberCommutationR
 								)
 						)
 				.from(memberCommutation)
+				.join(memberCommutation.member, member)
+				.where(member.userId.eq(userId))
+				.fetchOne();
+		
+		return content;
+	}
+
+	@Override
+	public MemberCommutation getMemberCommutationByUserId(String userId) {
+		QMemberCommutation memberCommutation = QMemberCommutation.memberCommutation;
+		QMember member = QMember.member;
+		
+		MemberCommutation content = queryFactory
+				.selectFrom(memberCommutation)
 				.join(memberCommutation.member, member)
 				.where(member.userId.eq(userId))
 				.fetchOne();

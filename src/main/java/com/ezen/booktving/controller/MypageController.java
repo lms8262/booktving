@@ -25,6 +25,7 @@ public class MypageController {
 	private final MypageRentBookService mypageRentBookService;
 	private final CommutationService commutationService;
 	
+	// 나의정보 대여내역
 	@GetMapping(value = {"/mypage/rentlist", "/mypage/rentlist/{page}"})
 	public String rentList(@PathVariable("page") Optional<Integer> page, Principal principal, Model model) {
 		if(principal == null) {
@@ -42,13 +43,14 @@ public class MypageController {
 		return "mypage/rentList";
 	}
 	
+	// 나의정보 이용권 관리 
 	@GetMapping(value = "/mypage/commutation")
 	public String myCommutation(Principal principal, Model model) {
 		if(principal == null) {
 			return "redirect:/login";
 		}
-		
-		MemberCommutationDto memberCommutationInfo = commutationService.getMemberCommutationInfo(principal.getName());
+		String userId = principal.getName();
+		MemberCommutationDto memberCommutationInfo = commutationService.getMemberCommutationInfo(userId);
 		model.addAttribute("memberCommutationInfo", memberCommutationInfo);
 		
 		return "mypage/myCommutation";

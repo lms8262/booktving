@@ -1,5 +1,6 @@
 package com.ezen.booktving.service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ezen.booktving.dto.CommutationTicketDto;
 import com.ezen.booktving.dto.MemberCommutationDto;
 import com.ezen.booktving.entity.CommutationTicket;
+import com.ezen.booktving.entity.MemberCommutation;
 import com.ezen.booktving.repository.CommutationTicketRepository;
 import com.ezen.booktving.repository.MemberCommutationRepository;
 
@@ -23,9 +25,31 @@ public class CommutationService {
 	private final CommutationTicketRepository commutationTicketRepository;
 	
 	// 이용권 관리 페이지에 보여줄 회원의 이용권 현황
-	@Transactional(readOnly = true)
 	public MemberCommutationDto getMemberCommutationInfo(String userId) {
+		MemberCommutation memberCommutation = memberCommutationRepository.getMemberCommutationByUserId(userId);
+		LocalDateTime currentDate = LocalDateTime.now();
+		if(memberCommutation != null) {			
+			if(memberCommutation.getEndDate().isBefore(currentDate)) { // 이용기간이 지났으면 삭제
+				memberCommutationRepository.delete(memberCommutation);
+				memberCommutationRepository.flush();
+			}
+		}
 		return memberCommutationRepository.getMemberCommutationInfo(userId);
+	}
+	
+	// 대여가능 상태를 확인(이용권을 이용중인지 아닌지 확인)
+	public boolean isExistsMemberCommutation(String userId) {
+		MemberCommutation memberCommutation = memberCommutationRepository.getMemberCommutationByUserId(userId);
+		LocalDateTime currentDate = LocalDateTime.now();
+		if(memberCommutation != null) {	
+			if(memberCommutation.getEndDate().isBefore(currentDate)) { // 이용기간이 지났으면 삭제
+				memberCommutationRepository.delete(memberCommutation);
+				memberCommutationRepository.flush();
+				return false;
+			}
+			return true; // 이용기간이 남았을때
+		}
+		return false; // 이용중이지 않을때
 	}
 	
 	// 이용권 구매 페이지에 보여줄 이용권 목록

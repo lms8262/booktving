@@ -68,14 +68,9 @@ public class RamdomPassword {
 		return member.getPassword();
 	}
 
-	
-
 	private Member findByUserIdAndEmail(String userId, String email) {
-		// TODO Auto-generated method stub
 		return memberRepository.findByUserIdAndEmail(userId, email);
 	}
-
-
 
 	private final JavaMailSender javaMailSender;
 

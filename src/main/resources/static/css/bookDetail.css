@@ -223,3 +223,7 @@ input {
 .review-form {
 	display: flex;
 }
+
+button:hover {
+	cursor: pointer;
+}

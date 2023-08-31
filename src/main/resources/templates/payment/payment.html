@@ -57,7 +57,10 @@
 			const month = String(date.getMonth() + 1).padStart(2, "0");
 			const day = String(date.getDate()).padStart(2, "0");
 			
-			let paymentId = year + month + day + "-" + userId;
+			let paymentId = year + month + day;
+			for(let i=0;i<10;i++) {
+				paymentId += Math.floor(Math.random() * 8);	
+			}
 			
 			return paymentId;
 		}
@@ -76,6 +79,7 @@
 			
 			let paymentUid = createPaymentId();
 			
+			// 결제 요청
 			IMP.request_pay({
 				pg : 'kakaopay.TC0ONETIME',
 				merchant_uid : paymentUid,
@@ -86,38 +90,62 @@
 				if(rsp.success) {
 					let token = $("meta[name='_csrf']").attr("content");
 			        let header = $("meta[name='_csrf_header']").attr("content");
-			        let params = {
-			        	"paymentUid" : rsp.merchant_uid,
-			        	"paymentAmount" : rsp.paid_amount,
-			        	"paymentName" : rsp.name,
-			        	"userId" : rsp.buyer_name,
-			        	"impUid" : rsp.imp_uid
-			        }
-					
+					// 결제 검증
 					$.ajax({
-						url : "/payment/success",
-			            type : "POST",
-			            contentType : "application/x-www-form-urlencoded; charset=UTF-8",
-			            data : params,
-			            beforeSend : function(xhr){
+			        	url : "/payment/validate/" + rsp.imp_uid,
+						type : "POST",
+						beforeSend : function(xhr){
 			                // 데이터를 전송하기 전에 헤더에 csrf값을 설정
 			                xhr.setRequestHeader(header, token);
-			            },
-			            cache   : false,
-			            success  : function(result, status){
-			            	alert("이용권 구매를 완료했습니다.");
-			                location.href='/payment/result';
-			            },
-			            error : function(jqXHR, status, error){
-			                if(jqXHR.status == '401'){
-			                    alert('로그인 후 이용해주세요');
-			                    location.href='/login';
-			                } else{
-			                    alert(jqXHR.responseText);
-			                }
 			            }
+					}).done(function(data) { // success시 실행
+						if(rsp.paid_amount == data.response.amount) { // 검증
+							
+							// 결제 검증까지 성공시 실행할 비즈니스 로직 
+					        let paramData = {
+					        	"paymentUid" : rsp.merchant_uid,
+					        	"paymentAmount" : rsp.paid_amount,
+					        	"paymentName" : rsp.name,
+					        	"userId" : rsp.buyer_name,
+					        	"impUid" : rsp.imp_uid,
+					        	"commutationTicketId" : commutationTicketId
+					        }
+							
+					        var param = JSON.stringify(paramData);
 						
+							$.ajax({
+								url : "/payment/success",
+					            type : "POST",
+					            contentType : "application/json",
+					            data : param,
+					            beforeSend : function(xhr){
+					                // 데이터를 전송하기 전에 헤더에 csrf값을 설정
+					                xhr.setRequestHeader(header, token);
+					            },
+					            cache   : false,
+					            success  : function(result, status){
+					            	alert("이용권 구매를 완료했습니다.");
+					                location.href='/payment/result';
+					            },
+					            error : function(jqXHR, status, error){
+					                if(jqXHR.status == '401'){
+					                    alert('로그인 후 이용해주세요');
+					                    location.href='/login';
+					                } else{
+					                    alert(jqXHR.responseText);
+					                }
+					            }
+								
+							});
+							
+						} else {
+							alert("결제 검증 실패");
+						}
+						
+					}).fail(function(){
+						alert("검증 요청 실패");
 					});
+					
 				}
 				
 			});

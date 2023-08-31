@@ -24,7 +24,9 @@ import com.ezen.booktving.dto.FavoriteBookDto;
 import com.ezen.booktving.entity.Book;
 import com.ezen.booktving.service.ApiService;
 import com.ezen.booktving.service.BookService;
+import com.ezen.booktving.service.CommutationService;
 import com.ezen.booktving.service.FavoriteBookService;
+import com.ezen.booktving.service.RentBookService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 
@@ -37,6 +39,8 @@ public class BookController {
 	private final BookService bookService;
 	private final FavoriteBookService favoriteBookService;
 	private final ApiService apiService;
+	private final CommutationService commutationService;
+	private final RentBookService rentBookService;
 	
 	// 도서상세 페이지
 	@GetMapping(value = "/book/bookDetail/{isbn}") // 개발 후 경로 변경 {isbn}
@@ -98,4 +102,20 @@ public class BookController {
 		bookService.saveReview(bookReviewDto);
 		return "redirect:/book/bookDetail/{isbn}";
 	}
+	
+	// 도서 대여요청
+	@PostMapping(value = "/book/bookDetail/rent/{isbn}")
+	@ResponseBody
+	public ResponseEntity rentBook(@PathVariable("isbn") String isbn, Principal principal) {
+		String userId = principal.getName();
+		
+		if(!commutationService.isExistsMemberCommutation(userId)) {
+			return new ResponseEntity<String>(HttpStatus.FORBIDDEN);
+		}
+		
+		Long result = rentBookService.saveRentBook(userId, isbn);
+		
+		return new ResponseEntity<Long>(result, HttpStatus.OK);
+	}
+	
 }

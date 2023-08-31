@@ -20,7 +20,9 @@ select * from author_book_img;
 delete from search_keyword where search_keyword_id = 56;
 select * from search_keyword;
 select * from recommend_keyword;
+select * from payment;
 select * from member_commutation;
+insert into member_commutation(member_id, reg_time, update_time, end_date) values(1, '2023-06-30', '2023-06-30', '2023-08-30');
 insert into member_commutation(member_id, reg_time, update_time, end_date) values(1, now(), now(), date_add(now(), interval 1 MONTH));
 
 insert into rent_book(member_id, book_id, reg_time, rent_date, update_time, complete_yn) values(1, 1, now(), now(), now(), 'N');
