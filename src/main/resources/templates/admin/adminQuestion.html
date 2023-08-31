@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout1}">
 
 
@@ -46,8 +45,8 @@
 											<table class="table table-responsive-md ">
 												<thead>
 													<tr>
-														<th scope="col"><input type="checkbox" id="checkall"
-															value=""></th>
+														<th scope="col"><input type="checkbox" id="checkall" value="">
+														</th>
 														<th scope="col">NO.</th>
 														<th scope="col">제목</th>
 														<th scope="col">회원번호</th>
@@ -56,11 +55,17 @@
 												</thead>
 												<tbody>
 													<tr th:each="question : ${questionList}">
-														<td class="adminmenu_td"><input type="checkbox" id="askChkBox" value="" /></td>
-														<td class="adminmenu_td" th:text="${question.id}" th:href="@{/question/questionDetail/{id}(id=${question.id})}"></td>
-														<td	class="adminmenu_td" th:text="${question.title}"></td>
-														<td class="adminmenu_td" th:text="${question.member.userId}"></td>
-														<td class="adminmenu_td" th:text="${question.questionDate}"></td>
+														<td class="adminmenu_td"><input type="checkbox" id="askChkBox"
+																value="" /></td>
+														<td class="adminmenu_td" th:text="${question.id}"></td>
+														<td class="adminmenu_td">
+															<a th:text="${question.title}"
+																th:href="@{/admin/answer/{id}(id=${question.id})}"></a>
+														</td>
+														<td class="adminmenu_td" th:text="${question.member.userId}">
+														</td>
+														<td class="adminmenu_td" th:text="${question.questionDate}">
+														</td>
 													</tr>
 												</tbody>
 											</table>
@@ -173,7 +178,7 @@
 						  + "&searchQuery=" + searchQuery
 		}	
 		 */
-		 
+
 	</script>
 </th:block>
 

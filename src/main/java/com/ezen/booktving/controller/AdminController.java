@@ -327,7 +327,7 @@ public class AdminController {
 	@GetMapping(value = "/admin/answer/{id}")
 	public String adminAnswer(@PathVariable Long id, Model model) {
 		QuestionDto questionDto = questionService.getQuestionById(id);
-		model.addAttribute("question", questionDto);
+        model.addAttribute("question", questionDto);
 		return "admin/adminAnswer";
 	}
 

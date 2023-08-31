@@ -25,56 +25,57 @@ public class QuestionService {
 	private QuestionRepository questionRepo;
 	@Autowired
 	private MemberRepository memberRepo;
-	
+
 	public QuestionService(QuestionRepository questionRepo) {
 		this.questionRepo = questionRepo;
 	}
-	
+
 	@Transactional
-	public String savePost(QuestionDto questionDto) {
+	public String savePost(QuestionDto questionDto, Long memberId) {
+		Member member = memberRepo.findById(memberId).orElse(null);
+
+		questionDto.getMemberDto().setId(member.getId());
 		return questionRepo.save(questionDto.createQuestion()).getTitle();
 	}
-	
+
 	@Transactional
 	public List<QuestionDto> getQuestionList() {
 		List<Question> questionList = questionRepo.findAll();
 		List<QuestionDto> questionDtoList = new ArrayList<>();
-		
-		for(Question question : questionList) {
+
+		for (Question question : questionList) {
 			QuestionDto questionDto = QuestionDto.of(question);
 			questionDtoList.add(questionDto);
 		}
-		
+
 		return questionDtoList;
 	}
-	
+
 	public QuestionDto getQuestionById(Long id) {
-	    Question question = questionRepo.findById(id).orElse(null);
-	    if (question != null) {
-	        return QuestionDto.of(question);
-	    }
-	    return null; // 또는 적절한 처리를 수행
+		Question question = questionRepo.findById(id).orElse(null);
+		if (question != null) {
+			return QuestionDto.of(question);
+		}
+		return null; // 또는 적절한 처리를 수행
 	}
-	
+
 	@Transactional(readOnly = true)
 	public boolean validateQue(Long id, String userId) {
 		Member curMember = memberRepo.findByUserId(userId);
-		Question question = questionRepo.findById(id)
-											.orElseThrow(EntityNotFoundException::new);
-		
+		Question question = questionRepo.findById(id).orElseThrow(EntityNotFoundException::new);
+
 		Member savedMember = question.getMember();
-		
-		if(!StringUtils.equals(curMember.getId(), savedMember.getId())) {
+
+		if (!StringUtils.equals(curMember.getId(), savedMember.getId())) {
 			return false;
 		}
-		
+
 		return true;
 	}
-	
+
 	public void deleteQuestion(Long id) {
-		Question question = questionRepo.findById(id)
-				.orElseThrow(EntityNotFoundException::new);
-		
+		Question question = questionRepo.findById(id).orElseThrow(EntityNotFoundException::new);
+
 		questionRepo.delete(question);
 	}
 }
