@@ -26,7 +26,7 @@
 							<th:block th:each="author, status : ${authors.getContent()}" >
 								<div class="author-wrap col-md-3 mb-4">
 									<div class="author-list">
-										<a class="author-link" th:href="'/author/Detail/' + ${author.id}">
+										<a class="author-link" th:href="'/author/detail/' + ${author.id}">
 											<img th:alt="${author.authorNameKo}" th:src="${author.imgUrl}" />
 										</a>
 										<!--

@@ -1,0 +1,78 @@
+@charset "UTF-8";
+
+.section-wrap {
+	position: relative;
+}
+
+/* 나의서재 프로필 영역 */
+.top .container-fluid{
+	padding: 0;
+}
+
+.mylibrary-top{
+	width: 100%;
+	height: 300px;
+	background-image: url("/images/myLibrary/mylibrary-bgimg.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	padding: 80px 20px;
+}
+
+.profile-box{
+	display:flex;
+	color: #fff; 
+}
+
+.profile-img-box{
+	width:80px;
+	height:80px;
+	overflow: hidden;
+	border-radius: 80px;
+}
+
+.profile-img-box img{
+	width:100%;
+}
+
+
+/* 나의서재 컨텐츠영역 */
+.myLibrary-contents-wrap{
+	height: auto;
+	margin-top: 150px;
+	margin-bottom: 100px;
+}
+
+.myLibrary-pictogram{
+	width: 30px;
+}
+
+.myLibrary-title{
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.myLibrary-more{
+	float: right;
+	margin-right: 20px;
+}
+
+.myLibrary-more a{
+	color: #bbb;
+}
+
+/* 나의 챌린지 */
+
+.challenge-wrap {
+	height: auto;
+	padding: 80px 0;
+}
+
+.challengeNew-box{
+	height: 150px;
+	background-color: #ddd;
+	border-radius: 15px;
+	border: 1px solid #aaa;
+	padding: 30px 20px;
+}
+
+

@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 import com.ezen.booktving.dto.FavoriteAuthorListDto;
 import com.ezen.booktving.dto.MyLibraryRentBookListDto;
@@ -61,14 +62,11 @@ public class MyLibraryController {
 			Page<FavoriteAuthorListDto> favoriteAuthors = authorService.getMyLibraryAuthorList(userDetails.getUsername(), pageable);
 			model.addAttribute("favoriteAuthors", favoriteAuthors);
 			
-			
 			return "mylibrary/mylibraryMain";
 		} else {
 			
 			return "redirect:/login";
 		}
-		
-		
 	}
 	
 	//나의 서재 대여도서 리스트
@@ -93,5 +91,19 @@ public class MyLibraryController {
 	public String myLibraryRentBookInfo() {
 			
 		return "mylibrary/myLibraryRentBookInfo";
+	}
+	
+	//나의챌린지 페이지
+	@GetMapping(value = "/mylibrary/myChallenge")
+	public String myChallenge() {
+		
+		return "mylibrary/myChallenge";
+	}
+	
+	
+	//나의챌린지 생성하기 페이지
+	@PostMapping(value = "/mylibrary/myChallenge/new")
+	public String myChallengeNew() {
+		return "mylibrary/myChallenge";
 	}
 }
