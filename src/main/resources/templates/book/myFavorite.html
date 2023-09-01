@@ -24,7 +24,9 @@
 			</div>
 			<div class="favorite-book">
 				<div th:each="favoriteBook : ${favoriteBooks}" class="book">
-					<div class="book-image"></div>
+					<div class="book-image">
+						<img th:src="${favoriteBook.bookImgDtoList[0].imgUrl}" class="img" style="width: 210px; height: 320px;">
+					</div>
 					<div class="fav-info">
 						<div class="div-title">
 							<p class="title" th:text="${favoriteBook.book.bookName}"></p>

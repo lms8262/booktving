@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ezen.booktving.dto.BookImgDto;
 import com.ezen.booktving.dto.FavoriteBookDto;
 import com.ezen.booktving.entity.Book;
 import com.ezen.booktving.entity.FavoriteBook;
@@ -65,9 +66,14 @@ public class FavoriteBookService {
     public List<FavoriteBookDto> getFavoriteBooksByMember(String userId) {
     	Member member = memberRepository.findByUserId(userId);
     	List<FavoriteBook> favoriteBooks = favoriteBookRepository.findByMember(member);
-    	List<FavoriteBookDto> favoriteBookDtos = favoriteBooks.stream().map(FavoriteBookDto::of)
-				.collect(Collectors.toList());
-        return favoriteBookDtos;
+    	List<FavoriteBookDto> favoriteBookDtos = favoriteBooks.stream().map(favoriteBook -> {
+            FavoriteBookDto dto = FavoriteBookDto.of(favoriteBook);
+            List<BookImgDto> bookImgDtos = favoriteBook.getBook().getBookImgDtoList();
+            dto.setBookImgDtoList(bookImgDtos);
+            return dto;
+        })
+        .collect(Collectors.toList());
+return favoriteBookDtos;
     }
 
     /*@Transactional

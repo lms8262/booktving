@@ -27,8 +27,9 @@ public class SecurityConfig {
 	private final PrincipalOauth2UserService principalOauth2UserService;
 	private final DataSource dataSource;
 
-	@Lazy//지연로딩, 실제사용될 때 로딩
-	public SecurityConfig(PrincipalOauth2UserService principalOauth2UserService, UserDetailsService userDetailsService, DataSource dataSource) {
+	@Lazy // 지연로딩, 실제사용될 때 로딩
+	public SecurityConfig(PrincipalOauth2UserService principalOauth2UserService, UserDetailsService userDetailsService,
+			DataSource dataSource) {
 		this.principalOauth2UserService = principalOauth2UserService;
 		this.dataSource = dataSource;
 		this.userDetailsService = userDetailsService;
@@ -38,7 +39,7 @@ public class SecurityConfig {
 	MvcRequestMatcher.Builder mvc(HandlerMappingIntrospector introspector) {
 		return new MvcRequestMatcher.Builder(introspector);
 	}
-	
+
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
 
@@ -73,6 +74,7 @@ public class SecurityConfig {
 
 		return http.build();
 	}
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -85,4 +87,3 @@ public class SecurityConfig {
 	}
 
 }
-

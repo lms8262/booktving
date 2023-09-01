@@ -1,0 +1,42 @@
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+<th:block layout:fragment="css">
+	<link rel="stylesheet" type="text/css" href="/css/questionAnswer.css" />
+	<style>
+</style>
+</th:block>
+
+<div layout:fragment="content">
+	<div class="top">
+		<div class="content">
+			<div class="detail-question">
+				<strong><a href="/question/questionInfo">고객센터</a></strong>
+				<p>
+					<a href="/question/questionCreate">1:1 문의</a>
+				</p>
+			</div>
+			<div class="que1">
+				<strong>1:1 문의</strong>
+			</div>
+			<div class="detail-div">
+				<div class="title">
+					<p th:if="${question}" th:text="${question.title}"
+						class="detail-title"></p>
+				</div>
+				<div class="content2">
+					<p th:if="${question}" th:text="${question.content}"
+						class="detail-content"></p>
+				</div>
+			</div>
+			
+			
+			
+			<div class="detail-list">
+				<button type="button" class="list" onclick="location.href='/question/questionList'">목록으로</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+</html>
