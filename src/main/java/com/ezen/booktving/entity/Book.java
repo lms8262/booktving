@@ -11,6 +11,7 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -69,13 +70,6 @@ public class Book extends BaseTimeEntity {
 
 	@OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
 	private List<BookImg> bookImgList;
-	
-	public void updateBookDetail(Integer page, String contents, String reqAuthor, String authorInfo) {
-		this.page = page;
-		this.contents = contents;
-		this.reqAuthor = reqAuthor;
-		this.authorInfo = authorInfo;
-	}
 
 	//book 엔티티 수정
 	public void updateBook(BookRegFormDto bookRegFormDto) {
