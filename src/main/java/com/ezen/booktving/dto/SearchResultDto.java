@@ -1,25 +1,29 @@
 package com.ezen.booktving.dto;
 
+import java.util.List;
+
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
-@Setter
 @Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-public class SearchBookDto {
-
-	private String bookName;
+public class SearchResultDto {
 	
-	private String isbn;
+	private BookSearchDto bookSearchDto;
 	
-	private String author;
+	private int totalItems;
 	
-	private String imgUrl;
+	private int currentPage;
+	
+	private int itemsPerPage;
+	
+	private boolean last;
+	
+	private List<SearchBookDto> items;
 	
 }

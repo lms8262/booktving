@@ -5,9 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Slice;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -16,13 +13,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ezen.booktving.dto.BookSearchDto;
 import com.ezen.booktving.dto.KeywordDto;
-import com.ezen.booktving.dto.SearchBookDto;
+import com.ezen.booktving.dto.SearchResultDto;
 import com.ezen.booktving.service.ApiService;
 import com.ezen.booktving.service.KeyWordService;
 import com.ezen.booktving.service.SearchService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -48,22 +48,18 @@ public class SearchController {
 	
 	// 검색 결과 페이지
 	@GetMapping(value = "/search/detail")
-	public String searchDetail(BookSearchDto bookSearchDto, Model model) {
+	public String searchDetail(BookSearchDto bookSearchDto, Model model, RedirectAttributes redirectAttributes) {
 		
 		try {
-			apiService.saveBookWhenSearchByAladinApi(bookSearchDto);
+			SearchResultDto firstSearchResult = apiService.getSearchResultByAladinApi(bookSearchDto, 0);
 			searchService.addSearchKeyword(bookSearchDto);
+			model.addAttribute("firstSearchResult", firstSearchResult);
+			
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
-		Pageable pageble = PageRequest.of(0, 30);
-		Slice<SearchBookDto> searchBookList = searchService.getSearchBookList(null, bookSearchDto, pageble);
-		Long searchCount = searchService.getSearchBookCount(bookSearchDto);
-		
-		model.addAttribute("bookSearchDto", bookSearchDto);
-		model.addAttribute("searchBookList", searchBookList);
-		model.addAttribute("searchCount", searchCount);
-		model.addAttribute("pageble", pageble);
+			redirectAttributes.addAttribute("errorMessage", "검색 중에 오류가 발생했습니다.");
+			return "redirect:/search/main";
+		}		
 		
 		return "search/searchDetail";
 	}
@@ -71,23 +67,25 @@ public class SearchController {
 	// 무한스크롤시 필요한 데이터 넘겨주기
 	@PostMapping(value = "/search/detail/paging")
 	@ResponseBody
-	public ResponseEntity<Map<String, Object>> getNextSearchBookList(@RequestBody Map<String, Object> data) {
-		
-		Long lastBookId = ((Integer) data.get("lastBookId")).longValue();
+	public ResponseEntity<SearchResultDto> getNextSearchBookList(@RequestBody Map<String, Object> data) {		
 		
 		Map<String, Object> bookSearchDtoMap = (HashMap) data.get("bookSearchDto");
 		BookSearchDto bookSearchDto = new BookSearchDto((String) bookSearchDtoMap.get("searchBy"), (String) bookSearchDtoMap.get("searchQuery"));
 		
-		Map<String ,Object> pageableMap = (HashMap) data.get("pageable");
-		Pageable pageable = PageRequest.of((Integer)pageableMap.get("pageNumber") + 1, 30);
+		int currentPage = (int) data.get("currentPage");
 		
-		Slice<SearchBookDto> searchBookList = searchService.getSearchBookList(lastBookId , bookSearchDto, pageable);
+		SearchResultDto nextSearchResult;
+		try {
+			nextSearchResult = apiService.getSearchResultByAladinApi(bookSearchDto, currentPage);
+		} catch (JsonMappingException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 		
-		Map<String, Object> result = new HashMap<>();
-		result.put("bookSearchDto", bookSearchDto);
-		result.put("searchBookList", searchBookList);
-		
-		return new ResponseEntity<Map<String,Object>>(result, HttpStatus.OK);
+		return new ResponseEntity<SearchResultDto>(nextSearchResult, HttpStatus.OK);
 	}
 	
 }

@@ -59,18 +59,8 @@ public class Book extends BaseTimeEntity {
 	@Column(columnDefinition = "text", nullable = false)
 	private String contents;
 	
-	@Column(nullable = false)
-	private String reqAuthor;
-	
 	@Column(columnDefinition = "text", nullable = false)
 	private String authorInfo;
-	
-	public void updateBookDetail(Integer page, String contents, String reqAuthor, String authorInfo) {
-		this.page = page;
-		this.contents = contents;
-		this.reqAuthor = reqAuthor;
-		this.authorInfo = authorInfo;
-	}
 
 	//book 엔티티 수정
 	public void updateBook(BookRegFormDto bookRegFormDto) {
@@ -83,6 +73,5 @@ public class Book extends BaseTimeEntity {
 		this.bookIntroduction = bookRegFormDto.getBookIntroduction();
 		this.contents = bookRegFormDto.getContents();
 		this.category = bookRegFormDto.getCategory();
-
 	}
 }

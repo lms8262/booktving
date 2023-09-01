@@ -1,5 +1,6 @@
 package com.ezen.booktving.controller;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,8 +28,6 @@ import com.ezen.booktving.service.BookService;
 import com.ezen.booktving.service.CommutationService;
 import com.ezen.booktving.service.FavoriteBookService;
 import com.ezen.booktving.service.RentBookService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -43,15 +42,13 @@ public class BookController {
 	private final RentBookService rentBookService;
 	
 	// 도서상세 페이지
-	@GetMapping(value = "/book/bookDetail/{isbn}") // 개발 후 경로 변경 {isbn}
+	@GetMapping(value = "/book/bookDetail/{isbn}")
 	public String bookDetail(Model model, @PathVariable("isbn") String isbn) {
 		
+		// db에 책 상세정보 있는지 확인 후 없으면 api 호출해서 저장
 		try {
-			// db에 책 상세정보 있는지 확인 후 없으면 api 호출해서 업데이트
-			apiService.updateBookDetailByAladinApi(isbn);
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-		} catch (JsonProcessingException e) {
+			apiService.saveBookInfo(isbn);
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
