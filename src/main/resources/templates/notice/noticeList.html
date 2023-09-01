@@ -1,10 +1,102 @@
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/layout1}">
+	 
+<!-- author 페이지 CSS --> 
+<th:block layout:fragment="css">
+	<link rel="stylesheet" type="text/css" href="/css/notice.css" />	
+</th:block>
 
-</body>
+<div layout:fragment="content">
+
+	<div class="top">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-12 section-wrap">
+					
+					<div class="container">
+						
+						<div class="top-title">
+							<i class="fa-solid fa-volume-high icorn" style="color: #000000;"></i>
+							<h4>공지사항</h4>
+						</div>
+							
+						<ul class="row notice-wrap">
+							<th:block th:each="notice, status : ${notices}">
+								<li class="notice-repeat col-12">
+									<div class="notice-title-box">
+										<p class="notice-group" th:text="${notice.noticeGroup.krName}"></p>
+										<h6 class="title" th:text="${notice.title}"></h6>
+										<p class="reg-time" th:text="${#temporals.format(notice.regTime, 'yyyy-MM-dd')}"></p>
+									</div>
+									<div class="notice-content-box">
+										<p th:utext="${notice.content}"></p>
+									</div>
+								</li>
+							</th:block>
+							
+						</ul>
+
+						<!-- paging 부분 -->
+						<div>
+							<nav th:with="start=${(notices.number / maxPage) * maxPage + 1}, 
+									  end = (${ ((notices.totalPages == 0)) ? 1 :	(start + (maxPage -1) < notices.totalPages ?
+									  start + (maxPage - 1) : notices.totalPages)})"
+								aria-label="...">
+								<ul class="pagination d-flex justify-content-center">
+
+									<li class="page-item "
+										th:classappend="${notices.first} ? 'disabled'"><a
+										class="page-link page-item"
+										th:onclick="'javascript:page(' + ${notices.number - 1} + ')'">이전</a>
+									</li>
+
+									<li class="page-item"
+										th:each="page: ${#numbers.sequence(start, end)}"
+										th:classappend="${notices.number eq page -1} ? 'active' : '' ">
+										<a class="page-link" th:inline="text"
+										th:onclick="'javascript:page(' + ${page - 1} + ')'">
+											[[${page}]] </a>
+									</li>
+
+									<li class="page-item"
+										th:classappend="${notices.last} ? 'disabled'"><a
+										class="page-link page-item"
+										th:onclick="'javascript:page(' + ${notices.number + 1} + ')'">다음</a>
+									</li>
+								</ul>
+							</nav>
+						</div>
+
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</div>
+
+
+<!-- author 페이지 javaScript -->
+<th:block layout:fragment="script">
+
+	<script>
+	
+		$(document).ready(function(){
+			
+			//공지사항 클릭 시 슬라이드다운
+			$('.notice-title-box').click(function(){
+				const notice = $(this).parent();
+				$('.notice-repeat.open').not(notice).removeClass('open');
+				notice.toggleClass('open');
+			});
+		});
+	
+	</script>
+
+</th:block>
+
 </html>

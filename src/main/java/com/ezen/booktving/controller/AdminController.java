@@ -393,8 +393,8 @@ public class AdminController {
 		return "admin/adminAnswer";
 	}
 	
-	//공지사항 관리페이지, 공지사항 페이지 보여주기
-	@GetMapping(value = {"/admin/notice", "/admin/notice/{page}", "/notice"})
+	//공지사항 관리페이지
+	@GetMapping(value = {"/admin/notice", "/admin/notice/{page}"})
 	public String adminNotice(NoticeSearchDto noticeSearchDto, @PathVariable("page") Optional<Integer> page, Model model) {
 
 		try {
@@ -428,7 +428,7 @@ public class AdminController {
 			return "admin/adminNoticeReg";
 		}
 		
-		try {
+		try {			
 			noticeService.saveNotice(noticeDto);
 		} catch (Exception e) {
 			e.printStackTrace();

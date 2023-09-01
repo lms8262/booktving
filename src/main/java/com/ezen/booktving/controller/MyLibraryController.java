@@ -11,16 +11,25 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.context.request.FacesRequestAttributes;
 
+import com.ezen.booktving.dto.ChallengeNewDto;
+import com.ezen.booktving.dto.FavoriteBookDto;
+import com.ezen.booktving.dto.FavoriteBookDtoList;
 import com.ezen.booktving.dto.MyLibraryRentBookListDto;
+import com.ezen.booktving.entity.FavoriteBook;
 import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.entity.RentBook;
+import com.ezen.booktving.service.BookService;
+import com.ezen.booktving.service.FavoriteBookService;
 import com.ezen.booktving.service.MemberService;
 import com.ezen.booktving.service.MyLibraryRentBookService;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @Controller
@@ -28,14 +37,18 @@ import lombok.RequiredArgsConstructor;
 public class MyLibraryController {
 	
 	private final MyLibraryRentBookService myLibraryRentBookService;
+	private final FavoriteBookService favoriteBookService;
 	private final MemberService memberService;
 	
 	
 	//나의서재 메인화면
-	@GetMapping(value = "/mylibrary")
+	@GetMapping(value = "/myLibrary")
 	public String myLibrary(Optional<Integer> page, Model model, @AuthenticationPrincipal UserDetails userDetails) {
 		
 		if(userDetails != null) {
+			
+			Member user = memberService.listAll(userDetails.getUsername());
+			model.addAttribute("user", user);
 			
 			Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 5);
 
@@ -49,11 +62,14 @@ public class MyLibraryController {
 			
 			//favoriteBook
 			//isEmpty
-			//List<FavoriteBook> favoriteBookList = ;
+			List<FavoriteBook> favoriteBookList = favoriteBookService.getFavoriteListAll(userDetails.getUsername());
+			model.addAttribute("favoriteBookList", favoriteBookList);
 			//not isEmpty
+			Page<FavoriteBookDtoList> favoriteBooks = favoriteBookService.getFavoriteBookList(userDetails.getUsername(), pageable);
+			model.addAttribute("favoriteBooks", favoriteBooks);
 			
 						
-			return "mylibrary/mylibraryMain";
+			return "myLibrary/myLibraryMain";
 		} else {
 			
 			return "redirect:/login";
@@ -61,7 +77,7 @@ public class MyLibraryController {
 	}
 	
 	//나의 서재 대여도서 리스트
-	@GetMapping(value= {"/mylibrary/rentList", "/mylibrary/rentList/{page}"})
+	@GetMapping(value= {"/myLibrary/rentList", "/myLibrary/rentList/{page}"})
 	public String myLibraryRentList(@PathVariable("page") Optional<Integer> page, Principal principal, Model model) {
 		
 		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 8);
@@ -73,43 +89,44 @@ public class MyLibraryController {
 		model.addAttribute("rentBooks", myLibraryRentBookListDtoList);
 		model.addAttribute("maxPage", 5);
 		
-		return "mylibrary/myLibraryRentBookList";
+		return "myLibrary/myLibraryRentBookList";
 	}
 	
 	
 	//나의 서재 대여도서 상세페이지 	
-	@GetMapping(value = "/mylibrary/rentbookinfo")
+	@GetMapping(value = "/myLibrary/rentbookinfo")
 	public String myLibraryRentBookInfo() {
 			
-		return "mylibrary/myLibraryRentBookInfo";
+		return "myLibrary/myLibraryRentBookInfo";
 	}
 	
 	//나의챌린지 페이지
-	@GetMapping(value = "/mylibrary/myChallenge")
+	@GetMapping(value = "/myLibrary/myChallenge")
 	public String myChallenge(Model model, @AuthenticationPrincipal UserDetails userDetails) {
 		
 		
 		Member user = memberService.listAll(userDetails.getUsername());
 		model.addAttribute("user", user);
 		
-		return "mylibrary/myChallenge";
+		return "myLibrary/myChallenge";
 	}
 	
 	//나의챌린지 생성 페이지
-	@GetMapping(value = "/mylibrary/myChallenge/new")
-	public String myChallengeNewPage(Model model, @AuthenticationPrincipal UserDetails userDetails) {
+	@GetMapping(value = "/myLibrary/myChallenge/new")
+	public String myChallengeNewPage(Model model, @AuthenticationPrincipal UserDetails userDetails, @Valid ChallengeNewDto challengeNewDto, BindingResult bindingResult ) {
 		
 		Member user = memberService.listAll(userDetails.getUsername());
 		model.addAttribute("user", user);
 		
 		
 		
-		return "mylibrary/myChallengeNew";
+		
+		return "myLibrary/myChallengeNew";
 	}
 	
 	//나의챌린지 생성하기
-	@PostMapping(value = "/mylibrary/myChallenge/new")
+	@PostMapping(value = "/myLibrary/myChallenge/new")
 	public String myChallengeNew() {
-		return "mylibrary/myChallenge";
+		return "myLibrary/myChallenge";
 	}
 }

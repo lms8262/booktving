@@ -11,11 +11,31 @@ h5 {
 }
 
 /* 공지사항 */
+
+.notice-wrap{
+	height: 40px;
+	line-height: 40px;	
+	overflow: hidden;
+	position: relative;
+}
+
 .notice-box{
+	position: absolute;
+	top: 0;
+	left: 0;
 	height: 40px;
 	line-height: 40px;
 	padding-left: 30px;
+	opacity: 0;
+	transform : translateY(-100%);
+	transition : opacity 0.5s, transform 0.5s;
 }
+
+.notice-box.active{
+	opacity: 1;
+	transform:	translateY(0);
+}
+
 /* 공지사항 끝 */
 
 /* 이미지슬라이드 */

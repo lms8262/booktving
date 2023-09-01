@@ -28,7 +28,7 @@
 								</div>
 							</div>
 							<div class="col-4 user-info-box">
-								<p class="user-info"><span>&nbsp;님의 서재</spans></p>
+								<p class="user-info">[[${user.memberName}]]<span>&nbsp;님의 서재</spans></p>
 							</div>
 							<div class="col-6"></div>
 						</div>						
@@ -41,16 +41,14 @@
 							<div class="col-6">
 								<nav class="myLibrary-nav">
 									<ul class="myLibrary-menu1">
-										<li> <a href="/mylibrary/rentList">Book case</a> </li> <span>&nbsp;|</span>
-										<li> <a href="">Favorite</a> </li> <span>&nbsp;|</span>
-										<!-- <li> <a href="">Author</a> </li> <span>&nbsp;|</span> -->
-										<li> <a href="/mylibrary/myChallenge">Challenge</a> </li>
+										<li> <a href="/myLibrary/rentList">Book case</a> </li> <span>&nbsp;|</span>
+										<li> <a href="/myLibrary/FavoriteBook">Favorite</a> </li> <span>&nbsp;|</span>
+										<li> <a href="/myLibrary/myChallenge">Challenge</a> </li>
 									</ul>
 									<ul class="myLibrary-menu2">
-										<li> <a href="/mylibrary/rentList">Book case</a> </li> <span>&nbsp;|</span>
-										<li> <a href="">Favorite</a> </li> <span>&nbsp;|</span>
-										<!-- <li> <a href="">Author</a> </li> <span>&nbsp;|</span> -->
-										<li> <a href="/mylibrary/myChallenge">Challenge</a> </li>
+										<li> <a href="/myLibrary/rentList">Book case</a> </li> <span>&nbsp;|</span>
+										<li> <a href="/myLibrary/FavoriteBook">Favorite</a> </li> <span>&nbsp;|</span>
+										<li> <a href="/myLibrary/myChallenge">Challenge</a> </li>
 									</ul>
 								</nav>
 							</div>
@@ -98,17 +96,17 @@
 									<img class="myLibrary-pictogram" src="/images/myLibrary/favorite.png" alt="Favorite" />
 									<span class="myLibrary-title">Favorite</span>
 									<span class="myLibrary-more">
-										<a href="/mylibrary/rentList">more</a>
+										<a href="/mylibrary/FavoriteBook">more</a>
 									</span>
 								</div>
 								
-								<div class="favorite-book-wrap">
+								<div class="favorite-book-wrap" th:if="${not #lists.isEmpty(favoriteBookList)}">
 									<!-- 찜한 도서 보여주기 -->
-									<div class="favorite-book">
-										<img src="" alt="" />
+									<div class="favorite-book" th:each="favoriteBook, status : ${favoriteBooks}">
+										<img src="${favoriteBook.imgUrl}" alt="${favoriteBook.bookName}" />
 									</div>
 								</div>
-								<div class="favorite-book-null-wrap">
+								<div class="favorite-book-null-wrap" th:if="${#lists.isEmpty(favoriteBookList)}">
 									<p class="favorite-book-null">
 										찜한 도서가 없습니다.
 									</p>

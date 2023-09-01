@@ -1,5 +1,11 @@
 @charset "UTF-8";
 
+.table tbody td{
+	text-align: center;
+	height: auto;
+	line-height: inherit;
+}
+
 .pagination li{
 	margin: 0;
 }

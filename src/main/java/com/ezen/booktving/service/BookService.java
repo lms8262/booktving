@@ -14,9 +14,11 @@ import com.ezen.booktving.dto.BookDto;
 import com.ezen.booktving.dto.BookImgDto;
 import com.ezen.booktving.dto.BookReviewDto;
 import com.ezen.booktving.dto.BookTvingTop10Dto;
+import com.ezen.booktving.dto.FavoriteBookDto;
 import com.ezen.booktving.entity.Book;
 import com.ezen.booktving.entity.BookImg;
 import com.ezen.booktving.entity.BookReview;
+import com.ezen.booktving.entity.FavoriteBook;
 import com.ezen.booktving.entity.RentBook;
 import com.ezen.booktving.repository.BookDetailRepository;
 import com.ezen.booktving.repository.BookImgRepository;
@@ -36,7 +38,9 @@ public class BookService {
 	private final BookImgRepository bookImgRepository;
 	private final BookReviewRepository bookReviewRepository;
 	private final RentRepository rentRepository;
+	private final BookRepository bookRepository;
 	
+	//책정보 가져오기
 	@Transactional(readOnly = true)
 	public BookDto getBookDetail(String isbn) {
 		Book book = bookDetailRepository.findByIsbnOrderByIdAsc(isbn);
@@ -72,18 +76,22 @@ public class BookService {
 						
 	}
 	
+	//리뷰 저장하기
 	@Transactional
 	public String saveReview(BookReviewDto bookReviewDto) {
 		 
 	        return bookReviewRepository.save(bookReviewDto.createBookReview()).getContent();
 	    }
 	
+	//책 isbn 정보 가져오기
 	@Transactional(readOnly = true)
 	public Book getBookByIsbn(String isbn) {
 	    return bookDetailRepository.findByIsbn(isbn);
 	            
 	}
 	
+	
+	//book 엔티티 id 가져오기
 	@Transactional(readOnly = true)
 	public Optional<Book> getBookById(Long id) {
 	    return bookDetailRepository.findById(id);
@@ -91,11 +99,11 @@ public class BookService {
 	}
 	
 	// isbn 값으로 해당 book 엔티티 데이터를 가져옴.
-	   @Transactional(readOnly = true)
-	   public Book getBook(String isbn){
-	      Book book = bookDetailRepository.findByIsbnOrderByIdAsc(isbn);
-	      return book;
-	   }
+	@Transactional(readOnly = true)
+	public Book getBook(String isbn){
+	    Book book = bookDetailRepository.findByIsbnOrderByIdAsc(isbn);
+	    return book;
+	}
 	
 	//북티빙 Top10
 	//일간
@@ -129,5 +137,7 @@ public class BookService {
 			
 		return bookTvingTop10Page;
 	}
+	
+
 	
 }

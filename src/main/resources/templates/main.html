@@ -16,14 +16,14 @@
 				<div class="section-wrap">
 
 					<!-- 공지사항 -->
-					<div class="container notice-wrap">
+					<div class="container notice-wrap" th:if="${not #lists.isEmpty(notices)}">
 
 						<nav class="notice-box"
-							 th:if="${not #lists.isEmpty(notices)}"
 							 th:each="notice, status : ${notices}">
-							<a th:href="'/notice/' + ${notice.id}" >
-								<i class="fa-solid fa-volume-high" style="color: #000000;"></i> 
-								<span th:text="${title}"></span>
+							<a href="/notice" >
+								<i class="fa-solid fa-volume-high" style="color: #000000;"></i> &nbsp;&nbsp;
+								[<span th:text="${notice.noticeGroup.krName}"></span>]
+								<span th:text="${notice.title}"></span>
 							</a>
 						</nav>
 
@@ -406,6 +406,25 @@
 	<script>
 		
 		$(document).ready(function(){
+			
+			//공지사항 슬라이드
+			const noticeBoxs = $('.notice-box');
+			let currentIndex = 0;
+			
+			function showNotice(index){
+				noticeBoxs.removeClass('active');
+				noticeBoxs.eq(index).addClass('active');
+			}
+			
+			function changeNotice(){
+				currentIndex = (currentIndex + 1) % noticeBoxs.length;
+				showNotice(currentIndex);
+			}
+			
+			showNotice(currentIndex);
+			setInterval(changeNotice, 4000);
+			
+			
 			
 			//이미지슬라이드
 			setInterval(function(){

@@ -60,7 +60,7 @@ public class BookController {
 	}
 
 	// 찜 목록
-	@GetMapping(value = "/book/myFavorite/{userId}")
+	@GetMapping(value = "/myLibrary/FavoriteBook")
 	public String myFavorite(Model model, Principal principal) {
 		String userId = principal.getName();
 
@@ -73,7 +73,7 @@ public class BookController {
 	}
 
 	// 찜 삭제
-	@DeleteMapping("/book/myFavorite/remove/{id}")
+	@DeleteMapping("/myLibrary/FavoriteBook/remove/{id}")
 	public @ResponseBody ResponseEntity removeFavoriteBook(@PathVariable("id") Long id, Principal principal) {
 		System.out.println("id: " + id);
 		favoriteBookService.removeFavoriteBook(id);

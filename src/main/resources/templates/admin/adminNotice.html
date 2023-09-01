@@ -62,7 +62,7 @@
 															</label>
 														</td>
 														<td scope="col" class="notice-no" th:text="${notice.id}"></td>
-														<td scope="col" class="notice-group" th:text="${notice.noticeGroup}"></td>
+														<td scope="col" class="notice-group" th:text="${notice.noticeGroup.krName}"></td>
 														<td scope="col" class="notice-title" th:text="${notice.title}"></td>
 														<td scope="col" class="createdby">관리자</td>
 														<td scope="col" class="regdate" th:text="${#temporals.format(notice.regTime, 'yyyy-MM-dd')}"></td>
