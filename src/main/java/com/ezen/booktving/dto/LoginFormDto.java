@@ -15,7 +15,7 @@ import lombok.Setter;
 public class LoginFormDto {
 	@NotBlank(message = "아이디는 필수 입력 값입니다.")
 	private String userId;
-	
+
 	@NotBlank(message = "이름은 필수 입력 값입니다.")
 	private String memberName;
 
@@ -26,12 +26,19 @@ public class LoginFormDto {
 	@Length(min = 8, max = 20, message = "비밀번호는 8자 ~ 20자 사이로 입력해주세요.")
 	@NotEmpty(message = "비밀번호는 필수 입력 값입니다.")
 	private String password;
-	
+
 	@NotEmpty(message = "전화번호는 필수 입력 값입니다.")
 	private String tel;
+	private LocalDate birth;
+
 	@NotBlank(message = "주소는 필수 입력 값입니다.")
 	private String address;
-	private LocalDate birth;
-	
-	
+
+	private String addressNo;
+
+	private String addressDetail;
+
+	private String Provider;
+	private String ProviderId;
+
 }

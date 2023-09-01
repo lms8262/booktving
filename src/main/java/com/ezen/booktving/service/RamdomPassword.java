@@ -39,6 +39,7 @@ public class RamdomPassword {
 		return sb.toString();
 	}
 
+	@SuppressWarnings("unused")
 	public String updatePassword(String pass, String email, PasswordEncoder passwordEncoder) {
 		Member member = memberRepository.findByEmail(email);
 
