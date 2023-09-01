@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.ezen.booktving.constant.QuestionStatus;
+import com.ezen.booktving.dto.QuestionDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -39,6 +40,9 @@ public class Question extends BaseEntity {
 	@Column(columnDefinition = "longtext", nullable = false)
 	private String content;
 
+	@Column(columnDefinition = "longtext", nullable = true)
+	private String answer;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id", nullable = false)
 	private Member member;
@@ -48,8 +52,10 @@ public class Question extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private QuestionStatus questionStatus;
 
-	public static Question createQuestion(Member member) {
+	public static Question createQuestion(QuestionDto questionDto, Member member) {
 		Question question = new Question();
+		question.setTitle(questionDto.getTitle());
+		question.setContent(questionDto.getContent());
 		question.setMember(member);
 
 		question.setQuestionStatus(QuestionStatus.WAIT);

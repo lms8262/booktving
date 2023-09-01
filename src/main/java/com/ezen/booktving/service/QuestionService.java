@@ -21,26 +21,23 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 @RequiredArgsConstructor
 public class QuestionService {
-	@Autowired
-	private QuestionRepository questionRepo;
-	@Autowired
-	private MemberRepository memberRepo;
-
-	public QuestionService(QuestionRepository questionRepo) {
-		this.questionRepo = questionRepo;
-	}
+	
+	private final QuestionRepository questionRepository;
+	
+	private final MemberRepository memberRepository;
 
 	@Transactional
-	public String savePost(QuestionDto questionDto, Long memberId) {
-		Member member = memberRepo.findById(memberId).orElse(null);
-
-		questionDto.getMemberDto().setId(member.getId());
-		return questionRepo.save(questionDto.createQuestion()).getTitle();
+	public String savePost(QuestionDto questionDto, String userId) {
+		Member member = memberRepository.findByUserId(userId);
+		Question question = Question.createQuestion(questionDto, member);
+		questionRepository.save(question);
+		
+		return question.getTitle();
 	}
 
 	@Transactional
 	public List<QuestionDto> getQuestionList() {
-		List<Question> questionList = questionRepo.findAll();
+		List<Question> questionList = questionRepository.findAll();
 		List<QuestionDto> questionDtoList = new ArrayList<>();
 
 		for (Question question : questionList) {
@@ -52,7 +49,7 @@ public class QuestionService {
 	}
 
 	public QuestionDto getQuestionById(Long id) {
-		Question question = questionRepo.findById(id).orElse(null);
+		Question question = questionRepository.findById(id).orElse(null);
 		if (question != null) {
 			return QuestionDto.of(question);
 		}
@@ -61,8 +58,8 @@ public class QuestionService {
 
 	@Transactional(readOnly = true)
 	public boolean validateQue(Long id, String userId) {
-		Member curMember = memberRepo.findByUserId(userId);
-		Question question = questionRepo.findById(id).orElseThrow(EntityNotFoundException::new);
+		Member curMember = memberRepository.findByUserId(userId);
+		Question question = questionRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 
 		Member savedMember = question.getMember();
 
@@ -74,8 +71,8 @@ public class QuestionService {
 	}
 
 	public void deleteQuestion(Long id) {
-		Question question = questionRepo.findById(id).orElseThrow(EntityNotFoundException::new);
+		Question question = questionRepository.findById(id).orElseThrow(EntityNotFoundException::new);
 
-		questionRepo.delete(question);
+		questionRepository.delete(question);
 	}
 }

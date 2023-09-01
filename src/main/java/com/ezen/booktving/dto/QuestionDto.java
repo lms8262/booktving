@@ -25,26 +25,14 @@ public class QuestionDto {
    @NotBlank
    private String content;
    
-   private Member member;
-   
-   private MemberDto memberDto;
-   
    private LocalDate questionDate;
    
    private QuestionStatus questionStatus;
    
    private static ModelMapper modelMapper = new ModelMapper();
       
-   public Question createQuestion() {
-      Question question = modelMapper.map(this, Question.class);
-      question.setMember(memberDto.createMember());
-      return question;
-   }
-   
    public static QuestionDto of(Question question) {
       QuestionDto questionDto = modelMapper.map(question, QuestionDto.class);
-      questionDto.setMemberDto(MemberDto.of(question.getMember()));
-
       return questionDto;
    }
 }

@@ -34,6 +34,7 @@ import com.ezen.booktving.entity.Book;
 import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.entity.Question;
 import com.ezen.booktving.service.AdminBookRentHistService;
+import com.ezen.booktving.service.AdminQuestionService;
 import com.ezen.booktving.service.AuthorService;
 import com.ezen.booktving.service.BookRegService;
 import com.ezen.booktving.service.MemberService;
@@ -51,6 +52,7 @@ public class AdminController {
 	private final AdminBookRentHistService adminBookRentHistService;
 	private final MemberService memberService;
 	private final QuestionService questionService;
+	private final AdminQuestionService adminQuestionService;
 
 	// 도서관리 페이지 보여주기
 	@GetMapping(value = { "/admin/books", "/admin/books/{page}" })
@@ -327,8 +329,16 @@ public class AdminController {
 	@GetMapping(value = "/admin/answer/{id}")
 	public String adminAnswer(@PathVariable Long id, Model model) {
 		QuestionDto questionDto = questionService.getQuestionById(id);
-        model.addAttribute("question", questionDto);
+		model.addAttribute("question", questionDto);
 		return "admin/adminAnswer";
+	}
+
+	// 문의삭제
+	@DeleteMapping("/admin/question/{id}/delete")
+	public @ResponseBody ResponseEntity deleteAdminQuestion(@PathVariable("id") Long id,
+			Principal principal) {
+		adminQuestionService.deleteAdminQuestion(id);
+		return new ResponseEntity<Long>(id, HttpStatus.OK);
 	}
 
 	// 공지관리 페이지 보여주기
