@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/layout1}">
+	 
+<th:block layout:fragment="css">
+	<link rel="stylesheet" th:href="@{/css/commutation.css}" />
+</th:block>
+
+<div layout:fragment="content">
+	<div class="container my-5">
+		<div>		
+			<h4 class="commutation-title mb-5">이용권 구매</h4>
+			<div class="text-center">
+				<p class="commutation-text mb-5">이용권 구매가 완료되었습니다.</p>
+				<a class="btn reg_btn commutationBtn" href="/mypage/commutation">이용권 관리 페이지로</a>
+			</div>
+		</div>
+	</div>
+</div>
+
+<th:block layout:fragment="script">
+</th:block>
+
+</html>

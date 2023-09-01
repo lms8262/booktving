@@ -171,7 +171,6 @@ h6 {
 }
 
 span {
-	display: block;
 	font-size: 13px;
 }
 
@@ -222,4 +221,8 @@ input {
 
 .review-form {
 	display: flex;
+}
+
+button:hover {
+	cursor: pointer;
 }

@@ -15,7 +15,6 @@ import com.ezen.booktving.dto.MemberFormDto;
 import com.ezen.booktving.dto.MemberSearchDto;
 import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.repository.MemberRepository;
-import com.querydsl.codegen.utils.StringUtils;
 
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;

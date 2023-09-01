@@ -2,9 +2,6 @@ package com.ezen.booktving.entity;
 
 import java.util.List;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import com.ezen.booktving.dto.BookImgDto;
 
 import jakarta.persistence.Column;
