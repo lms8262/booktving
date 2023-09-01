@@ -1,5 +1,6 @@
 package com.ezen.booktving.controller;
 
+import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,12 +23,11 @@ import com.ezen.booktving.dto.BookDto;
 import com.ezen.booktving.dto.BookReviewDto;
 import com.ezen.booktving.dto.FavoriteBookDto;
 import com.ezen.booktving.entity.Book;
-import com.ezen.booktving.repository.MemberRepository;
-
 import com.ezen.booktving.service.ApiService;
 import com.ezen.booktving.service.BookService;
+import com.ezen.booktving.service.CommutationService;
 import com.ezen.booktving.service.FavoriteBookService;
-import com.ezen.booktving.service.MemberService;
+import com.ezen.booktving.service.RentBookService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -36,14 +36,22 @@ import lombok.RequiredArgsConstructor;
 public class BookController {
 
 	private final BookService bookService;
-	private final ApiService apiService;
 	private final FavoriteBookService favoriteBookService;
-	private final MemberService memberService;
-	private final MemberRepository memberRepository;
-
+	private final ApiService apiService;
+	private final CommutationService commutationService;
+	private final RentBookService rentBookService;
+	
 	// 도서상세 페이지
-	@GetMapping(value = "/book/bookDetail/{isbn}") // 개발 후 경로 변경 {isbn}
+	@GetMapping(value = "/book/bookDetail/{isbn}")
 	public String bookDetail(Model model, @PathVariable("isbn") String isbn) {
+		
+		// db에 책 상세정보 있는지 확인 후 없으면 api 호출해서 저장
+		try {
+			apiService.saveBookInfo(isbn);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 		BookDto bookDto = bookService.getBookDetail(isbn);
 		List<BookReviewDto> bookReviewDtoList = new ArrayList<BookReviewDto>();
 		model.addAttribute("reviews", bookReviewDtoList);
@@ -91,4 +99,20 @@ public class BookController {
 		bookService.saveReview(bookReviewDto);
 		return "redirect:/book/bookDetail/{isbn}";
 	}
+	
+	// 도서 대여요청
+	@PostMapping(value = "/book/bookDetail/rent/{isbn}")
+	@ResponseBody
+	public ResponseEntity rentBook(@PathVariable("isbn") String isbn, Principal principal) {
+		String userId = principal.getName();
+		
+		if(!commutationService.isExistsMemberCommutation(userId)) {
+			return new ResponseEntity<String>(HttpStatus.FORBIDDEN);
+		}
+		
+		Long result = rentBookService.saveRentBook(userId, isbn);
+		
+		return new ResponseEntity<Long>(result, HttpStatus.OK);
+	}
+	
 }

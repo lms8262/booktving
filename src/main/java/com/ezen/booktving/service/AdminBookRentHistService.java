@@ -12,8 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ezen.booktving.dto.AdminRentHistBookDto;
 import com.ezen.booktving.dto.BookSearchDto;
 import com.ezen.booktving.entity.RentBook;
-import com.ezen.booktving.repository.AdminBookRentHistRepository;
-import com.ezen.booktving.repository.RentRepository;
+import com.ezen.booktving.repository.RentBookRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -22,13 +21,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Transactional
 public class AdminBookRentHistService {
-	private final AdminBookRentHistRepository adminBookRentHistRepository;
-	private final RentRepository rentRepository;
+	private final RentBookRepository rentBookRepository;
 	
 	@Transactional(readOnly = true)
 	public AdminRentHistBookDto getAdminRentBookDtl(Long rentBookId) {
 		
-		RentBook rentBook = adminBookRentHistRepository.findById(rentBookId)
+		RentBook rentBook = rentBookRepository.findById(rentBookId)
 													.orElseThrow(EntityNotFoundException::new);
 		
 		AdminRentHistBookDto adminRentHistBookDto = AdminRentHistBookDto.of(rentBook);
@@ -38,7 +36,7 @@ public class AdminBookRentHistService {
 	
 	@Transactional(readOnly = true)
 	public Page<AdminRentHistBookDto> getAdminRentHistPage(BookSearchDto bookSearchDto, Pageable pageable) {
-		Page<RentBook> rentBookPage = adminBookRentHistRepository.getAdminRentBookPage(bookSearchDto, pageable);
+		Page<RentBook> rentBookPage = rentBookRepository.getAdminRentBookPage(bookSearchDto, pageable);
 		List<RentBook> rentBookList = rentBookPage.getContent();
 		
 		List<AdminRentHistBookDto> rentBooks = new ArrayList<>();
@@ -52,10 +50,10 @@ public class AdminBookRentHistService {
 	
 	//대출내역 삭제
 	public void deleteAdminRentBook(Long rentBookId) {
-		RentBook rentBook = rentRepository.findById(rentBookId)
+		RentBook rentBook = rentBookRepository.findById(rentBookId)
 							.orElseThrow(EntityNotFoundException::new);
 		
-		rentRepository.delete(rentBook);
+		rentBookRepository.delete(rentBook);
 	}
 	
 }

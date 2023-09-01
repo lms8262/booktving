@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -29,10 +28,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class BookService {
 
-	@Autowired
 	private final BookRepository bookRepository;
 	private final BookDetailRepository bookDetailRepository;
-	private final BookImgService bookImgService;
 	private final BookImgRepository bookImgRepository;
 	private final BookReviewRepository bookReviewRepository;
 	
@@ -72,29 +69,26 @@ public class BookService {
 	}
 	
 	@Transactional
-	public String saveReview(BookReviewDto bookReviewDto) {
-		 
-	        return bookReviewRepository.save(bookReviewDto.createBookReview()).getContent();
-	    }
+	public String saveReview(BookReviewDto bookReviewDto) {	 
+		return bookReviewRepository.save(bookReviewDto.createBookReview()).getContent();
+    }
 	
 	@Transactional(readOnly = true)
 	public Book getBookByIsbn(String isbn) {
-	    return bookDetailRepository.findByIsbn(isbn);
-	            
+		return bookDetailRepository.findByIsbn(isbn);   
 	}
 	
 	@Transactional(readOnly = true)
 	public Optional<Book> getBookById(Long id) {
-	    return bookDetailRepository.findById(id);
-	            
+		return bookDetailRepository.findById(id);        
 	}
 	
 	// isbn 값으로 해당 book 엔티티 데이터를 가져옴.
-	   @Transactional(readOnly = true)
-	   public Book getBook(String isbn){
-	      Book book = bookDetailRepository.findByIsbnOrderByIdAsc(isbn);
-	      return book;
-	   }
+   @Transactional(readOnly = true)
+   public Book getBook(String isbn){
+      Book book = bookDetailRepository.findByIsbnOrderByIdAsc(isbn);
+      return book;
+   }
 	
 	//북티빙 Top10
 	//일간

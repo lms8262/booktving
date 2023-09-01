@@ -27,7 +27,6 @@ public class AdminRentHistBookDto {
 	
 	private static ModelMapper modelMapper = new ModelMapper();
 	
-	
 	public AdminRentHistBookDto(RentBook rentBook) {
 		this.id = rentBook.getId();
 		this.BookId = rentBook.getBook().getId();

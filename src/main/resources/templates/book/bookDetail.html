@@ -5,26 +5,20 @@
 <head>
 <meta name="_csrf" th:content="${_csrf.token}" />
 <meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
+
+
 <th:block layout:fragment="css">
 	<link rel="stylesheet" type="text/css" href="/css/bookDetail.css" />
 </th:block>
-<link
-	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-	rel="stylesheet"
-	integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-	crossorigin="anonymous">
-<script
-	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-	integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-	crossorigin="anonymous"></script>
-</head>
+
 <div layout:fragment="content">
 	<div class="top">
 		<th:block th:each="book, status: ${books}">
 			<div class="content">
 				<div class="book-content">
 					<div class="bookimg">
-						<img src="/images/book1.jpg" class="img">
+						<img th:src="${book.bookImgDtoList[0].imgUrl}" class="img">
 					</div>
 					<div class="bookdetail">
 						<h2 id="bookName" style="font-weight: bolder"
@@ -36,7 +30,7 @@
 							<button type="button" class="like" onclick="like()">
 								<i class="fa-solid fa-heart"></i>&nbsp;찜하기
 							</button>
-							<button type="button" class="rent">
+							<button type="button" class="rent" th:onclick="rent([[${book.isbn}]])">
 								<i class="fa-solid fa-cart-shopping"></i>&nbsp;대여하기
 							</button>
 						</div>
@@ -136,11 +130,12 @@
 <th:block layout:fragment="script">
 	<script th:inline="javascript">
 		$(document).ready(function () {
+			var errorMessage = [[${errorMessage}]];
+			if (errorMessage != null) {
+				alert(errorMessage);
+			}
 		});
-		var errorMessage = [[${errorMessage}]];
-		if (errorMessage != null) {
-			alert(errorMessage);
-		}
+		
 		const sendIt = () => {
 			var f = document.myForm;
 			str = f.reviews.value;
@@ -152,10 +147,7 @@
 			}
 			f.submit();
 		}
-		var errorMessage = [[${errorMessage}]];
-		if (errorMessage != null) {
-			alert(errorMessage);
-		}
+		
 		function like() {
 			var token = $("meta[name='_csrf']").attr("content");
 			var header = $("meta[name='_csrf_header']").attr("content");
@@ -186,6 +178,41 @@
 				}
 			});
 		}
+		
+		function rent(isbn) {
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			
+			$.ajax({
+				type: "POST",
+				url: "/book/bookDetail/rent/" + isbn,
+				contentType: "application/json",
+				beforeSend: function(xhr) {
+			        xhr.setRequestHeader(header, token);
+			    },
+			    success: function(result, status) {
+			    	if(result === -1) {
+			    		alert("이미 대여중인 책입니다.");
+			    	} else {			    		
+				    	alert("도서 대여를 완료했습니다.");
+				    	location.href='/mypage/rentlist';
+			    	}
+			    },
+			    error: function(jqXHR, status, error) {
+			    	if(jqXHR.status == '401'){
+	                    alert('로그인 후 이용해주세요');
+	                    location.href='/login';
+	                } else if(jqXHR.status == '403') {
+	                	alert('이용권 구매가 필요합니다.');
+	                	location.href='/payment';
+	                } else{
+	                    alert(jqXHR.responseText);
+	                }
+			    }
+			});
+		}
+		
+		
 	</script>
 </th:block>
 </html>

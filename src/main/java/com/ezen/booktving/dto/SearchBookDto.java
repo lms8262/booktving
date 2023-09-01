@@ -1,19 +1,19 @@
 package com.ezen.booktving.dto;
 
-import com.querydsl.core.annotations.QueryProjection;
-
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class SearchBookDto {
-	
-	private Long id;
-	
+
 	private String bookName;
 	
 	private String isbn;
@@ -22,12 +22,4 @@ public class SearchBookDto {
 	
 	private String imgUrl;
 	
-	@QueryProjection
-	public SearchBookDto(Long id, String bookName, String isbn, String author, String imgUrl) {
-		this.id = id;
-		this.bookName = bookName;
-		this.isbn = isbn;
-		this.author = author;
-		this.imgUrl = imgUrl;
-	}
 }

@@ -36,6 +36,5 @@ public class NewBookTvingRepositoryCustomImpl implements NewBookTvingRepositoryC
 
 		return new PageImpl<>(content, pageable, total);
 	}
-
 	
 }

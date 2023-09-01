@@ -1,7 +1,6 @@
 package com.ezen.booktving.entity;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import com.ezen.booktving.constant.QuestionStatus;
 

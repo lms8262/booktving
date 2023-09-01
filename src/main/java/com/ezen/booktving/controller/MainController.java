@@ -53,7 +53,7 @@ public class MainController {
 			model.addAttribute("yearRanks", yearRanks);
 			
 		
-		//NEW 북티빙		
+		//NEW 북티빙
 		//상위 4개만 가져오기
 		Pageable pageable2 = PageRequest.of(page.isPresent() ? page.get() : 0 , 4);
 		Page<NewBookTving> newBookTvings = newBookTvingService.getNewBookTving(pageable2);

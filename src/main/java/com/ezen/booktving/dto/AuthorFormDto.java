@@ -6,7 +6,6 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 
 import com.ezen.booktving.entity.Author;
-import com.querydsl.core.annotations.QueryProjection;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;

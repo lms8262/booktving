@@ -108,6 +108,7 @@
 		     <artifactId>modelmapper</artifactId>
 		     <version>3.1.0</version>
 		</dependency>
+
 		<!--sns로그인-->
 		<dependency>
 		    <groupId>org.springframework.security</groupId>
@@ -126,8 +127,23 @@
 		    <groupId>org.springframework.boot</groupId>
 		    <artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
-
+		
+		<!-- iamport Client -->
+		<dependency>
+		    <groupId>com.github.iamport</groupId>
+		    <artifactId>iamport-rest-client-java</artifactId>
+		    <version>0.2.23</version>
+		</dependency>
+		
 	</dependencies>
+	
+	<!-- iamport Client -->
+	<repositories>
+		<repository>
+		    <id>jitpack.io</id>
+		    <url>https://jitpack.io</url>
+		</repository>
+	</repositories>
 
 	<build>
 		<plugins>
