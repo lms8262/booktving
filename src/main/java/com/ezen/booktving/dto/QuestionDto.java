@@ -29,6 +29,8 @@ public class QuestionDto {
    
    private QuestionStatus questionStatus;
    
+   public Member member;
+   
    private static ModelMapper modelMapper = new ModelMapper();
       
    public static QuestionDto of(Question question) {
