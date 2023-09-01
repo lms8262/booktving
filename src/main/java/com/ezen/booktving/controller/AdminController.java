@@ -1,6 +1,7 @@
 package com.ezen.booktving.controller;
 
 import java.security.Principal;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ezen.booktving.dto.AdminRentHistBookDto;
 import com.ezen.booktving.dto.AnswerDto;
@@ -27,6 +29,8 @@ import com.ezen.booktving.dto.AuthorFormDto;
 import com.ezen.booktving.dto.AuthorSearchDto;
 import com.ezen.booktving.dto.BookRegFormDto;
 import com.ezen.booktving.dto.BookSearchDto;
+import com.ezen.booktving.dto.KeywordDto;
+import com.ezen.booktving.dto.KeywordFormDto;
 import com.ezen.booktving.dto.MemberSearchDto;
 import com.ezen.booktving.dto.QuestionDto;
 import com.ezen.booktving.entity.Author;
@@ -37,9 +41,11 @@ import com.ezen.booktving.service.AdminBookRentHistService;
 import com.ezen.booktving.service.AdminQuestionService;
 import com.ezen.booktving.service.AuthorService;
 import com.ezen.booktving.service.BookRegService;
+import com.ezen.booktving.service.KeyWordService;
 import com.ezen.booktving.service.MemberService;
 import com.ezen.booktving.service.QuestionService;
 
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -51,6 +57,7 @@ public class AdminController {
 	private final BookRegService bookRegService;
 	private final AdminBookRentHistService adminBookRentHistService;
 	private final MemberService memberService;
+	private final KeyWordService keyWordService;
 	private final QuestionService questionService;
 	private final AdminQuestionService adminQuestionService;
 
@@ -210,11 +217,65 @@ public class AdminController {
 		return new ResponseEntity<Long>(rentBookId, HttpStatus.OK);
 	}
 
-	// 키워드관리 페이지 보여주기
-	@GetMapping(value = "/admin/keyword")
-	public String adminKeyword() {
+	// 추천 키워드 관리 페이지 보여주기
+	@GetMapping(value = "/admin/keyword/recommend")
+	public String adminRecommendKeyword(@RequestParam(required = false) String searchKeywordName, @RequestParam Optional<Integer> page, Model model) {
 
-		return "admin/adminKeyword";
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
+		Page<KeywordDto> keywordDtoList = keyWordService.getRecommendKeywordList(searchKeywordName, pageable);
+
+		model.addAttribute("keywordDtoList", keywordDtoList);
+		model.addAttribute("maxPage", 5);
+		return "admin/adminRecommendKeyword";
+	}
+
+	// 추천 키워드 등록
+	@PostMapping(value = "/admin/keyword/recommend/append")
+	public String appendRecommendKeyword(@Valid KeywordFormDto keywordFormDto, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
+		if(bindingResult.hasErrors()) {
+			redirectAttributes.addFlashAttribute("errorMessage", bindingResult.getFieldError().getDefaultMessage());
+			return "redirect:/admin/keyword/recommend";
+		}
+
+		try {
+			keyWordService.appendRecommendKeyword(keywordFormDto);
+		} catch (RuntimeException e) {
+			e.printStackTrace();
+			redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+			return "redirect:/admin/keyword/recommend";
+		}
+
+		return "redirect:/admin/keyword/recommend";
+	}
+
+	// 추천 키워드 끌어올리기 기능
+	@PostMapping(value = "/admin/keyword/recommend/pullUp")
+	@ResponseBody
+	public ResponseEntity pullUpRecommendKeyword(@RequestParam(value = "keywordIdList[]") List<Long> keywordIdList) {
+		Collections.reverse(keywordIdList);
+
+		try {			
+			keyWordService.pullUpRecommendKeyword(keywordIdList);
+		} catch (EntityNotFoundException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+	// 추천 키워드 삭제하는 기능
+	@DeleteMapping(value = "/admin/keyword/recommend/delete")
+	@ResponseBody
+	public ResponseEntity deleteRecommendKeyword(@RequestParam(value = "keywordIdList[]") List<Long> keywordIdList) {
+		try {
+			keyWordService.deleteRecommendKeyword(keywordIdList);
+		} catch (EntityNotFoundException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	// 추천작가 관리 페이지 보여주기
