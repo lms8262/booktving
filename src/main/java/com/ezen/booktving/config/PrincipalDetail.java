@@ -1,6 +1,5 @@
 package com.ezen.booktving.config;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 import org.springframework.security.core.GrantedAuthority;
@@ -18,24 +17,20 @@ public class PrincipalDetail implements UserDetails {
 
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		Collection<GrantedAuthority> collectors = new ArrayList<>();
-
-		collectors.add(() -> {
-			return "ROLE_" + member.getRole();
-		});
-		return collectors;
+		
+		return null;
 	}
 
 	@Override
 	public String getPassword() {
 		// TODO Auto-generated method stub
-		return member.getPassword();
+		return null;
 	}
 
 	@Override
 	public String getUsername() {
 		// TODO Auto-generated method stub
-		return member.getEmail();
+		return null;
 	}
 
 	@Override

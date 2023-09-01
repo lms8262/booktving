@@ -38,19 +38,19 @@
 
 	<div class="search-result container">
 		<h5>
-			검색결과&nbsp;&nbsp;<span>[[${searchCount}]]</span>
+			검색결과&nbsp;&nbsp;<span>[[${firstSearchResult.totalItems}]]</span>
 		</h5>
 		<div class="container">
 			<div id="search-data" class="row row-cols-md-6 g-4">
 				
-				<th:block th:if="${!#lists.isEmpty(searchBookList.getContent())}" th:each="searchBook : ${searchBookList.getContent()}">
+				<th:block th:if="${!#lists.isEmpty(firstSearchResult.getItems())}" th:each="searchBook : ${firstSearchResult.getItems()}">
 					<div class="search-card col-2">
 						<div class="card">
-							<a th:href="@{/search/detail/update/} + ${searchBook.isbn}">
+							<a th:href="@{/book/bookDetail/} + ${searchBook.isbn}">
 								<img th:src="${searchBook.imgUrl}" class="card-img-top" alt="이미지">
 							</a>
-							<a th:href="@{/search/detail/update/} + ${searchBook.isbn}">
-								<div class="card-body" th:data-last-book-id="${searchBook.id}">
+							<a th:href="@{/book/bookDetail/} + ${searchBook.isbn}">
+								<div class="card-body">
 									<h5 class="card-title">[[${searchBook.bookName}]]</h5>
 									<p class="card-text">[[${searchBook.author}]]</p>
 								</div>
@@ -61,7 +61,7 @@
 				
 				
 			</div>
-			<div th:if="${#lists.isEmpty(searchBookList.getContent())}">검색 결과가 존재하지 않습니다.</div>
+			<div th:if="${#lists.isEmpty(firstSearchResult.getItems())}">검색 결과가 존재하지 않습니다.</div>
 		</div>
 		
 	</div>
@@ -70,15 +70,15 @@
 
 <th:block layout:fragment="script">
 	<script th:inline="javascript">
-		var bookSearchDto = [[${bookSearchDto}]];
-		var pageable = [[${searchBookList.pageable}]];
-		var last = [[${searchBookList.last}]];
+		var bookSearchDto = [[${firstSearchResult.bookSearchDto}]];
+		var last = [[${firstSearchResult.last}]];
+		var currentPage = [[${firstSearchResult.currentPage}]];
 		
 		$(document).ready(function() {
 			
-			$("#searchBy").val([[${bookSearchDto.searchBy}]]).prop("selected", true);
+			$("#searchBy").val([[${firstSearchResult.bookSearchDto.searchBy}]]).prop("selected", true);
 			
-			$("#searchQuery").val([[${bookSearchDto.searchQuery}]]);
+			$("#searchQuery").val([[${firstSearchResult.bookSearchDto.searchQuery}]]);
 			
 			$("#searchBtn").on("click", function(e) {
 				e.preventDefault(); // submit 방지
@@ -123,11 +123,9 @@
 			var token = $("meta[name='_csrf']").attr("content");
 	        var header = $("meta[name='_csrf_header']").attr("content");
 	        
-	        var lastBookId = $(".card-body:last").data('last-book-id');
 	        var paramData = {
-        		lastBookId : lastBookId,
         		bookSearchDto : bookSearchDto,
-        		pageable : pageable, 
+        		currentPage : currentPage
 	        }
 	        
 	        var param = JSON.stringify(paramData);
@@ -146,11 +144,11 @@
 	            success  : function(result, status){
 	            	// 다음 페이지 요청시 필요한 데이터 업데이트
 	            	bookSearchDto = result.bookSearchDto;
-	            	pageable = result.searchBookList.pageable;
-	            	last = result.searchBookList.last;
+	            	last = result.last;
+	            	currentPage = result.currentPage;
 	            	
 	            	// 화면에 데이터 추가
-	            	addNextBookList(result.searchBookList.content);
+	            	addNextBookList(result.items);
 	            },
 	            error : function(jqXHR, status, error){
 	                if(jqXHR.status == '401'){
@@ -164,17 +162,17 @@
 		}
 		
 		// 가져온 데이터 화면에 추가
-		function addNextBookList(contents) {
-			for(let i = 0; i < contents.length; i++) {
+		function addNextBookList(items) {
+			for(let i = 0; i < items.length; i++) {
 				var appendData = `<div class="search-card col-2">
 					<div class="card">
-					<a href="/search/detail/update/${contents[i].isbn}">
-						<img src="${contents[i].imgUrl}" class="card-img-top" alt="이미지">
+					<a href="/book/bookDetail/${items[i].isbn}">
+						<img src="${items[i].imgUrl}" class="card-img-top" alt="이미지">
 					</a>
-					<a href="/search/detail/update/${contents[i].isbn}">
-						<div class="card-body" data-last-book-id="${contents[i].id}">
-							<h5 class="card-title">${contents[i].bookName}</h5>
-							<p class="card-text">${contents[i].author}</p>
+					<a href="/book/bookDetail/${items[i].isbn}">
+						<div class="card-body">
+							<h5 class="card-title">${items[i].bookName}</h5>
+							<p class="card-text">${items[i].author}</p>
 						</div>
 					</a>
 				</div>

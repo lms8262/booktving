@@ -10,9 +10,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
-import org.thymeleaf.util.StringUtils;
 
-import com.ezen.booktving.constant.Role;
 import com.ezen.booktving.dto.AuthorBookDto;
 import com.ezen.booktving.dto.AuthorBookImgDto;
 import com.ezen.booktving.dto.AuthorDtoList;
@@ -23,12 +21,10 @@ import com.ezen.booktving.entity.Author;
 import com.ezen.booktving.entity.AuthorBook;
 import com.ezen.booktving.entity.AuthorBookImg;
 import com.ezen.booktving.entity.AuthorImg;
-import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.repository.AuthorBookImgRepository;
 import com.ezen.booktving.repository.AuthorBookRepository;
 import com.ezen.booktving.repository.AuthorImgRepository;
 import com.ezen.booktving.repository.AuthorRepository;
-import com.ezen.booktving.repository.MemberRepository;
 
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -43,7 +39,6 @@ public class AuthorService {
 	private final AuthorImgRepository authorImgRepository;
 	private final AuthorBookImgRepository authorBookImgRepository;
 	private final AuthorImgService authorImgService;
-	private final MemberRepository memberRepository;
 	private final ModelMapper modelMapper;
 	
 	
@@ -131,7 +126,7 @@ public class AuthorService {
 			AuthorBookDto authorBookDto = AuthorBookDto.of(authorBook, modelMapper);
 			
 			//작가도서이미지 정보 가져오기
-			AuthorBookImg authorBookImg = authorBookImgRepository.findByAuthorBookIdOrderByIdAsc(authorBook.getId());
+			AuthorBookImg authorBookImg = authorBookImgRepository.findTop1ByAuthorBookIdOrderByIdAsc(authorBook.getId());
 			AuthorBookImgDto authorBookImgDto = AuthorBookImgDto.of(authorBookImg, modelMapper);
 			
 			authorBookDto.setAuthorBookImgDto(authorBookImgDto);			

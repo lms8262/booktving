@@ -6,6 +6,6 @@ import com.ezen.booktving.entity.AuthorBookImg;
 
 public interface AuthorBookImgRepository extends JpaRepository<AuthorBookImg, Long>{
 	
-	AuthorBookImg findByAuthorBookIdOrderByIdAsc(Long authorBookId);
+	AuthorBookImg findTop1ByAuthorBookIdOrderByIdAsc(Long authorBookId);
 
 }

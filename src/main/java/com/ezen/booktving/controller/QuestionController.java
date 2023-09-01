@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ezen.booktving.dto.QuestionDto;
-import com.ezen.booktving.entity.Question;
 import com.ezen.booktving.service.QuestionService;
 
 import lombok.RequiredArgsConstructor;
