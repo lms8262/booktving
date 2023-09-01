@@ -142,4 +142,9 @@ public class MemberService implements UserDetailsService {
 		}
 		memberRepository.delete(member);
 	}
+
+	public void saveMember(Member member) {
+		// TODO Auto-generated method stub
+		
+	}
 }

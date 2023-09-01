@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ezen.booktving.auth.PrincipalDetails;
 import com.ezen.booktving.dto.LoginFormDto;
 import com.ezen.booktving.dto.MemberFormDto;
 import com.ezen.booktving.entity.Member;
@@ -45,6 +47,8 @@ public class LoginCotroller {
 		return "login/login";
 	}
 
+
+
 	// 로그인 실패했을때
 	@GetMapping(value = "/login/error")
 	public String loginError(Model model) {
@@ -53,6 +57,7 @@ public class LoginCotroller {
 
 	}
 
+//회원가입
 	@GetMapping(value = "/login/new")
 	public String membership(Model model) {
 		model.addAttribute("loginFormDto", new LoginFormDto());
@@ -71,8 +76,10 @@ public class LoginCotroller {
 			model.addAttribute("errorMessage", e.getMessage());
 			return "membership/memberloginForm";
 		}
-		return "redirect:/";
+		return "membership/memberloginForm";
 	}
+
+//소셜 로그인
 
 	// 아이디 찾기
 	@GetMapping("/findid")
@@ -176,7 +183,7 @@ public class LoginCotroller {
 
 //회원탈퇴
 	@DeleteMapping(value = "/login/{userId}/delete")
-	public ResponseEntity<String> deleteMember2(@PathVariable("userId") String userId ,Principal principal) {
+	public ResponseEntity<String> deleteMember2(@PathVariable("userId") String userId, Principal principal) {
 		try {
 			memberService.deleteMember2(userId);
 			return new ResponseEntity<>("탈퇴했습니다.", HttpStatus.OK);

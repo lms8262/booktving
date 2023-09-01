@@ -1,5 +1,7 @@
 package com.ezen.booktving.repository;
 
+import java.util.Optional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.ezen.booktving.constant.Role;
@@ -13,23 +15,17 @@ public interface MemberRepository extends JpaRepository<Member, Long>, MemberRep
 	Member findByEmail(String email);
 
 	Member findByTel(String tel);
-	
+
 	Member findByUserIdAndEmail(String userId, String Email);
+
 	/*
 	 * @Select("SELECT SELECT MID FROM member WHERE MID= #{mid}") String
 	 * checkIdUser(@Param("mid")String mid);
 	 */
-	
+	Optional<Member> findByEmailAndProvider(String email, String provider);
+
 	Member findByRole(Role role);
 
 	Member findByMemberName(String name);
-
-
-
-
-
-	
-
-	
 
 }

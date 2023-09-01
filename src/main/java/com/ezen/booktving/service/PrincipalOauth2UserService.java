@@ -1,18 +1,15 @@
 package com.ezen.booktving.service;
 
-import java.util.UUID;
-
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
 import org.springframework.security.oauth2.client.userinfo.OAuth2UserRequest;
 import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import com.ezen.booktiving.info.GoogleUserInfo;
-import com.ezen.booktiving.info.KakaoUserInfo;
-import com.ezen.booktiving.info.Oauth2UserInfo;
-import com.ezen.booktving.config.PrincipalDetails;
+import com.ezen.booktving.auth.GoogleUserInfo;
+import com.ezen.booktving.auth.KakaoMemberInfo;
+import com.ezen.booktving.auth.OAuth2UserInfo;
+import com.ezen.booktving.auth.PrincipalDetails;
 import com.ezen.booktving.constant.Role;
 import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.repository.MemberRepository;
@@ -25,43 +22,35 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 	private final MemberRepository memberRepository;
-	private final PasswordEncoder passwordEncoder;
 
 	@Override
 	public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 
 		OAuth2User oAuth2User = super.loadUser(userRequest);
-
-		Oauth2UserInfo oAuth2UserInfo = null;
+		OAuth2UserInfo oAuth2UserInfo = null;
 
 		String provider = userRequest.getClientRegistration().getRegistrationId(); // google
 
 		if (provider.equals("google")) {
 			oAuth2UserInfo = new GoogleUserInfo(oAuth2User.getAttributes());
 		} else if (provider.equals("kakao")) {
-			oAuth2UserInfo = new KakaoUserInfo(oAuth2User.getAttributes());
-		} else if (provider.equals("naver")) {
-
+			oAuth2UserInfo = new KakaoMemberInfo(oAuth2User.getAttributes());
 		}
 
 		String providerId = oAuth2UserInfo.getProviderId();
 		String username = oAuth2UserInfo.getName();
-		String uuid = UUID.randomUUID().toString().substring(0, 6);
-		String password = passwordEncoder.encode("패스워드" + uuid); // 사용자가 입력한 적은 없지만 만들어준다
+		String password = "SNS 로그인"; // 사용자가 입력한 적은 없지만 만들어준다
 
 		String email = oAuth2UserInfo.getEmail();
-		Role role = Role.ADMIN;
+		Role role = Role.ROLE_WAIT;
 
-		Member byUsername = memberRepository.findByEmail(email);
+		Member member = memberRepository.findByEmail(email);
 
-		// DB에 없는 사용자라면 회원가입처리
-		if (byUsername == null) {
-			byUsername = Member.oauth2Register().memberName(username).password(password).email(email).role(role)
+		if (member == null) {
+			member = Member.oauth2Register().email(email).name(username).password(password).role(role)
 					.provider(provider).providerId(providerId).build();
-			memberRepository.save(byUsername);
 		}
 
-		return new PrincipalDetails(byUsername, oAuth2UserInfo);
+		return new PrincipalDetails(member, oAuth2UserInfo);
 	}
-
 }

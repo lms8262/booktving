@@ -3,6 +3,9 @@ package com.ezen.booktving.dto;
 import java.time.LocalDate;
 
 import org.hibernate.validator.constraints.Length;
+import org.modelmapper.ModelMapper;
+
+import com.ezen.booktving.entity.Member;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -40,5 +43,14 @@ public class LoginFormDto {
 
 	private String Provider;
 	private String ProviderId;
+	private static ModelMapper modelMapper = new ModelMapper();
 
+	public static LoginFormDto of(Member member) {
+		return modelMapper.map(member, LoginFormDto.class);
+	}
+
+	public void setName(String name) {
+		// TODO Auto-generated method stub
+		
+	}
 }

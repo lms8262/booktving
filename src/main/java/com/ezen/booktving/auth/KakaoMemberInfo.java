@@ -1,14 +1,14 @@
-package com.ezen.booktiving.info;
+package com.ezen.booktving.auth;
 
 import java.util.Map;
 
-public class KakaoUserInfo implements Oauth2UserInfo {
+public class KakaoMemberInfo implements OAuth2UserInfo {
 	private Map<String, Object> attributes;
 	private Map<String, Object> attributesAccount;
 	private Map<String, Object> attributesProfile;
 
-	public KakaoUserInfo(Map<String, Object> attributes) {
-
+	
+	public KakaoMemberInfo(Map<String, Object> attributes) {
 		this.attributes = attributes;
 		this.attributesAccount = (Map<String, Object>) attributes.get("kakao_account");
 		this.attributesProfile = (Map<String, Object>) attributesAccount.get("profile");
@@ -31,14 +31,7 @@ public class KakaoUserInfo implements Oauth2UserInfo {
 
 	@Override
 	public String getEmail() {
-
-		String email = attributesAccount.get("email").toString();
-
-		if (attributesAccount.get("email") == null) {
-			email = "email_disagree";
-		}
-
-		return email;
+		return attributesAccount.get("email").toString();
 	}
 
 	@Override

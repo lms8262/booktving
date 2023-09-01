@@ -18,7 +18,7 @@ import lombok.Setter;
 @Getter
 @Setter
 public class MemberFormDto {
-	// private Long id;
+	private Long id;
 
 	@NotBlank(message = "아이디는 필수 입력 값입니다.")
 	private String userId;
@@ -42,7 +42,7 @@ public class MemberFormDto {
 
 	@NotNull(message = "생년월일은 필수 입력 값입니다.")
 	private LocalDate birth;
-
+	
 	private Role role;
 
 	private static ModelMapper modelMapper = new ModelMapper();
@@ -56,4 +56,3 @@ public class MemberFormDto {
 	}
 
 }
-
