@@ -34,7 +34,6 @@
 }
 
 .bookdetail {
-	height: 400px;
 	margin-top: 70px;
 	margin-left: 50px;
 }
@@ -172,7 +171,6 @@ h6 {
 }
 
 span {
-	display: block;
 	font-size: 13px;
 }
 
@@ -223,4 +221,8 @@ input {
 
 .review-form {
 	display: flex;
+}
+
+button:hover {
+	cursor: pointer;
 }

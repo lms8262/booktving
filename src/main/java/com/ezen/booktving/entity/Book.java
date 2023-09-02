@@ -2,10 +2,12 @@ package com.ezen.booktving.entity;
 
 import java.time.LocalDate;
 
+import com.ezen.booktving.dto.BookImgDto;
 import com.ezen.booktving.dto.BookRegFormDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,7 +19,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Entity
 @Table(name = "book")
@@ -61,18 +65,11 @@ public class Book extends BaseTimeEntity {
 	@Column(columnDefinition = "text", nullable = false)
 	private String contents;
 	
-	@Column(nullable = false)
-	private String reqAuthor;
-	
 	@Column(columnDefinition = "text", nullable = false)
 	private String authorInfo;
-	
-	public void updateBookDetail(Integer page, String contents, String reqAuthor, String authorInfo) {
-		this.page = page;
-		this.contents = contents;
-		this.reqAuthor = reqAuthor;
-		this.authorInfo = authorInfo;
-	}
+
+	@OneToMany(mappedBy = "book", fetch = FetchType.LAZY)
+	private List<BookImg> bookImgList;
 
 	//book 엔티티 수정
 	public void updateBook(BookRegFormDto bookRegFormDto) {
@@ -85,6 +82,11 @@ public class Book extends BaseTimeEntity {
 		this.bookIntroduction = bookRegFormDto.getBookIntroduction();
 		this.contents = bookRegFormDto.getContents();
 		this.category = bookRegFormDto.getCategory();
+	}
 
+	public List<BookImgDto> getBookImgDtoList() {
+		return bookImgList.stream()
+	            .map(BookImgDto::of) // BookImg 엔티티를 BookImgDto로 변환
+	            .collect(Collectors.toList());
 	}
 }

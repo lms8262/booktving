@@ -1,7 +1,6 @@
 package com.ezen.booktving.dto;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import org.modelmapper.ModelMapper;
 
@@ -17,27 +16,24 @@ import lombok.*;
 @ToString
 @NoArgsConstructor
 public class QuestionDto {
-	private Long id;
-	
-	@NotBlank
-	private String title;
-	
-	@NotBlank
-	private String content;
-	
-	private Member member;
-	
-	private LocalDate questionDate;
-	
-	private QuestionStatus questionStatus;
-	
-	private static ModelMapper modelMapper = new ModelMapper();
-		
-	public Question createQuestion() {
-		return modelMapper.map(this, Question.class);
-	}
-	
-	public static QuestionDto of(Question question) {
-		return modelMapper.map(question, QuestionDto.class);
-	}
+   private Long id;
+   
+   @NotBlank
+   private String title;
+   
+   @NotBlank
+   private String content;
+   
+   private LocalDate questionDate;
+   
+   private QuestionStatus questionStatus;
+   
+   public Member member;
+   
+   private static ModelMapper modelMapper = new ModelMapper();
+      
+   public static QuestionDto of(Question question) {
+      QuestionDto questionDto = modelMapper.map(question, QuestionDto.class);
+      return questionDto;
+   }
 }

@@ -7,7 +7,6 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.thymeleaf.util.StringUtils;
 
-import com.ezen.booktving.dto.KeywordDto;
 import com.ezen.booktving.entity.QRecommendKeyword;
 import com.ezen.booktving.entity.RecommendKeyword;
 import com.querydsl.core.types.dsl.BooleanExpression;

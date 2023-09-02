@@ -27,8 +27,9 @@ public class SecurityConfig {
 	private final PrincipalOauth2UserService principalOauth2UserService;
 	private final DataSource dataSource;
 
-	@Lazy//지연로딩, 실제사용될 때 로딩
-	public SecurityConfig(PrincipalOauth2UserService principalOauth2UserService, UserDetailsService userDetailsService, DataSource dataSource) {
+	@Lazy // 지연로딩, 실제사용될 때 로딩
+	public SecurityConfig(PrincipalOauth2UserService principalOauth2UserService, UserDetailsService userDetailsService,
+			DataSource dataSource) {
 		this.principalOauth2UserService = principalOauth2UserService;
 		this.dataSource = dataSource;
 		this.userDetailsService = userDetailsService;
@@ -38,22 +39,17 @@ public class SecurityConfig {
 	MvcRequestMatcher.Builder mvc(HandlerMappingIntrospector introspector) {
 		return new MvcRequestMatcher.Builder(introspector);
 	}
-	
+
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http, MvcRequestMatcher.Builder mvc) throws Exception {
 
 		http.authorizeHttpRequests(authorize -> authorize // 페이지 접근에 관한
 				// 모든 사용자가 로그인(인증) 없이 접근할수 있도록 설정
-				.requestMatchers(mvc.pattern("/css/**"), mvc.pattern("/js/**"), mvc.pattern("/images/**"),
-						mvc.pattern("/fontawesome-free-6.3.0-web/**"))
-				.permitAll().requestMatchers(mvc.pattern("/"), mvc.pattern("/membership/**"), mvc.pattern("/login/**"))
-				.permitAll()
-				.requestMatchers(mvc.pattern("/favicon.ico"), mvc.pattern("/error"), mvc.pattern("/image/**"))
-				.permitAll().requestMatchers(mvc.pattern("/findid"), mvc.pattern("/findpw")).permitAll()
-				.requestMatchers(mvc.pattern("/category/**"), mvc.pattern("/search/**"), mvc.pattern("/question/**"),
-						mvc.pattern("/author/**"), mvc.pattern("/book/**"), mvc.pattern("/mylibrary/**"),
-						mvc.pattern("/mypage/**"))
-				.permitAll()
+				.requestMatchers(mvc.pattern("/css/**"), mvc.pattern("/js/**"), mvc.pattern("/images/**"),mvc.pattern("/fontawesome-free-6.3.0-web/**")).permitAll()
+				.requestMatchers(mvc.pattern("/"), mvc.pattern("/membership/**"), mvc.pattern("/login/**")).permitAll()
+				.requestMatchers(mvc.pattern("/favicon.ico"), mvc.pattern("/error"),mvc.pattern("/image/**")).permitAll()
+				.requestMatchers(mvc.pattern("/findid"),mvc.pattern("/findpw"),mvc.pattern("/payment")).permitAll()
+				.requestMatchers(mvc.pattern("/category/**"), mvc.pattern("/search/**"), mvc.pattern("/question/**"),mvc.pattern("/author/**"), mvc.pattern("/book/**"), mvc.pattern("/mylibrary/**") ,mvc.pattern("/mypage/**")).permitAll()
 				// 'admin'으로 시작하는 경로는 관리자만 접근가능하도록 설정
 				.requestMatchers(mvc.pattern("/admin/**")).permitAll()// hasRole("ADMIN")
 				.anyRequest().authenticated())// 그외 페이지는 모두 로그인 (인증을 받아야한다.)
@@ -78,6 +74,7 @@ public class SecurityConfig {
 
 		return http.build();
 	}
+
 	@Bean
 	public PasswordEncoder passwordEncoder() {
 		return new BCryptPasswordEncoder();
@@ -90,4 +87,3 @@ public class SecurityConfig {
 	}
 
 }
-

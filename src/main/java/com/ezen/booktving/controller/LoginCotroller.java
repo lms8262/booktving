@@ -22,7 +22,6 @@ import com.ezen.booktving.dto.LoginFormDto;
 import com.ezen.booktving.dto.MemberFormDto;
 import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.repository.MemberRepository;
-import com.ezen.booktving.service.IdService;
 import com.ezen.booktving.service.MemberService;
 import com.ezen.booktving.service.RamdomPassword;
 
@@ -34,7 +33,6 @@ import lombok.RequiredArgsConstructor;
 public class LoginCotroller {
 
 	private final MemberService memberService;
-	private final IdService idService;
 	private final MemberRepository memberRepository;
 	private final RamdomPassword randomPassword;
 	private final PasswordEncoder passwordEncoder;

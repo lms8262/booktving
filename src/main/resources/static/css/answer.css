@@ -1,0 +1,14 @@
+@charset "UTF-8";
+
+.admin-member-search {
+	margin-right: 0 !important;
+}
+
+.search-btn-box {
+	display: flex;
+}
+
+.page-item.active .page-link {
+	background-color: #FFD360;
+	border-color:#FFD360;
+}

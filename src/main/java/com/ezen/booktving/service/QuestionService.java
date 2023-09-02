@@ -21,60 +21,58 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 @RequiredArgsConstructor
 public class QuestionService {
-	@Autowired
-	private QuestionRepository questionRepo;
-	@Autowired
-	private MemberRepository memberRepo;
 	
-	public QuestionService(QuestionRepository questionRepo) {
-		this.questionRepo = questionRepo;
-	}
+	private final QuestionRepository questionRepository;
 	
+	private final MemberRepository memberRepository;
+
 	@Transactional
-	public String savePost(QuestionDto questionDto) {
-		return questionRepo.save(questionDto.createQuestion()).getTitle();
+	public String savePost(QuestionDto questionDto, String userId) {
+		Member member = memberRepository.findByUserId(userId);
+		Question question = Question.createQuestion(questionDto, member);
+		questionRepository.save(question);
+		
+		return question.getTitle();
 	}
-	
+
 	@Transactional
 	public List<QuestionDto> getQuestionList() {
-		List<Question> questionList = questionRepo.findAll();
+		List<Question> questionList = questionRepository.findAll();
 		List<QuestionDto> questionDtoList = new ArrayList<>();
-		
-		for(Question question : questionList) {
+
+		for (Question question : questionList) {
 			QuestionDto questionDto = QuestionDto.of(question);
 			questionDtoList.add(questionDto);
 		}
-		
+
 		return questionDtoList;
 	}
-	
+
 	public QuestionDto getQuestionById(Long id) {
-	    Question question = questionRepo.findById(id).orElse(null);
-	    if (question != null) {
-	        return QuestionDto.of(question);
-	    }
-	    return null; // 또는 적절한 처리를 수행
+		Question question = questionRepository.findById(id).orElse(null);
+		if (question != null) {
+			return QuestionDto.of(question);
+		}
+		return null; // 또는 적절한 처리를 수행
 	}
-	
+
 	@Transactional(readOnly = true)
 	public boolean validateQue(Long id, String userId) {
-		Member curMember = memberRepo.findByUserId(userId);
-		Question question = questionRepo.findById(id)
-											.orElseThrow(EntityNotFoundException::new);
-		
+		Member curMember = memberRepository.findByUserId(userId);
+		Question question = questionRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+
 		Member savedMember = question.getMember();
-		
-		if(!StringUtils.equals(curMember.getId(), savedMember.getId())) {
+
+		if (!StringUtils.equals(curMember.getId(), savedMember.getId())) {
 			return false;
 		}
-		
+
 		return true;
 	}
-	
+
 	public void deleteQuestion(Long id) {
-		Question question = questionRepo.findById(id)
-				.orElseThrow(EntityNotFoundException::new);
-		
-		questionRepo.delete(question);
+		Question question = questionRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+
+		questionRepository.delete(question);
 	}
 }

@@ -10,5 +10,6 @@ public interface AuthorBookRepository extends JpaRepository<AuthorBook, Long> , 
 	
 	List<AuthorBook> findByAuthorId(Long authorId);
 	
+	List<AuthorBook> findByAuthorIdOrderByIdAsc(Long authorId);
 
 }

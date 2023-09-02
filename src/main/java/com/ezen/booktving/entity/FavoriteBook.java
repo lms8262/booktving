@@ -1,7 +1,8 @@
 package com.ezen.booktving.entity;
 
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
+import java.util.List;
+
+import com.ezen.booktving.dto.BookImgDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,6 +13,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -41,7 +43,10 @@ public class FavoriteBook extends BaseTimeEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "book_id", nullable = false)
 	private Book book;
-
+	
+	@Transient // 이 필드는 데이터베이스에 매핑하지 않음
+    private List<BookImgDto> bookImgDtoList;
+	
 	public static FavoriteBook createFavoriteBook(Member member, Book book) {
 		FavoriteBook favoriteBook = new FavoriteBook();
 		favoriteBook.setMember(member);

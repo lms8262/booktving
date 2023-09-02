@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.DeleteMapping; 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ezen.booktving.dto.QuestionDto;
-import com.ezen.booktving.entity.Question;
 import com.ezen.booktving.service.QuestionService;
 
 import lombok.RequiredArgsConstructor;
@@ -29,21 +28,21 @@ public class QuestionController {
 	
 	@RequestMapping(value = "/question/questionInfo")
 	public String questionInfo() {
-		
 		return "question/questionInfo";
 	}
 	
 	@GetMapping(value = "/question/questionCreate")
-	public String questionCreate() {
-		
+	public String create(Model model) {
+		model.addAttribute("questionDto", new QuestionDto());
 		return "question/questionCreate";
 	}
 	
 	@PostMapping(value = "/question/questionCreate")
-	public String recCreate(QuestionDto questionDto) {
-		questionService.savePost(questionDto);
+    public String questionCreate(QuestionDto questionDto, Principal principal) {
+		String userId = principal.getName();
+		questionService.savePost(questionDto, userId);
 		return "question/questionInfo";
-	}
+   }
 	
 	@GetMapping(value = "/question/questionList")
 	public String questionList(Model model) {
@@ -57,6 +56,12 @@ public class QuestionController {
 	    QuestionDto questionDto = questionService.getQuestionById(id);
 	    model.addAttribute("question", questionDto);
 	    return "question/questionDetail";
+	}
+	
+	@GetMapping(value = "/question/questionAnswer")
+	public String questionAnswer() {
+		
+		return "question/questionAnswer";
 	}
 	
 	@DeleteMapping("/question/{id}/delete")

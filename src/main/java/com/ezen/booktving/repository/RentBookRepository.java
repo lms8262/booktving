@@ -11,7 +11,7 @@ import org.springframework.data.repository.query.Param;
 import com.ezen.booktving.dto.BookTvingTop10Dto;
 import com.ezen.booktving.entity.RentBook;
 
-public interface RentRepository extends JpaRepository<RentBook, Long>{
+public interface RentBookRepository extends JpaRepository<RentBook, Long>, RentBookRepositoryCustom{
 	
 	@Query("select r from RentBook r where r.member.userId = :userId order by r.rentDate desc")
 	List<RentBook> findRents(@Param("userId") String userId, Pageable pageable);

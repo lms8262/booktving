@@ -125,7 +125,7 @@ public class AuthorService {
 			AuthorBookDto authorBookDto = AuthorBookDto.of(authorBook, modelMapper);
 			
 			//작가도서이미지 정보 가져오기
-			AuthorBookImg authorBookImg = authorBookImgRepository.findByAuthorBookIdOrderByIdAsc(authorBook.getId());
+			AuthorBookImg authorBookImg = authorBookImgRepository.findTop1ByAuthorBookIdOrderByIdAsc(authorBook.getId());
 			AuthorBookImgDto authorBookImgDto = AuthorBookImgDto.of(authorBookImg, modelMapper);
 			
 			authorBookDto.setAuthorBookImgDto(authorBookImgDto);			

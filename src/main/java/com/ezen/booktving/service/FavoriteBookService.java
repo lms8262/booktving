@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -13,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ezen.booktving.constant.YesNoStatus;
+import com.ezen.booktving.dto.BookImgDto;
 import com.ezen.booktving.dto.FavoriteBookDto;
 import com.ezen.booktving.dto.FavoriteBookDtoList;
 import com.ezen.booktving.entity.Book;
@@ -30,6 +30,7 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 @RequiredArgsConstructor
 public class FavoriteBookService {
+	
 	private final FavoriteBookRepository favoriteBookRepository;
 	private final BookRepository bookRepository;
 	private final MemberRepository memberRepository;
@@ -65,9 +66,14 @@ public class FavoriteBookService {
     public List<FavoriteBookDto> getFavoriteBooksByMember(String userId) {
     	Member member = memberRepository.findByUserId(userId);
     	List<FavoriteBook> favoriteBooks = favoriteBookRepository.findByMember(member);
-    	List<FavoriteBookDto> favoriteBookDtos = favoriteBooks.stream().map(FavoriteBookDto::of)
-				.collect(Collectors.toList());
-        return favoriteBookDtos;
+    	List<FavoriteBookDto> favoriteBookDtos = favoriteBooks.stream().map(favoriteBook -> {
+            FavoriteBookDto dto = FavoriteBookDto.of(favoriteBook);
+            List<BookImgDto> bookImgDtos = favoriteBook.getBook().getBookImgDtoList();
+            dto.setBookImgDtoList(bookImgDtos);
+            return dto;
+        })
+        .collect(Collectors.toList());
+return favoriteBookDtos;
     }
 
     

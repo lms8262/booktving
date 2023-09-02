@@ -13,9 +13,7 @@ import com.ezen.booktving.constant.YesNoStatus;
 import com.ezen.booktving.dto.BookRentHistDto;
 import com.ezen.booktving.entity.RentBook;
 import com.ezen.booktving.repository.BookImgRepository;
-import com.ezen.booktving.repository.BookRepository;
-import com.ezen.booktving.repository.MemberRepository;
-import com.ezen.booktving.repository.RentRepository;
+import com.ezen.booktving.repository.RentBookRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,9 +21,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Transactional
 public class MypageRentBookService {
-	private final RentRepository rentRepository;
-	private final BookRepository bookRepository;
-	private final MemberRepository memberRepository;
+	private final RentBookRepository rentBookRepository;
 	private final BookImgRepository bookImgRepository;
 	
 	//대여목록 가져오는 서비스
@@ -33,10 +29,10 @@ public class MypageRentBookService {
 	public Page<BookRentHistDto> getBookRentHistList(String userId, Pageable pageable) {
 		
 		//1. 유저 아이디와 페이징 조건을 이용하여 대여 목록을 조회
-		List<RentBook> rentbooks = rentRepository.findRents(userId, pageable);
+		List<RentBook> rentbooks = rentBookRepository.findRents(userId, pageable);
 		
 		//2. 유저의 대여 총 개수를 구한다
-		Long totalCount = rentRepository.countRent(userId);
+		Long totalCount = rentBookRepository.countRent(userId);
 		
 		List<BookRentHistDto> bookRentHistDtos = new ArrayList<>();
 		

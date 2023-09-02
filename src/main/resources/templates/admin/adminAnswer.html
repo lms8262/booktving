@@ -6,6 +6,7 @@
 	 
 <!-- adminBook 페이지 CSS --> 
 <th:block layout:fragment="css">
+	<link rel="stylesheet" href="/css/answer.css" />	
 </th:block>
 
 <div layout:fragment="content"> 
@@ -42,8 +43,8 @@
 										
 										<form role="form" action="">
 											
-											<input type="text" class="form-control answer-title col-12"/>
-											<textarea rows="10" class="form-control answer-content col-12" id="answer"></textarea>
+											<input type="text" class="form-control answer-title col-12" th:if="${question}" th:value= "'RE: ' + ${question.title}"/>
+											<textarea rows="10" class="form-control answer-content col-12" id="answer" th:if="${question}" th:text="'RE: ' + ${question.content}"></textarea>
 																				
 												<!-- 등록버튼  -->
 												<div class="form-group button col-12">
