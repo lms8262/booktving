@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+<head>
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
+
+
+<th:block layout:fragment="css">
+	<link rel="stylesheet" href="/css/myChallenge.css" />
+</th:block>
+
+<div layout:fragment="content">
+
+	<div class="top">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="container-fluid section-wrap">
+				
+					<!-- top profile -->
+					<div class="mylibrary-top">
+						<div class="container profile-box">
+							<div class="col-2">
+								<div class="profile-img-box">
+									<img alt="프로필" src="/images/myLibrary/profile.png">
+								</div>
+							</div>
+							<div class="col-4 user-info-box">
+								<p class="user-info">[[${user.memberName}]]<span>&nbsp;님의 서재</spans></p>
+							</div>
+							<div class="col-6"></div>
+						</div>						
+					</div>
+
+					<!-- 나의챌린지 content -->
+					<div class="challenge-wrap" >
+					
+						<div class="container challengeNew-box">
+							<div class="challenge-text-wrap">
+								<p class="challenge-text"> <strong> [[${user.memberName}]] </strong> &nbsp;님 나만의 챌린지를 시작해 보세요.</p>
+								<div class="challenge-link-wrap">
+									<a class="challenge-new-link" href="/myLibrary/myChallenge/new">
+										챌린지 생성 <sapn> <i class="fa-solid fa-circle-plus" style="color: #555555;"></i> </sapn>
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+											
+					
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+<th:block layout:fragment="script">
+	<script>
+	
+	
+	
+	</script>
+	
+</th:block>
+
+</html>

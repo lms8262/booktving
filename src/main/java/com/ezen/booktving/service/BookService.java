@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,19 +18,22 @@ import com.ezen.booktving.repository.BookDetailRepository;
 import com.ezen.booktving.repository.BookImgRepository;
 import com.ezen.booktving.repository.BookRepository;
 import com.ezen.booktving.repository.BookReviewRepository;
+import com.ezen.booktving.repository.RentBookRepository;
 
 import lombok.RequiredArgsConstructor;
+
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class BookService {
 
-	private final BookRepository bookRepository;
 	private final BookDetailRepository bookDetailRepository;
 	private final BookImgRepository bookImgRepository;
 	private final BookReviewRepository bookReviewRepository;
+	private final RentBookRepository rentRepository;
 	
+	//책정보 가져오기
 	@Transactional(readOnly = true)
 	public BookDto getBookDetail(String isbn) {
 		Book book = bookDetailRepository.findByIsbnOrderByIdAsc(isbn);
@@ -68,16 +69,20 @@ public class BookService {
 						
 	}
 	
+	//리뷰 저장하기
 	@Transactional
 	public String saveReview(BookReviewDto bookReviewDto) {	 
 		return bookReviewRepository.save(bookReviewDto.createBookReview()).getContent();
     }
 	
+	//책 isbn 정보 가져오기
 	@Transactional(readOnly = true)
 	public Book getBookByIsbn(String isbn) {
 		return bookDetailRepository.findByIsbn(isbn);   
 	}
 	
+	
+	//book 엔티티 id 가져오기
 	@Transactional(readOnly = true)
 	public Optional<Book> getBookById(Long id) {
 		return bookDetailRepository.findById(id);        
@@ -92,34 +97,37 @@ public class BookService {
 	
 	//북티빙 Top10
 	//일간
-	public Page<BookTvingTop10Dto> getDayBookRankList(Pageable pageable) {
+	public List<BookTvingTop10Dto> getDayBookRankList() {
 		
-		Page<BookTvingTop10Dto> bookTvingTop10Page = bookRepository.getDayBookRankList(pageable);
+		List<BookTvingTop10Dto> bookTvingTop10Page = rentRepository.getDayBookRankList();
 		
 		return bookTvingTop10Page;
 	}
 	
 	//주간
-	public Page<BookTvingTop10Dto> getWeekBookRankList(Pageable pageable) {
+	public List<BookTvingTop10Dto> getWeekBookRankList() {
 			
-		Page<BookTvingTop10Dto> bookTvingTop10Page = bookRepository.getWeekBookRankList(pageable);
+		List<BookTvingTop10Dto> bookTvingTop10Page = rentRepository.getWeekBookRankList();
 			
 		return bookTvingTop10Page;
 	}
 		
 	//월간
-	public Page<BookTvingTop10Dto> getMonthBookRankList(Pageable pageable) {
+	public List<BookTvingTop10Dto> getMonthBookRankList() {
 			
-		Page<BookTvingTop10Dto> bookTvingTop10Page = bookRepository.getMonthBookRankList(pageable);
+		List<BookTvingTop10Dto> bookTvingTop10Page = rentRepository.getMonthBookRankList();
 			
 		return bookTvingTop10Page;
 	}
 		
 	//연간
-	public Page<BookTvingTop10Dto> getYearBookRankList(Pageable pageable) {
+	public List<BookTvingTop10Dto> getYearBookRankList() {
 			
-		Page<BookTvingTop10Dto> bookTvingTop10Page = bookRepository.getYearBookRankList(pageable);
+		List<BookTvingTop10Dto> bookTvingTop10Page = rentRepository.getYearBookRankList();
 			
 		return bookTvingTop10Page;
 	}
+	
+
+	
 }

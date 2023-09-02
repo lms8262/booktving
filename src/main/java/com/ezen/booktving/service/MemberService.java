@@ -1,5 +1,8 @@
 package com.ezen.booktving.service;
 
+
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.User;
@@ -47,7 +50,6 @@ public class MemberService implements UserDetailsService {
 	}
 
 	// 중복아이디
-
 	private void validateDuplicateUserId(LoginFormDto loginFormDto) {
 
 		Member findMember = memberRepository.findByUserId(loginFormDto.getEmail());
@@ -63,7 +65,6 @@ public class MemberService implements UserDetailsService {
 		if (findMember != null) {
 			throw new IllegalStateException("이미 사용중인 이메일입니다.");
 		}
-
 	}
 
 	// 중복전화번호
@@ -73,7 +74,6 @@ public class MemberService implements UserDetailsService {
 		if (findMember != null) {
 			throw new IllegalStateException("이미 사용중인 전화번호입니다.");
 		}
-
 	}
 
 	@Override
@@ -104,7 +104,7 @@ public class MemberService implements UserDetailsService {
 		memberRepository.delete(member);
 	}
 
-//회원정보 가져오기
+	//회원정보 가져오기
 	@Transactional(readOnly = true)
 	public MemberFormDto getUpdateDtl(String userId) {
 		Member member = memberRepository.findByUserId(userId);
@@ -119,20 +119,20 @@ public class MemberService implements UserDetailsService {
 		return member.getUserId();
 	}
 
-//회원관리
+	//회원관리
 	@Transactional(readOnly = true)
 	public Page<Member> getAdminMemberPage(MemberSearchDto membersearchDto, Pageable pageable) {
 		Page<Member> memberPage = memberRepository.getAdminMemberPage(membersearchDto, pageable);
 		return memberPage;
 	}
 
-//회원관리 삭제
+	//회원관리 삭제
 	public void deleteMember(Long memberId) {
 		Member member = memberRepository.findById(memberId).orElseThrow(EntityNotFoundException::new);
 		memberRepository.delete(member);
 	}
 
-//회원정보 수정 회원탈퇴
+	//회원정보 수정 회원탈퇴
 	@Transactional
 	public void deleteMember2(String userId) {
 		Member member = memberRepository.findByUserId(userId);
@@ -141,4 +141,13 @@ public class MemberService implements UserDetailsService {
 		}
 		memberRepository.delete(member);
 	}
+	
+	//로그인한 사용자 정보 가져오기
+	public Member listAll(String userId){
+		
+		Member user = memberRepository.findByLogInUserId(userId);
+		
+		return user;
+	}
+	
 }

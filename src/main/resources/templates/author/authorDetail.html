@@ -40,24 +40,31 @@
 								<div class="author-info-content" th:text="${author.authorIntroduction}"></div>
 							</div>
 							
-							<div class="author-book-wrap" th:if="${not #strings.isEmpty(authorBooks)}" >
+							<div class="author-book-wrap">
 								<div class="author-book-title">
 									<h5>대표저서</h5>
 									<div class="author-deco-bar"></div>
 								</div>
 								
-								<th:block th:each="authorBook, status : ${authorBooks}">
-									<div class="author-book-content mb-5">
-										<div class="book-img-box col-3">
-											<img th:alt="${authorBook.bookName}" th:src="${authorBook.authorBookImgDto.imgUrl}">
-										</div>
-										<div class="book-text-box col-7">
-											<p class="book-info-title" th:text="${authorBook.bookSubTitle}"></p>
-											<p class="book-title" th:text="${authorBook.bookName}"></p>
-											<p class="book-introdution" th:utext="${authorBook.bookIntrodution}"></p>										</div>
-										<div class="col-1"></div>
-									</div>
-								</th:block>
+								<div th:if="${not #lists.isEmpty(authorBooks)}">
+									<th:block th:each="authorBook, status : ${authorBooks}">
+											<div class="author-book-content mb-5">
+												<div class="book-img-box col-3">
+													<img th:alt="${authorBook.bookName}" th:src="${authorBook.authorBookImgDto.imgUrl}">
+												</div>
+												<div class="book-text-box col-7">
+													<p class="book-info-title" th:text="${authorBook.bookSubTitle}"></p>
+													<p class="book-title" th:text="${authorBook.bookName}"></p>
+													<p class="book-introdution" th:utext="${authorBook.bookIntrodution}"></p>										</div>
+												<div class="col-1"></div>
+											</div>
+									</th:block>
+								</div>
+								<div th:if="${#lists.isEmpty(authorBooks)}">
+									<p class="author-book-null">
+										등록된 대표 저서가 없습니다.
+									</p>
+								</div>
 							</div>
 													
 						</div>

@@ -6,6 +6,7 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 
 import com.ezen.booktving.entity.Book;
+import com.ezen.booktving.entity.BookImg;
 import com.ezen.booktving.entity.FavoriteBook;
 import com.ezen.booktving.entity.Member;
 
@@ -31,6 +32,8 @@ public class FavoriteBookDto {
 
 	private static ModelMapper modelMapper = new ModelMapper();
 
+	private List<FavoriteBookDto> favoriteBookDtoList = new ArrayList<>();
+
 	public FavoriteBookDto() {
 		// 기본 생성자
 	}
@@ -44,11 +47,12 @@ public class FavoriteBookDto {
 		this.book = book;
 	}
 
-	private List<FavoriteBookDto> favoriteBookDtoList = new ArrayList<>();
 
 	public static FavoriteBookDto of(FavoriteBook favoriteBook) {
 		FavoriteBookDto dto = modelMapper.map(favoriteBook, FavoriteBookDto.class);
 		dto.setIsbn(favoriteBook.getBook().getIsbn());
 		return dto;
 	}
+	
+	
 }

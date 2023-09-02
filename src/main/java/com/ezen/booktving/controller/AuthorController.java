@@ -36,7 +36,7 @@ public class AuthorController {
 	}
 	
 	//작가 상세페이지 보여주기
-	@GetMapping(value = "/author/Detail/{authorId}")
+	@GetMapping(value = "/author/detail/{authorId}")
 	public String authotDetail(Model model, @PathVariable("authorId") Long authorId) {
 			
 		AuthorFormDto authorDto = authorService.getAuthorDtl(authorId);

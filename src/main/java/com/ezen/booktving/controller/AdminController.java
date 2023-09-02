@@ -32,10 +32,14 @@ import com.ezen.booktving.dto.BookSearchDto;
 import com.ezen.booktving.dto.KeywordDto;
 import com.ezen.booktving.dto.KeywordFormDto;
 import com.ezen.booktving.dto.MemberSearchDto;
-import com.ezen.booktving.dto.QuestionDto;
+import com.ezen.booktving.dto.NoticeDto;
+import com.ezen.booktving.dto.NoticeSearchDto;
+
 import com.ezen.booktving.entity.Author;
 import com.ezen.booktving.entity.Book;
 import com.ezen.booktving.entity.Member;
+import com.ezen.booktving.entity.Notice;
+import com.ezen.booktving.dto.QuestionDto;
 import com.ezen.booktving.entity.Question;
 import com.ezen.booktving.service.AdminBookRentHistService;
 import com.ezen.booktving.service.AdminQuestionService;
@@ -43,6 +47,7 @@ import com.ezen.booktving.service.AuthorService;
 import com.ezen.booktving.service.BookRegService;
 import com.ezen.booktving.service.KeyWordService;
 import com.ezen.booktving.service.MemberService;
+import com.ezen.booktving.service.NoticeService;
 import com.ezen.booktving.service.QuestionService;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -57,6 +62,7 @@ public class AdminController {
 	private final BookRegService bookRegService;
 	private final AdminBookRentHistService adminBookRentHistService;
 	private final MemberService memberService;
+	private final NoticeService noticeService;
 	private final KeyWordService keyWordService;
 	private final QuestionService questionService;
 	private final AdminQuestionService adminQuestionService;
@@ -393,7 +399,7 @@ public class AdminController {
 		model.addAttribute("question", questionDto);
 		return "admin/adminAnswer";
 	}
-
+	
 	// 문의삭제
 	@DeleteMapping("/admin/question/{id}/delete")
 	public @ResponseBody ResponseEntity deleteAdminQuestion(@PathVariable("id") Long id,
@@ -401,26 +407,87 @@ public class AdminController {
 		adminQuestionService.deleteAdminQuestion(id);
 		return new ResponseEntity<Long>(id, HttpStatus.OK);
 	}
+	
+	//공지사항 관리페이지
+		@GetMapping(value = {"/admin/notice", "/admin/notice/{page}"})
+		public String adminNotice(NoticeSearchDto noticeSearchDto, @PathVariable("page") Optional<Integer> page, Model model) {
 
-	// 공지관리 페이지 보여주기
-	@GetMapping(value = "/admin/notice")
-	public String adminNotice() {
-
-		return "admin/adminNotice";
-	}
+			try {
+				Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
+				Page<Notice> notices = noticeService.getAdminNoticePage(noticeSearchDto, pageable);
+				
+				model.addAttribute("notices", notices);
+				model.addAttribute("noticeSearchDto", noticeSearchDto);
+				model.addAttribute("maxPage", 5);
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			
+			return "admin/adminNotice";
+		}
 
 	// 공지사항 등록 페이지 보여주기
 	@GetMapping(value = "/admin/noticeReg")
-	public String adminNoticeReg() {
-
+	public String adminNoticeReg(Model model) {
+		model.addAttribute("noticeDto", new NoticeDto());
+		
 		return "admin/adminNoticeReg";
 	}
-
+	
+	//공지사항 등록하기
+	@PostMapping(value = "/admin/noticeReg")
+	public String noticeNew(@Valid NoticeDto noticeDto, BindingResult bindingResult, Model model) {
+		
+		if(bindingResult.hasErrors()) {
+			return "admin/adminNoticeReg";
+		}
+		
+		try {			
+			noticeService.saveNotice(noticeDto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("errorMessage", "공지사항 등록 중 에러가 발생했습니다.");
+			
+			return "admin/adminNoticeReg";
+		}
+		return "redirect:/admin/notice";
+	}
+	
 	// 공지사항 수정 페이지 보여주기
-	@GetMapping(value = "/admin/noticeModify")
-	public String adminNoticeModify() {
+	@GetMapping(value = "/admin/notice/{noticeId}")
+	public String adminNoticeModify(@PathVariable("noticeId") Long noticeId, Model model) {
 
+		try {
+			NoticeDto noticeDto = noticeService.getNoticeDtl(noticeId);
+			model.addAttribute("noticeDto", noticeDto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("errorMessage", "공지사항 정보를 가져올 때 에러가 발생했습니다.");
+			
+			model.addAttribute("noticeDto", new NoticeDto());
+			
+			return "admin/adminNoticeReg";
+		}
+		
 		return "admin/adminNoticeModify";
 	}
 
+	//공지사항 수정하기
+	@PostMapping(value = "/admin/notice/(noticeId)")
+	public String noticeUpdate(@Valid NoticeDto noticeDto, Model model, BindingResult bindingResult) {
+		if(bindingResult.hasErrors()) {
+			return "admin/adminNoticeReg";
+		}
+		
+		try {
+			noticeService.updateNotice(noticeDto);
+		} catch (Exception e) {
+			e.printStackTrace();
+			model.addAttribute("errorMessage", "공지사항 수정 중 에러가 발생했습니다.");
+			return "admin/adminNoticeReg";
+		}
+		return "redirect:/admin/notice";
+		
+	}
 }

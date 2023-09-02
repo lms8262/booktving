@@ -61,4 +61,5 @@ public class RentBook extends BaseTimeEntity {
 	@JoinColumn(name = "book_id", nullable = false)
 	private Book book;
 	
+	
 }
