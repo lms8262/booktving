@@ -41,10 +41,9 @@ public class ChallengeItem extends BaseTimeEntity {
 	private Challenge challenge;
 	
 	
-	public static ChallengeItem challengeItem(Integer targetMount, YesNoStatus success, Challenge challenge ) {
+	public static ChallengeItem createChallengeItem(Integer targetMount, YesNoStatus success) {
 		
 		ChallengeItem challengeItem = new ChallengeItem();
-		challengeItem.setChallenge(challenge);
 		challengeItem.setTargetMount(targetMount);
 		challengeItem.setSuccess(success);
 		

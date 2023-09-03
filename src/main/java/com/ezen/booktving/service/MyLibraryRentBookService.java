@@ -13,10 +13,14 @@ import com.ezen.booktving.constant.YesNoStatus;
 import com.ezen.booktving.dto.AdminRentHistBookDto;
 import com.ezen.booktving.dto.MyLibraryRentBookInfoDto;
 import com.ezen.booktving.dto.MyLibraryRentBookListDto;
+import com.ezen.booktving.dto.RentBookDto;
+import com.ezen.booktving.entity.ChallengeItem;
 import com.ezen.booktving.entity.RentBook;
 import com.ezen.booktving.repository.BookImgRepository;
+import com.ezen.booktving.repository.ChallengeItemRepository;
 import com.ezen.booktving.repository.RentBookRepository;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -25,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 public class MyLibraryRentBookService {
 	private final RentBookRepository rentBookRepository;
 	private final BookImgRepository bookImgRepository;
+	
 	
 	
 	//대여목록 리스트 가져오는 서비스
@@ -77,5 +82,23 @@ public class MyLibraryRentBookService {
 		}
 		return rentBookList;
 	}
+	
+	//챌린지 페이지에서 rentbook 가져오기
+	public List<RentBookDto> getMyRentBookList(String userId){
+		List<RentBook> rentBooks = rentBookRepository.findByCompleteYnAndMember_UserId(YesNoStatus.Y, userId);
+		
+		List<RentBookDto> rentBookDtoList = new ArrayList<>();
+		
+		for(RentBook rentBook : rentBooks) {
+			RentBookDto rentBookDto = new RentBookDto(rentBook);
+			rentBookDtoList.add(rentBookDto);
+		}
+		return rentBookDtoList;
+	}
+	
+	public long getCountOfCompletedRentBooks(String userId) {
+        return rentBookRepository.countByCompleteYnAndMember_UserId(YesNoStatus.Y, userId);
+    }
+
 	
 }

@@ -215,3 +215,88 @@
 .deco-img-box img {
 	width: 500px;
 }
+
+
+/* 나만의 챌린지 페이지(챌린지 생성 후) */
+.challenge-title-box h4{
+	font-weight: bold;
+}
+
+.challenge-list-wrap{
+	display: flex;
+	padding: 0 30px;
+	padding-top: 50px;
+}
+
+.challenge-list-content-box{
+	display: flex;
+	align-items: center;
+	background-color: #ddd;
+	border-radius: 15px;
+	border: 1px solid #bbb;
+	padding: 30px 20px;
+}
+
+.challenge-list-content-box img{
+	width: 160px;
+}
+
+.targer-title{
+	text-align: center;
+	font-size: 25px;
+	font-weight: bold;
+}
+
+.reading-target{
+	height: 60px;
+	line-height: 60px;
+	display: flex;
+	justify-content: center;
+	align-items: last baseline;
+}
+
+.reading-target p {
+	width: 50px;
+	margin: 0;
+	text-align: center;
+}
+
+.reading-target .completeYn{
+	font-size: 50px;
+	font-weight: bold;
+	text-align: end;
+}
+
+.reading-target .targetMount{
+	font-size: 20px;
+	text-align: start;
+}
+
+.challenge-item{
+	display: flex;
+	align-items: center;
+	font-size: 25px;
+	font-weight: bold;
+}
+
+.challenge-item p{
+	margin: 0;
+	text-align: center;
+}
+
+.challenge-item-box p {
+	margin-bottom: 10px;
+}
+
+.challenge-item-box .new-challenge{
+	display: block;
+	width: 150px;
+	height: 40px;
+	line-height: 40px;
+	background-color: #ffd360;
+	border-radius: 20px;
+	color: #fff;
+	font-size: 20px;
+	text-align: center;
+	margin: 0 auto;
+}

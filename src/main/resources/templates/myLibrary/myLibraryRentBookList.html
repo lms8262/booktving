@@ -35,14 +35,14 @@
 										<!--나의 서재 대여도서 목록  -->
 										<div>
 											<div>
-												<h5 style="font-weight: bold;" th:text="총 + ${num}"></h5>
+												<h5 style="font-weight: bold;" th:text="|총&nbsp;&nbsp;&nbsp; ${rentBooks.totalElements}권|"></h5>
 											</div>
 											<div class="container">
 												<div class="row">
 
 													<div class="col-sm-3 rentbookContent"
 														th:each="rentBook: ${rentBooks.getContent()}">
-														<a href="/mylibrary/rentbookinfo">
+														<a href="/myLibrary/rentbookinfo">
 															<div class="card col-12">
 																<div class="rentimgbox">
 																	<img alt="${rentBook.bookName}" th:src="${rentBook.imgUrl}">
@@ -119,11 +119,8 @@
 	
 	function page(page) {
 
-		var searchBy = $("#searchBy").val();
-		var searchQuery = $("#searchQuery").val();
 
-		location.href = "/mylibrary/rentList/" + page + "?searchBy=" + searchBy
-				+ "&searchQuery=" + searchQuery;
+		location.href = "/myLibrary/rentList/" + page;
 	}
 	
 	</script>

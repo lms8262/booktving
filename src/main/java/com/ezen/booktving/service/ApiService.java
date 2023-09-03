@@ -55,7 +55,7 @@ public class ApiService {
         JSONArray list = null;
         
         JSONParser jsonParser = new JSONParser();
-        JSONObject jsonObject = (JSONObject)jsonParser.parse(result);
+        JSONObject jsonObject = (JSONObject) jsonParser.parse(result);
         list = (JSONArray) jsonObject.get("item");
         
         for (int k = 0; k < list.size(); k++) {
@@ -86,7 +86,7 @@ public class ApiService {
     	JSONArray list = null;
     	
     	JSONParser jsonParser = new JSONParser();
-    	JSONObject jSONObject = (JSONObject)jsonParser.parse(result) ;
+    	JSONObject jSONObject = (JSONObject) jsonParser.parse(result) ;
     	list = (JSONArray) jSONObject.get("item");
     	
     	for(int k = 0; k < list.size(); k++) {

@@ -35,10 +35,10 @@
 						</div>						
 					</div>
 
-					<!-- 나의챌린지 content -->
+					<!-- 나의챌린지 생성하기 content -->
 					<div class="challenge-wrap" >
 					
-						<div class="container challengeNew-box">
+						<div class="container challengeNew-box" th:if="${#lists.isEmpty(challengeHistDtos)}">
 							<div class="challenge-text-wrap">
 								<p class="challenge-text"> <strong> [[${user.memberName}]] </strong> &nbsp;님 나만의 챌린지를 시작해 보세요.</p>
 								<div class="challenge-link-wrap">
@@ -48,6 +48,50 @@
 								</div>
 							</div>
 						</div>
+						
+						<div class="container challenge-list-box" th:if="${not #lists.isEmpty(challengeHistDtos)}">
+							<div class="challenge-title-box">
+								<h4>나만의 챌린지</h4>
+								<hr>
+							</div>
+							
+							<div class="challenge-list-wrap" th:each="challengeHistDto, status : ${challengeHistDtos}">
+								<div class="challenge-list-content-box col-5" th:each="challengeItemDto, status : ${challengeHistDto.challengeItemDtoList}" >
+									<div class="col-4">
+										<img src="/images/myLibrary/book.png" />
+									</div>
+									<div class="col-8">
+										<p class="targer-title">목표독서량</p>
+										<div class="reading-target">
+											<p class="completeYn" id="completedRentBooksCount" th:if="${completedRentBooksCount} > 0" th:text="${completedRentBooksCount}"></p>
+											<p class="completeYn" th:unless="${completedRentBooksCount} > 0">0</p>
+											<p>/</p>
+											<p th:text="${challengeItemDto.targetMount}" id="targetMount" class="targetMount"></p>
+										</div>
+									</div>
+								</div>
+								
+								<input type="hidden" id="challengeItemId" name="challengeItemId">
+								
+								<div th:each="challengeItemDto, status : ${challengeHistDto.challengeItemDtoList}" class="col-7 challenge-item">
+									<div th:if="${#strings.equals(challengeItemDto.success, 'N')}">
+										<p>꾸준한 독서로 목표를 달성해 보세요!</p>
+									</div>
+									
+									<div class="challenge-item-box" th:if="${#strings.equals(challengeItemDto.success, 'Y')}">
+										<p>축하합니다!! 목표를 달성했습니다.</p>
+										<p>새로운 목표를 세워보세요!</p>
+										<a href="/myLibrary/myChallenge/new" class="new-challenge">새로운 목표</a>
+									</div>
+								</div>
+							</div>
+							
+							
+						</div>
+						
+						
+						
+						
 					</div>
 											
 					
@@ -60,8 +104,39 @@
 
 
 <th:block layout:fragment="script">
-	<script>
 	
+	<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+	
+	<script>
+	$(document).ready(function() {
+
+    var completedRentBooksCount = parseInt($('#completedRentBooksCount').text());
+    var targetMount = parseInt($('#targetMount').text());
+
+    if (completedRentBooksCount === targetMount) {
+
+        $.ajax({
+            type: 'POST', 
+            url: '/updateChallengeItem', 
+            data: {
+                completedRentBooksCount: completedRentBooksCount,
+                targetMount: targetMount,
+                challengeItemId: $('#challengeItemId').val()
+            },
+            success: function(response) {
+                
+                console.log('데이터베이스 업데이트 성공');
+               
+            },
+            error: function(error) {
+              
+                console.error('데이터베이스 업데이트 실패');
+               
+            }
+        });
+    }
+});
+
 	
 	
 	</script>

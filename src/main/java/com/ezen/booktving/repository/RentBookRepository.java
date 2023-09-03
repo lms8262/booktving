@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.ezen.booktving.constant.YesNoStatus;
 import com.ezen.booktving.dto.BookTvingTop10Dto;
 import com.ezen.booktving.entity.RentBook;
 
@@ -21,6 +22,12 @@ public interface RentBookRepository extends JpaRepository<RentBook, Long>, RentB
 	@Query("select r from RentBook r where r.member.userId = :userId")
 	List<RentBook> findRentByMember(@Param("userId") String userId);
 	
+	//프로젝션을 이용해 rentBook의 완독 데이터가져오기
+	//@Query("select count(r.completeYn) from RentBook r where completeYn = 'Y' and r.member.userId = :userId ")
+	List<RentBook> findByCompleteYnAndMember_UserId(YesNoStatus completeYn, String userId);
+	
+	//프로젝션을 이용해 rentBook의 완독한 갯수 구하기
+	long countByCompleteYnAndMember_UserId(YesNoStatus completeYn, String userId);
 	
 	//북티빙 Top10-일간
 		@Query(value = "select data.num num, book.book_id id, book.book_name BookName, book_img.img_url imgUrl, book_img.rep_yn repYn, book.publisher publisher, book.isbn isbn, book.author author\r\n"

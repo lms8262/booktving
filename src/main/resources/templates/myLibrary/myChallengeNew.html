@@ -46,11 +46,11 @@
 								</div>
 								<div class="challenge-target-bar col-11">
 									<label for="customRange1" class="form-label"></label>
-									<input type="range" class="form-range col-12" id="customRange1" min="0" max="10" step="1" value="5" oninput="document.getElementById('value1').innerHTML=this.value;" />
-									<span id="value1"></span>
+									<input type="range" class="form-range col-12" id="targetMount" name="targetMount" min="0" max="10" step="1" value="1" oninput="document.getElementById('targetMount1').innerHTML=this.value;" />
+									<span id="targetMount1" name="targetMount"></span>
 								</div>
 								<div class="button-box">
-									<button type="submit" >설정완료</button>
+									<button type="submit" onclick="newChallenge()">설정완료</button>
 								</div>
 								<div class="deco-img-box">
 									<img alt="deco-img" src="/images/myLibrary/deco-img.png" />
@@ -71,6 +71,48 @@
 
 <th:block layout:fragment="script">
 
+	<script th:inline="javascript">
+	
+	function newChallenge(){
+		var token = $("meta[name='_csrf']").attr("content");
+		var header = $("meta[name='_csrf_header']").attr("content");
+		
+		var url = "/myLibrary/myChallenge/new";
+		
+		var paramData = {
+			targetMount : $("#targetMount").val(),
+			success: "N"
+		}
+			
+			var param = JSON.stringify(paramData);
+			
+			$.ajax({
+				url : url,
+				type : "POST",
+				contentType : "application/json",
+				data : param,
+				beforeSend : function(xhr){
+					xhr.setRequestHeader(header, token)
+				},
+				dataType : "json",
+				cache : false,
+				success : function(){
+					alert("챌린지 생성이 완료되었습니다." + result);
+					
+				},
+				error : function(jqXHR, status, error){
+					if(jqXHR.status == '401'){
+						alert('로그인 후 이용해주세요.')
+						location.href = '/login';
+					}else {
+						alert(jqXHR.responseText); 
+					}
+				}
+			});
+			
+	}
+	
+	</script>
 	
 </th:block>
 
