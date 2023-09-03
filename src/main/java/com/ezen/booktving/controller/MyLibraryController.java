@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.ezen.booktving.dto.ChallengeHistDto;
 import com.ezen.booktving.dto.ChallengeNewDto;
 import com.ezen.booktving.dto.FavoriteBookDtoList;
+import com.ezen.booktving.dto.MyLibraryRentBookInfoDto;
 import com.ezen.booktving.dto.MyLibraryRentBookListDto;
 import com.ezen.booktving.entity.FavoriteBook;
 import com.ezen.booktving.entity.Member;
@@ -98,14 +99,56 @@ public class MyLibraryController {
 		return "myLibrary/myLibraryRentBookList";
 	}
 	
-	
 	//나의 서재 대여도서 상세페이지 	
-	@GetMapping(value = "/myLibrary/rentbookinfo")
-	public String myLibraryRentBookInfo() {
-			
+	@GetMapping(value = "/myLibrary/rentbookinfo/{rentBookId}")
+	public String myLibraryRentBookInfo(Model model,@AuthenticationPrincipal UserDetails userDetails, @PathVariable("rentBookId") Long rentBookId) {
+		
+		MyLibraryRentBookInfoDto rentBookInfoDto = myLibraryRentBookService.getMyLibraryRentBookInfo(rentBookId);
+		model.addAttribute("rentBookDto", rentBookInfoDto);
+		
 		return "myLibrary/myLibraryRentBookInfo";
 	}
 	
+	//나의서재 - 대여도서 -독서완료 등록하기
+	@PostMapping(value = "/myLibrary/rentbookinfo/Complete")
+	public String rentBookComplete(@RequestParam("rentBookId") Long rentBookId) {
+		
+		myLibraryRentBookService.rentBookComplete(rentBookId);
+		return "redirect:/myLibrary/rentbookinfo/\" + rentBookId;";
+	}
+	
+	//나의서재 - 대여도서 -리뷰등록
+	@PostMapping(value = "/myLibrary/rentbookinfo/addReview")
+    public String addReview(@RequestParam("reviewText") String reviewText, @RequestParam("rentBookId") Long rentBookId) {
+
+		myLibraryRentBookService.addReview(rentBookId, reviewText);
+        return "redirect:/myLibrary/rentbookinfo/" + rentBookId;
+    }
+	
+	//나의서재 - 대여도서 - 리뷰삭제
+    @PostMapping(value = "/myLibrary/rentbookinfo/deleteReview")
+    public String deleteReview(@RequestParam("rentBookId") Long rentBookId) {
+    	
+        myLibraryRentBookService.deleteReview(rentBookId);
+        return "redirect:/myLibrary/rentbookinfo/" + rentBookId;
+    }
+	
+	//나의서재 - 대여도서 - 한문장 등록
+	@PostMapping(value = "/myLibrary/rentbookinfo/addSentence")
+	public String addSentence(@RequestParam("sentence") String sentence, @RequestParam("rentBookId") Long rentBookId) {
+		
+		myLibraryRentBookService.addSentence(rentBookId, sentence);
+		return "redirect:/myLibrary/rentbookinfo/" + rentBookId;
+	}	
+	
+	//나의서재 - 대여도서 - 한문장 삭제
+	@PostMapping(value = "/myLibrary/rentbookinfo/deleteSentence")
+    public String deleteSentence(@RequestParam("rentBookId") Long rentBookId) {
+		
+        myLibraryRentBookService.deleteSentence(rentBookId);
+        return "redirect:/myLibrary/rentbookinfo/" + rentBookId;
+    }
+
 	//나의챌린지 페이지
 	@GetMapping(value = "/myLibrary/myChallenge")
 	public String myChallenge(Model model, @AuthenticationPrincipal UserDetails userDetails) {

@@ -79,10 +79,11 @@ ul{
 	justify-content: flex-start;
 	padding: 0;
 	margin: 0;	
+	flex-wrap: wrap;
 }
 
 nav .menu{
-	width: auto;
+	width: 25%;
 	height: 40px;
 	line-height: 40px;
 	display: block;
@@ -90,6 +91,7 @@ nav .menu{
 	margin: 0 10px !important;
 	text-align: center;
 	position: relative;
+	flex: 1;
 }
 
 nav .menu a{

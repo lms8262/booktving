@@ -41,11 +41,11 @@
 												<div class="row">
 
 													<div class="col-sm-3 rentbookContent"
-														th:each="rentBook: ${rentBooks.getContent()}">
-														<a href="/myLibrary/rentbookinfo">
+														th:each="rentBook, status: ${rentBooks.getContent()}">
+														<a th:href="'/myLibrary/rentbookinfo/' + ${rentBook.id}">
 															<div class="card col-12">
 																<div class="rentimgbox">
-																	<img alt="${rentBook.bookName}" th:src="${rentBook.imgUrl}">
+																	<img th:alt="${rentBook.bookName}" th:src="${rentBook.imgUrl}">
 																</div>
 																<div class="rentlistContent">
 																	<p class="library-sub" id="bookName"
