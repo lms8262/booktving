@@ -23,7 +23,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ezen.booktving.dto.AdminRentHistBookDto;
-import com.ezen.booktving.dto.AnswerDto;
 import com.ezen.booktving.dto.AuthorBookDto;
 import com.ezen.booktving.dto.AuthorFormDto;
 import com.ezen.booktving.dto.AuthorSearchDto;
@@ -40,7 +39,6 @@ import com.ezen.booktving.entity.Book;
 import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.entity.Notice;
 import com.ezen.booktving.dto.QuestionDto;
-import com.ezen.booktving.entity.Question;
 import com.ezen.booktving.service.AdminBookRentHistService;
 import com.ezen.booktving.service.AdminQuestionService;
 import com.ezen.booktving.service.AuthorService;

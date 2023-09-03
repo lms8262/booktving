@@ -3,6 +3,7 @@ package com.ezen.booktving.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Transactional
 public class BookRegService {
+	
+	private final ModelMapper modelMapper;
 	private final BookRepository bookRepository;
 	private final BookImgService bookImgService;
 	private final BookImgRepository bookImgRepository;
@@ -33,7 +36,7 @@ public class BookRegService {
 	public Long saveBook(BookRegFormDto bookRegFormDto, List<MultipartFile> bookImgFileList) throws Exception {
 		
 		//1. 상품등록
-		Book book = bookRegFormDto.createBook(); //dto -> entity
+		Book book = bookRegFormDto.createBook(modelMapper); //dto -> entity
 		bookRepository.save(book); //insert 저장
 		
 		//2. 이미지 등록
@@ -65,7 +68,7 @@ public class BookRegService {
 		//bookImg 엔티티 객체 -> bookImgDto로 변환
 		List<BookImgDto> bookimgDtoList = new ArrayList<>();
 		for(BookImg bookImg : bookimgList) {
-			BookImgDto bookImgDto = BookImgDto.of(bookImg);
+			BookImgDto bookImgDto = BookImgDto.of(bookImg, modelMapper);
 			bookimgDtoList.add(bookImgDto);
 		}
 		
@@ -74,13 +77,12 @@ public class BookRegService {
 						.orElseThrow(EntityNotFoundException::new);
 		
 		//book 엔티티 객체 -> dto로 변환
-		BookRegFormDto bookRegFormDto = BookRegFormDto.of(book);
+		BookRegFormDto bookRegFormDto = BookRegFormDto.of(book, modelMapper);
 		
 		//3. BookRegFormDto에 이미지 정보 (bookImgDtoList)를 넣어준다.
 		bookRegFormDto.setBookImgDtoList(bookimgDtoList);
 		
 		return bookRegFormDto;
-		
 	
 	}
 	
@@ -105,8 +107,6 @@ public class BookRegService {
 	@Transactional(readOnly = true)
 	public Page<Book> getAdminBookPage(BookSearchDto bookSearchDto, Pageable pageable) {
 		Page<Book> bookPage = bookRepository.getAdminBookPage(bookSearchDto, pageable);
-		List<Book> bookList = bookPage.getContent();
-		
 		return bookPage;
 	}
 	

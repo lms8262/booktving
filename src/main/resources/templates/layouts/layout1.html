@@ -29,13 +29,10 @@
 <body>
 
 	<div class="site-wrap container-fluid">
-		<div th:replace="fragments/header::header" class="header justify-content-center"></div>
+		<div th:replace="~{fragments/header::header}" class="header justify-content-center"></div>
 		<div layout:fragment="content" class="content justify-content-center"></div>
-		<div th:replace="fragments/footer::footer" class="footer justify-content-center"></div>
+		<div th:replace="~{fragments/footer::footer}" class="footer justify-content-center"></div>
 	</div>
-
-
-
 
 	<!-- 공통으로 쓰이는 js -->
   	<script th:src="@{/js/jquery-3.3.1.min.js}" /></script>
@@ -52,6 +49,5 @@
 	<th:block layout:fragment="script"></th:block>
 
 </body>
-
 
 </html>

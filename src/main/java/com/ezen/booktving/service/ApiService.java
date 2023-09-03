@@ -21,6 +21,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 
 import com.ezen.booktving.constant.YesNoStatus;
 import com.ezen.booktving.dto.BookSearchDto;
+import com.ezen.booktving.dto.CategoryResultDto;
 import com.ezen.booktving.dto.SearchBookDto;
 import com.ezen.booktving.dto.SearchResultDto;
 import com.ezen.booktving.entity.BestSeller;
@@ -180,15 +181,16 @@ public class ApiService {
         JsonNode rootNode = objectMapper.readTree(jsonString);
         
         int totalResults = rootNode.get("totalResults").intValue();
-        int totalItems = totalResults > 240 ? 240 : totalResults;
-        boolean last = totalItems - (currentPage * 48) <= 0 ? true : false;
+        int totalItems = totalResults > 240 ? 240 : totalResults; // 240 = 48 * 5
+        int itemsPerPage = rootNode.get("itemsPerPage").intValue();
+        boolean last = totalItems - (currentPage * itemsPerPage) <= 0 ? true : false;
         List<SearchBookDto> items = generateItemsOfSearchResult(rootNode);
     	
         SearchResultDto searchResultDto = SearchResultDto.builder()
         												 .bookSearchDto(bookSearchDto)
         												 .totalItems(totalItems)
         												 .currentPage(currentPage)
-        												 .itemsPerPage(totalItems)
+        												 .itemsPerPage(itemsPerPage)
         												 .last(last)
         												 .items(items)
         												 .build();
@@ -297,5 +299,59 @@ public class ApiService {
         saveBookAndBookImg(rootNode);
     }
     
+    // 카테고리 검색 api 결과가 들어있는 jsonString 
+    private String getJsonStringOfCategoryBook(int categoryId, int start) {
+    	String ttbKey = "ttblyczang41056001";
+    	String queryType = "ItemNewAll";
+    	int maxResults = 48;
+    	String cover = "Big";
+    	String output = "JS";
+    	String version = "20131101";
+    	
+		String jsonString = webClient.get()
+		    	.uri(uriBuilder -> uriBuilder
+		    			.path("/ItemList.aspx")
+		    			.queryParam("TTBKey", ttbKey)
+		    			.queryParam("QueryType", queryType)
+		    			.queryParam("Start", start)
+		    			.queryParam("MaxResults", maxResults)
+		    			.queryParam("Cover", cover)
+		    			.queryParam("Output", output)
+		    			.queryParam("Version", version)
+		    			.queryParam("CategoryId", categoryId)
+		    			.build()
+		    		)
+		    	.retrieve()
+		    	.bodyToMono(String.class)
+		    	.block();
+		
+		return jsonString;
+    }
+    
+    // 알라딘 카테고리 검색 api를 호출해서 보여줄 카테고리 검색 결과
+    public CategoryResultDto getCategoryResultByAladinApi(int categoryId, int currentPage) throws JsonMappingException, JsonProcessingException {
+    	currentPage++; // 현재 페이지를 1 증가시킴
+    	String jsonString = getJsonStringOfCategoryBook(categoryId, currentPage);
+    	
+    	ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode rootNode = objectMapper.readTree(jsonString);
+        
+        int totalResults = rootNode.get("totalResults").intValue();
+        int totalItems = totalResults > 240 ? 240 : totalResults; // 240 = 48 * 5
+        int itemsPerPage = rootNode.get("itemsPerPage").intValue();
+        boolean last = totalItems - (currentPage * itemsPerPage) <= 0 ? true : false;
+        List<SearchBookDto> items = generateItemsOfSearchResult(rootNode);
+    	
+        CategoryResultDto categoryResultDto = CategoryResultDto.builder()
+        												 .categoryId(categoryId)
+        												 .totalItems(totalItems)
+        												 .currentPage(currentPage)
+        												 .itemsPerPage(itemsPerPage)
+        												 .last(last)
+        												 .items(items)
+        												 .build();
+    	return categoryResultDto;
+    }
+
 }
 

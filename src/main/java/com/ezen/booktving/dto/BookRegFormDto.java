@@ -51,19 +51,14 @@ public class BookRegFormDto {
 	//도서 이미지 아이디들을 저장 -> 수정시에 이미지 아이디들을 담아둘 용도
 	private List<Long> bookImgIds = new ArrayList<>();
 	
-	private static ModelMapper modelMapper = new ModelMapper();
-	
 	//dto -> entity로 바꿈
-	public Book createBook() {
+	public Book createBook(ModelMapper modelMapper) {
 		return modelMapper.map(this, Book.class);
 	}
 	
 	//entity -> dto로 바꿈
-	public static BookRegFormDto of(Book book) {
+	public static BookRegFormDto of(Book book, ModelMapper modelMapper) {
 		return modelMapper.map(book, BookRegFormDto.class);
 	}
-	
-	public String bookcreate;
-	
 
 }

@@ -38,13 +38,13 @@ public class BookDto {
 	
 	private List<BookReviewDto> bookReviewDtoList = new ArrayList<>();
 	
-	private static ModelMapper modelMapper = new ModelMapper();
-	
-	public Book createBook() {
-		return modelMapper.map(this, Book.class);
+	public Book createBook(ModelMapper modelMapper) {
+		Book book = modelMapper.map(this, Book.class);
+		book.setAuthorInfo("");
+		return book;
 	}
 	
-	public static BookDto of(Book book) {
+	public static BookDto of(Book book, ModelMapper modelMapper) {
 		return modelMapper.map(book, BookDto.class);
 	}
 }

@@ -15,16 +15,13 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.context.request.FacesRequestAttributes;
 
 import com.ezen.booktving.dto.ChallengeNewDto;
-import com.ezen.booktving.dto.FavoriteBookDto;
 import com.ezen.booktving.dto.FavoriteBookDtoList;
 import com.ezen.booktving.dto.MyLibraryRentBookListDto;
 import com.ezen.booktving.entity.FavoriteBook;
 import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.entity.RentBook;
-import com.ezen.booktving.service.BookService;
 import com.ezen.booktving.service.FavoriteBookService;
 import com.ezen.booktving.service.MemberService;
 import com.ezen.booktving.service.MyLibraryRentBookService;

@@ -4,13 +4,15 @@ import org.modelmapper.ModelMapper;
 
 import com.ezen.booktving.constant.YesNoStatus;
 
-import com.ezen.booktving.entity.Book;
 import com.ezen.booktving.entity.BookImg;
 
 import lombok.*;
 
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class BookImgDto {
 
 	private Long id;
@@ -23,15 +25,11 @@ public class BookImgDto {
 	
 	private String imgUrl;
 	
-	private Book book;
-	
-	private static ModelMapper modelMapper = new ModelMapper();
-	
-	public BookImg createBookImg() {
+	public BookImg createBookImg(ModelMapper modelMapper) {
 		return modelMapper.map(this, BookImg.class);
 	}
 	
-	public static BookImgDto of(BookImg bookImg) {
+	public static BookImgDto of(BookImg bookImg, ModelMapper modelMapper) {
 		return modelMapper.map(bookImg, BookImgDto.class);
 	}
 }
