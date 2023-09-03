@@ -7,24 +7,28 @@ import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.context.request.FacesRequestAttributes;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.ezen.booktving.dto.ChallengeHistDto;
 import com.ezen.booktving.dto.ChallengeNewDto;
-import com.ezen.booktving.dto.FavoriteBookDto;
 import com.ezen.booktving.dto.FavoriteBookDtoList;
 import com.ezen.booktving.dto.MyLibraryRentBookListDto;
 import com.ezen.booktving.entity.FavoriteBook;
 import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.entity.RentBook;
-import com.ezen.booktving.service.BookService;
+import com.ezen.booktving.service.ChallengeService;
 import com.ezen.booktving.service.FavoriteBookService;
 import com.ezen.booktving.service.MemberService;
 import com.ezen.booktving.service.MyLibraryRentBookService;
@@ -39,6 +43,8 @@ public class MyLibraryController {
 	private final MyLibraryRentBookService myLibraryRentBookService;
 	private final FavoriteBookService favoriteBookService;
 	private final MemberService memberService;
+	private final ChallengeService challengeService;
+	
 	
 	
 	//나의서재 메인화면
@@ -104,12 +110,36 @@ public class MyLibraryController {
 	@GetMapping(value = "/myLibrary/myChallenge")
 	public String myChallenge(Model model, @AuthenticationPrincipal UserDetails userDetails) {
 		
-		
 		Member user = memberService.listAll(userDetails.getUsername());
 		model.addAttribute("user", user);
 		
+		List<ChallengeHistDto> challengeHistDtoList = challengeService.getChallengeList(userDetails.getUsername());
+		model.addAttribute("challengeHistDtos", challengeHistDtoList);
+		
+		//List<RentBookDto> rentBookDtoList = myLibraryRentBookService.getMyRentBookList(userDetails.getUsername());
+		//model.addAttribute("rentBookDtoList", rentBookDtoList);
+		
+		long completedRentBooksCount = myLibraryRentBookService.getCountOfCompletedRentBooks(userDetails.getUsername());
+	    model.addAttribute("completedRentBooksCount", completedRentBooksCount);
+		
 		return "myLibrary/myChallenge";
 	}
+	
+	
+	//나의챌린지 목표 달성시 페이지 업데이트하기
+	@PostMapping(value = "/updateChallengeItem")
+	public ResponseEntity<String> updateChallengeItem(@RequestParam("completedRentBooksCount") int completedRentBooksCount,
+									  @RequestParam("targetMount") int targetMount,
+									  @RequestParam("challengeItemId") long challengeItemId) {
+		
+		try {
+	        challengeService.updateChallengeItem(completedRentBooksCount, targetMount, challengeItemId);
+	        return ResponseEntity.ok("데이터베이스 업데이트 성공");
+	    } catch (Exception e) {
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("데이터베이스 업데이트 실패");
+	    }
+	}
+	
 	
 	//나의챌린지 생성 페이지
 	@GetMapping(value = "/myLibrary/myChallenge/new")
@@ -118,15 +148,33 @@ public class MyLibraryController {
 		Member user = memberService.listAll(userDetails.getUsername());
 		model.addAttribute("user", user);
 		
-		
-		
-		
 		return "myLibrary/myChallengeNew";
 	}
 	
 	//나의챌린지 생성하기
 	@PostMapping(value = "/myLibrary/myChallenge/new")
-	public String myChallengeNew() {
-		return "myLibrary/myChallenge";
+	public String myChallengeNew(@RequestBody @Valid ChallengeNewDto challengeNewDto, 
+					BindingResult bindingResult, Model model, Principal principal) {
+		
+		if(bindingResult.hasErrors()) {
+			StringBuilder sb = new StringBuilder();
+			List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+			
+			for(FieldError fieldError : fieldErrors) {
+				sb.append(fieldError.getDefaultMessage());  //에러메세지를 합친다.
+			}
+			return "redirect:/myLibrary/myChallenge/new";
+		}
+		
+		String userId = principal.getName();
+		Long challengeId;
+		
+		try {
+			challengeId = challengeService.saveChallenge(challengeNewDto, userId);
+		} catch (Exception e) {
+			return "redirect:/myLibrary/myChallenge/new";
+		}
+		return "redirect:/myLibrary/myChallenge/" + challengeId;
 	}
+
 }
