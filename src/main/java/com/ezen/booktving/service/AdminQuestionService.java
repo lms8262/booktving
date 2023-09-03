@@ -21,12 +21,12 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Transactional
 public class AdminQuestionService {
-	private final AdminQuestionRepository adminQuestionRepo;
-	private final QuestionRepository questionRepo;
+	private final AdminQuestionRepository adminQuestionRepository;
+	private final QuestionRepository questionRepository;
 	
 	@Transactional(readOnly = true)
 	public AdminQuestionDto getAdminQuestion(Long id) {
-		Question question = adminQuestionRepo.findById(id)
+		Question question = adminQuestionRepository.findById(id)
 						.orElseThrow(EntityNotFoundException::new);
 		AdminQuestionDto adminQuestionDto = AdminQuestionDto.of(question);
 		return adminQuestionDto;
@@ -34,7 +34,7 @@ public class AdminQuestionService {
 	
 	@Transactional(readOnly = true)
 	public Page<AdminQuestionDto> getAdminQuestionPage(Pageable pageable) {
-		Page<Question> questionPage = adminQuestionRepo.getQuestion(pageable);
+		Page<Question> questionPage = adminQuestionRepository.getQuestion(pageable);
 		List<Question> questionList = questionPage.getContent();
 		
 		List<AdminQuestionDto> questions = new ArrayList<>();
@@ -47,8 +47,8 @@ public class AdminQuestionService {
 	}
 	
 	public void deleteAdminQuestion(Long id) {
-		Question question = questionRepo.findById(id)
+		Question question = questionRepository.findById(id)
 							.orElseThrow(EntityNotFoundException::new);
-		questionRepo.delete(question);
+		questionRepository.delete(question);
 	}
 }

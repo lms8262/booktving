@@ -1,6 +1,5 @@
 package com.ezen.booktving.service;
 
-
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -11,9 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ezen.booktving.dto.NoticeDto;
 import com.ezen.booktving.dto.NoticeSearchDto;
-import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.entity.Notice;
-import com.ezen.booktving.repository.MemberRepository;
 import com.ezen.booktving.repository.NoticeRepository;
 
 import jakarta.persistence.EntityNotFoundException;

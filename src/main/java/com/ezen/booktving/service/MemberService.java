@@ -1,8 +1,5 @@
 package com.ezen.booktving.service;
 
-
-import java.util.List;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.User;
@@ -86,18 +83,6 @@ public class MemberService implements UserDetailsService {
 		return User.builder().username(member.getUserId()).password(member.getPassword())
 				.roles(member.getRole().toString()).build();
 	}
-
-	/*
-	 * public Long updateMember(MemberFormDto memberFormDto) throws
-	 * EntityNotFoundException { Member member =
-	 * memberRepository.findById(memberFormDto.getId()).orElseThrow(
-	 * EntityNotFoundException::new);
-	 * 
-	 * member.updateMember(memberFormDto);
-	 * 
-	 * 
-	 * return member.getId(); }
-	 */
 
 	public void deleteMenu(String userId) {
 		Member member = memberRepository.findByUserId(userId);

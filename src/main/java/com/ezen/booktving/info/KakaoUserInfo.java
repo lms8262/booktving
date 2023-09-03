@@ -1,4 +1,4 @@
-package com.ezen.booktiving.info;
+package com.ezen.booktving.info;
 
 import java.util.Map;
 

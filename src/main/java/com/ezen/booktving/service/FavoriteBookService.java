@@ -3,7 +3,6 @@ package com.ezen.booktving.service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -16,6 +15,7 @@ import com.ezen.booktving.dto.BookImgDto;
 import com.ezen.booktving.dto.FavoriteBookDto;
 import com.ezen.booktving.dto.FavoriteBookDtoList;
 import com.ezen.booktving.entity.Book;
+import com.ezen.booktving.entity.BookImg;
 import com.ezen.booktving.entity.FavoriteBook;
 import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.repository.BookImgRepository;
@@ -35,7 +35,6 @@ public class FavoriteBookService {
 	private final BookRepository bookRepository;
 	private final MemberRepository memberRepository;
 	private final BookImgRepository bookImgRepository;
-
 	
 	//찜하기
 	public Long like(String userId, String isbn) {
@@ -58,22 +57,40 @@ public class FavoriteBookService {
 	@Transactional
 	public Page<FavoriteBook> getFavoriteList(String userId, Pageable pageable) {
 		Member member = memberRepository.findByUserId(userId);
-		
 		return favoriteBookRepository.findByMember(member, pageable);
 	}
 	
-
     public List<FavoriteBookDto> getFavoriteBooksByMember(String userId) {
     	Member member = memberRepository.findByUserId(userId);
     	List<FavoriteBook> favoriteBooks = favoriteBookRepository.findByMember(member);
-    	List<FavoriteBookDto> favoriteBookDtos = favoriteBooks.stream().map(favoriteBook -> {
-            FavoriteBookDto dto = FavoriteBookDto.of(favoriteBook);
-            List<BookImgDto> bookImgDtos = favoriteBook.getBook().getBookImgDtoList();
-            dto.setBookImgDtoList(bookImgDtos);
-            return dto;
-        })
-        .collect(Collectors.toList());
-return favoriteBookDtos;
+    	
+    	List<FavoriteBookDto> favoriteBookDtos = new ArrayList<>();
+    	for(FavoriteBook favoriteBook : favoriteBooks) {
+    		List<BookImg> bookImgList = bookImgRepository.findByBookIdOrderByIdAsc(favoriteBook.getBook().getId());
+    		
+    		List<BookImgDto> bookImgDtoList = new ArrayList<>();
+    		for(BookImg bookImg : bookImgList) {
+    			BookImgDto bookImgDto = BookImgDto.builder()
+    					.id(bookImg.getId())
+    					.imgName(bookImg.getImgName())
+    					.oriImgName(bookImg.getOriImgName())
+    					.repYn(bookImg.getRepYn())
+    					.imgUrl(bookImg.getImgUrl())
+    					.build();
+    			bookImgDtoList.add(bookImgDto);
+    		}
+    		
+    		FavoriteBookDto favoriteBookDto = FavoriteBookDto.builder()
+    				.id(favoriteBook.getId())
+    				.isbn(favoriteBook.getBook().getIsbn())
+    				.bookName(favoriteBook.getBook().getBookName())
+    				.author(favoriteBook.getBook().getAuthor())
+    				.bookImgDtoList(bookImgDtoList)
+    				.build();
+    		favoriteBookDtos.add(favoriteBookDto);
+    	}
+    	
+    	return favoriteBookDtos;
     }
 
     
@@ -89,7 +106,7 @@ return favoriteBookDtos;
     	FavoriteBook favoriteBook = favoriteBookRepository.findById(likeId)
     						.orElseThrow(EntityNotFoundException::new);
     	
-    	favoriteBookRepository.deleteById(likeId);
+    	favoriteBookRepository.delete(favoriteBook);
     }
     
    //로그인한 사용자의 찜도서 정보 가져오기
