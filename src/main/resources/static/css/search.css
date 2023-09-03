@@ -1,4 +1,9 @@
 @charset "UTF-8";
+
+button:hover {
+	cursor: pointer;
+}
+
 .search_wrap {
 	border-bottom: 1px solid #eee;
 }

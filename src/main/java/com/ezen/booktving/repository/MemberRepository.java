@@ -1,7 +1,5 @@
 package com.ezen.booktving.repository;
 
-import java.util.List;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -19,11 +17,7 @@ public interface MemberRepository extends JpaRepository<Member, Long>, MemberRep
 	Member findByTel(String tel);
 	
 	Member findByUserIdAndEmail(String userId, String Email);
-	/*
-	 * @Select("SELECT SELECT MID FROM member WHERE MID= #{mid}") String
-	 * checkIdUser(@Param("mid")String mid);
-	 */
-	
+
 	Member findByRole(Role role);
 
 	Member findByMemberName(String name);

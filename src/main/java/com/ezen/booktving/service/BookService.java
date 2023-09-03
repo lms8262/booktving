@@ -2,8 +2,8 @@ package com.ezen.booktving.service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,29 +14,31 @@ import com.ezen.booktving.dto.BookTvingTop10Dto;
 import com.ezen.booktving.entity.Book;
 import com.ezen.booktving.entity.BookImg;
 import com.ezen.booktving.entity.BookReview;
-import com.ezen.booktving.repository.BookDetailRepository;
+import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.repository.BookImgRepository;
 import com.ezen.booktving.repository.BookRepository;
 import com.ezen.booktving.repository.BookReviewRepository;
+import com.ezen.booktving.repository.MemberRepository;
 import com.ezen.booktving.repository.RentBookRepository;
 
 import lombok.RequiredArgsConstructor;
-
 
 @Service
 @Transactional
 @RequiredArgsConstructor
 public class BookService {
-
-	private final BookDetailRepository bookDetailRepository;
+	
+	private final ModelMapper modelMapper;
+	private final BookRepository bookRepository;
 	private final BookImgRepository bookImgRepository;
 	private final BookReviewRepository bookReviewRepository;
 	private final RentBookRepository rentRepository;
+	private final MemberRepository memberRepository;
 	
 	//책정보 가져오기
 	@Transactional(readOnly = true)
 	public BookDto getBookDetail(String isbn) {
-		Book book = bookDetailRepository.findByIsbnOrderByIdAsc(isbn);
+		Book book = bookRepository.findByIsbn(isbn);
 		
 		if (book == null) {
 	        // 책 정보가 없을 경우 처리
@@ -49,7 +51,7 @@ public class BookService {
 		//이미지 엔티티 객체 -> dto로 변환
 		List<BookImgDto> bookImgDtoList = new ArrayList<>();
 		for(BookImg bookImg : bookImgList) {
-			BookImgDto bookImgDto = BookImgDto.of(bookImg);
+			BookImgDto bookImgDto = BookImgDto.of(bookImg, modelMapper);
 			bookImgDtoList.add(bookImgDto);
 		}
 		
@@ -57,11 +59,15 @@ public class BookService {
 		
 		List<BookReviewDto> bookReviewDtoList = new ArrayList<>();
 		for(BookReview bookReview : bookReviewList) {
-			BookReviewDto bookReviewDto = BookReviewDto.of(bookReview);
+			BookReviewDto bookReviewDto = BookReviewDto.builder()
+					.id(bookReview.getId())
+					.userId(bookReview.getMember().getUserId())
+					.content(bookReview.getContent())
+					.build();
 			bookReviewDtoList.add(bookReviewDto);
 		}
 		
-		BookDto bookDto = BookDto.of(book);
+		BookDto bookDto = BookDto.of(book, modelMapper);
 		bookDto.setBookImgDtoList(bookImgDtoList);
 		bookDto.setBookReviewDtoList(bookReviewDtoList);
 		
@@ -70,30 +76,18 @@ public class BookService {
 	}
 	
 	//리뷰 저장하기
-	@Transactional
-	public String saveReview(BookReviewDto bookReviewDto) {	 
-		return bookReviewRepository.save(bookReviewDto.createBookReview()).getContent();
+	public void saveReview(BookReviewDto bookReviewDto, String userId, String isbn) {	 
+		Member member = memberRepository.findByUserId(userId);
+		Book book = bookRepository.findByIsbn(isbn);
+		
+		BookReview bookReview = BookReview.builder()
+				.content(bookReviewDto.getContent())
+				.book(book)
+				.member(member)
+				.build();
+		
+		bookReviewRepository.save(bookReview);
     }
-	
-	//책 isbn 정보 가져오기
-	@Transactional(readOnly = true)
-	public Book getBookByIsbn(String isbn) {
-		return bookDetailRepository.findByIsbn(isbn);   
-	}
-	
-	
-	//book 엔티티 id 가져오기
-	@Transactional(readOnly = true)
-	public Optional<Book> getBookById(Long id) {
-		return bookDetailRepository.findById(id);        
-	}
-	
-	// isbn 값으로 해당 book 엔티티 데이터를 가져옴.
-   @Transactional(readOnly = true)
-   public Book getBook(String isbn){
-      Book book = bookDetailRepository.findByIsbnOrderByIdAsc(isbn);
-      return book;
-   }
 	
 	//북티빙 Top10
 	//일간

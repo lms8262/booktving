@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+<head>
+	<meta name="_csrf" th:content="${_csrf.token}" />
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
+
+<th:block layout:fragment="css">
+	<link rel="stylesheet" th:href="@{/css/search.css}" />
+</th:block>
+
+<div layout:fragment="content">
+
+	<div class="search-result container">
+		<h5>
+			[[${categoryName}]] 도서 검색결과&nbsp;&nbsp;<span>[[${firstCategoryResult.totalItems}]]</span>
+		</h5>
+		<div class="container">
+			<div id="search-data" class="row row-cols-md-6 g-4">
+				
+				<th:block th:if="${!#lists.isEmpty(firstCategoryResult.getItems())}" th:each="categoryBook : ${firstCategoryResult.getItems()}">
+					<div class="search-card col-2">
+						<div class="card">
+							<a th:href="@{/book/bookDetail/} + ${categoryBook.isbn}">
+								<img th:src="${categoryBook.imgUrl}" class="card-img-top" alt="이미지">
+							</a>
+							<a th:href="@{/book/bookDetail/} + ${categoryBook.isbn}">
+								<div class="card-body">
+									<h5 class="card-title">[[${categoryBook.bookName}]]</h5>
+									<p class="card-text">[[${categoryBook.author}]]</p>
+								</div>
+							</a>
+						</div>
+					</div>
+				</th:block>
+				
+				
+			</div>
+			<div th:if="${#lists.isEmpty(firstCategoryResult.getItems())}">검색 결과가 존재하지 않습니다.</div>
+		</div>
+		
+	</div>
+
+</div>
+
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+		var categoryId = [[${firstCategoryResult.categoryId}]];
+		var last = [[${firstCategoryResult.last}]];
+		var currentPage = [[${firstCategoryResult.currentPage}]];
+		
+		$(document).ready(function() {
+			
+			// 1. 현재 스크롤의 위치 + 화면의 높이 == 문서의 높이
+			if($(window).scrollTop() + $(window).height() == $(document).height()) {
+				if(!last) {					
+					requestNextCategoryBookList();
+				}
+			}
+			
+			// 2. 스크롤시 발생하는 이벤트
+			$(window).scroll(function() {
+			      // 스크롤의 위치 + 화면의 높이가 문서의 높이가 되는 순간 새로운 데이터를 요청
+			    if($(window).scrollTop() + $(window).height() == $(document).height()) {
+			    	if(!last) {			    		
+			    		requestNextCategoryBookList();
+			    	}
+			    }
+			  });
+			
+		});
+		
+		function requestNextCategoryBookList() {
+			var token = $("meta[name='_csrf']").attr("content");
+	        var header = $("meta[name='_csrf_header']").attr("content");
+	        
+	        var paramData = {
+	        	categoryId : categoryId,
+        		currentPage : currentPage
+	        }
+	        
+	        var param = JSON.stringify(paramData);
+	        
+	        $.ajax({
+	            url : '/category/detail/paging',
+	            type : "POST",
+	            contentType : "application/json",
+	            data : param,
+	            beforeSend : function(xhr){
+	                // 데이터를 전송하기 전에 헤더에 csrf값을 설정
+	                xhr.setRequestHeader(header, token);
+	            },
+	            dataType : "json",
+	            cache   : false,
+	            success  : function(result, status){
+	            	// 다음 페이지 요청시 필요한 데이터 업데이트
+	            	categoryId = result.categoryId;
+	            	last = result.last;
+	            	currentPage = result.currentPage;
+	            	
+	            	// 화면에 데이터 추가
+	            	addNextBookList(result.items);
+	            },
+	            error : function(jqXHR, status, error){
+	                if(jqXHR.status == '401'){
+	                    alert('로그인 후 이용해주세요');
+	                    location.href='/login';
+	                } else{
+	                    alert(jqXHR.responseText);
+	                }
+	            }
+	        });
+		}
+		
+		// 가져온 데이터 화면에 추가
+		function addNextBookList(items) {
+			for(let i = 0; i < items.length; i++) {
+				var appendData = `<div class="search-card col-2">
+					<div class="card">
+					<a href="/book/bookDetail/${items[i].isbn}">
+						<img src="${items[i].imgUrl}" class="card-img-top" alt="이미지">
+					</a>
+					<a href="/book/bookDetail/${items[i].isbn}">
+						<div class="card-body">
+							<h5 class="card-title">${items[i].bookName}</h5>
+							<p class="card-text">${items[i].author}</p>
+						</div>
+					</a>
+				</div>
+			</div>`;
+			
+			$("#search-data").append(appendData);
+			}
+		}
+		
+	</script>
+</th:block>
+
+</html>

@@ -52,12 +52,7 @@ public class FavoriteBook extends BaseTimeEntity {
 		favoriteBook.setMember(member);
 		favoriteBook.setBook(book);
 		
-		/*Book book = new Book();
-        book.setId(id);
-        favoriteBook.setBook(book);*/
-		
 		return favoriteBook;
-		
 	}
 
 }

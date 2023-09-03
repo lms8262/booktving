@@ -7,7 +7,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
-import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,6 +22,5 @@ public abstract class BaseEntity extends BaseTimeEntity {
 	
 	@LastModifiedBy
 	private String modifiedBy; // 수정자
-	
 	
 }

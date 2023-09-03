@@ -43,6 +43,7 @@ ul{
 
 /* sec: header */
 .header-section{
+	width: 1920px;
 	display:flex;
 	align-items:center;
 	height: 100px;
@@ -51,6 +52,7 @@ ul{
 
 .header-box{
 	padding: 0;
+	min-width: 1140px;
 }
 
 .main-nav{
@@ -64,11 +66,19 @@ ul{
 .logo{
 	margin: 0;
 	display: flex;
-	align-items: center;
+	justify-content: flex-end;
 }
 
 .logo img{
 	width:150px;
+}
+
+.menu-box {
+	margin: 0 0 0 40px;
+}
+
+.login-box {
+	margin: 0 0 0 auto;
 }
 
 .nav_left{
@@ -411,11 +421,14 @@ form nav {
 
 /* sec: content : admin  페이지 공통 양식 끝 */
 
-
-
 /* sec: footer */
 .footer_section{
+	width: 1920px;
 	background-color: #FFD360;
+}
+
+.footer_section > div {
+	min-width: 1140px;
 }
 
 .footer-content{

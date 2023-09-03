@@ -2,7 +2,6 @@ package com.ezen.booktving.controller;
 
 import java.io.IOException;
 import java.security.Principal;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -22,7 +21,6 @@ import com.ezen.booktving.dto.BookDto;
 
 import com.ezen.booktving.dto.BookReviewDto;
 import com.ezen.booktving.dto.FavoriteBookDto;
-import com.ezen.booktving.entity.Book;
 import com.ezen.booktving.service.ApiService;
 import com.ezen.booktving.service.BookService;
 import com.ezen.booktving.service.CommutationService;
@@ -53,8 +51,6 @@ public class BookController {
 		}
 		
 		BookDto bookDto = bookService.getBookDetail(isbn);
-		List<BookReviewDto> bookReviewDtoList = new ArrayList<BookReviewDto>();
-		model.addAttribute("reviews", bookReviewDtoList);
 		model.addAttribute("books", bookDto);
 		return "book/bookDetail";
 	}
@@ -86,18 +82,16 @@ public class BookController {
 	// 찜 삭제
 	@DeleteMapping("/myLibrary/favoritebook/remove/{id}")
 	public @ResponseBody ResponseEntity removeFavoriteBook(@PathVariable("id") Long id, Principal principal) {
-		System.out.println("id: " + id);
 		favoriteBookService.removeFavoriteBook(id);
 		return new ResponseEntity<Long>(id, HttpStatus.OK);
 	}
 
-	// 리뷰
-	@PostMapping(value = "/book/bookDetail/{isbn}/review")
-	public String reviewCreate(BookReviewDto bookReviewDto, @PathVariable("isbn") String isbn) {
-		Book book = bookService.getBookByIsbn(isbn); // 해당 Book 엔티티 가져오기
-		bookReviewDto.setBook(book); // BookReviewDto에 Book 엔티티 설정
-		bookService.saveReview(bookReviewDto);
-		return "redirect:/book/bookDetail/{isbn}";
+	// 리뷰 등록
+	@PostMapping(value = "/book/bookDetail/review/{isbn}")
+	public String reviewCreate(Principal principal, BookReviewDto bookReviewDto, @PathVariable("isbn") String isbn) {
+		String userId = principal.getName();
+		bookService.saveReview(bookReviewDto, userId, isbn);
+		return "redirect:/book/bookDetail/" + isbn;
 	}
 	
 	// 도서 대여요청

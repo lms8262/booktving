@@ -9,7 +9,6 @@
       <td align="center"><a href="https://github.com/bohyun87"><img src="https://avatars.githubusercontent.com/u/130732028?v=4" width="100px;" alt=""/><br /><sub><b>팀원 : 최보현</b></sub></a><br /></td>
       <td align="center"><a href="https://github.com/leejinwoo3"><img src="https://avatars.githubusercontent.com/u/128760115?v=4" width="100px;" alt=""/><br /><sub><b>팀원 : 이진우</b></sub></a><br /></td>
       <td align="center"><a href="https://github.com/Jiyeon2411"><img src="https://avatars.githubusercontent.com/u/78262928?v=4" width="100px;" alt=""/><br /><sub><b>팀원 : 이지연</b></sub></a><br /></td>
-      <td align="center"><a href="https://github.com/dongjin1996"><img src="https://avatars.githubusercontent.com/u/130732105?v=4" width="100px;" alt=""/><br /><sub><b>팀원 : 신동진</b></sub></a><br /></td>
     </tr>
   </tbody>
 </table>
