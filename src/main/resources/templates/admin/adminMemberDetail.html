@@ -47,15 +47,15 @@
 											<div class="col-md-8">
 												<table class="table table-responsive-md ">						
 													<tr>
-														<th class="col-sm-3">아이디</th>
+														<th th:text="${member.userId}" class="col-sm-3">아이디</th>
 														<td class="col-sm-9"></td>
 													</tr>
 													<tr>
-														<th class="col-sm-3">회원이름</th>
+														<th th:text="${member.memberName}" class="col-sm-3">회원이름</th>
 														<td class="col-sm-9"></td>
 													</tr>
 													<tr>
-														<th class="col-sm-3">전화번호</th>
+														<th th:text="${member.tel}" class="col-sm-3">전화번호</th>
 														<td class="col-sm-9"></td>
 													</tr>																										
 												</table>

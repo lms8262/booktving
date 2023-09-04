@@ -59,7 +59,7 @@
 													<tr th:each="member : ${members.content}">
 														<th th:text="${member.id}" scope="row"></th>
 														<td th:text="${member.role}"></td>
-														<td th:text="${member.memberName}"></td>
+														<td th:text="${member.memberName}"><a th:href="/admin/member/"></a></td>
 														<td th:text="${member.regTime}"></td>
 														<td th:text="${member.birth}"></td>
 														<td>

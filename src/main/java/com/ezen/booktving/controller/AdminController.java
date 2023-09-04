@@ -31,15 +31,15 @@ import com.ezen.booktving.dto.BookRegFormDto;
 import com.ezen.booktving.dto.BookSearchDto;
 import com.ezen.booktving.dto.KeywordDto;
 import com.ezen.booktving.dto.KeywordFormDto;
+import com.ezen.booktving.dto.MemberFormDto;
 import com.ezen.booktving.dto.MemberSearchDto;
 import com.ezen.booktving.dto.NoticeDto;
 import com.ezen.booktving.dto.NoticeSearchDto;
-
+import com.ezen.booktving.dto.QuestionDto;
 import com.ezen.booktving.entity.Author;
 import com.ezen.booktving.entity.Book;
 import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.entity.Notice;
-import com.ezen.booktving.dto.QuestionDto;
 import com.ezen.booktving.service.AdminBookRentHistService;
 import com.ezen.booktving.service.AdminQuestionService;
 import com.ezen.booktving.service.AuthorService;
@@ -171,8 +171,7 @@ public class AdminController {
 
 	// 회원관리 페이지 보여주기
 	@GetMapping(value = "/admin/member")
-	public String adminMemberMng(MemberSearchDto membersearchDto,
-			@PathVariable("page") @RequestParam(name = "page", required = false, defaultValue = "0") int page,
+	public String adminMemberMng(MemberSearchDto membersearchDto, @RequestParam(name = "page", required = false, defaultValue = "0") int page,
 			Model model) {
 		Pageable pageable = PageRequest.of(page, 3);
 		Page<Member> members = memberService.getAdminMemberPage(membersearchDto, pageable);
@@ -190,9 +189,10 @@ public class AdminController {
 	}
 
 	// 회원정보 상세페이지 보여주기 //value 경로는 개발하면서 변경. {memberId}
-	@GetMapping(value = "/admin/member/")
-	public String adminMemberDetail() {
-
+	@GetMapping(value = "/admin/member/{userId}")
+	public String adminMemberDetail(@PathVariable("userId") String userId,Model model) {
+		memberService.findByUserId(userId);
+		model.addAttribute("memberFormDto",new MemberFormDto());
 		return "admin/adminMemberDetail";
 	}
 
