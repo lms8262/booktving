@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+
+textarea:focus, 
+input:focus,
+select:focus {
+    outline: none !important;
+	box-shadow: none !important;
+	border-color: inherit !important; 
+}

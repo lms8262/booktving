@@ -147,4 +147,9 @@ public class MemberService implements UserDetailsService {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public Member listAll(String username) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

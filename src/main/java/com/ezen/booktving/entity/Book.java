@@ -9,7 +9,6 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,7 +16,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
-import java.util.*;
 
 @Entity
 @Table(name = "book")
@@ -61,18 +59,8 @@ public class Book extends BaseTimeEntity {
 	@Column(columnDefinition = "text", nullable = false)
 	private String contents;
 	
-	@Column(nullable = false)
-	private String reqAuthor;
-	
 	@Column(columnDefinition = "text", nullable = false)
 	private String authorInfo;
-	
-	public void updateBookDetail(Integer page, String contents, String reqAuthor, String authorInfo) {
-		this.page = page;
-		this.contents = contents;
-		this.reqAuthor = reqAuthor;
-		this.authorInfo = authorInfo;
-	}
 
 	//book 엔티티 수정
 	public void updateBook(BookRegFormDto bookRegFormDto) {
@@ -85,6 +73,6 @@ public class Book extends BaseTimeEntity {
 		this.bookIntroduction = bookRegFormDto.getBookIntroduction();
 		this.contents = bookRegFormDto.getContents();
 		this.category = bookRegFormDto.getCategory();
-
 	}
+
 }

@@ -10,10 +10,7 @@
 	 
 <!-- adminBook 페이지 CSS --> 
 <th:block layout:fragment="css">
-<<<<<<< HEAD
-=======
 	<link rel="stylesheet" href="/css/adminAuthor.css" />	
->>>>>>> develope
 </th:block>
 
 <div layout:fragment="content">
@@ -83,33 +80,6 @@
 												</tbody>
 											</table>
 											
-											<!-- paging 부분 -->
-											<div>
-												<nav th:with="start=${(authors.number / maxPage) * maxPage + 1}, 
-															  end = (${ ((authors.totalPages == 0)) ? 1 :	(start + (maxPage -1) < authors.totalPages ?
-												  			  start + (maxPage - 1) : authors.totalPages)})" 						
-																aria-label="...">
-													<ul class="pagination d-flex justify-content-center">
-							  
-													    <li class="page-item " th:classappend="${authors.first} ? 'disabled'">
-													      	<a class="page-link page-item" th:onclick="'javascript:page(' + ${authors.number - 1} + ')'">이전</a>
-														</li>
-	
-														<li class="page-item"
-															th:each="page: ${#numbers.sequence(start, end)}"
-															th:classappend="${authors.number eq page -1} ? 'active' : '' ">
-															<a class="page-link" th:inline="text"
-															th:onclick="'javascript:page(' + ${page - 1} + ')'">
-																[[${page}]] </a>
-														</li>
-	
-														<li class="page-item" th:classappend="${authors.last} ? 'disabled'"><a
-															class="page-link page-item" th:onclick="'javascript:page(' + ${authors.number + 1} + ')'">다음</a>
-															</li>	
-													</ul>
-												</nav>												
-											</div>
-											
 											<!-- 등록버튼  -->
 											<div class="form-group button col-12">
 												<div class="col-md-8"></div>
@@ -142,7 +112,34 @@
 													</div>
 												</div>
 												<div class="col-lg-2"></div>
-											</div>											
+											</div>	
+											
+											<!-- paging 부분 -->
+											<div>
+												<nav th:with="start=${(authors.number / maxPage) * maxPage + 1}, 
+															  end = (${ ((authors.totalPages == 0)) ? 1 :	(start + (maxPage -1) < authors.totalPages ?
+												  			  start + (maxPage - 1) : authors.totalPages)})" 						
+																aria-label="...">
+													<ul class="pagination d-flex justify-content-center">
+							  
+													    <li class="page-item " th:classappend="${authors.first} ? 'disabled'">
+													      	<a class="page-link page-item" th:onclick="'javascript:page(' + ${authors.number - 1} + ')'">이전</a>
+														</li>
+	
+														<li class="page-item"
+															th:each="page: ${#numbers.sequence(start, end)}"
+															th:classappend="${authors.number eq page -1} ? 'active' : '' ">
+															<a class="page-link" th:inline="text"
+															th:onclick="'javascript:page(' + ${page - 1} + ')'">
+																[[${page}]] </a>
+														</li>
+	
+														<li class="page-item" th:classappend="${authors.last} ? 'disabled'"><a
+															class="page-link page-item" th:onclick="'javascript:page(' + ${authors.number + 1} + ')'">다음</a>
+															</li>	
+													</ul>
+												</nav>												
+											</div>										
 											
 										</form>
 									</div>

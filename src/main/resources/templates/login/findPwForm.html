@@ -148,7 +148,6 @@ body {
 			//*전달하기 전에 데이터를 JSON ->문자 번호 만들어야 한다.
 			var param = JSON.stringify(paramData);
 
-			console.log(param);
 
 			$.ajax({
 				url : url,
@@ -165,7 +164,7 @@ body {
 				},
 				error : function(jqXHR, status, error) {
 					if (jqXHR.status == '401') {
-						alert('로그인 후 이용해주세요.');
+						alert('아이디 이메일 확인해주세요.');
 						location.href = '/account/search';
 					} else {
 						alert(jqXHR.responseText);

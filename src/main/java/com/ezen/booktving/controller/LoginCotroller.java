@@ -75,7 +75,7 @@ public class LoginCotroller {
 			model.addAttribute("errorMessage", e.getMessage());
 			return "membership/memberloginForm";
 		}
-		return "membership/memberloginForm";
+		return "login/login";
 	}
 
 	//소셜 로그인 회원가입 페이지

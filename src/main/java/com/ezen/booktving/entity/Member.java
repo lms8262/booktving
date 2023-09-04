@@ -81,7 +81,7 @@ public class Member extends BaseTimeEntity {
 			member.setRole(Role.ROLE_SNS_USER);
 		} else {
 			password = passwordEncoder.encode(memberFormDto.getPassword());
-			member.setRole(Role.ROLE_USER);
+			member.setRole(Role.USER);
 		}
 		
 		member.setUserId(memberFormDto.getUserId());

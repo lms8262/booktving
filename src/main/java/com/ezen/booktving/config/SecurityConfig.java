@@ -19,7 +19,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.web.servlet.handler.HandlerMappingIntrospector;
 
 import com.ezen.booktving.handler.CustomOAuth2SuccessHandler;
-import com.ezen.booktving.repository.MemberRepository;
 import com.ezen.booktving.service.PrincipalOauth2UserService;
 
 import lombok.RequiredArgsConstructor;

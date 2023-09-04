@@ -1,6 +1,5 @@
 package com.ezen.booktving.entity;
 
-
 import com.ezen.booktving.dto.AuthorFormDto;
 
 import jakarta.persistence.Column;
@@ -43,6 +42,5 @@ public class Author  extends BaseEntity{
 		this.title = authorFormDto.getTitle();
 		this.authorIntroduction = authorFormDto.getAuthorIntroduction();
 	}
-
 
 }

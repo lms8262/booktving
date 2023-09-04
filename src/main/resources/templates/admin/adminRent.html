@@ -81,7 +81,6 @@
 												<div class="col-lg-2" style="display: flex;">
 													<!-- 검색분류 -->
 													<select class="form-control" th:field="*{searchBy}">
-														<option value="">검색분류</option>
 														<option value="bookId">도서ID</option>
 														<option value="bookName">도서명</option>
 														<option value="userId">회원ID</option>
@@ -103,8 +102,9 @@
 										
 											<nav th:with="start=${(rentBooks.number / maxPage) * maxPage + 1}, 
 														  end = (${ ((rentBooks.totalPages == 0)) ? 1 :	(start + (maxPage -1) < rentBooks.totalPages ?
-											  			  start + (maxPage - 1) : rentBooks.totalPages)})" 						
-															aria-label="...">
+											  			  start + (maxPage - 1) : rentBooks.totalPages)})"
+											  			  class="d-flex"
+														  aria-label="...">
 												<ul class="pagination d-flex justify-content-center">
 						  
 												    <li class="page-item " th:classappend="${rentBooks.first} ? 'disabled'">

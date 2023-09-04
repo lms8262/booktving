@@ -10,33 +10,35 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ezen.booktving.constant.YesNoStatus;
+import com.ezen.booktving.dto.AdminRentHistBookDto;
 import com.ezen.booktving.dto.MyLibraryRentBookInfoDto;
 import com.ezen.booktving.dto.MyLibraryRentBookListDto;
+import com.ezen.booktving.dto.RentBookDto;
+import com.ezen.booktving.entity.ChallengeItem;
 import com.ezen.booktving.entity.RentBook;
 import com.ezen.booktving.repository.BookImgRepository;
-import com.ezen.booktving.repository.BookRepository;
-import com.ezen.booktving.repository.MemberRepository;
-import com.ezen.booktving.repository.RentRepository;
+import com.ezen.booktving.repository.ChallengeItemRepository;
+import com.ezen.booktving.repository.RentBookRepository;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class MyLibraryRentBookService {
-	private final RentRepository rentRepository;
-	private final BookRepository bookRepository;
-	private final MemberRepository memberRepository;
+	private final RentBookRepository rentBookRepository;
 	private final BookImgRepository bookImgRepository;
+	
 	
 	
 	//대여목록 리스트 가져오는 서비스
 	@Transactional(readOnly = true)
 	public Page<MyLibraryRentBookListDto> getMyLibraryRentBookList(String userId, Pageable pageable) {
 		
-		List<RentBook> rentbooks = rentRepository.findRents(userId, pageable);
+		List<RentBook> rentbooks = rentBookRepository.findRents(userId, pageable);
 		
-		Long totalCount = rentRepository.countRent(userId);
+		Long totalCount = rentBookRepository.countRent(userId);
 		
 		List<MyLibraryRentBookListDto> myLibraryRentBookListDtos = new ArrayList<>();
 		
@@ -53,9 +55,9 @@ public class MyLibraryRentBookService {
 	@Transactional(readOnly = true)
 	public Page<MyLibraryRentBookInfoDto> getMyLibraryRentBookInfo(String userId, Pageable pageable) {
 		
-		List<RentBook> rentbookInfo = rentRepository.findRents(userId, pageable);
+		List<RentBook> rentbookInfo = rentBookRepository.findRents(userId, pageable);
 		
-		Long totalCount = rentRepository.countRent(userId);
+		Long totalCount = rentBookRepository.countRent(userId);
 		
 		List<MyLibraryRentBookInfoDto> myLibraryRentBookInfoDtos  = new ArrayList<>();
 		
@@ -67,5 +69,36 @@ public class MyLibraryRentBookService {
 		
 		return new PageImpl<>(myLibraryRentBookInfoDtos, pageable, totalCount);
 	} 
+	
+	//로그인한 사용자의 도서대여정보 가져오기
+	public List<RentBook> listAll(String userId){
+		List<RentBook> rentBookList = rentBookRepository.findRentByMember(userId);
+		
+		List<AdminRentHistBookDto> rentBookDtoList = new ArrayList<>();
+		
+		for(RentBook rentBook : rentBookList) {
+			AdminRentHistBookDto rentBookDto = AdminRentHistBookDto.of(rentBook);
+			rentBookDtoList.add(rentBookDto);
+		}
+		return rentBookList;
+	}
+	
+	//챌린지 페이지에서 rentbook 가져오기
+	public List<RentBookDto> getMyRentBookList(String userId){
+		List<RentBook> rentBooks = rentBookRepository.findByCompleteYnAndMember_UserId(YesNoStatus.Y, userId);
+		
+		List<RentBookDto> rentBookDtoList = new ArrayList<>();
+		
+		for(RentBook rentBook : rentBooks) {
+			RentBookDto rentBookDto = new RentBookDto(rentBook);
+			rentBookDtoList.add(rentBookDto);
+		}
+		return rentBookDtoList;
+	}
+	
+	public long getCountOfCompletedRentBooks(String userId) {
+        return rentBookRepository.countByCompleteYnAndMember_UserId(YesNoStatus.Y, userId);
+    }
+
 	
 }

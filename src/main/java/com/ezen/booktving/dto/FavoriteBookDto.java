@@ -1,5 +1,7 @@
 package com.ezen.booktving.dto;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 
 import com.ezen.booktving.entity.Book;
@@ -10,33 +12,32 @@ import lombok.*;
 
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class FavoriteBookDto {
 
 	private Long id;
-	
+
 	private String isbn;
-	
+
 	private String bookName;
-	
+
 	private String author;
-	
-	private Member member;
 
-	private Book book;
-	
-	private static ModelMapper modelMapper = new ModelMapper();
+	private List<BookImgDto> bookImgDtoList;
 
-	/*public FavoriteBook createFavoriteBook() {
-		FavoriteBook favoriteBook = new FavoriteBook();
-		favoriteBook.setMember(this.member); // Set the member
-	    favoriteBook.setId(this.id); // Set the bookId
-	    
-	    return favoriteBook;
-	}*/
+	public FavoriteBookDto(Long id, String isbn, String bookName, String author, Member member, Book book) {
+		this.id = id;
+		this.isbn = isbn;
+		this.bookName = bookName;
+		this.author = author;
+	}
 
-	public static FavoriteBookDto of(FavoriteBook favoriteBook) {
+	public static FavoriteBookDto of(ModelMapper modelMapper, FavoriteBook favoriteBook) {
 		FavoriteBookDto dto = modelMapper.map(favoriteBook, FavoriteBookDto.class);
-		dto.setIsbn(favoriteBook.getBook().getIsbn()); 
+		dto.setIsbn(favoriteBook.getBook().getIsbn());
 		return dto;
 	}
+	
 }

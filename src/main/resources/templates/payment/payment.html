@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/layout1}">
+
+<head>
+	<script src="https://cdn.iamport.kr/v1/iamport.js"></script>
+	<meta name="_csrf" th:content="${_csrf.token}" />
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
+	 
+<th:block layout:fragment="css">
+	<link rel="stylesheet" th:href="@{/css/commutation.css}" />
+</th:block>
+
+<div layout:fragment="content">
+	<div class="container my-5">
+		<div>		
+			<h4 class="commutation-title mb-5">이용권 구매</h4>
+			<div class="text-center">
+				<div class="col-3"></div>
+				<div class="col-6" th:if="${not #lists.isEmpty(commutationTicketList)}">
+					<th:block th:each="commutationTicket : ${commutationTicketList}">
+						<div class="mb-4 commutation-ticket d-flex" th:id="ticket- + ${commutationTicket.commutationTicketId}">
+							<input type="radio" name="select-ticket" 
+							th:data-commutation-name="${commutationTicket.commutationName}" 
+							th:data-price="${commutationTicket.price}"
+							th:data-commutation-ticket-id="${commutationTicket.commutationTicketId}" >
+							<p>
+								<span th:text="${commutationTicket.commutationName}"></span>
+								<span th:text="${commutationTicket.price} + '원'"></span>
+							</p>
+						</div>
+					</th:block>
+					<button type="button" class="btn reg_btn commutationBtn" onclick="requestPayment();">카카오페이 결제</button>
+				</div>
+				<div class="col-6" th:unless="${not #lists.isEmpty(commutationTicketList)}">
+					<p>현재 판매중인 이용권이 없습니다.</p>
+				</div>
+				<div class="col-3"></div>
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+		var IMP = window.IMP;
+		IMP.init("imp22321435");
+		
+		var userId = [[${#authentication.principal.username}]];
+		
+		function createPaymentId() {
+			const date = new Date();
+			const year = date.getFullYear();
+			const month = String(date.getMonth() + 1).padStart(2, "0");
+			const day = String(date.getDate()).padStart(2, "0");
+			
+			let paymentId = year + month + day;
+			for(let i=0;i<10;i++) {
+				paymentId += Math.floor(Math.random() * 8);	
+			}
+			
+			return paymentId;
+		}
+		
+		function requestPayment() {
+			let selectTicket = $("input[name='select-ticket']:checked");
+			let commutationTicketId = selectTicket.data("commutationTicketId");
+			
+			if(commutationTicketId == null) {
+				alert("구매하실 이용권을 선택해주세요.");
+				return false;
+			}
+			
+			let commutationName = selectTicket.data("commutationName");
+			let price = selectTicket.data("price");
+			
+			let paymentUid = createPaymentId();
+			
+			// 결제 요청
+			IMP.request_pay({
+				pg : 'kakaopay.TC0ONETIME',
+				merchant_uid : paymentUid,
+				name : commutationName,
+				amount : price,
+				buyer_name : userId
+			}, function(rsp){
+				if(rsp.success) {
+					let token = $("meta[name='_csrf']").attr("content");
+			        let header = $("meta[name='_csrf_header']").attr("content");
+					// 결제 검증
+					$.ajax({
+			        	url : "/payment/validate/" + rsp.imp_uid,
+						type : "POST",
+						beforeSend : function(xhr){
+			                // 데이터를 전송하기 전에 헤더에 csrf값을 설정
+			                xhr.setRequestHeader(header, token);
+			            }
+					}).done(function(data) { // success시 실행
+						if(rsp.paid_amount == data.response.amount) { // 검증
+							
+							// 결제 검증까지 성공시 실행할 비즈니스 로직 
+					        let paramData = {
+					        	"paymentUid" : rsp.merchant_uid,
+					        	"paymentAmount" : rsp.paid_amount,
+					        	"paymentName" : rsp.name,
+					        	"userId" : rsp.buyer_name,
+					        	"impUid" : rsp.imp_uid,
+					        	"commutationTicketId" : commutationTicketId
+					        }
+							
+					        var param = JSON.stringify(paramData);
+						
+							$.ajax({
+								url : "/payment/success",
+					            type : "POST",
+					            contentType : "application/json",
+					            data : param,
+					            beforeSend : function(xhr){
+					                // 데이터를 전송하기 전에 헤더에 csrf값을 설정
+					                xhr.setRequestHeader(header, token);
+					            },
+					            cache   : false,
+					            success  : function(result, status){
+					            	alert("이용권 구매를 완료했습니다.");
+					                location.href='/payment/result';
+					            },
+					            error : function(jqXHR, status, error){
+					                if(jqXHR.status == '401'){
+					                    alert('로그인 후 이용해주세요');
+					                    location.href='/login';
+					                } else{
+					                    alert(jqXHR.responseText);
+					                }
+					            }
+								
+							});
+							
+						} else {
+							alert("결제 검증 실패");
+						}
+						
+					}).fail(function(){
+						alert("검증 요청 실패");
+					});
+					
+				}
+				
+			});
+		}
+		
+	</script>
+</th:block>
+
+</html>

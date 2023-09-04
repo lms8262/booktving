@@ -1,6 +1,5 @@
 package com.ezen.booktving.repository;
 
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

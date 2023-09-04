@@ -1,20 +1,20 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="~{layouts/layout1}">
-	
-	 
-<!-- adminBook 페이지 CSS --> 
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+
+<!-- adminBook 페이지 CSS -->
 <th:block layout:fragment="css">
+	<link rel="stylesheet" href="/css/answer.css" />
 </th:block>
 
-<div layout:fragment="content"> 
+<div layout:fragment="content">
 
 	<div class="top">
 		<div class="container">
 			<div class="row">
 				<div class="col-12 section-wrap">
-				
+
 					<div class="row">
 						<nav class="menu col-lg-2">
 							<ul class="col-12">
@@ -27,38 +27,43 @@
 								<li><a href="/admin/notice">공지관리</a></li>
 							</ul>
 						</nav>
-						
-						 
+
+
 						<div class="admin-content col-lg-10">
 							<div class="container">
 								<div class="row">
 									<div class="col-12">
-										
+
 										<div class="top-title">
 											<h4>문의답변</h4>
 											<hr>
 										</div>
-										
-										
-										<form role="form" action="">
-											
-											<input type="text" class="form-control answer-title col-12"/>
-											<textarea rows="10" class="form-control answer-content col-12" id="answer"></textarea>
-																				
-												<!-- 등록버튼  -->
-												<div class="form-group button col-12">
-													<div class="col-12">
-														<button type="button" class="btn col-12 answer-btn">등록하기</button>
-													</div>
+
+
+										<form action="/admin/answer" method="post" name="form">
+											<input type="hidden" th:name="${_csrf.parameterName}"
+												th:value="${_csrf.token}">
+											<input type="hidden" name="questionId" th:value="${question.id}" />
+											<input type="text" class="form-control answer-title col-12"
+												th:if="${question}" th:value="'RE: ' + ${question.title}" />
+											<textarea name="content" rows="10" class="form-control answer-content col-12"
+												id="answer" th:if="${question}"
+												th:text="'RE: ' + ${question.content}"></textarea>
+
+											<!-- 등록버튼  -->
+											<div class="form-group button col-12">
+												<div class="col-12">
+													<input type="button" value="등록하기" class="btn col-12 answer-btn"
+														onclick="submitAnswer()" />
 												</div>
-																						
+											</div>
 										</form>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				
+
 				</div>
 			</div>
 		</div>
@@ -70,8 +75,23 @@
 <!-- adminBook 페이지 javaScript -->
 <th:block layout:fragment="script">
 
-	<script>
-	
+	<script th:inline="javascript">
+		var errorMessage = [[${errorMessage}]];
+		if (errorMessage != null) {
+			alert(errorMessage);
+		}
+
+		const submitAnswer = () => {
+			var f = document.form;
+			str = f.answer.value;
+			str = str.trim();
+			if (!str) {
+				alert("\n답변을 입력하세요.");
+				f.answer.focus();
+				return;
+			}
+			f.submit();
+		}
 	</script>
 </th:block>
 

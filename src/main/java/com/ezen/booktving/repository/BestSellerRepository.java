@@ -1,6 +1,5 @@
 package com.ezen.booktving.repository;
 
-
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -13,6 +12,5 @@ public interface BestSellerRepository extends JpaRepository<BestSeller, Long>, B
 	//스케줄러 이용시 api 중복 저장 되지 않게 하려고 isbn 이용하기 
 	@Query("select b.isbn from BestSeller b")
 	List<String> findAllIsbn();
-
 	
 }

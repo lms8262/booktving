@@ -30,50 +30,46 @@
 									<div class="col-12">
 
 										<div class="top-title">
-											<h4>내 대여내역</h4>
+											<h4>나의 대여내역</h4>
 											<hr>
 										</div>
 
 										<!-- 내 대여내역 contents -->
 										<div class="container">
 											<div class="row">
-												<div class="col-md-2"></div>
-												<div class="col-md-8">
+												<div class="col-md-12">
 													<div th:each="rentBook : ${rentBooks.getContent()}">
 														<div class="card">
 															<div class="each">
-																<div style="margin: 0">
-																	<span class="book-rent-num">대여번호</span>
-																	<p th:text="${rentBook.id}">1</p>
+																<div class="col-1">
+																	<span class="book-rent-num">대여[[${rentBook.id}]]</span>
 																</div>
-																<div style="margin: 0">
+																<div class="col-3">
 																	<div class="img">
-																		<img class="rentlist-img"  alt="이미지"
-																			th:src="${rentBook.imgUrl}">
+																		<img class="rentlist-img"  alt="이미지" th:src="${rentBook.imgUrl}">
 																	</div>
 																</div>
-																<div class="test" style="display: flex;">
+																<div class="test col-8" style="display: flex;">
 
-																	<div style="margin-right: 30px">
+																	<div class="col-5">
 																		<h5 class="book-name" th:text="${rentBook.bookName}">도서명</h5>
 																		<span class="rent-sub" th:text="${rentBook.author}">저자명</span>
 																		/ <span class="rent-sub"
 																			th:text="${rentBook.publisher}">출판사명</span>
 																	</div>
-																	<div style="margin-right: 30px;">
+																	<div class="col-3">
 																		<p class="book-price">결제방식</p>
 																		<span class="rent-sub">이용권</span>
 																	</div>
-																	<div>
+																	<div class="col-4">
 																		<p class="book-date">대여일</p>
-																		<span class="rent-sub" th:text="${rentBook.rentDate}">2023/08/18</span>
+																		<span class="rent-sub" th:text="${rentBook.rentDate}"></span>
 																	</div>
 																</div>
 															</div>
 														</div>
 													</div>
 												</div>
-												<div class="col-md-2"></div>
 											</div>
 										</div>
 
@@ -130,12 +126,7 @@
 	<script>
 	
 	function page(page) {
-
-		var searchBy = $("#searchBy").val();
-		var searchQuery = $("#searchQuery").val();
-
-		location.href = "/mypage/rentlist/" + page + "?searchBy=" + searchBy
-				+ "&searchQuery=" + searchQuery;
+		location.href = "/mypage/rentlist/" + page;
 	}
 	
 	</script>

@@ -34,6 +34,17 @@
 	width:100%;
 }
 
+.user-info-box {
+	display: flex;
+	align-items: center;
+	padding: 0;
+}
+
+.user-info{
+	margin: 0;	
+}
+
+
 
 /* 나의서재 메뉴 영역 */
 .myLibrary-menu-wrap{
@@ -111,13 +122,12 @@
 }
 
 .myLibrary-nav li:hover a {
-	font-weight: normal;
 	text-decoration: none;
 }
 
 /* 나의서재 컨텐츠영역 */
 .myLibrary-contents-wrap{
-	height: 1100px;
+	height: auto;
 	margin-top: 150px;
 	margin-bottom: 100px;
 }
@@ -152,6 +162,49 @@
 	position: relative;
 }
 
+.bookcase-box-title{
+	margin-bottom: 30px;
+}
+
+.rent-book-wrap{
+	width: 65%;
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 10;
+}
+
+.rent-book{
+	width: 110px;
+	height: 140px;
+	border-radius: 7px 7px 0 0;
+	box-shadow: 3px 3px 5px #ccc;
+	overflow: hidden;
+	float: left;
+}
+
+.rent-book img{
+    width: 100%;
+}
+
+.author-book-null-wrap {
+	display: flex;
+	justify-content:center; 
+	margin-top: 60px;
+}
+
+.rent-book-deco-bar{
+	width: 90%;
+	height: 10px;
+	position: absolute;
+	top: 225px;
+	left: 50%;
+	transform: translateX(-50%);
+	box-shadow: 3px 3px 5px #bbb;
+	background-color: #fff;
+	z-index: 150;
+}
+
 
 /* 나의서재 favorite 영역 */
 .favorite-box{
@@ -165,6 +218,47 @@
 	position: relative;
 }
 
+.favorite-box-title{
+	margin-bottom: 30px;
+}
+
+.favorite-book-wrap{
+	width: 90%;
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 10;
+}
+
+.favorite-book{
+	background-color: #bbb;
+	width: 15%;
+	height: 140px;
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	border-radius: 7px 7px 0 0;
+	z-index: 1;
+	box-shadow: 3px 3px 5px #ccc;
+}
+
+.favorite-book-null-wrap {
+	display: flex;
+	justify-content:center; 
+	margin-top: 60px;
+}
+
+.favorite-book-deco-bar{
+	width: 90%;
+	height: 10px;
+	position: absolute;
+	top: 225px;
+	left: 50%;
+	transform: translateX(-50%);
+	box-shadow: 3px 3px 5px #bbb;
+	z-index: 150;
+	background-color: #fff
+}
 
 /* 나의서재 author 영역 */
 .author-box{
@@ -178,10 +272,37 @@
 	position: relative;
 }
 
+.author-box-title{
+	margin-bottom: 30px;
+}
 
+.favorite-author-wrap{
+	width: 90%;
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 10;
+}
 
+.favorite-author {
+	background-color: #bbb;
+	width: 15%;
+	height: 140px;
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	border-radius: 7px 7px 0 0;
+	z-index: 1;
+	box-shadow: 3px 3px 5px #ccc;
+}
 
-.deco-bar{
+.favorite-author-null-wrap {
+	display: flex;
+	justify-content:center; 
+	margin-top: 60px;
+}
+
+.favorite-author-deco-bar{
 	width: 90%;
 	height: 10px;
 	position: absolute;
@@ -189,6 +310,8 @@
 	left: 50%;
 	transform: translateX(-50%);
 	box-shadow: 3px 3px 5px #bbb;
+	z-index: 150;
+	background-color: #fff
 }
 
 
