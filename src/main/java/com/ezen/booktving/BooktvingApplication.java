@@ -8,7 +8,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 @EnableScheduling
 @SpringBootApplication
-//@ComponentScan(basePackages = {"com.ezen.booktiving.auth"})
 public class BooktvingApplication {
 
 	public static void main(String[] args) {
