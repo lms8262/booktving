@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ezen.booktving.entity.Challenge;
-import com.ezen.booktving.entity.ChallengeItem;
 
 import lombok.Getter;
 import lombok.Setter;

@@ -38,14 +38,17 @@
 											<h4>문의답변</h4>
 											<hr>
 										</div>
-
+										
+										<input type="text" class="form-control answer-title col-12"
+												 th:value="${question.title}" readonly/>
+										<textarea name="content" rows="10" class="form-control answer-content col-12"
+											th:text="${question.content}" readonly></textarea>
+										
 
 										<form action="/admin/answer" method="post" name="form">
 											<input type="hidden" th:name="${_csrf.parameterName}"
 												th:value="${_csrf.token}">
 											<input type="hidden" name="questionId" th:value="${question.id}" />
-											<input type="text" class="form-control answer-title col-12"
-												th:if="${question}" th:value="'RE: ' + ${question.title}" />
 											<textarea name="content" rows="10" class="form-control answer-content col-12"
 												id="answer" th:if="${question}"
 												th:text="'RE: ' + ${question.content}"></textarea>

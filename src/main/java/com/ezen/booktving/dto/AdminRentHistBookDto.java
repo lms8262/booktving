@@ -7,10 +7,12 @@ import org.modelmapper.ModelMapper;
 import com.ezen.booktving.entity.RentBook;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class AdminRentHistBookDto {
 	
 	private Long id; //대여 아이디
@@ -25,10 +27,6 @@ public class AdminRentHistBookDto {
 	
 	private String userName; //회원 이름
 	
-	private static ModelMapper modelMapper = new ModelMapper();
-	
-	public AdminRentHistBookDto() {	}
-	
 	public AdminRentHistBookDto(RentBook rentBook) {
 		this.id = rentBook.getId();
 		this.BookId = rentBook.getBook().getId();
@@ -38,8 +36,8 @@ public class AdminRentHistBookDto {
 		this.userName = rentBook.getMember().getMemberName();
 	}
 	
-	
-	public static AdminRentHistBookDto of(RentBook rentBook) {
+	public static AdminRentHistBookDto of(RentBook rentBook, ModelMapper modelMapper) {
 		return modelMapper.map(rentBook, AdminRentHistBookDto.class);
 	}
+	
 }

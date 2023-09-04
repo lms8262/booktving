@@ -45,13 +45,11 @@ public class MemberFormDto {
 
 	private Role role;
 
-	private static ModelMapper modelMapper = new ModelMapper();
-
-	public static MemberFormDto of(Member member) {
+	public static MemberFormDto of(Member member, ModelMapper modelMapper) {
 		return modelMapper.map(member, MemberFormDto.class);
 	}
 
-	public Member createMember() {
+	public Member createMember(ModelMapper modelMapper) {
 		return modelMapper.map(this, Member.class);
 	}
 

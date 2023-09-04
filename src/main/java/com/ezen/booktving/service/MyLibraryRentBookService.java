@@ -3,6 +3,7 @@ package com.ezen.booktving.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -14,23 +15,19 @@ import com.ezen.booktving.dto.AdminRentHistBookDto;
 import com.ezen.booktving.dto.MyLibraryRentBookInfoDto;
 import com.ezen.booktving.dto.MyLibraryRentBookListDto;
 import com.ezen.booktving.dto.RentBookDto;
-import com.ezen.booktving.entity.ChallengeItem;
 import com.ezen.booktving.entity.RentBook;
 import com.ezen.booktving.repository.BookImgRepository;
-import com.ezen.booktving.repository.ChallengeItemRepository;
 import com.ezen.booktving.repository.RentBookRepository;
 
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class MyLibraryRentBookService {
+	private final ModelMapper modelMapper;
 	private final RentBookRepository rentBookRepository;
 	private final BookImgRepository bookImgRepository;
-	
-	
 	
 	//대여목록 리스트 가져오는 서비스
 	@Transactional(readOnly = true)
@@ -77,7 +74,7 @@ public class MyLibraryRentBookService {
 		List<AdminRentHistBookDto> rentBookDtoList = new ArrayList<>();
 		
 		for(RentBook rentBook : rentBookList) {
-			AdminRentHistBookDto rentBookDto = AdminRentHistBookDto.of(rentBook);
+			AdminRentHistBookDto rentBookDto = AdminRentHistBookDto.of(rentBook, modelMapper);
 			rentBookDtoList.add(rentBookDto);
 		}
 		return rentBookList;

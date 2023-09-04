@@ -3,16 +3,15 @@ package com.ezen.booktving.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ezen.booktving.constant.QuestionStatus;
 import com.ezen.booktving.dto.AdminQuestionDto;
 import com.ezen.booktving.dto.AnswerDto;
-import com.ezen.booktving.dto.QuestionDto;
 import com.ezen.booktving.entity.Answer;
 import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.entity.Question;
@@ -28,6 +27,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Transactional
 public class AdminQuestionService {
+	private final ModelMapper modelMapper;
 	private final AdminQuestionRepository adminQuestionRepository;
 	private final QuestionRepository questionRepository;
 	private final AnswerRepository answerRepository;
@@ -37,7 +37,7 @@ public class AdminQuestionService {
 	public AdminQuestionDto getAdminQuestion(Long id) {
 		Question question = adminQuestionRepository.findById(id)
 						.orElseThrow(EntityNotFoundException::new);
-		AdminQuestionDto adminQuestionDto = AdminQuestionDto.of(question);
+		AdminQuestionDto adminQuestionDto = AdminQuestionDto.of(question, modelMapper);
 		return adminQuestionDto;
 	}
 	
@@ -65,9 +65,15 @@ public class AdminQuestionService {
 	    if(member == null) {
 	    	throw new EntityNotFoundException();
 	    }
-
-	    Answer answer = Answer.createAnswer(answerDto, question, member);
-	    answer.setQuestion(question);
+	    
+	    Answer answer = answerRepository.findByQuestionId(questionId);
+	    
+	    if(answer == null) {
+	    	answer = Answer.createAnswer(answerDto, question, member);	    	
+	    	answer.setQuestion(question);
+	    } else {
+	    	answer.updateAnswer(answerDto.getContent());
+	    }
 
 	    answerRepository.save(answer);
         
@@ -77,7 +83,7 @@ public class AdminQuestionService {
 	public AnswerDto getAnswerById(Long id) {
 		Answer answer = answerRepository.findById(id).orElse(null);
 		if (answer != null) {
-			return AnswerDto.of(answer);
+			return AnswerDto.of(answer, modelMapper);
 		}
 		return null;
 	}

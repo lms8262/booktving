@@ -1,5 +1,6 @@
 package com.ezen.booktving.service;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.User;
@@ -24,11 +25,12 @@ import lombok.RequiredArgsConstructor;
 @Transactional // 쿼리문 수정시 에러가 발생하면 변경된 데이터를 이전상태로 출력
 @RequiredArgsConstructor
 public class MemberService implements UserDetailsService {
+	private final ModelMapper modelMapper;
 	private final MemberRepository memberRepository;
 
 	// 회원 테이블 회원등록
 	public Long saveMember(MemberFormDto memberFormDto) throws Exception {
-		Member member = memberFormDto.createMember();
+		Member member = memberFormDto.createMember(modelMapper);
 		memberRepository.save(member);
 		return member.getId();
 	}
@@ -49,9 +51,9 @@ public class MemberService implements UserDetailsService {
 	// 중복아이디
 	private void validateDuplicateUserId(LoginFormDto loginFormDto) {
 
-		Member findMember = memberRepository.findByUserId(loginFormDto.getEmail());
+		Member findMember = memberRepository.findByUserId(loginFormDto.getUserId());
 		if (findMember != null) {
-			throw new IllegalStateException("이미 사용중인 이메일입니다.");
+			throw new IllegalStateException("이미 사용중인 ID입니다.");
 		}
 	}
 
@@ -93,7 +95,7 @@ public class MemberService implements UserDetailsService {
 	@Transactional(readOnly = true)
 	public MemberFormDto getUpdateDtl(String userId) {
 		Member member = memberRepository.findByUserId(userId);
-		MemberFormDto memberFormDto = MemberFormDto.of(member);
+		MemberFormDto memberFormDto = MemberFormDto.of(member, modelMapper);
 
 		return memberFormDto;
 	}
