@@ -113,27 +113,27 @@
 
 
 											<!-- paging 부분 -->
-											<!-- 개발 후 medel key 으로 수정해서 사용하세요
-											<nav th:with="start=${(items.number / maxPage) * maxPage + 1}, 
-														  end = (${ ((items.totalPages == 0)) ? 1 :	(start + (maxPage -1) < items.totalPages ?
-											  			  start + (maxPage - 1) : items.totalPages)})" 						
+											<!--
+											<nav th:with="start=${(questions.number / maxPage) * maxPage + 1}, 
+														  end = (${ ((questions.totalPages == 0)) ? 1 :	(start + (maxPage -1) < questions.totalPages ?
+											  			  start + (maxPage - 1) : questions.totalPages)})" 						
 															aria-label="...">
 												<ul class="pagination d-flex justify-content-center">
 						  
-												    <li class="page-item " th:classappend="${items.first} ? 'disabled'">
-												      	<a class="page-link page-item" th:onclick="'javascript:page(' + ${items.number - 1} + ')'">◀</a>
+												    <li class="page-item " th:classappend="${questions.first} ? 'disabled'">
+												      	<a class="page-link page-item" th:onclick="'javascript:page(' + ${questions.number - 1} + ')'">이전</a>
 													</li>
 
 													<li class="page-item"
 														th:each="page: ${#numbers.sequence(start, end)}"
-														th:classappend="${items.number eq page -1} ? 'active' : '' ">
+														th:classappend="${questions.number eq page -1} ? 'active' : '' ">
 														<a class="page-link" th:inline="text"
 														th:onclick="'javascript:page(' + ${page - 1} + ')'">
 															[[${page}]] </a>
 													</li>
 
-													<li class="page-item" th:classappend="${items.last} ? 'disabled'"><a
-														class="page-link page-item" th:onclick="'javascript:page(' + ${items.number + 1} + ')'">▶</a>
+													<li class="page-item" th:classappend="${questions.last} ? 'disabled'"><a
+														class="page-link page-item" th:onclick="'javascript:page(' + ${questions.number + 1} + ')'">다음</a>
 														</li>
 
 												</ul>

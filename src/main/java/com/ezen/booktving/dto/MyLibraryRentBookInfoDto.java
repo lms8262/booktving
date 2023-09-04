@@ -18,6 +18,10 @@ public class MyLibraryRentBookInfoDto {
 	
 	private String bookName; //도서명
 	
+	private String itemId; //바로읽기 아이디
+	
+	private String isbn; //ISBN
+	
 	private String author; //저자명
 	
 	private String publisher; //출판사명
@@ -32,7 +36,7 @@ public class MyLibraryRentBookInfoDto {
 	
 	private String sentence; //한 문장
 	
-	private YesNoStatus completeYn;
+	private YesNoStatus completeYn; //완독여부
 	
 	
 	public MyLibraryRentBookInfoDto(RentBook rentBook, BookImg bookImg) {
@@ -46,6 +50,8 @@ public class MyLibraryRentBookInfoDto {
 		this.review = rentBook.getReview();
 		this.sentence = rentBook.getSentence();
 		this.completeYn = rentBook.getCompleteYn();
+		this.isbn = rentBook.getBook().getIsbn();
+		this.itemId = rentBook.getBook().getItemId();
 	}
 
 }

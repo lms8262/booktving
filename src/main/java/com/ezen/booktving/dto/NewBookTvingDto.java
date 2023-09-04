@@ -36,6 +36,9 @@ public class NewBookTvingDto {
 	@NotBlank
 	private String description;
 	
+	@NotBlank
+	private String itemId;
+	
 	private static ModelMapper modelMapper = new ModelMapper();
 	
 	// Dto -> Entity 변환

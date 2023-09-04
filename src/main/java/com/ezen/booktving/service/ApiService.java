@@ -105,6 +105,7 @@ public class ApiService {
     							.publisher(contents.get("publisher").toString())
     							.imgUrl(contents.get("cover").toString())
     							.link(contents.get("link").toString())
+    							.itemId(contents.get("itemId").toString())
     							.build()
     		
     		);

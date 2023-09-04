@@ -13,10 +13,6 @@
 	color: #ffd360;
 }
 
-.adminbook-page {
-	
-}
-
 .adminbook-page > li {
 	margin: 0;
 }
@@ -29,18 +25,18 @@
 	accent-color: #ffd360;
 }
 
-.page-item {
-	cursor: pointer;
+
+/* 페이징 */
+.pagination li{
+	margin: 0;
 }
 
-.page-link {
-	color: black;
-}
-
-.page-item.active .page-link {
+.pagination .page-item.active .page-link {
+	color: #fff;
 	background-color: #ffd360;
-	border-color: white;
+	border-color: #ffd360;
 }
+
 
 /* 에러처리 */
 .fieldError {

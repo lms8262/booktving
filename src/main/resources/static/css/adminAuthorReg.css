@@ -27,9 +27,6 @@ form .dropdown label{
 	margin: 0;
 }
 
-form .dropdown select{
-}
-
 .book-title{
 	width: 80px;
 	height: 35px;
@@ -45,4 +42,12 @@ form .dropdown select{
 
 textarea{
 	text-align: justify;
+}
+
+
+/* 에러처리 */
+.fieldError {
+	color: red;
+	font-weight: 800;
+	margin-top: 10px;
 }

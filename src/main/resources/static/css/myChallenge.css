@@ -93,30 +93,23 @@
 	margin-bottom: 40px;
 }
 
-.challenge-list-wrap-nomargin{
+.challenge-link-wrap{
 	display: flex;
 	justify-content: center;
-	margin: 0;
 }
 
-.challenge-list-wrap-nomargin form{
-	margin: 0;
-	display: flex;
-}
-
-.challenge-new-link{
+.challenge-new-link{ 
 	width: 200px;
-	height: 35px;
-	line-height: 35px;
+	height: 50px;
+	line-height: 50px;
 	text-align: center;
 	background-color: rgb(244, 244, 244);
 	border: 1px solid #000;
 	border-radius: 5px;
 	color: rgb(85, 85, 85);
-	font-size: 17px;
-	padding: 0;
+	font-size: 18px;
+	padding: 0 30px;
 }
-
 
 /* 나만의 챌린지 생성페이지 */
 .myChallenge-wrap{
@@ -236,6 +229,18 @@
 	display: flex;
 	padding: 0 30px;
 	padding-top: 50px;
+}
+
+.challenge-list-wrap-nomargin{
+	display: flex;
+	justify-content: center;
+	margin: 0;
+	padding: 0;
+}
+
+.challenge-list-wrap-nomargin form{
+	margin: 0;
+	display: flex;
 }
 
 .challenge-list-content-box{

@@ -1,4 +1,4 @@
-package com.ezen.booktving.repository;
+ package com.ezen.booktving.repository;
 
 import java.util.List;
 
@@ -16,4 +16,6 @@ public interface ChallengeItemRepository extends JpaRepository<ChallengeItem, Lo
 	@Query("select c from ChallengeItem c where c.member.userId = :userId")
     ChallengeItem findUserChallengeItem(@Param("userId") String userId);
 
+	@Query("select c from ChallengeItem c where c.member.userId = :userId and c.isActive = Y")
+	List<ChallengeItem> findActiveChallengeItems(@Param("userId") String userId);
 }

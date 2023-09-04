@@ -38,7 +38,7 @@
 					<!-- 나의챌린지 생성하기 content -->
 					<div class="challenge-wrap" >
 					
-						<div class="container challengeNew-box" th:if="${#lists.isEmpty(challengeHistDtos)}">
+						<div class="container challengeNew-box" th:if="${#lists.isEmpty(challengeItemDtoList)}">
 							<div class="challenge-text-wrap">
 								<p class="challenge-text"> <strong> [[${memberName}]] </strong> &nbsp;님 나만의 챌린지를 시작해 보세요.</p>
 								<div class="challenge-link-wrap">
@@ -49,16 +49,18 @@
 							</div>
 						</div>
 						
-						<div class="container challenge-list-box" th:if="${not #lists.isEmpty(challengeHistDtos)}">
+						
+						<div class="container challenge-list-box" th:if="${not #lists.isEmpty(challengeItemDtoList)}">
 							<div class="challenge-title-box">
 								<h4>나만의 챌린지</h4>
 								<hr>
 							</div>
-
-
-							<div class="challenge-list-wrap" th:each="challengeHistDto, status : ${challengeHistDtos}">
-								<div class="col-lg-12 challenge-list-wrap-nomargin" th:each="challengeItemDto, status : ${challengeHistDto.challengeItemDtoList}">
-
+	
+							<div class="challenge-list-wrap" 
+									th:each="challengeItemDto, status : ${challengeItemDtoList}" 
+									th:if="${#strings.equals(challengeItemDto.isActive, 'Y')}">
+								<div class="col-lg-12 challenge-list-wrap-nomargin">
+		
 									<form th:action="@{'/updateChallengeItem/' + ${challengeItemDto.id}}" method="post">
 										<div class="challenge-list-content-box col-5">
 											<input type="hidden" id="challengeItemId" name="challengeItemId" th:value="${challengeItemDto.id}">
@@ -75,37 +77,26 @@
 												</div>
 											</div>
 										</div>
-
-
-
-										<div th:each="challengeItemDto, status : ${challengeHistDto.challengeItemDtoList}" class="col-7 challenge-item">
-											<div th:if="${#strings.equals(challengeItemDto.success, 'N')}">
+	
+										<div class="col-7 challenge-item">
+											<div th:if="${#strings.equals(challengeItemDto.isActive, 'Y') and #strings.equals(challengeItemDto.success, 'N')}">
 												<p>꾸준한 독서로 목표를 달성해 보세요!</p>
 												<div id="buttonContainer"></div>
 											</div>
-
-											<div class="challenge-item-box" th:if="${#strings.equals(challengeItemDto.success, 'Y')}">
+	
+											<div class="challenge-item-box" th:if="${#strings.equals(challengeItemDto.isActive, 'Y') and #strings.equals(challengeItemDto.success, 'Y')}">
 												<p>축하합니다!! 목표를 달성했습니다.</p>
 												<p>새로운 목표를 세워보세요!</p>
-												<a href="/myLibrary/myChallenge/new" class="new-challenge">새로운 목표</a>
+												<a href="/myLibrary/myChallenge/new" class="new-challenge" >새로운 목표</a>
 											</div>
 										</div>
 										<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 									</form>
-
 								</div>
 							</div>
-
-
-
-
 						</div>
 						
-						
-						
-						
 					</div>
-											
 					
 				</div>
 			</div>
@@ -138,8 +129,33 @@
 	            }
 	        });
 	    });
+	    
+	    $("#submitButton").click(function() {
+	        var challengeItemId = parseInt($("#challengeItemId").val());
+	        $.ajax({
+	            url: "/deactivateChallenge/" + challengeItemId,
+	            method: "GET", 
+	            success: function(response) {
+	            	console.log(challengeItemId);
+	            	alert("요청에 성공했습니다.");
+	            },
+	            error: function(error) {
+	            	alert("요청에 실패했습니다.");
+	            }
+	        });
+	    });
+	    
+	   
+	    
 	});
 	
+	var token = $("meta[name='_csrf']").attr("content");
+	var header = $("meta[name='_csrf_header']").attr("content");
+				
+	var challengeItemId = document.getElementById("challengeItemId").value;
+	
+	
+	//completedRentBooksCount & targetMount 값 비교 / challengeItemId 값 넘겨주기
 	function autoCheckChallenge(){
 		
 		var completedRentBooksCount = parseInt(document.getElementById("completedRentBooksCount").value)
@@ -152,11 +168,8 @@
 			successButton.onclick = function(){
 				alert("목표독서량에 도달했습니다.");
 
-				var token = $("meta[name='_csrf']").attr("content");
-				var header = $("meta[name='_csrf_header']").attr("content");
 				
-				var challengeItemId = document.getElementById("challengeItemId").value;
-				var url = "/updateChallengeItem/" + challengeItemId;
+			var url = "/updateChallengeItem/" + challengeItemId;
 				
 			$.ajax({
 				url : url,
@@ -181,6 +194,33 @@
 			var buttonContainer = document.getElementById("buttonContainer");
 			buttonContainer.appendChild(successButton);
 		}
+		
+	}
+	
+	//비활성화 데이터 넘기기
+	
+	function deactivateChallenge(challengeItemId){
+		
+		var url = "/deactivateChallenge/" + challengeItemId;
+				
+			$.ajax({
+				url : url,
+				type : "POST",
+				beforeSend : function(xhr){
+					xhr.setRequestHeader(header, token)
+				},
+				success : function(response){
+					if(response === "success"){
+						alert("챌린지가 비활성화 되었습니다.");
+						location.href="/myLibrary/myChallenge";
+					} else {
+						alert("챌린지 비활성화 설정을 실패했습니다.");
+					}
+				},
+				error : function(){
+					alert("비활성화 중 오류가 발생했습니다.");
+				}
+			});
 		
 	}
 	

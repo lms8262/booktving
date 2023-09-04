@@ -16,10 +16,14 @@ public class ChallengeItemDto {
 	
 	private YesNoStatus success;
 	
+	private YesNoStatus isActive;
+	
 	public ChallengeItemDto(ChallengeItem challengeItem) {
 		this.id = challengeItem.getId();
 		this.targetMount = challengeItem.getTargetMount();
 		this.success = challengeItem.getSuccess();
+		this.isActive = challengeItem.getIsActive();
+		
 	}
 	
 }

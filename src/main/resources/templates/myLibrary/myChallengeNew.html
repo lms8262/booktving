@@ -80,13 +80,13 @@
 	
 	$(document).ready(function() {
 	
-		
 	
 	});
 	
 	function newChallenge(){
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
+		var challengeItemId = $("#challengeItemId").val(); // challengeItemId 가져오기
 		
 		var url = "/myLibrary/myChallenge/new";
 		
@@ -120,6 +120,10 @@
 				}
 			});
 			
+			
+			deactivateChallenge(challengeItemId);
+			console.log("Challenge Item ID: " + challengeItemId);
+						
 	}
 	
 	</script>

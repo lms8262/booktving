@@ -116,7 +116,7 @@
 												<ul class="pagination d-flex justify-content-center">
 						  
 												    <li class="page-item " th:classappend="${keywordDtoList.first} ? 'disabled'">
-												      	<a class="page-link page-item" th:onclick="'javascript:page(' + ${keywordDtoList.number - 1} + ')'">◀</a>
+												      	<a class="page-link page-item" th:onclick="'javascript:page(' + ${keywordDtoList.number - 1} + ')'">이전</a>
 													</li>
 	
 													<li class="page-item"
@@ -128,7 +128,7 @@
 													</li>
 	
 													<li class="page-item" th:classappend="${keywordDtoList.last} ? 'disabled'"><a
-														class="page-link page-item" th:onclick="'javascript:page(' + ${keywordDtoList.number + 1} + ')'">▶</a>
+														class="page-link page-item" th:onclick="'javascript:page(' + ${keywordDtoList.number + 1} + ')'">다음</a>
 														</li>
 	
 												</ul>

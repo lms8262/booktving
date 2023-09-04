@@ -8,19 +8,14 @@
 	accent-color: #ffd360;
 }
 
-.page-item {
-	cursor: pointer;
+.pagination li{
 	margin: 0;
-	margin-bottom: 20px;
 }
 
-.page-link {
-	color: black;
-}
-
-.page-item.active .page-link {
+.pagination .page-item.active .page-link {
+	color: #fff;
 	background-color: #ffd360;
-	border-color: white;
+	border-color: #ffd360;
 }
 
 .rentContent {

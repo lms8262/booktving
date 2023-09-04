@@ -52,60 +52,28 @@
 											<table class="table table-responsive-md ">
 												<thead>
 													<tr>
-														<th scope="col"><input type="checkbox" id="checkall"
-															value=""></th>
-														<th scope="col">도서ID</th>
-														<th scope="col">도서명</th>
-														<th scope="col">저자명</th>
-														<th scope="col">출판사</th>
-														<th scope="col">등록일</th>
+														<th class="col-1"><input type="checkbox" id="checkall" value=""></th>
+														<th class="col-1">도서ID</th>
+														<th class="col-4">도서명</th>
+														<th class="col-2">저자명</th>
+														<th class="col-2">출판사</th>
+														<th class="col-2">등록일</th>
 													</tr>
 												</thead>
 												<tbody>
 													<tr th:each="book, status: ${books.getContent()}">
-														<td class="adminmenu_td"><input type="checkbox"
-															th:value="${book.id}" id="bookChkBox" name="bookChkBox" /></td>
-														<td class="adminmenu_td" th:text="${book.id}">1</td>
-														<td class="adminmenu_td"><a
-															th:href="'/admin/book/' + ${book.id}"
-															th:text="${book.bookName}" class="adminbook_link"></a></td>
-														<td class="adminmenu_td" th:text="${book.author}">3</td>
-														<td class="adminmenu_td" th:text="${book.publisher}">4</td>
-														<td class="adminmenu_td" th:text="${book.regTime}">5</td>
+														<td class="adminmenu_td col-1"><input type="checkbox" th:value="${book.id}" id="bookChkBox" name="bookChkBox" /></td>
+														<td class="adminmenu_td col-1" th:text="${book.id}">1</td>
+														<td class="adminmenu_td col-4"><a th:href="'/admin/book/' + ${book.id}" th:text="${book.bookName}" class="adminbook_link"></a></td>
+														<td class="adminmenu_td col-2" th:text="${book.author}">3</td>
+														<td class="adminmenu_td col-2" th:text="${book.publisher}">4</td>
+														<td class="adminmenu_td col-2" th:text="${#temporals.format(book.regTime, 'yyyy-MM-dd')}" >5</td>
 													</tr>
 												</tbody>
 											</table>
 
 
-											<!--페이지 버튼  -->
-											<div>
-												<nav
-													th:with="start=${(books.number/maxPage)*maxPage + 1}
-			                 ,end=(${(books.totalPages == 0) ? 1 : (start + (maxPage - 1) < books.totalPages ? start + (maxPage - 1) : books.totalPages)})"
-													aria-label="Page navigation example" class="page-nav">
-													<ul
-														class="pagination d-flex justify-content-center adminbook-page">
-														<li class="page-item pageitem"
-															th:classappend="${books.first}?'disabled'"><a
-															class="page-link"
-															th:onclick="'javascript:page(' + ${books.number - 1} +')'">이전</a>
-														</li>
-
-														<li class="page-item pageitem"
-															th:each="page: ${#numbers.sequence(start, end)}"
-															th:classappend="${books.number eq page-1}?'active':''">
-															<a class="page-link" th:inline="text"
-															th:onclick="'javascript:page(' + ${page - 1} +')'">[[${page}]]</a>
-														</li>
-
-														<li class="page-item pageitem"
-															th:classappend="${books.last}?'disabled'"><a
-															class="page-link"
-															th:onclick="'javascript:page(' + ${books.number + 1} +')'">다음</a>
-														</li>
-													</ul>
-												</nav>
-											</div>
+											
 
 											<!-- 등록버튼  -->
 											<div class="form-group button col-12">
@@ -146,8 +114,39 @@
 												</div>
 												<div class="col-lg-2"></div>
 											</div>
-											<input type="hidden" name="${_csrf.parameterName}"
-												value="${_csrf.token}">
+											
+											
+											<!--페이지 버튼  -->
+											<div>
+												<nav
+													th:with="start=${(books.number/maxPage)*maxPage + 1}
+			                 ,end=(${(books.totalPages == 0) ? 1 : (start + (maxPage - 1) < books.totalPages ? start + (maxPage - 1) : books.totalPages)})"
+													aria-label="Page navigation example" class="page-nav">
+													<ul
+														class="pagination d-flex justify-content-center adminbook-page">
+														<li class="page-item pageitem"
+															th:classappend="${books.first}?'disabled'"><a
+															class="page-link"
+															th:onclick="'javascript:page(' + ${books.number - 1} +')'">이전</a>
+														</li>
+
+														<li class="page-item pageitem"
+															th:each="page: ${#numbers.sequence(start, end)}"
+															th:classappend="${books.number eq page-1}?'active':''">
+															<a class="page-link" th:inline="text"
+															th:onclick="'javascript:page(' + ${page - 1} +')'">[[${page}]]</a>
+														</li>
+
+														<li class="page-item pageitem"
+															th:classappend="${books.last}?'disabled'"><a
+															class="page-link"
+															th:onclick="'javascript:page(' + ${books.number + 1} +')'">다음</a>
+														</li>
+													</ul>
+												</nav>
+											</div>
+											
+											<input type="hidden" name="${_csrf.parameterName}" 	value="${_csrf.token}">
 
 										</form>
 									</div>

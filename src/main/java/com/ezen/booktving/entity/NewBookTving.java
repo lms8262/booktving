@@ -48,5 +48,8 @@ public class NewBookTving extends BaseEntity{
 	
 	@Column(nullable = true)
 	private String description;
+	
+	@Column(nullable = true)
+	private String itemId;
 
 }

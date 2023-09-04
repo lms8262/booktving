@@ -1,7 +1,22 @@
 @charset "UTF-8";
 
-.adminmenu_td {
+.table thead th {
+	vertical-align: middle;
+}
+
+.table tbody td{
+	width: auto;
+	vertical-align: middle;
 	text-align: center;
+	height: auto;
+}
+
+.adminmenu_td {
+	height: 35px;
+	text-align: center;
+	overflow: hidden;
+  	text-overflow: ellipsis;
+  	word-break: break-all;
 }
 
 .adminbook_link {
@@ -11,10 +26,6 @@
 
 .adminbook_link:hover {
 	color: #ffd360;
-}
-
-.adminbook-page {
-	
 }
 
 .adminbook-page > li {
@@ -29,17 +40,15 @@
 	accent-color: #ffd360;
 }
 
-.page-item {
-	cursor: pointer;
+
+.pagination li{
+	margin: 0;
 }
 
-.page-link {
-	color: black;
-}
-
-.page-item.active .page-link {
+.pagination .page-item.active .page-link {
+	color: #fff;
 	background-color: #ffd360;
-	border-color: white;
+	border-color: #ffd360;
 }
 
 /* 에러처리 */

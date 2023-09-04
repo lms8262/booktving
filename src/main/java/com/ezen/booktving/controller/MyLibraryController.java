@@ -23,13 +23,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ezen.booktving.config.PrincipalDetails;
 import com.ezen.booktving.dto.ChallengeItemDto;
+import com.ezen.booktving.dto.ChallengeNewDto;
 import com.ezen.booktving.dto.FavoriteBookDtoList;
 import com.ezen.booktving.dto.MyLibraryRentBookInfoDto;
 import com.ezen.booktving.dto.MyLibraryRentBookListDto;
 import com.ezen.booktving.entity.FavoriteBook;
-import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.entity.RentBook;
 import com.ezen.booktving.service.ChallengeItemService;
 import com.ezen.booktving.service.FavoriteBookService;
@@ -46,7 +45,7 @@ public class MyLibraryController {
 	private final MyLibraryRentBookService myLibraryRentBookService;
 	private final FavoriteBookService favoriteBookService;
 	private final MemberService memberService;
-	private final ChallengeItemService challengeService;
+	private final ChallengeItemService challengeItemService;
 	
 	
 	
@@ -122,8 +121,7 @@ public class MyLibraryController {
 	//나의서재 - 대여도서 -리뷰등록
 	@PostMapping(value = "/myLibrary/rentbookinfo/addReview")
     public String addReview(@RequestParam("reviewText") String reviewText, @RequestParam("rentBookId") Long rentBookId) {
-		System.out.println("reviewText: " + reviewText);
-		System.out.println("rentBookId: " + rentBookId);
+	
 		myLibraryRentBookService.addReview(rentBookId, reviewText);
         return "redirect:/myLibrary/rentbookinfo/" + rentBookId;
     }
@@ -161,9 +159,11 @@ public class MyLibraryController {
 			String memberName = memberService.getLoginMemberName(userDetails.getUsername());
 			model.addAttribute("memberName", memberName);
 			
-			List<ChallengeItemDto> challengeHistDtoList = challengeService.getChallengeList(userDetails.getUsername());
-			model.addAttribute("challengeHistDtos", challengeHistDtoList);
+			List<ChallengeItemDto> challengeItemDtoList = challengeItemService.getChallengeList(userDetails.getUsername());
+			model.addAttribute("challengeItemDtoList", challengeItemDtoList);
 			
+			//List<ChallengeItemDto> activeChallengeItemList = challengeItemService.getActioveChallengeList(userDetails.getUsername());
+			//model.addAttribute("activeChallengeItemList", activeChallengeItemList);
 			
 			//List<RentBookDto> rentBookDtoList = myLibraryRentBookService.getMyRentBookList(userDetails.getUsername());
 			//model.addAttribute("rentBookDtoList", rentBookDtoList);
@@ -182,14 +182,34 @@ public class MyLibraryController {
 	@ResponseBody
 	public ResponseEntity updateChallengeItem(@PathVariable("challengeItemId") Long challengeItemId) {
 		
-		challengeService.updateChallengeItemSuccess(challengeItemId);
+		try {
+			challengeItemService.updateChallengeItemSuccess(challengeItemId);
+			return new ResponseEntity<String>("success", HttpStatus.OK);
+			
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
 		
-		return new ResponseEntity<String>("success", HttpStatus.OK);
+	}
+	
+	//나의챌린지-아이템 비활성화 시키기
+	@PostMapping(value = "/deactivateChallenge/{challengeItemId}")
+	@ResponseBody
+	public ResponseEntity deactivateChallenge(@PathVariable("challengeItemId") Long challengeItemId) {
+		
+		try {
+			challengeItemService.deactivateChallenge(challengeItemId);
+			return new ResponseEntity<>("success", HttpStatus.OK);
+			
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	//나의챌린지 생성 페이지
 	@GetMapping(value = "/myLibrary/myChallenge/new")
-	public String myChallengeNewPage(Model model, @AuthenticationPrincipal UserDetails userDetails, @Valid ChallengeItemDto challengeItemDto, BindingResult bindingResult ) {
+	public String myChallengeNewPage(Model model, @AuthenticationPrincipal UserDetails userDetails, 
+									@Valid ChallengeNewDto challengeNewDto, BindingResult bindingResult ) {
 		
 		String memberName = memberService.getLoginMemberName(userDetails.getUsername());
 		model.addAttribute("memberName", memberName);
@@ -199,7 +219,7 @@ public class MyLibraryController {
 	
 	//나의챌린지 생성하기
 	@PostMapping(value = "/myLibrary/myChallenge/new")
-	public @ResponseBody ResponseEntity myChallengeNew(@RequestBody @Valid ChallengeItemDto challengeNewDto, 
+	public @ResponseBody ResponseEntity myChallengeNew(@RequestBody @Valid ChallengeNewDto challengeNewDto, 
 					BindingResult bindingResult, Principal principal) {
 		
 		if(bindingResult.hasErrors()) {
@@ -215,7 +235,7 @@ public class MyLibraryController {
 		String userId = principal.getName();
 		
 		try {
-			challengeService.saveChallenge(challengeNewDto, userId);
+			challengeItemService.saveChallenge(challengeNewDto, userId);
 		} catch (Exception e) {
 			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
