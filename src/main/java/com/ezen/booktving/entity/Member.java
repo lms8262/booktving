@@ -4,13 +4,8 @@ import java.time.LocalDate;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.ezen.booktving.constant.PrivateOk;
-import com.ezen.booktving.constant.PromotionOk;
 import com.ezen.booktving.constant.Role;
-import com.ezen.booktving.constant.ServiceOk;
-import com.ezen.booktving.dto.LoginFormDto;
 import com.ezen.booktving.dto.MemberFormDto;
-import com.ezen.booktving.dto.SnsDto;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -70,68 +65,41 @@ public class Member extends BaseTimeEntity {
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	private Role role;
-	private String name;
+	
 	private String provider;
 	private String providerId;
 
-	@Enumerated(EnumType.STRING) // 서비스 동의
-	private ServiceOk serviceOk;
-
-	@Enumerated(EnumType.STRING) // 개인정보 동의
-	private PrivateOk privateOk;
-
-	@Enumerated(EnumType.STRING) // 프로모션 동의
-	private PromotionOk promotionOk;
-
-	public static Member createMember(LoginFormDto loginFormDto, PasswordEncoder passwordEncoder) {
+	public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) {
 
 		// 패스워드 암호화
 		Member member = new Member();
 		String password;
-		if (loginFormDto.getPassword().equals("SNS 로그인")) {
-			password = "SNS 로그인";
-			member.setProvider(loginFormDto.getProvider());
-			member.setProviderId(loginFormDto.getProviderId());
+		if (memberFormDto.getProvider() != null) {
+			password = memberFormDto.getPassword();
+			member.setProvider(memberFormDto.getProvider());
+			member.setProviderId(memberFormDto.getProviderId());
+			member.setRole(Role.ROLE_SNS_USER);
 		} else {
-			password = passwordEncoder.encode(loginFormDto.getPassword());
+			password = passwordEncoder.encode(memberFormDto.getPassword());
+			member.setRole(Role.ROLE_USER);
 		}
-
-		member.setEmail(loginFormDto.getEmail());
+		
+		member.setUserId(memberFormDto.getUserId());
+		member.setEmail(memberFormDto.getEmail());
 		member.setPassword(password);
-		member.setMemberName(loginFormDto.getMemberName());
-		member.setTel(loginFormDto.getTel());
-		member.setBirth(loginFormDto.getBirth());
-		member.setRole(Role.ROLE_USER);
+		member.setMemberName(memberFormDto.getMemberName());
+		member.setTel(memberFormDto.getTel());
+		member.setBirth(memberFormDto.getBirth());
+		member.setAddress(memberFormDto.getAddress());
+		member.setAddressNo(memberFormDto.getAddressNo());
+		member.setAddressDetail(memberFormDto.getAddressDetail());
+		
 
-		if (loginFormDto.getMemberName().isEmpty()) {
-			member.setMemberName(loginFormDto.getMemberName());
+		if (memberFormDto.getMemberName().isEmpty()) {
+			member.setMemberName(memberFormDto.getMemberName());
 		} else {
-			member.setMemberName(loginFormDto.getMemberName());
+			member.setMemberName(memberFormDto.getMemberName());
 		}
-
-		return member;
-	}
-
-	// sns회원가입 메소드
-	public static Member createSnsMember(SnsDto snsDto) {
-		Member member = new Member();
-
-		// 기본정보
-		member.setMemberName(snsDto.getNickname());
-		member.setEmail(snsDto.getEmail());
-		member.setPassword(snsDto.getPassword());
-		member.setTel(snsDto.getPhoneNumber());
-		member.setName(snsDto.getName()); // 간편로그인시 소셜회사마다 주는 회원이름값
-		member.setProvider(snsDto.getProvider()); // 구글인지 카카오인지 구별값
-		member.setProviderId(snsDto.getProviderId()); // 소셜 기본id값
-
-		// 약관동의
-		member.setServiceOk(ServiceOk.Y);
-		member.setPrivateOk(PrivateOk.Y);
-		member.setPromotionOk(PromotionOk.Y);
-
-		// 역할
-		member.setRole(Role.USER);
 
 		return member;
 	}
@@ -144,7 +112,7 @@ public class Member extends BaseTimeEntity {
 		return password;
 	}
 
-//비밀번호 제외 업데이트
+	//비밀번호 제외 업데이트
 	public void updateMember(@Valid MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) {
 		this.email = memberFormDto.getEmail();
 		this.tel = memberFormDto.getTel();
@@ -159,20 +127,20 @@ public class Member extends BaseTimeEntity {
 		}
 	}
 
-//간편로그인
+	//간편로그인
 	@Builder(builderClassName = "MemberDetailRegister", builderMethodName = "MemberDetailRegister")
-    public Member(String email, String password, String name, Role role) {
+    public Member(String email, String password, String memberName, Role role) {
         this.email = email;
         this.password = password;
-        this.name = name;
+        this.memberName = memberName;
         this.role = role;
     }
 
 	 @Builder(builderClassName = "OAuth2Register", builderMethodName = "oauth2Register")
-	    public Member(String email, String password, String name, Role role, String provider, String providerId) {
+	    public Member(String email, String password, String memberName, Role role, String provider, String providerId) {
 	    	this.email = email;
 	        this.password = password;
-	        this.name = name;
+	        this.memberName = memberName;
 	        this.role = role;
 	        this.provider = provider;
 	        this.providerId = providerId;

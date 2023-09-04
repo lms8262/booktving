@@ -22,7 +22,7 @@ public interface MemberRepository extends JpaRepository<Member, Long>, MemberRep
 	 * @Select("SELECT SELECT MID FROM member WHERE MID= #{mid}") String
 	 * checkIdUser(@Param("mid")String mid);
 	 */
-	Optional<Member> findByEmailAndProvider(String email, String provider);
+	Member findByProviderAndProviderId(String provider, String providerId);
 
 	Member findByRole(Role role);
 

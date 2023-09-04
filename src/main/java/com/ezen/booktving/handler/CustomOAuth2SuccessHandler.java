@@ -1,4 +1,4 @@
-package com.ezen.booktving.service;
+package com.ezen.booktving.handler;
 
 import java.io.IOException;
 
@@ -30,9 +30,9 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
 
 	private String determineTargetUrl(Member member) {
 		Member findMember = memberRepository.findByEmail(member.getEmail());
-
+		
 		if (findMember == null) {
-			return "/login/joinForm";
+			return "/login/sns";
 		} else {
 			return "/";
 		}

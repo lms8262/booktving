@@ -17,7 +17,7 @@
 
 	<!-- wrapper -->
 	<form role="form" action="/login/new" method="post"
-		th:object="${loginFormDto}">
+		th:object="${memberFormDto}">
 		<!-- content-->
 		<div id="content">
 
@@ -140,7 +140,7 @@
 				<button type="submit" id="btnJoin" style="margin-left: 45px;">
 					<span>가입하기</span>
 				</button>
-				<button type="submit" id="btnJoin">
+				<button type="reset" id="btnJoin">
 					<span>취소</span>
 				</button>
 			</div>

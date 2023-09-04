@@ -39,18 +39,17 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 
 		String providerId = oAuth2UserInfo.getProviderId();
 		String username = oAuth2UserInfo.getName();
-		String password = "SNS 로그인"; // 사용자가 입력한 적은 없지만 만들어준다
+		String password = "SNS로그인입니다."; // 사용자가 입력한 적은 없지만 만들어준다
 
-		String email = oAuth2UserInfo.getEmail();
 		Role role = Role.ROLE_WAIT;
 
-		Member member = memberRepository.findByEmail(email);
+		Member member = memberRepository.findByProviderAndProviderId(provider, providerId);
 
 		if (member == null) {
-			member = Member.oauth2Register().email(email).name(username).password(password).role(role)
+			member = Member.oauth2Register().memberName(username).password(password).role(role)
 					.provider(provider).providerId(providerId).build();
 		}
-
+		
 		return new PrincipalDetails(member, oAuth2UserInfo);
 	}
 }
