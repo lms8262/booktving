@@ -205,9 +205,10 @@
 }
 
 .book-info-title{
-	width: 250px;
-	height: 40px;
+	width: auto;
+	height: auto;
 	line-height: 40px;
+	padding: 10px;
 	text-align: center;
 	border-radius: 20px;
 	background-color: #5b5b5b;
