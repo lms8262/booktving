@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,13 +18,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.ezen.booktving.dto.LoginFormDto;
+import com.ezen.booktving.auth.OAuth2UserInfo;
+import com.ezen.booktving.auth.PrincipalDetails;
 import com.ezen.booktving.dto.MemberFormDto;
 import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.repository.MemberRepository;
+import com.ezen.booktving.service.IdService;
 import com.ezen.booktving.service.MemberService;
-import com.ezen.booktving.service.RamdomPassword;
+import com.ezen.booktving.service.RamdomPasswordService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -33,8 +37,9 @@ import lombok.RequiredArgsConstructor;
 public class LoginCotroller {
 
 	private final MemberService memberService;
+	private final IdService idService;
 	private final MemberRepository memberRepository;
-	private final RamdomPassword randomPassword;
+	private final RamdomPasswordService randomPassword;
 	private final PasswordEncoder passwordEncoder;
 
 	// 로그인 화면
@@ -51,27 +56,62 @@ public class LoginCotroller {
 
 	}
 
+//회원가입
 	@GetMapping(value = "/login/new")
 	public String membership(Model model) {
-		model.addAttribute("loginFormDto", new LoginFormDto());
+		model.addAttribute("memberFormDto", new MemberFormDto());
 		return "membership/memberloginForm";
 	}
 
 	@PostMapping(value = "/login/new")
-	public String membership(@Valid LoginFormDto loginFormDto, BindingResult bindingRestult, Model model) {
+	public String membership(@Valid MemberFormDto memberFormDto, BindingResult bindingRestult, Model model) {
 
 		if (bindingRestult.hasErrors()) {
 			return "membership/memberloginForm";
 		}
 		try {
-			memberService.createMember(loginFormDto, passwordEncoder);
+			memberService.createMember(memberFormDto, passwordEncoder);
 		} catch (Exception e) {
 			model.addAttribute("errorMessage", e.getMessage());
 			return "membership/memberloginForm";
 		}
+		return "login/login";
+	}
+
+	//소셜 로그인 회원가입 페이지
+	@GetMapping(value = "/login/sns")
+	public String snsship(Authentication authentication, Model model) {
+		PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
+		OAuth2UserInfo oAuth2UserInfo = principal.getOAuth2UserInfo();
+		
+		MemberFormDto memberFormDto = new MemberFormDto();
+		memberFormDto.setMemberName(oAuth2UserInfo.getName());
+		memberFormDto.setProvider(oAuth2UserInfo.getProvider());
+		memberFormDto.setProviderId(oAuth2UserInfo.getProviderId());
+		memberFormDto.setPassword(principal.getPassword());
+		
+		model.addAttribute("memberFormDto", memberFormDto);
+		return "login/joinForm";
+	}
+	
+	
+	@PostMapping(value = "/login/sns/new")
+	public String snsNew(@Valid MemberFormDto memberFormDto, BindingResult bindingRestult, Model model, RedirectAttributes redirectAttributes) {
+
+		if (bindingRestult.hasErrors()) {
+			return "login/joinForm";
+		}
+		try {
+			memberService.createMember(memberFormDto, passwordEncoder);
+		} catch (Exception e) {
+			redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+			return "redirect:/login/sns";
+		}
 		return "redirect:/";
 	}
 
+	
+	
 	// 아이디 찾기
 	@GetMapping("/findid")
 	public String showFindIdForm() {
@@ -96,7 +136,7 @@ public class LoginCotroller {
 	// 비밀 번호 찾기
 	@GetMapping(value = "/findpw")
 	public String search_ps(Model model) {
-		model.addAttribute("loginFormDto", new LoginFormDto());
+		model.addAttribute("memberFormDto", new MemberFormDto());
 
 		return "login/findPwForm";
 	}
@@ -174,7 +214,7 @@ public class LoginCotroller {
 
 //회원탈퇴
 	@DeleteMapping(value = "/login/{userId}/delete")
-	public ResponseEntity<String> deleteMember2(@PathVariable("userId") String userId ,Principal principal) {
+	public ResponseEntity<String> deleteMember2(@PathVariable("userId") String userId, Principal principal) {
 		try {
 			memberService.deleteMember2(userId);
 			return new ResponseEntity<>("탈퇴했습니다.", HttpStatus.OK);
@@ -184,4 +224,6 @@ public class LoginCotroller {
 			return new ResponseEntity<>("Error deleting member: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
+	
+	
 }

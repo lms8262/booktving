@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import com.ezen.booktving.constant.Role;
-import com.ezen.booktving.dto.LoginFormDto;
 import com.ezen.booktving.dto.MemberFormDto;
 
 import jakarta.persistence.Column;
@@ -56,47 +55,56 @@ public class Member extends BaseTimeEntity {
 
 	@Column(nullable = false)
 	private String address;
-	
+
 	@Column(nullable = false)
 	private String addressNo;
-	
+
 	@Column(nullable = false)
 	private String addressDetail;
 
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	private Role role;
-
-	private String provider;
 	
+	private String provider;
 	private String providerId;
 
-	public static Member createMember(LoginFormDto loginFormDto, PasswordEncoder passwordEncoder) {
+	public static Member createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) {
 
 		// 패스워드 암호화
-		String password = passwordEncoder.encode(loginFormDto.getPassword());
-
-		// MemberFormDto를 -> Member 엔티티 객체로 변환
-
 		Member member = new Member();
-		member.setAddress(loginFormDto.getAddress());
-		member.setAddressDetail(loginFormDto.getAddressDetail());
-		member.setAddressNo(loginFormDto.getAddressNo());
-		member.setUserId(loginFormDto.getUserId());
-		member.setMemberName(loginFormDto.getMemberName());
-		member.setEmail(loginFormDto.getEmail());
-		member.setBirth(loginFormDto.getBirth());
-		member.setTel(loginFormDto.getTel());
-		member.setProvider(loginFormDto.getProvider());
-		member.setProviderId(loginFormDto.getProviderId());
+		String password;
+		if (memberFormDto.getProvider() != null) {
+			password = memberFormDto.getPassword();
+			member.setProvider(memberFormDto.getProvider());
+			member.setProviderId(memberFormDto.getProviderId());
+			member.setRole(Role.ROLE_SNS_USER);
+		} else {
+			password = passwordEncoder.encode(memberFormDto.getPassword());
+			member.setRole(Role.USER);
+		}
+		
+		member.setUserId(memberFormDto.getUserId());
+		member.setEmail(memberFormDto.getEmail());
 		member.setPassword(password);
-		/* member.setRole(Role.ADMIN); //관리자로 가입할때 */
-		member.setRole(Role.USER);// 일반 사용자로 가입할때
+		member.setMemberName(memberFormDto.getMemberName());
+		member.setTel(memberFormDto.getTel());
+		member.setBirth(memberFormDto.getBirth());
+		member.setAddress(memberFormDto.getAddress());
+		member.setAddressNo(memberFormDto.getAddressNo());
+		member.setAddressDetail(memberFormDto.getAddressDetail());
+		
+
+		if (memberFormDto.getMemberName().isEmpty()) {
+			member.setMemberName(memberFormDto.getMemberName());
+		} else {
+			member.setMemberName(memberFormDto.getMemberName());
+		}
 
 		return member;
 	}
 
-	//비밀번호 업데이트
+	// 비밀번호 업데이트
 	public String updatePassword(String pass, PasswordEncoder passwordEncoder) {
 		String password = passwordEncoder.encode(pass);
 		this.password = password;
@@ -119,22 +127,23 @@ public class Member extends BaseTimeEntity {
 		}
 	}
 
+	//간편로그인
 	@Builder(builderClassName = "MemberDetailRegister", builderMethodName = "MemberDetailRegister")
-	public Member(String memberName, String password, String email, Role role) {
-		this.memberName = memberName;
-		this.password = password;
-		this.email = email;
-		this.role = role;
-	}
+    public Member(String email, String password, String memberName, Role role) {
+        this.email = email;
+        this.password = password;
+        this.memberName = memberName;
+        this.role = role;
+    }
 
-	@Builder(builderClassName = "OAuth2Register", builderMethodName = "oauth2Register")
-	public Member(String memberName, String password, String email, Role role, String provider, String providerId) {
-		this.memberName = memberName;
-		this.password = password;
-		this.email = email;
-		this.role = role;
-		this.provider = provider;
-		this.providerId = providerId;
-	}
+	 @Builder(builderClassName = "OAuth2Register", builderMethodName = "oauth2Register")
+	    public Member(String email, String password, String memberName, Role role, String provider, String providerId) {
+	    	this.email = email;
+	        this.password = password;
+	        this.memberName = memberName;
+	        this.role = role;
+	        this.provider = provider;
+	        this.providerId = providerId;
+	    }
 
 }
