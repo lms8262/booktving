@@ -88,24 +88,12 @@ public class MemberService implements UserDetailsService {
 				.roles(member.getRole().toString()).build();
 	}
 
-	/*
-	 * public Long updateMember(MemberFormDto memberFormDto) throws
-	 * EntityNotFoundException { Member member =
-	 * memberRepository.findById(memberFormDto.getId()).orElseThrow(
-	 * EntityNotFoundException::new);
-	 * 
-	 * member.updateMember(memberFormDto);
-	 * 
-	 * 
-	 * return member.getId(); }
-	 */
-
 	public void deleteMenu(String userId) {
 		Member member = memberRepository.findByUserId(userId);
 		memberRepository.delete(member);
 	}
 
-//회원정보 가져오기
+	//회원정보 가져오기
 	@Transactional(readOnly = true)
 	public MemberFormDto getUpdateDtl(String userId) {
 		Member member = memberRepository.findByUserId(userId);
@@ -120,20 +108,20 @@ public class MemberService implements UserDetailsService {
 		return member.getUserId();
 	}
 
-//회원관리
+	//회원관리
 	@Transactional(readOnly = true)
 	public Page<Member> getAdminMemberPage(MemberSearchDto membersearchDto, Pageable pageable) {
 		Page<Member> memberPage = memberRepository.getAdminMemberPage(membersearchDto, pageable);
 		return memberPage;
 	}
 
-//회원관리 삭제
+	//회원관리 삭제
 	public void deleteMember(Long memberId) {
 		Member member = memberRepository.findById(memberId).orElseThrow(EntityNotFoundException::new);
 		memberRepository.delete(member);
 	}
 
-//회원정보 수정 회원탈퇴
+	//회원정보 수정 회원탈퇴
 	@Transactional
 	public void deleteMember2(String userId) {
 		Member member = memberRepository.findByUserId(userId);
@@ -143,13 +131,11 @@ public class MemberService implements UserDetailsService {
 		memberRepository.delete(member);
 	}
 
-	public void saveMember(Member member) {
-		// TODO Auto-generated method stub
+	//로그인한 사용자 정보 가져오기
+	public Member listAll(String userId){
 		
-	}
-
-	public Member listAll(String username) {
-		// TODO Auto-generated method stub
-		return null;
+		Member user = memberRepository.findByLogInUserId(userId);
+		
+		return user;
 	}
 }
