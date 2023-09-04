@@ -1,10 +1,9 @@
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout1}">
 <th:block layout:fragment="css">
 	<link rel="stylesheet" type="text/css" href="/css/questionDetail.css" />
 	<style>
-</style>
+	</style>
 </th:block>
 
 <div layout:fragment="content">
@@ -21,12 +20,13 @@
 			</div>
 			<div class="detail-div">
 				<div class="title">
-					<p th:if="${question}" th:text="${question.title}"
-						class="detail-title"></p>
+					<p th:if="${question}" th:text="${question.title}" class="detail-title"></p>
 				</div>
 				<div class="content2">
-					<p th:if="${question}" th:text="${question.content}"
-						class="detail-content"></p>
+					<p th:if="${question}" th:text="${question.content}" class="detail-content"></p>
+				</div>
+				<div class="answer">
+					<p th:if="${answer != null}" th:text="${answer.content}"></p>
 				</div>
 			</div>
 			<div class="detail-list">

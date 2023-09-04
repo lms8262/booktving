@@ -76,6 +76,14 @@
 	padding: 10px;
 }
 
+.answer {
+	width: 1050px;
+	height: 220px;
+	background-color: rgb(192, 192, 192);
+	margin-top: 20px;
+	border-radius: 5px;
+}
+
 .detail-list {
 	padding-top: 50px;
 	width: 125px;

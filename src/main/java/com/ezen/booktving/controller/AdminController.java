@@ -317,29 +317,41 @@ public class AdminController {
 	}
 
 	// 문의관리 페이지 보여주기
-	@GetMapping(value = "/admin/question")
-	public String adminQuestion(QuestionDto questionDto, @PathVariable("page") Optional<Integer> page, Model model) {
-		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 3);
-		List<QuestionDto> questionDtoList = questionService.getQuestionList();
-		model.addAttribute("questionList", questionDtoList);
-		return "admin/adminQuestion";
-	}
+		@GetMapping(value = "/admin/question")
+		public String adminQuestion(QuestionDto questionDto, @PathVariable("page") Optional<Integer> page, Model model) {
+			Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 3);
+			List<QuestionDto> questionDtoList = questionService.getQuestionList();
+			model.addAttribute("questionList", questionDtoList);
+			return "admin/adminQuestion";
+		}
 
-	// 문의답변 페이지 보여주기
-	@GetMapping(value = "/admin/answer/{id}")
-	public String adminAnswer(@PathVariable Long id, Model model) {
-		QuestionDto questionDto = questionService.getQuestionById(id);
-		model.addAttribute("question", questionDto);
-		return "admin/adminAnswer";
-	}
+		// 문의답변 페이지 보여주기
+		@GetMapping(value = "/admin/answer/{id}")
+		public String adminAnswer(@PathVariable Long id, Model model) {
+			QuestionDto questionDto = questionService.getQuestionById(id);
+			model.addAttribute("question", questionDto);
+			return "admin/adminAnswer";
+		}
 
-	// 문의삭제
-	@DeleteMapping("/admin/question/{id}/delete")
-	public @ResponseBody ResponseEntity deleteAdminQuestion(@PathVariable("id") Long id,
-			Principal principal) {
-		adminQuestionService.deleteAdminQuestion(id);
-		return new ResponseEntity<Long>(id, HttpStatus.OK);
-	}
+		// 문의 답변 작성 및 저장
+		@PostMapping(value = "/admin/answer")
+		public String saveAdminAnswer(AnswerDto answerDto, Long questionId, Principal principal) {
+
+			System.out.println(answerDto);
+			System.out.println(questionId);
+			System.out.println(principal);
+
+			adminQuestionService.saveAnswer(answerDto, questionId, principal.getName());
+			return "redirect:/admin/question";
+//			return null;
+		}
+
+		// 문의삭제
+		@DeleteMapping("/admin/question/{id}/delete")
+		public @ResponseBody ResponseEntity deleteAdminQuestion(@PathVariable("id") Long id, Principal principal) {
+			adminQuestionService.deleteAdminQuestion(id);
+			return new ResponseEntity<Long>(id, HttpStatus.OK);
+		}
 
 	// 공지관리 페이지 보여주기
 	@GetMapping(value = "/admin/notice")

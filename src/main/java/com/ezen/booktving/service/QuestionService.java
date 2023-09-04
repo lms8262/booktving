@@ -8,9 +8,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.thymeleaf.util.StringUtils;
 
+import com.ezen.booktving.dto.AnswerDto;
 import com.ezen.booktving.dto.QuestionDto;
+import com.ezen.booktving.entity.Answer;
 import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.entity.Question;
+import com.ezen.booktving.repository.AnswerRepository;
 import com.ezen.booktving.repository.MemberRepository;
 import com.ezen.booktving.repository.QuestionRepository;
 
@@ -25,6 +28,8 @@ public class QuestionService {
 	private final QuestionRepository questionRepository;
 	
 	private final MemberRepository memberRepository;
+	
+	private final AnswerRepository answerRepository;
 
 	@Transactional
 	public String savePost(QuestionDto questionDto, String userId) {
@@ -53,8 +58,14 @@ public class QuestionService {
 		if (question != null) {
 			return QuestionDto.of(question);
 		}
-		return null; // 또는 적절한 처리를 수행
+		return null; 
 	}
+	
+	public Answer getAnswerById(Long questionId) {
+		
+		 return answerRepository.findByQuestionId(questionId);
+	}
+		
 
 	@Transactional(readOnly = true)
 	public boolean validateQue(Long id, String userId) {
