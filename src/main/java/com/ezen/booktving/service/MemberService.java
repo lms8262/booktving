@@ -11,7 +11,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ezen.booktving.dto.LoginFormDto;
 import com.ezen.booktving.dto.MemberFormDto;
 import com.ezen.booktving.dto.MemberSearchDto;
 import com.ezen.booktving.entity.Member;
@@ -35,11 +34,11 @@ public class MemberService implements UserDetailsService {
 		return member.getId();
 	}
 
-	public void createMember(LoginFormDto loginFormDto, PasswordEncoder passwordEncoder) {
-		validateDuplicateUserId(loginFormDto); /// 아이디중복 체크
-		validateDuplicateEmail(loginFormDto);// 이메일 중복
-		validateDuplicateTel(loginFormDto);// 전화 번호 중복
-		Member member = Member.createMember(loginFormDto, passwordEncoder);
+	public void createMember(MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) {
+		validateDuplicateUserId(memberFormDto); /// 아이디중복 체크
+		validateDuplicateEmail(memberFormDto);// 이메일 중복
+		validateDuplicateTel(memberFormDto);// 전화 번호 중복
+		Member member = Member.createMember(memberFormDto, passwordEncoder);
 		memberRepository.save(member);// insert
 
 	}
@@ -49,30 +48,33 @@ public class MemberService implements UserDetailsService {
 	}
 
 	// 중복아이디
-	private void validateDuplicateUserId(LoginFormDto loginFormDto) {
+	private void validateDuplicateUserId(MemberFormDto memberFormDto) {
 
-		Member findMember = memberRepository.findByUserId(loginFormDto.getUserId());
+		Member findMember = memberRepository.findByUserId(memberFormDto.getUserId());
+
 		if (findMember != null) {
 			throw new IllegalStateException("이미 사용중인 ID입니다.");
 		}
 	}
 
 	// 중복이메일
-	private void validateDuplicateEmail(LoginFormDto loginFormDto) {
+	private void validateDuplicateEmail(MemberFormDto memberFormDto) {
 
-		Member findMember = memberRepository.findByEmail(loginFormDto.getEmail());
+		Member findMember = memberRepository.findByEmail(memberFormDto.getEmail());
 		if (findMember != null) {
 			throw new IllegalStateException("이미 사용중인 이메일입니다.");
 		}
+
 	}
 
 	// 중복전화번호
-	private void validateDuplicateTel(LoginFormDto loginFormDto) {
+	private void validateDuplicateTel(MemberFormDto memberFormDto) {
 
-		Member findMember = memberRepository.findByTel(loginFormDto.getTel());
+		Member findMember = memberRepository.findByTel(memberFormDto.getTel());
 		if (findMember != null) {
 			throw new IllegalStateException("이미 사용중인 전화번호입니다.");
 		}
+
 	}
 
 	@Override
@@ -128,13 +130,12 @@ public class MemberService implements UserDetailsService {
 		}
 		memberRepository.delete(member);
 	}
-	
+
 	//로그인한 사용자 정보 가져오기
 	public Member listAll(String userId){
 		
-		Member user = memberRepository.findByLogInUserId(userId);
+		Member user = memberRepository.findByUserId(userId);
 		
 		return user;
 	}
-	
 }

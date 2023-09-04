@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class RamdomPassword {
+public class RamdomPasswordService {
 	private final MemberRepository memberRepository;
 
 	public String getRamdomPassword(int size) {
