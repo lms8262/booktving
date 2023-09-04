@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layouts/layout1}">
 
 <head>
-<meta name="_csrf" th:content="${_csrf.token}" />
-<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+	<meta name="_csrf" th:content="${_csrf.token}" />
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
 </head>
 <!-- adminBook 페이지 CSS -->
 <th:block layout:fragment="css">
@@ -49,26 +48,29 @@
 											<table class="table table-responsive-md ">
 												<thead>
 													<tr>
-														<th scope="col"><input type="checkbox" id="checkall"
-															value="" onclick="checkAll()"></th>
+														<th scope="col"><input type="checkbox" id="checkall" value=""
+																onclick="checkAll()"></th>
 														<th scope="col">NO.</th>
 														<th scope="col">제목</th>
 														<th scope="col">회원아이디</th>
 														<th scope="col">등록일</th>
+														<th scope="col">답변여부</th>
 													</tr>
 												</thead>
 												<tbody>
 													<tr th:each="question : ${questionList}">
-														<td class="adminmenu_td"><input type="checkbox"
-															id="askChkBox" value="" /></td>
+														<td class="adminmenu_td"><input type="checkbox" id="askChkBox"
+																value="" /></td>
 														<td class="adminmenu_td" th:text="${question.id}"></td>
-														<td class="adminmenu_td"><a
-															th:text="${question.title}"
-															th:href="@{/admin/answer/{id}(id=${question.id})}"></a></td>
-														<td class="adminmenu_td"
-															th:text="${question.member.userId}"></td>
-														<td class="adminmenu_td"
-															th:text="${question.questionDate}"></td>
+														<td class="adminmenu_td"><a th:text="${question.title}"
+																th:href="@{/admin/answer/{id}(id=${question.id})}"></a>
+														</td>
+														<td class="adminmenu_td" th:text="${question.member.userId}">
+														</td>
+														<td class="adminmenu_td" th:text="${question.questionDate}">
+														</td>
+														<td class="adminmenu_td" th:text="${question.questionStatus.krName}">
+														</td>
 													</tr>
 												</tbody>
 											</table>
@@ -83,8 +85,8 @@
 														style="width: 100px;">답변등록</button>
 												</div>
 												<div class="col-md-2">
-													<button type="button" class="btn delete_btn"
-														style="width: 100px;" value="${question.id}"
+													<button type="button" class="btn delete_btn" style="width: 100px;"
+														value="${question.id}"
 														onclick="adminDeleteQuestion(this.value)">삭제</button>
 												</div>
 											</div>
@@ -186,7 +188,7 @@
 			var checkboxes = document.querySelectorAll('#askChkBox');
 			var checkall = document.getElementById('checkall');
 
-			checkboxes.forEach(function(checkbox) {
+			checkboxes.forEach(function (checkbox) {
 				checkbox.checked = checkall.checked;
 			});
 		}
@@ -195,9 +197,9 @@
 			var selectedIds = [];
 			var checkboxes = document.querySelectorAll('#askChkBox:checked');
 
-			checkboxes.forEach(function(checkbox) {
+			checkboxes.forEach(function (checkbox) {
 				selectedIds.push(checkbox.closest('tr').querySelector(
-						'.adminmenu_td').textContent);
+					'.adminmenu_td').textContent);
 			});
 
 			if (selectedIds.length === 0) {
@@ -211,18 +213,18 @@
 				var deleteUrl = "/admin/question/" + id + "/delete";
 
 				$.ajax({
-					url : deleteUrl,
-					type : "DELETE",
-					contentType : "application/json",
-					beforeSend : function(xhr) {
+					url: deleteUrl,
+					type: "DELETE",
+					contentType: "application/json",
+					beforeSend: function (xhr) {
 						xhr.setRequestHeader(header, token);
 					},
-					data : JSON.stringify({
-						questionIds : selectedIds
+					data: JSON.stringify({
+						questionIds: selectedIds
 					}), // 선택한 문의 ID를 서버에 전달
-					dataType : "json",
-					cache : false,
-					success : function(result, status) {
+					dataType: "json",
+					cache: false,
+					success: function (result, status) {
 						if (result.success) {
 							alert('선택한 문의가 삭제되었습니다.');
 							location.href = '/admin/question'; // 페이지 새로고침 또는 필요한 동작 수행
@@ -230,7 +232,7 @@
 							alert('문의 삭제에 실패했습니다.');
 						}
 					},
-					error : function(xhr, status, error) {
+					error: function (xhr, status, error) {
 						console.error('문의 삭제 오류:', error);
 					}
 				});

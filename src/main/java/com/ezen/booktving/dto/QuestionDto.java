@@ -5,6 +5,7 @@ import java.time.LocalDate;
 import org.modelmapper.ModelMapper;
 
 import com.ezen.booktving.constant.QuestionStatus;
+import com.ezen.booktving.entity.Answer;
 import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.entity.Question;
 
@@ -27,6 +28,8 @@ public class QuestionDto {
    private LocalDate questionDate;
    
    private QuestionStatus questionStatus;
+   
+   private Answer answer;
    
    public Member member;
    
