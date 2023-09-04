@@ -4,9 +4,6 @@ p {
 	margin-bottom: 5px;
 }
 
-.cardd {
-	
-}
 
 #bookName {
 	font-weight: bold;
@@ -38,18 +35,24 @@ p {
 	font-size: 0.9rem;
 }
 
+.rentbookContent {
+	margin: 15px 0;
+}
+
 .rentlistContent {
 	padding: 10px;
 }
 
-.rentbookContent {
-	margin: 0;
-	margin-top: 15px;
-	margin-bottom: 15px;
-}
-
 .rentbookimg {
 	display: flex;
+}
+
+.rentimgbox{
+	width: 100%;
+}
+
+.rentimgbox img{
+	width: 100%;
 }
 
 .page-item {

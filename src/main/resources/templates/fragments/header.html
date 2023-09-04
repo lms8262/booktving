@@ -10,19 +10,19 @@
 				<nav class="main-nav">
 
 					<!-- 로고 -->
-					<div class="logo col-lg-2">
+					<div class="logo">
 						<a href="/"> <img alt="logo" src="/images/header/logo.png">
 						</a>
 					</div>
 
 					<!-- 메뉴 -->
 					<!-- 개발 후 로그인 전/후 메뉴 sec:authorize코드 추가예정  -->
-					<div class="col-lg-7 menu-box">
+					<div class="menu-box">
 						<ul class="nav_left">
-							<li class="menu"><a href="/category/main"> <span>카테고리</span></a></li>
+							<li class="menu"><a href="/category"> <span>카테고리</span></a></li>
 							<li class="menu"><a href="/search/main"> <span>검색</span></a></li>
 							<li class="menu"><a href="/question/questionInfo"> <span>문의하기</span></a></li>
-							<li class="menu"><a href="/mylibrary"> <span>나의서재</span></a></li>
+							<li class="menu"><a href="/myLibrary"> <span>나의서재</span></a></li>
 							<li class="menu slide-menu"><a href="javascript:;"> <span>나의정보</span></a>
 								<ul class="submenu">
 									<li sec:authorize="isAnonymous()"><a href="/login" > <span>개인정보
@@ -38,7 +38,7 @@
 						</ul>
 					</div>
 
-					<div>
+					<div class="login-box">
 						<ul class="nav_right">
 
 							<li class="admin"><a href="/admin/books" class="admin-btn"> 

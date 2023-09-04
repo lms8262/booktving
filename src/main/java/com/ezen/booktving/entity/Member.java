@@ -17,7 +17,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -69,6 +68,7 @@ public class Member extends BaseTimeEntity {
 	private Role role;
 
 	private String provider;
+	
 	private String providerId;
 
 	public static Member createMember(LoginFormDto loginFormDto, PasswordEncoder passwordEncoder) {
@@ -96,7 +96,7 @@ public class Member extends BaseTimeEntity {
 		return member;
 	}
 
-//비밀번호 업데이트
+	//비밀번호 업데이트
 	public String updatePassword(String pass, PasswordEncoder passwordEncoder) {
 		String password = passwordEncoder.encode(pass);
 		this.password = password;
@@ -104,7 +104,7 @@ public class Member extends BaseTimeEntity {
 		return password;
 	}
 
-//비밀번호 제외 업데이트
+	//비밀번호 제외 업데이트
 	public void updateMember(@Valid MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) {
 		this.email = memberFormDto.getEmail();
 		this.tel = memberFormDto.getTel();

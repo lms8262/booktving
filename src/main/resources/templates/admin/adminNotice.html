@@ -6,6 +6,7 @@
 	 
 <!-- adminBook 페이지 CSS --> 
 <th:block layout:fragment="css">
+	<link rel="stylesheet" href="/css/adminNotice.css" />	
 </th:block>
 
 <div layout:fragment="content">
@@ -54,15 +55,17 @@
 													</tr>
 												</thead>
 												<tbody>
-													<tr>
+													<tr th:each="notice, status : ${notices.getContent()}">
 														<td>
-															<input type="checkbox" value=""/> 
+															<label class="checkbox-inline">
+																<input type="checkbox" th:name="chBoxs" class="chBoxs" id="chBoxs"  value="${notice.id}" /> 
+															</label>
 														</td>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
+														<td scope="col" class="notice-no" th:text="${notice.id}"></td>
+														<td scope="col" class="notice-group" th:text="${notice.noticeGroup.krName}"></td>
+														<td scope="col" class="notice-title" th:text="${notice.title}"></td>
+														<td scope="col" class="createdby">관리자</td>
+														<td scope="col" class="regdate" th:text="${#temporals.format(notice.regTime, 'yyyy-MM-dd')}"></td>
 													</tr>
 												</tbody>
 											</table>
@@ -71,10 +74,10 @@
 											<div class="form-group button col-12">
 												<div class="col-md-8"></div>
 												<div class="col-md-2">
-													<button type="button" class="btn reg_btn" style="width: 100px;">등록하기</button>
+													<button type="button" class="btn reg_btn" style="width: 100px;" onclick="location.href='/admin/noticeReg'">등록하기</button>
 												</div>
 												<div class="col-md-2">
-													<button type="button" class="btn delete_btn" style="width: 100px;">삭제하기</button>
+													<button type="submit" class="btn delete_btn" style="width: 100px;">삭제하기</button>
 												</div>
 											</div>
 
@@ -100,36 +103,34 @@
 												</div>
 												<div class="col-lg-2"></div>
 											</div>
-
-
+											
 											<!-- paging 부분 -->
-											<!-- 개발 후 medel key 으로 수정해서 사용하세요
-											<nav th:with="start=${(items.number / maxPage) * maxPage + 1}, 
-														  end = (${ ((items.totalPages == 0)) ? 1 :	(start + (maxPage -1) < items.totalPages ?
-											  			  start + (maxPage - 1) : items.totalPages)})" 						
+											
+											<nav th:with="start=${(notices.number / maxPage) * maxPage + 1}, 
+														  end = (${ ((notices.totalPages == 0)) ? 1 :	(start + (maxPage -1) < notices.totalPages ?
+											  			  start + (maxPage - 1) : notices.totalPages)})" 						
 															aria-label="...">
 												<ul class="pagination d-flex justify-content-center">
 						  
-												    <li class="page-item " th:classappend="${items.first} ? 'disabled'">
-												      	<a class="page-link page-item" th:onclick="'javascript:page(' + ${items.number - 1} + ')'">◀</a>
+												    <li class="page-item " th:classappend="${notices.first} ? 'disabled'">
+												      	<a class="page-link page-item" th:onclick="'javascript:page(' + ${notices.number - 1} + ')'">이전</a>
 													</li>
 
 													<li class="page-item"
 														th:each="page: ${#numbers.sequence(start, end)}"
-														th:classappend="${items.number eq page -1} ? 'active' : '' ">
+														th:classappend="${notices.number eq page -1} ? 'active' : '' ">
 														<a class="page-link" th:inline="text"
 														th:onclick="'javascript:page(' + ${page - 1} + ')'">
 															[[${page}]] </a>
 													</li>
 
-													<li class="page-item" th:classappend="${items.last} ? 'disabled'"><a
-														class="page-link page-item" th:onclick="'javascript:page(' + ${items.number + 1} + ')'">▶</a>
+													<li class="page-item" th:classappend="${notices.last} ? 'disabled'"><a
+														class="page-link page-item" th:onclick="'javascript:page(' + ${notices.number + 1} + ')'">다음</a>
 														</li>
-
 												</ul>
 											</nav>
-											-->
 											
+
 										</form>
 									</div>
 								</div>
@@ -149,7 +150,7 @@
 <th:block layout:fragment="script">
 
 	<script>
-	/*  개발 후 검색 항목에 맞게 수정해서 사용하세요
+	
 	$(document).ready(function(){
 		$("#searchBtn").on("click", function(e){
 			e.preventDefault(); 
@@ -159,18 +160,14 @@
 	
 	function page(page){
 		
-		var searchDateType = $("#searchDateType").val();
-		var searchSellStatus = $("#searchSellStatus").val();
 		var searchBy = $("#searchBy").val();
 		var searchQuery = $("#searchQuery").val();
 		
 		location.href = "/admin/adminBook/" + page 
-					  + "?searchDateType=" +  searchDateType 
-					  + "&searchSellStatus=" + searchSellStatus
-					  + "&searchBy=" + searchBy
+					  + "?searchBy=" + searchBy
 					  + "&searchQuery=" + searchQuery
 	}	
-	 */
+	
 	</script>
 </th:block>
 

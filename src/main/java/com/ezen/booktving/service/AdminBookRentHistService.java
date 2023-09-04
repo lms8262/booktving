@@ -56,4 +56,19 @@ public class AdminBookRentHistService {
 		rentBookRepository.delete(rentBook);
 	}
 	
+	//도서대여정보 가져오기
+	public List<RentBook> listAll(){
+		List<RentBook> rentBookList = rentBookRepository.findAll();
+		
+		List<AdminRentHistBookDto> rentBookDtoList = new ArrayList<>();
+		
+		for(RentBook rentBook : rentBookList) {
+			AdminRentHistBookDto renBookDto = AdminRentHistBookDto.of(rentBook);
+			rentBookDtoList.add(renBookDto);
+		}
+		return rentBookList;
+	}
+	
+
+	
 }

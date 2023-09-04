@@ -9,12 +9,12 @@ import org.springframework.security.oauth2.core.OAuth2AuthenticationException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
-import com.ezen.booktiving.info.GoogleUserInfo;
-import com.ezen.booktiving.info.KakaoUserInfo;
-import com.ezen.booktiving.info.Oauth2UserInfo;
 import com.ezen.booktving.config.PrincipalDetails;
 import com.ezen.booktving.constant.Role;
 import com.ezen.booktving.entity.Member;
+import com.ezen.booktving.info.GoogleUserInfo;
+import com.ezen.booktving.info.KakaoUserInfo;
+import com.ezen.booktving.info.Oauth2UserInfo;
 import com.ezen.booktving.repository.MemberRepository;
 
 import jakarta.transaction.Transactional;

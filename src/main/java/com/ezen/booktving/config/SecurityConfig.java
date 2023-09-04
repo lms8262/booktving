@@ -49,9 +49,10 @@ public class SecurityConfig {
 				.requestMatchers(mvc.pattern("/"), mvc.pattern("/membership/**"), mvc.pattern("/login/**")).permitAll()
 				.requestMatchers(mvc.pattern("/favicon.ico"), mvc.pattern("/error"),mvc.pattern("/image/**")).permitAll()
 				.requestMatchers(mvc.pattern("/findid"),mvc.pattern("/findpw"),mvc.pattern("/payment")).permitAll()
-				.requestMatchers(mvc.pattern("/category/**"), mvc.pattern("/search/**"), mvc.pattern("/question/**"),mvc.pattern("/author/**"), mvc.pattern("/book/**"), mvc.pattern("/mylibrary/**") ,mvc.pattern("/mypage/**")).permitAll()
+				.requestMatchers(mvc.pattern("/category/**"), mvc.pattern("/search/**"), mvc.pattern("/question/**"),mvc.pattern("/author/**"), mvc.pattern("/book/**"), mvc.pattern("/myLibrary/**") ,mvc.pattern("/mypage/**")).permitAll()
 				// 'admin'으로 시작하는 경로는 관리자만 접근가능하도록 설정
 				.requestMatchers(mvc.pattern("/admin/**")).permitAll()// hasRole("ADMIN")
+				.requestMatchers(mvc.pattern("/myLibrary/myChallenge/new")).hasAnyRole("USER", "ADMIN")
 				.anyRequest().authenticated())// 그외 페이지는 모두 로그인 (인증을 받아야한다.)
 				.formLogin(formLogin -> formLogin// 2.로그인에 관련된 설정
 						.loginPage("/login")// 로그인페이지 URL설정

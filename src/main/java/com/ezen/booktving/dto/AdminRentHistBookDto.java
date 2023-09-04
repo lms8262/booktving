@@ -27,21 +27,18 @@ public class AdminRentHistBookDto {
 	
 	private static ModelMapper modelMapper = new ModelMapper();
 	
+	public AdminRentHistBookDto() {	}
+	
 	public AdminRentHistBookDto(RentBook rentBook) {
 		this.id = rentBook.getId();
 		this.BookId = rentBook.getBook().getId();
-		this.rentDate = rentBook.getRentDate().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm"));
+		this.rentDate = rentBook.getRentDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
 		this.bookName = rentBook.getBook().getBookName();
 		this.userId = rentBook.getMember().getUserId();
 		this.userName = rentBook.getMember().getMemberName();
 	}
 	
-	//dto - > entity로 바꿈
-	public RentBook createRentBook() {
-		return modelMapper.map(this, RentBook.class);
-	}
 	
-	//entity -> dto로 바꿈
 	public static AdminRentHistBookDto of(RentBook rentBook) {
 		return modelMapper.map(rentBook, AdminRentHistBookDto.class);
 	}

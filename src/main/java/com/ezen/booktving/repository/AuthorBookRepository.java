@@ -8,6 +8,8 @@ import com.ezen.booktving.entity.AuthorBook;
 
 public interface AuthorBookRepository extends JpaRepository<AuthorBook, Long> ,  AuthorRepositoryCustom{
 	
+	List<AuthorBook> findByAuthorId(Long authorId);
+	
 	List<AuthorBook> findByAuthorIdOrderByIdAsc(Long authorId);
 
 }

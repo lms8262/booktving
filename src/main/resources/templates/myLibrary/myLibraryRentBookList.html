@@ -35,30 +35,29 @@
 										<!--나의 서재 대여도서 목록  -->
 										<div>
 											<div>
-												<h5 style="font-weight: bold;" th:text="총 + ${num}">총
-													1권</h5>
+												<h5 style="font-weight: bold;" th:text="|총&nbsp;&nbsp;&nbsp; ${rentBooks.totalElements}권|"></h5>
 											</div>
 											<div class="container">
 												<div class="row">
 
 													<div class="col-sm-3 rentbookContent"
 														th:each="rentBook: ${rentBooks.getContent()}">
-														<a href="/mylibrary/rentbookinfo">
-															<div class="cardd">
+														<a href="/myLibrary/rentbookinfo">
+															<div class="card col-12">
 																<div class="rentimgbox">
-																	<img alt="이미지" src="/images/categorytestimg1.jpg">
+																	<img alt="${rentBook.bookName}" th:src="${rentBook.imgUrl}">
 																</div>
 																<div class="rentlistContent">
 																	<p class="library-sub" id="bookName"
-																		th:text="${rentBook.bookName}">미생물 전쟁</p>
+																		th:text="${rentBook.bookName}"></p>
 																	<p class="library-sub" id="author"
-																		th:text="${rentBook.author}">아일사 와일드</p>
+																		th:text="${rentBook.author}"></p>
 																	<p class="library-sub" id="publisher"
-																		th:text="${rentBook.publisher}">출판사</p>
+																		th:text="${rentBook.publisher}"></p>
 																	<p class="library-sub" id="category"
-																		th:text="${rentBook.category}">장르</p>
+																		th:text="${rentBook.category}"></p>
 																	<p class="library-sub" id="complete"
-																		th:text="|완독여부: ${rentBook.complete}|">완독여부: 완독</p>
+																		th:text="|완독여부: ${rentBook.complete}|"></p>
 																</div>
 
 															</div>
@@ -120,11 +119,8 @@
 	
 	function page(page) {
 
-		var searchBy = $("#searchBy").val();
-		var searchQuery = $("#searchQuery").val();
 
-		location.href = "/mylibrary/rentList/" + page + "?searchBy=" + searchBy
-				+ "&searchQuery=" + searchQuery;
+		location.href = "/myLibrary/rentList/" + page;
 	}
 	
 	</script>

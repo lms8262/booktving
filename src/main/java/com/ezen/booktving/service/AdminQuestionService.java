@@ -81,10 +81,11 @@ public class AdminQuestionService {
 		}
 		return null;
 	}
-	
-	public void deleteAdminQuestion(Long id) {
+
+		public void deleteAdminQuestion(Long id) {
 		Question question = questionRepository.findById(id)
 							.orElseThrow(EntityNotFoundException::new);
 		questionRepository.delete(question);
 	}
+	
 }

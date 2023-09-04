@@ -16,7 +16,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -60,10 +59,5 @@ public class Question extends BaseEntity {
 
 		return question;
 	}
-
-	/*
-	 * @Builder public Question(Long id, String title, String content) { this.id =
-	 * id; this.title = title; this.content = content; }
-	 */
 
 }

@@ -56,7 +56,6 @@ public class AuthorService {
 		
 		Page<Author> authorPage = authorRepository.getAdminAuthorPage(authorSearchDto, pageable);
 		
-		
 		return authorPage;
 	}
 	
@@ -119,7 +118,7 @@ public class AuthorService {
 		authorFormDto.setAuthorImgDto(authorImgDto);
 		
 		//작가도서 정보 가져오기
-		List<AuthorBook> authorBooks = authorBookRepository.findByAuthorIdOrderByIdAsc(authorId);
+		List<AuthorBook> authorBooks = authorBookRepository.findByAuthorId(authorId);
 		
 		List<AuthorBookDto> authorBookDtoList = new ArrayList<>();
 		for(AuthorBook authorBook : authorBooks) {
@@ -142,4 +141,7 @@ public class AuthorService {
 		
 		authorRepository.deleteById(authorId);
 	}
+	
+		
+	
 }

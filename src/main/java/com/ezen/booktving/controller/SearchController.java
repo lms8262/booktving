@@ -21,8 +21,6 @@ import com.ezen.booktving.dto.SearchResultDto;
 import com.ezen.booktving.service.ApiService;
 import com.ezen.booktving.service.KeyWordService;
 import com.ezen.booktving.service.SearchService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -77,10 +75,7 @@ public class SearchController {
 		SearchResultDto nextSearchResult;
 		try {
 			nextSearchResult = apiService.getSearchResultByAladinApi(bookSearchDto, currentPage);
-		} catch (JsonMappingException e) {
-			e.printStackTrace();
-			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-		} catch (JsonProcessingException e) {
+		} catch (IOException e) {
 			e.printStackTrace();
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
