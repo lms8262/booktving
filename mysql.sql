@@ -20,3 +20,5 @@ select * from recommend_keyword;
 select * from payment;
 select * from member_commutation;
 select * from commutation_ticket;
+select * from question;
+select * from answer;

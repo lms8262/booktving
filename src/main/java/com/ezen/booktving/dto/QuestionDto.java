@@ -5,8 +5,6 @@ import java.time.LocalDate;
 import org.modelmapper.ModelMapper;
 
 import com.ezen.booktving.constant.QuestionStatus;
-import com.ezen.booktving.entity.Answer;
-import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.entity.Question;
 
 import jakarta.validation.constraints.NotBlank;
@@ -28,14 +26,8 @@ public class QuestionDto {
    private LocalDate questionDate;
    
    private QuestionStatus questionStatus;
-   
-   private Answer answer;
-   
-   public Member member;
-   
-   private static ModelMapper modelMapper = new ModelMapper();
       
-   public static QuestionDto of(Question question) {
+   public static QuestionDto of(Question question, ModelMapper modelMapper) {
       QuestionDto questionDto = modelMapper.map(question, QuestionDto.class);
       return questionDto;
    }

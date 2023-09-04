@@ -35,15 +35,13 @@ public class BestSellerDto {
 	@NotBlank
 	private String link;
 	
-	private static ModelMapper modelMapper = new ModelMapper();
-	
 	// Dto -> Entity 변환
-	public BestSeller createBestSeller() {
+	public BestSeller createBestSeller(ModelMapper modelMapper) {
 		return modelMapper.map(this, BestSeller.class);
 	}
 	
 	// Entity -> Dto 변환
-	public static BestSellerDto of(BestSeller bestSeller) {
+	public static BestSellerDto of(BestSeller bestSeller, ModelMapper modelMapper) {
 		return modelMapper.map(bestSeller, BestSellerDto.class);
 	}
 	

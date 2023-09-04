@@ -14,6 +14,5 @@ public class ChallengeNewDto {
 	private int targetMount;
 	
 	private YesNoStatus success;
-
 	
 }
