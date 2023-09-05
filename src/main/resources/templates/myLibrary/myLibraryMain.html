@@ -78,8 +78,8 @@
 									</div>
 								</div>
 								
-								<div class="author-book-null-wrap" th:if="${#lists.isEmpty(rentBookList)}">
-									<p class="author-book-null">
+								<div class="rent-book-null-wrap" th:if="${#lists.isEmpty(rentBookList)}">
+									<p class="rent-book-null">
 										대여한 도서가 없습니다.
 									</p>
 								</div>	
@@ -96,14 +96,14 @@
 									<img class="myLibrary-pictogram" src="/images/myLibrary/favorite.png" alt="Favorite" />
 									<span class="myLibrary-title">Favorite</span>
 									<span class="myLibrary-more">
-										<a href="/myLibrary/FavoriteBook">more</a>
+										<a href="/myLibrary/favoritebook">more</a>
 									</span>
 								</div>
 								
 								<div class="favorite-book-wrap" th:if="${not #lists.isEmpty(favoriteBookList)}">
 									<!-- 찜한 도서 보여주기 -->
 									<div class="favorite-book" th:each="favoriteBook, status : ${favoriteBooks}">
-										<img src="${favoriteBook.imgUrl}" alt="${favoriteBook.bookName}" />
+										<img th:src="${favoriteBook.imgUrl}" th:alt="${favoriteBook.bookName}" />
 									</div>
 								</div>
 								<div class="favorite-book-null-wrap" th:if="${#lists.isEmpty(favoriteBookList)}">

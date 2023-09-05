@@ -1,11 +1,26 @@
 @charset "UTF-8";
 
-.top {
-	height: 1200px;
+a,
+a:hover,
+a:focus,
+a:active {
+  text-decoration: none;
+  color: #000;
+  outline: none;
+  box-shadow: none;
 }
 
-.content {
-	width: 1310px;
+a:hover,
+a:focus {
+  color: initial;
+}
+
+ul{
+	list-style: none
+}
+
+.top {
+	height: auto;
 	border-left: 1px solid #eee;
 	border-right: 1px solid #eee;
 }
@@ -15,7 +30,6 @@
 	width: 1310px;
 	display: flex;
 	position: relative;
-	
 }
 
 .bookimg {
@@ -27,15 +41,17 @@
 
 .img {
 	height: 322px;
-	weight: 220px;
 	border: 1px solid #eee;
 	margin-left: 30px;
 	margin-top: 40px;
 }
 
-.bookdetail {
-	margin-top: 70px;
-	margin-left: 50px;
+.bookdetail  {
+	padding: 50px 40px;
+}
+
+.bookIntroduction{
+	text-align: justify	;
 }
 
 .button {
@@ -43,38 +59,38 @@
 }
 
 .like {
-	height: 35px;
-	weight: 90px;
 	margin-right: 20px;
 	border-style: none;
 	background-color: #FFD360;
-	border-radius: 20px;
-	font-size: 13px;
+	border-radius: 50px;
+	font-size: 15px;
+	padding: 10px 20px;
 }
 
 .rent {
-	height: 35px;
-	weight: 90px;
 	border-style: none;
 	background-color: #FFD360;
-	border-radius: 20px;
-	font-size: 13px;
+	border-radius: 50px;
+	font-size: 15px;
+	padding: 10px 20px;
 }
 
 .content .book-info-detail {
 	height: 100px;
 	background-color: #F5F3EA;
 	display: flex;
+	padding: 0;
+	overflow: hidden;
 }
 
 .slide-wrapper {
-	display: inline-flex;
-	padding-top: 15px;
-	padding-left: 0;
+	display: flex;
+	margin: 0;
+	justify-content: center;
+	align-items: center;
 }
 
 .slide-item {
-	width: 220px;
 	position: relative;
 	border-right: 1px solid #c3c2c2;
 	text-align: center;
@@ -87,6 +103,29 @@
 .bookindex {
 	border-bottom: 1px solid #eee;
 	cursor: pointer;
+}
+#collapseExample{
+	height: auto;
+}
+
+.book-content{
+	height: auto;
+	min-height: 100px;
+	padding: 20px 40px;
+	border: none;
+}
+
+.book-content > p{
+	margin: 0;
+	text-align: left;
+}
+
+.book-author-info{
+	height: auto;
+	min-height: 100px;
+	padding: 20px 40px;
+	border: none;
+	text-align: justify;
 }
 
 .btn {
@@ -113,21 +152,23 @@
 }
 
 .bookindex-image{
+	padding: 20px;
 	height: 73px;
 	display: flex;
-	align-items: center;	
+	align-items: center;
+	justify-content: end;	
 	border-bottom: 12px solid #f4f4f4;
 }
 
 .aladin {
-	width: 35px;
-	height: 35px;
-	margin-left: 60px;
+	margin: 0;
+	width: 20px;
 }
 
-h6 {
-	margin: 0;
-	padding-right: 1150px;	
+.aladin-text {
+	font-size: 15px;
+	color: #aaa;
+	margin: 0 20px;
 }
 
 .review {
@@ -185,29 +226,20 @@ span {
 
 .review-input {
 	margin: 0;
-	padding-left: 10px;
+	padding-left: 60px;
+ }
 
-}
-
-input {
+.review-input input {
 	border: 1px solid #e4e4e4;
 	border-radius: 5px;
+	width: 100%;
 	height: 50px;
-	width: 900px;
-}
-
-.review-input {
-	padding-left: 60px;
-}
-
-.review-input>input {
-	width: 1100px;
+	padding: 10px;
 }
 
 .review-register {
 	padding-left: 10px;
 	margin: 0;
-	
 }
 
 .review-button {
@@ -217,7 +249,9 @@ input {
 	background-color: #FFD360;
 	height: 50px;
 	border-radius: 5px;
-}
+	color: #fff;
+	font-weight: bold;
+	}
 
 .review-form {
 	display: flex;
