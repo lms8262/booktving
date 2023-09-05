@@ -153,7 +153,7 @@ public class MyLibraryController {
 	//나의챌린지 페이지
 	@GetMapping(value = "/myLibrary/myChallenge")
 	public String myChallenge(Model model, @AuthenticationPrincipal UserDetails userDetails) {
-		
+			
 		if(userDetails != null) {
 			
 			String memberName = memberService.getLoginMemberName(userDetails.getUsername());
@@ -162,84 +162,80 @@ public class MyLibraryController {
 			List<ChallengeItemDto> challengeItemDtoList = challengeItemService.getChallengeList(userDetails.getUsername());
 			model.addAttribute("challengeItemDtoList", challengeItemDtoList);
 			
-			//List<ChallengeItemDto> activeChallengeItemList = challengeItemService.getActioveChallengeList(userDetails.getUsername());
-			//model.addAttribute("activeChallengeItemList", activeChallengeItemList);
-			
-			//List<RentBookDto> rentBookDtoList = myLibraryRentBookService.getMyRentBookList(userDetails.getUsername());
-			//model.addAttribute("rentBookDtoList", rentBookDtoList);
+			long isActiveCount = challengeItemService.getCountOfIsActive(userDetails.getUsername());
+			model.addAttribute("isActiveCount", isActiveCount);
 			
 			long completedRentBooksCount = myLibraryRentBookService.getCountOfCompletedRentBooks(userDetails.getUsername());
 			model.addAttribute("completedRentBooksCount", completedRentBooksCount);
-			
+				
 			return "myLibrary/myChallenge";
 		} else {
-			return "login/login";
+				return "login/login";
 		}
 	}
-	
-	//나의챌린지 목표 달성시 페이지 업데이트하기
-	@PostMapping(value = "/updateChallengeItem/{challengeItemId}")
-	@ResponseBody
-	public ResponseEntity updateChallengeItem(@PathVariable("challengeItemId") Long challengeItemId) {
 		
-		try {
-			challengeItemService.updateChallengeItemSuccess(challengeItemId);
+		//나의챌린지 목표 달성시 페이지 업데이트하기
+		@PostMapping(value = "/myLibrary/updateChallengeItem/{challengeItemId}")
+		@ResponseBody
+		public ResponseEntity updateChallengeItem(@PathVariable("challengeItemId") Long challengeItemId) {
+			
+			try {
+				challengeItemService.updateChallengeItemSuccess(challengeItemId);
+				
+			} catch (Exception e) {
+				return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			}
 			return new ResponseEntity<String>("success", HttpStatus.OK);
 			
-		} catch (Exception e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 		
-	}
-	
-	//나의챌린지-아이템 비활성화 시키기
-	@PostMapping(value = "/deactivateChallenge/{challengeItemId}")
-	@ResponseBody
-	public ResponseEntity deactivateChallenge(@PathVariable("challengeItemId") Long challengeItemId) {
-		
-		try {
-			challengeItemService.deactivateChallenge(challengeItemId);
-			return new ResponseEntity<>("success", HttpStatus.OK);
+		//나의챌린지-아이템 비활성화 시키기
+		@PostMapping(value = "/myLibrary/deactivateChallenge/{challengeItemId}")
+		@ResponseBody
+		public ResponseEntity deactivateChallenge(@PathVariable("challengeItemId") Long challengeItemId) {
 			
-		} catch (Exception e) {
-			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-		}
-	}
-	
-	//나의챌린지 생성 페이지
-	@GetMapping(value = "/myLibrary/myChallenge/new")
-	public String myChallengeNewPage(Model model, @AuthenticationPrincipal UserDetails userDetails, 
-									@Valid ChallengeNewDto challengeNewDto, BindingResult bindingResult ) {
-		
-		String memberName = memberService.getLoginMemberName(userDetails.getUsername());
-		model.addAttribute("memberName", memberName);
-		
-		return "myLibrary/myChallengeNew";
-	}
-	
-	//나의챌린지 생성하기
-	@PostMapping(value = "/myLibrary/myChallenge/new")
-	public @ResponseBody ResponseEntity myChallengeNew(@RequestBody @Valid ChallengeNewDto challengeNewDto, 
-					BindingResult bindingResult, Principal principal) {
-		
-		if(bindingResult.hasErrors()) {
-			StringBuilder sb = new StringBuilder();
-			List<FieldError> fieldErrors = bindingResult.getFieldErrors();
-			
-			for(FieldError fieldError : fieldErrors) {
-				sb.append(fieldError.getDefaultMessage());  //에러메세지를 합친다.
+			try {
+				challengeItemService.deactivateChallenge(challengeItemId);
+				
+			} catch (Exception e) {
+				return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 			}
-			return new ResponseEntity<String>(sb.toString(), HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<String>("deactivate", HttpStatus.OK);
 		}
 		
-		String userId = principal.getName();
-		
-		try {
-			challengeItemService.saveChallenge(challengeNewDto, userId);
-		} catch (Exception e) {
-			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		//나의챌린지 생성 페이지
+		@GetMapping(value = "/myLibrary/myChallenge/new")
+		public String myChallengeNewPage(Model model, @AuthenticationPrincipal UserDetails userDetails, 
+										@Valid ChallengeNewDto challengeNewDto, BindingResult bindingResult ) {
+			
+			String memberName = memberService.getLoginMemberName(userDetails.getUsername());
+			model.addAttribute("memberName", memberName);
+			
+			return "myLibrary/myChallengeNew";
 		}
-		return new ResponseEntity<>(HttpStatus.OK);
-	}
-
+		
+		//나의챌린지 생성하기
+		@PostMapping(value = "/myLibrary/myChallenge/new")
+		public @ResponseBody ResponseEntity myChallengeNew(@RequestBody @Valid ChallengeNewDto challengeNewDto, 
+						BindingResult bindingResult, Principal principal) {
+			
+			if(bindingResult.hasErrors()) {
+				StringBuilder sb = new StringBuilder();
+				List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+				
+				for(FieldError fieldError : fieldErrors) {
+					sb.append(fieldError.getDefaultMessage());  //에러메세지를 합친다.
+				}
+				return new ResponseEntity<String>(sb.toString(), HttpStatus.BAD_REQUEST);
+			}
+			
+			String userId = principal.getName();
+			
+			try {
+				challengeItemService.saveChallenge(challengeNewDto, userId);
+			} catch (Exception e) {
+				return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+			}
+			return new ResponseEntity<>(HttpStatus.OK);
+		}
 }

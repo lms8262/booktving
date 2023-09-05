@@ -55,6 +55,10 @@ public class ChallengeItemService {
 		return challengeItemDtoList;
 	}
 	
+	public long getCountOfIsActive(String userId) {
+		return challengeItemRepository.countByIsActiveAndMember_UserId(YesNoStatus.Y, userId);
+	}
+	
 	/*
 	//challengeItem 중 활성화 데이터 가져오기
 	public List<ChallengeItemDto> getActioveChallengeList(String userId){

@@ -137,11 +137,17 @@ public class AuthorService {
 	}
 	
 	//작가정보 삭제
-	public void deleteAuthor(Long authorId) {
+	public void deleteAuthor(List<Long> authorIdList) {
 		
-		authorRepository.deleteById(authorId);
+		List<Author> authorList = new ArrayList<>();
+		
+		for(Long authorId : authorIdList) {
+			Author author = authorRepository.findById(authorId).orElseThrow(EntityNotFoundException::new);
+			authorList.add(author);
+		}
+		
+		authorRepository.deleteAll(authorList);
 	}
-	
 		
 	
 }

@@ -1,5 +1,6 @@
 package com.ezen.booktving.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -68,5 +69,17 @@ public class NoticeService {
 		notice.updateNotice(noticeDto);
 		
 		return notice.getId();
+	}
+	
+	//공지사항 삭제하기
+	public void deleteNotice(List<Long> noticeIdList) {
+		
+		List<Notice> noticeList = new ArrayList<>();
+		for(Long noticeId : noticeIdList) {
+			Notice notice = noticeRepository.findById(noticeId).orElseThrow(EntityNotFoundException::new);
+			noticeList.add(notice);
+		}
+		
+		noticeRepository.deleteAll(noticeList);
 	}
 }

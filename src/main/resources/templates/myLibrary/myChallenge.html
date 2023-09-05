@@ -38,7 +38,7 @@
 					<!-- 나의챌린지 생성하기 content -->
 					<div class="challenge-wrap" >
 					
-						<div class="container challengeNew-box" th:if="${#lists.isEmpty(challengeItemDtoList)}">
+						<div class="container challengeNew-box" th:if="${#lists.isEmpty(challengeItemDtoList) or isActiveCount == 0}">
 							<div class="challenge-text-wrap">
 								<p class="challenge-text"> <strong> [[${memberName}]] </strong> &nbsp;님 나만의 챌린지를 시작해 보세요.</p>
 								<div class="challenge-link-wrap">
@@ -50,7 +50,7 @@
 						</div>
 						
 						
-						<div class="container challenge-list-box" th:if="${not #lists.isEmpty(challengeItemDtoList)}">
+						<div class="container challenge-list-box" th:if="${not #lists.isEmpty(challengeItemDtoList) and isActiveCount >= 1}">
 							<div class="challenge-title-box">
 								<h4>나만의 챌린지</h4>
 								<hr>
@@ -61,37 +61,42 @@
 									th:if="${#strings.equals(challengeItemDto.isActive, 'Y')}">
 								<div class="col-lg-12 challenge-list-wrap-nomargin">
 		
-									<form th:action="@{'/updateChallengeItem/' + ${challengeItemDto.id}}" method="post">
-										<div class="challenge-list-content-box col-5">
-											<input type="hidden" id="challengeItemId" name="challengeItemId" th:value="${challengeItemDto.id}">
-											<div class="col-4">
-												<img src="/images/myLibrary/book.png" />
-											</div>
-											<div class="col-8">
-												<p class="targer-title">목표독서량</p>
-												<div class="reading-target">
-													<input class="completeYn" id="completedRentBooksCount" th:if="${completedRentBooksCount} > 0" th:value="${completedRentBooksCount}" disabled />
-													<input class="completeYn" th:unless="${completedRentBooksCount} > 0" value="0" disabled />
-													<p>/</p>
-													<input th:value="${challengeItemDto.targetMount}" id="targetMount" class="targetMount" disabled />
-												</div>
+									
+									<div class="challenge-list-content-box col-5">
+										<div class="col-4">
+											<img src="/images/myLibrary/book.png" />
+										</div>
+										<div class="col-8">
+											<p class="targer-title">목표독서량</p>
+											<div class="reading-target">
+												<input class="completeYn" id="completedRentBooksCount" th:if="${completedRentBooksCount} > 0" th:value="${completedRentBooksCount}" disabled />
+												<input class="completeYn" th:unless="${completedRentBooksCount} > 0" value="0" disabled />
+												<p>/</p>
+												<input th:value="${challengeItemDto.targetMount}" id="targetMount" class="targetMount" disabled />
 											</div>
 										</div>
-	
-										<div class="col-7 challenge-item">
+									</div>
+									
+									<div class="col-7 challenge-item">
+										<div>
+										<input type="hidden" id="challengeItemId" name="challengeItemId" th:value="${challengeItemDto.id}">
 											<div th:if="${#strings.equals(challengeItemDto.isActive, 'Y') and #strings.equals(challengeItemDto.success, 'N')}">
 												<p>꾸준한 독서로 목표를 달성해 보세요!</p>
 												<div id="buttonContainer"></div>
 											</div>
-	
+											<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+										</div>
+		
+										<div>
+											<input type="hidden" id="challengeItemId" name="challengeItemId" th:value="${challengeItemDto.id}">
 											<div class="challenge-item-box" th:if="${#strings.equals(challengeItemDto.isActive, 'Y') and #strings.equals(challengeItemDto.success, 'Y')}">
 												<p>축하합니다!! 목표를 달성했습니다.</p>
 												<p>새로운 목표를 세워보세요!</p>
-												<a href="/myLibrary/myChallenge/new" class="new-challenge" >새로운 목표</a>
+												<button  id="newChallenge" class="new-challenge" >새로운 목표</button>
 											</div>
-										</div>
 										<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-									</form>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -116,33 +121,11 @@
 		autoCheckChallenge()
 		
 	    $("#submitButton").click(function() {
-	        var challengeItemId = parseInt($("#challengeItemId").val());
-	        $.ajax({
-	            url: "/updateChallengeItem/" + challengeItemId,
-	            method: "GET", 
-	            success: function(response) {
-	            	console.log(challengeItemId);
-	            	alert("요청에 성공했습니다.");
-	            },
-	            error: function(error) {
-	            	alert("요청에 실패했습니다.");
-	            }
-	        });
+	    	autoCheckChallenge();
 	    });
 	    
-	    $("#submitButton").click(function() {
-	        var challengeItemId = parseInt($("#challengeItemId").val());
-	        $.ajax({
-	            url: "/deactivateChallenge/" + challengeItemId,
-	            method: "GET", 
-	            success: function(response) {
-	            	console.log(challengeItemId);
-	            	alert("요청에 성공했습니다.");
-	            },
-	            error: function(error) {
-	            	alert("요청에 실패했습니다.");
-	            }
-	        });
+	    $("#newChallenge").click(function() {
+	    	deactivateChallenge(challengeItemId);
 	    });
 	    
 	   
@@ -169,7 +152,7 @@
 				alert("목표독서량에 도달했습니다.");
 
 				
-			var url = "/updateChallengeItem/" + challengeItemId;
+			var url = "/myLibrary/updateChallengeItem/" + challengeItemId;
 				
 			$.ajax({
 				url : url,
@@ -200,8 +183,8 @@
 	//비활성화 데이터 넘기기
 	
 	function deactivateChallenge(challengeItemId){
-		
-		var url = "/deactivateChallenge/" + challengeItemId;
+			
+		var url = "/myLibrary/deactivateChallenge/" + challengeItemId;
 				
 			$.ajax({
 				url : url,
@@ -210,7 +193,8 @@
 					xhr.setRequestHeader(header, token)
 				},
 				success : function(response){
-					if(response === "success"){
+					alert(response);
+					if(response === "deactivate"){
 						alert("챌린지가 비활성화 되었습니다.");
 						location.href="/myLibrary/myChallenge";
 					} else {
@@ -219,6 +203,7 @@
 				},
 				error : function(){
 					alert("비활성화 중 오류가 발생했습니다.");
+					
 				}
 			});
 		

@@ -1,5 +1,7 @@
 package com.ezen.booktving.dto;
 
+import com.ezen.booktving.constant.NoticeGroup;
+
 import lombok.Getter;
 import lombok.Setter;
 
@@ -8,6 +10,7 @@ import lombok.Setter;
 public class NoticeSearchDto {
 
 	private String searchBy;	
+	private NoticeGroup searchNoticeGroup;
 	private String searchQuery = "";
 	
 }
