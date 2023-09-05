@@ -3,6 +3,7 @@ package com.ezen.booktving.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Transactional
 public class AdminBookRentHistService {
+	private final ModelMapper modelMapper; 
 	private final RentBookRepository rentBookRepository;
 	
 	@Transactional(readOnly = true)
@@ -29,7 +31,7 @@ public class AdminBookRentHistService {
 		RentBook rentBook = rentBookRepository.findById(rentBookId)
 													.orElseThrow(EntityNotFoundException::new);
 		
-		AdminRentHistBookDto adminRentHistBookDto = AdminRentHistBookDto.of(rentBook);
+		AdminRentHistBookDto adminRentHistBookDto = AdminRentHistBookDto.of(rentBook, modelMapper);
 		
 		return adminRentHistBookDto;
 	}
@@ -63,7 +65,7 @@ public class AdminBookRentHistService {
 		List<AdminRentHistBookDto> rentBookDtoList = new ArrayList<>();
 		
 		for(RentBook rentBook : rentBookList) {
-			AdminRentHistBookDto renBookDto = AdminRentHistBookDto.of(rentBook);
+			AdminRentHistBookDto renBookDto = AdminRentHistBookDto.of(rentBook, modelMapper);
 			rentBookDtoList.add(renBookDto);
 		}
 		return rentBookList;

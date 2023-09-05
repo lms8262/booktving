@@ -3,6 +3,7 @@ package com.ezen.booktving.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -10,8 +11,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ezen.booktving.dto.AdminQuestionDto;
+import com.ezen.booktving.dto.AnswerDto;
+import com.ezen.booktving.entity.Answer;
+import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.entity.Question;
 import com.ezen.booktving.repository.AdminQuestionRepository;
+import com.ezen.booktving.repository.AnswerRepository;
+import com.ezen.booktving.repository.MemberRepository;
 import com.ezen.booktving.repository.QuestionRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -21,14 +27,17 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Transactional
 public class AdminQuestionService {
+	private final ModelMapper modelMapper;
 	private final AdminQuestionRepository adminQuestionRepository;
 	private final QuestionRepository questionRepository;
+	private final AnswerRepository answerRepository;
+	private final MemberRepository memberRepository;
 	
 	@Transactional(readOnly = true)
 	public AdminQuestionDto getAdminQuestion(Long id) {
 		Question question = adminQuestionRepository.findById(id)
 						.orElseThrow(EntityNotFoundException::new);
-		AdminQuestionDto adminQuestionDto = AdminQuestionDto.of(question);
+		AdminQuestionDto adminQuestionDto = AdminQuestionDto.of(question, modelMapper);
 		return adminQuestionDto;
 	}
 	
@@ -46,9 +55,43 @@ public class AdminQuestionService {
 		return new PageImpl<>(questions, pageable, questionPage.getTotalElements());
 	}
 	
-	public void deleteAdminQuestion(Long id) {
+	@Transactional
+	public String saveAnswer(AnswerDto answerDto, Long questionId, String username) {
+	    Question question = questionRepository.findById(questionId)
+	            .orElseThrow(EntityNotFoundException::new);
+	    
+	    Member member = memberRepository.findByUserId(username);
+	    
+	    if(member == null) {
+	    	throw new EntityNotFoundException();
+	    }
+	    
+	    Answer answer = answerRepository.findByQuestionId(questionId);
+	    
+	    if(answer == null) {
+	    	answer = Answer.createAnswer(answerDto, question, member);	    	
+	    	answer.setQuestion(question);
+	    } else {
+	    	answer.updateAnswer(answerDto.getContent());
+	    }
+
+	    answerRepository.save(answer);
+        
+        return answer.getContent();
+    }
+	
+	public AnswerDto getAnswerById(Long id) {
+		Answer answer = answerRepository.findById(id).orElse(null);
+		if (answer != null) {
+			return AnswerDto.of(answer, modelMapper);
+		}
+		return null;
+	}
+
+		public void deleteAdminQuestion(Long id) {
 		Question question = questionRepository.findById(id)
 							.orElseThrow(EntityNotFoundException::new);
 		questionRepository.delete(question);
 	}
+	
 }

@@ -27,9 +27,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Transactional
 public class MyLibraryRentBookService {
+	private final ModelMapper modelMapper;
 	private final RentBookRepository rentBookRepository;
 	private final BookImgRepository bookImgRepository;
-	
 	
 	//대여목록 리스트 가져오는 서비스
 	@Transactional(readOnly = true)
@@ -119,7 +119,7 @@ public class MyLibraryRentBookService {
 		List<AdminRentHistBookDto> rentBookDtoList = new ArrayList<>();
 		
 		for(RentBook rentBook : rentBookList) {
-			AdminRentHistBookDto rentBookDto = AdminRentHistBookDto.of(rentBook);
+			AdminRentHistBookDto rentBookDto = AdminRentHistBookDto.of(rentBook, modelMapper);
 			rentBookDtoList.add(rentBookDto);
 		}
 		return rentBookList;

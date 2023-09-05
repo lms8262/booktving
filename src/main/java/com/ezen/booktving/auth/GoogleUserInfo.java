@@ -1,15 +1,14 @@
-package com.ezen.booktving.info;
+package com.ezen.booktving.auth;
 
 import java.util.Map;
 
-public class GoogleUserInfo implements Oauth2UserInfo {
+public class GoogleUserInfo implements OAuth2UserInfo{
+	private Map<String, Object> attributes; 
 
-	private Map<String, Object> attributes;
-
-	public GoogleUserInfo(Map<String, Object> attributes) {
-		this.attributes = attributes;
-	}
-
+    public GoogleUserInfo(Map<String, Object> attributes) {
+        this.attributes = attributes;
+    }
+    
 	@Override
 	public Map<String, Object> getAttributes() {
 		return attributes;

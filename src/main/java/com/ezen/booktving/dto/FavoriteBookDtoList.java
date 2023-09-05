@@ -1,9 +1,7 @@
 package com.ezen.booktving.dto;
 
-import com.ezen.booktving.entity.Book;
 import com.ezen.booktving.entity.BookImg;
 import com.ezen.booktving.entity.FavoriteBook;
-import com.ezen.booktving.entity.Member;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -21,10 +19,6 @@ public class FavoriteBookDtoList {
 	private String author;
 	
 	private String imgUrl;
-	
-	private Member member;
-
-	private Book book;
 
 	public FavoriteBookDtoList(FavoriteBook favoriteBook, BookImg bookImg) {
 		this.id = favoriteBook.getId();

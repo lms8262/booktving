@@ -37,9 +37,6 @@ public class Question extends BaseEntity {
 
 	@Column(columnDefinition = "longtext", nullable = false)
 	private String content;
-
-	@Column(columnDefinition = "longtext", nullable = true)
-	private String answer;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id", nullable = false)
@@ -49,6 +46,7 @@ public class Question extends BaseEntity {
 
 	@Enumerated(EnumType.STRING)
 	private QuestionStatus questionStatus;
+
 
 	public static Question createQuestion(QuestionDto questionDto, Member member) {
 		Question question = new Question();

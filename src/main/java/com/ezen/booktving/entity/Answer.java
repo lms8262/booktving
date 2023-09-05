@@ -1,5 +1,8 @@
 package com.ezen.booktving.entity;
 
+import com.ezen.booktving.constant.QuestionStatus;
+import com.ezen.booktving.dto.AnswerDto;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -8,6 +11,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
@@ -28,7 +32,27 @@ public class Answer extends BaseEntity {
 	@Column(columnDefinition = "longtext", nullable = false)
 	private String content;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "question_id", nullable = false)
 	private Question question;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "member_id", nullable = false)
+	private Member member;
+	
+	public static Answer createAnswer(AnswerDto answerDto, Question question, Member answerMember) {
+		
+		question.setQuestionStatus(QuestionStatus.COMPLETE);
+		
+		Answer answer = new Answer();
+		answer.setContent(answerDto.getContent());
+		answer.setQuestion(question);
+		answer.setMember(answerMember);
+		
+		return answer;
+	}
+	
+	public void updateAnswer(String content) {
+		this.content = content;
+	}
 }

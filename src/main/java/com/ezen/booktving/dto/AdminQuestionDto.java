@@ -31,21 +31,20 @@ public class AdminQuestionDto {
 	
 	private QuestionStatus questionStatus;
 	
-	private static ModelMapper modelMapper = new ModelMapper();
-	
 	public AdminQuestionDto(Question question) {
 		this.id = question.getId();
 		this.title = question.getTitle();
 		this.content = question.getContent();
 		this.member = question.getMember();
 		this.questionDate = question.getQuestionDate();
+		this.questionStatus = question.getQuestionStatus();
 	}
 	
-	public Question createQuestion() {
+	public Question createQuestion(ModelMapper modelMapper) {
 		return modelMapper.map(this, Question.class);
 	}
 	
-	public static AdminQuestionDto of(Question question) {
+	public static AdminQuestionDto of(Question question, ModelMapper modelMapper) {
 		return modelMapper.map(question, AdminQuestionDto.class);
 	}
 }
