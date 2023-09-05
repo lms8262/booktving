@@ -87,25 +87,13 @@ public class MemberService implements UserDetailsService {
 		return User.builder().username(member.getUserId()).password(member.getPassword())
 				.roles(member.getRole().toString()).build();
 	}
-
-	/*
-	 * public Long updateMember(MemberFormDto memberFormDto) throws
-	 * EntityNotFoundException { Member member =
-	 * memberRepository.findById(memberFormDto.getId()).orElseThrow(
-	 * EntityNotFoundException::new);
-	 * 
-	 * member.updateMember(memberFormDto);
-	 * 
-	 * 
-	 * return member.getId(); }
-	 */
-
+	
 	public void deleteMenu(String userId) {
 		Member member = memberRepository.findByUserId(userId);
 		memberRepository.delete(member);
 	}
 
-//회원정보 가져오기
+	//회원정보 가져오기
 	@Transactional(readOnly = true)
 	public MemberFormDto getUpdateDtl(String userId) {
 		Member member = memberRepository.findByUserId(userId);
