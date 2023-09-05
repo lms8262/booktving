@@ -197,17 +197,3 @@ select {
 .btn_area > button:hover {
 	cursor: pointer;
 }
-
-#btnJoin {
-	width: 40%;
-	padding: 21px 0 17px;
-	border: 0;
-	cursor: pointer;
-	color: #fff;
-	background-color: #722ef9;
-	font-size: 20px;
-	font-weight: 400;
-	font-family: Dotum, 'µ¸¿ò', Helvetica, sans-serif;
-	  
-	border-radius: 5px;
-}

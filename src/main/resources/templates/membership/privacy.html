@@ -74,7 +74,6 @@
 						onclick="sample6_execDaumPostcode()" value="우편번호 찾기"
 						style="width: 150px;">
 				</h3>
-				<br>
 				<div class="input-group">
 					<input type="text" th:field="*{addressNo}" aria-label="First name"
 						class="form-control" placeholder="우편번호" style="width: 30%">
@@ -90,11 +89,11 @@
 
 			<!-- JOIN BTN-->
 			<div class="btn_area">
-				<button type="submit" id="btnUpdate">
+				<button type="submit">
 					<span>수정하기</span>
 				</button>
-				<button type="reset" id="btnJoin" onclick="location.href='/login'">
-					<span>취소</span>
+				<button type="button" onclick="deleteMember();">
+					<span>탈퇴하기</span>
 				</button>
 			</div>
 			

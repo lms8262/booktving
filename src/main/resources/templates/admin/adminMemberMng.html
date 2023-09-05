@@ -47,7 +47,7 @@
 												<thead>
 													<tr>
 														<th scope="col">No.</th>
-														<th scope="col">역활</th>
+														<th scope="col">역할</th>
 														<th scope="col">회원이름</th>
 														<th scope="col">가입일</th>
 														<th scope="col">생년월일</th>
@@ -73,39 +73,6 @@
 												</tbody>
 											</table>
 
-		
-											<!-- 페이지 -->
-											<div>
-												<nav
-													th:with="start=${(members.number / maxPage) * maxPage + 1},
-	               end=${ ((members.totalPages == 0)) ? 1 : (start + (maxPage - 1) < members.totalPages ?
-	                     start + (maxPage - 1) : members.totalPages)}"
-													aria-label="..." style="display: flex">
-													<ul
-														class="pagination d-flex justify-content-center adminbook-page">
-														<li class="page-item pageitem"
-															th:classappend="${members.first} ? 'disabled'"><a
-															class="page-link page-item"
-															th:onclick="'javascript:page(' + ${members.number - 1} + ')'">이전</a>
-														</li>
-
-														<li class="page-item pageitem"
-															th:each="page : ${#numbers.sequence(start, end)}"
-															th:classappend="${members.number eq page - 1} ? 'active' : '' ">
-															<a class="page-link" th:inline="text"
-															th:onclick="'javascript:page(' + ${page - 1} + ')'">[[${page}]]</a>
-														</li>
-
-														<li class="page-item pageitem"
-															th:classappend="${members.last} ? 'disabled'"><a
-															class="page-link page-item"
-															th:onclick="'javascript:page(' + ${members.number + 1} + ')'">다음</a>
-														</li>
-													</ul>
-												</nav>
-											</div>
-
-
 											<!-- 검색 bar 부분 -->
 											<div class="row search-bar" style="height: 40px;"
 												th:object="${bookSearchDto}">
@@ -121,9 +88,9 @@
 													</select>
 												</div>
 												<div class="col-lg-2">
-													<!-- 역활선택 -->
+													<!-- 역할선택 -->
 													<select id="role" name="role" class="form-control">
-														<option value="">역활(전체)</option>
+														<option value="">역할(전체)</option>
 														<option value="USER">회원</option>
 														<option value="ADMIN">관리자</option>
 													</select>
@@ -138,8 +105,6 @@
 												</div>
 												<div class="col-lg-1"></div>
 											</div>
-
-
 
 											<!-- 페이지 -->
 											<div>
@@ -241,8 +206,8 @@
 				},
 				error : function(jqXHR, status, error) {
 					if (jqXHR.status == '401') {
-						alert('Please log in before performing this action.');
-						location.href = '/login'; // Change this URL to the login page URL.
+						alert('로그인 후 이용해주세요.');
+						location.href = '/login';
 					} else {
 						alert(jqXHR.responseText);
 					}
