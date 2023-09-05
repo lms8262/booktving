@@ -30,7 +30,7 @@
 						<div class="challenge-content-wrap">
 							<p class="content1">목표를 스스로 세우고 달성할 수 있어요.</p>
 							<p class="content2">독서 목표량을 설정하고 달성해 보세요. 만들어진 챌린지를 수행하면서 성취감을 느껴보세요.</p>
-							<p class="content3"> <strong>[[${user.memberName}]]</strong> 님의 독서를 응원합니다 !</p>
+							<p class="content3"> <strong>[[${memberName}]]</strong> 님의 독서를 응원합니다 !</p>
 							<p class="content4">[챌린지 수행방법]</p>
 							<p class="content5">1.&nbsp;&nbsp;&nbsp;대여한 도서 목록에서 책을 읽을 수 있어요.</p>
 							<p class="content6">2.&nbsp;&nbsp;&nbsp;다 읽은 책의 ‘완료’ 버튼을 누르세요.</p>
@@ -38,25 +38,30 @@
 						</div>
 						
 						
-						<form role="form" action="" method="post" >
+						<form role="form" method="post">
 							<div class="challenge-target-wrap">
 								<div class="challenge-target-box">
 									<img src="/images/myLibrary/profile.png" alt="이미지" />
-									<p> <strong>[[${user.memberName}]]</strong> <span>&nbsp;님의 목표 독서량을 설정하세요.</span> </p>
+									<p> <strong>[[${memberName}]]</strong> <span>&nbsp;님의 목표 독서량을 설정하세요.</span> </p>
 								</div>
 								<div class="challenge-target-bar col-11">
 									<label for="customRange1" class="form-label"></label>
 									<input type="range" class="form-range col-12" id="targetMount" name="targetMount" min="0" max="10" step="1" value="1" oninput="document.getElementById('targetMount1').innerHTML=this.value;" />
 									<span id="targetMount1" name="targetMount"></span>
 								</div>
-								<div class="button-box">
-									<button type="submit" onclick="newChallenge()">설정완료</button>
+								<div class="button-box-wrap col-5">
+									<div class="button-box">
+										<button type="button" onclick="newChallenge()">설정완료</button>
+									</div>
+									<div class="button-box">
+										<button type="button" onclick="location.href='/myLibrary/myChallenge'" >챌린지☞</button>
+									</div>
 								</div>
 								<div class="deco-img-box">
 									<img alt="deco-img" src="/images/myLibrary/deco-img.png" />
 								</div>
 							</div>
-						
+						<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 						</form>
 						
 					</div>
@@ -73,9 +78,15 @@
 
 	<script th:inline="javascript">
 	
+	$(document).ready(function() {
+	
+	
+	});
+	
 	function newChallenge(){
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
+		var challengeItemId = $("#challengeItemId").val(); // challengeItemId 가져오기
 		
 		var url = "/myLibrary/myChallenge/new";
 		
@@ -94,11 +105,10 @@
 				beforeSend : function(xhr){
 					xhr.setRequestHeader(header, token)
 				},
-				dataType : "json",
 				cache : false,
-				success : function(){
-					alert("챌린지 생성이 완료되었습니다." + result);
-					
+				success : function(retult, status){
+					alert("챌린지가 생성되었습니다.");
+					location.href="/myLibrary/myChallenge";
 				},
 				error : function(jqXHR, status, error){
 					if(jqXHR.status == '401'){
@@ -110,6 +120,10 @@
 				}
 			});
 			
+			
+			deactivateChallenge(challengeItemId);
+			console.log("Challenge Item ID: " + challengeItemId);
+						
 	}
 	
 	</script>

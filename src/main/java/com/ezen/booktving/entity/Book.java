@@ -61,6 +61,9 @@ public class Book extends BaseTimeEntity {
 	
 	@Column(columnDefinition = "text", nullable = false)
 	private String authorInfo;
+	
+	@Column(nullable = false)
+	private String itemId;
 
 	//book 엔티티 수정
 	public void updateBook(BookRegFormDto bookRegFormDto) {
@@ -73,6 +76,7 @@ public class Book extends BaseTimeEntity {
 		this.bookIntroduction = bookRegFormDto.getBookIntroduction();
 		this.contents = bookRegFormDto.getContents();
 		this.category = bookRegFormDto.getCategory();
+		this.itemId = bookRegFormDto.getItemId();
 	}
 
 }

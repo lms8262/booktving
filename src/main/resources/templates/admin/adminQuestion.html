@@ -70,33 +70,71 @@
 													</tr>
 												</tbody>
 											</table>
-											
-											<nav th:with="start=${(questionList.number / maxPage) * maxPage + 1}, 
-														  end = (${ ((questionList.totalPages == 0)) ? 1 :	(start + (maxPage -1) < questionList.totalPages ?
-											  			  start + (maxPage - 1) : questionList.totalPages)})" 						
-												 aria-label="..."
-												 class="d-flex">
-												<ul class="pagination d-flex justify-content-center">
-						  
-												    <li class="page-item " th:classappend="${questionList.first} ? 'disabled'">
-												      	<a class="page-link page-item" th:onclick="'javascript:page(' + ${questionList.number - 1} + ')'">이전</a>
-													</li>
 
-													<li class="page-item"
-														th:each="page: ${#numbers.sequence(start, end)}"
-														th:classappend="${questionList.number eq page -1} ? 'active' : '' ">
-														<a class="page-link" th:inline="text"
-														th:onclick="'javascript:page(' + ${page - 1} + ')'">
-															[[${page}]] </a>
-													</li>
 
-													<li class="page-item" th:classappend="${questionList.last} ? 'disabled'"><a
-														class="page-link page-item" th:onclick="'javascript:page(' + ${questionList.number + 1} + ')'">다음</a>
+
+											<!-- 등록버튼  -->
+											<div class="form-group button col-12">
+												<div class="col-md-8"></div>
+												<div class="col-md-2">
+													<button type="button" class="btn reg_btn"
+														style="width: 100px;">답변등록</button>
+												</div>
+												<div class="col-md-2">
+													<button type="button" class="btn delete_btn"
+														style="width: 100px;" value="${question.id}"
+														onclick="adminDeleteQuestion(this.value)">삭제</button>
+												</div>
+											</div>
+
+											<!-- 검색 bar 부분 -->
+											<div class="row search-bar" style="height: 40px;">
+												<div class="col-lg-2"></div>
+												<div class="col-lg-2" style="display: flex;">
+													<!-- 검색분류 -->
+													<select class="form-control">
+														<option value="">검색분류</option>
+														<option value="">제목</option>
+														<option value="">회원아이디</option>
+													</select>
+												</div>
+												<div class="col-lg-6">
+													<div style="display: flex;">
+														<input type="text" class="form-control col-sm-10"
+															placeholder="검색어 입력">
+														<button id="searchBtn" type="submit"
+															class="btn search-btn col-sm-2">검색</button>
+													</div>
+												</div>
+												<div class="col-lg-2"></div>
+											</div>
+
+											<!-- paging 부분 -->
+											<div>
+												<nav th:with="start=${(questionList / maxPage) * maxPage + 1}, 
+															  end = (${ ((questionList.totalPages == 0)) ? 1 :	(start + (maxPage -1) < questionList.totalPages ?
+												  			  start + (maxPage - 1) : questionList.totalPages)})" 						
+																aria-label="...">
+													<ul class="pagination d-flex justify-content-center">
+							  
+													    <li class="page-item " th:classappend="${questionList.first} ? 'disabled'">
+													      	<a class="page-link page-item" th:onclick="'javascript:page(' + ${questionList.number - 1} + ')'">이전</a>
 														</li>
-
-												</ul>
-											</nav>
-											
+	
+														<li class="page-item"
+															th:each="page: ${#numbers.sequence(start, end)}"
+															th:classappend="${questionList.number eq page -1} ? 'active' : '' ">
+															<a class="page-link" th:inline="text"
+															th:onclick="'javascript:page(' + ${page - 1} + ')'">
+																[[${page}]] </a>
+														</li>
+	
+														<li class="page-item" th:classappend="${questionList.last} ? 'disabled'"><a
+															class="page-link page-item" th:onclick="'javascript:page(' + ${questionList.number + 1} + ')'">다음</a>
+															</li>	
+													</ul>
+												</nav>												
+											</div>
 
 										</form>
 									</div>

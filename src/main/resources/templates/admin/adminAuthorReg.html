@@ -24,7 +24,7 @@
 							<ul class="col-12">
 								<li><a href="/admin/books">도서관리</a></li>
 								<li><a href="/admin/member">회원관리</a></li>
-								<li><a href="/admin/rent">대출관리</a></li>
+								<li><a href="/admin/rents">대출관리</a></li>
 								<li><a href="/admin/keyword/recommend">추천 키워드 관리</a></li>
 								<li><a href="/admin/author">추천작가 관리</a></li>
 								<li><a href="/admin/question">문의관리</a></li>
@@ -52,21 +52,25 @@
 												<label for="authorNameKo" class="author-label">작가명(한글)</label>
 												<br />
 												<input type="text" placeholder="작가명(한글)" th:field="*{authorNameKo}" class="form-control col-12" />
+												<p th:if="${#fields.hasErrors('authorNameKo')}" th:errors="*{authorNameKo}" class="fieldError">Incorrect Data</p>
 											</div>
 											<div class="author-contents">
 												<label for="authorNameEg" class="author-label">작가명(영문)</label>
 												<br />
 												<input type="text" placeholder="작가명(영문)" th:field="*{authorNameEg}" class="form-control col-12" />
+												<p th:if="${#fields.hasErrors('authorNameEg')}" th:errors="*{authorNameEg}" class="fieldError">Incorrect Data</p>
 											</div>
 											<div class="author-contents">
 												<label for="title" class="author-label">작가소개 타이틀</label>
 												<br />
 												<input type="text" placeholder="작가를 한문장으로 소개해보세요" th:field="*{title}" class="form-control col-12" />
+												<p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="fieldError">Incorrect Data</p>
 											</div>
 											<div class="author-contents">
 												<label for="authorintroduction" class="author-label">작가소개</label>
 												<br />
 												<textarea type="text" rows="10" placeholder="작가를 소개하세요" th:field="*{authorIntroduction}" class="form-control col-12" ></textarea>
+												<p th:if="${#fields.hasErrors('authorIntroduction')}" th:errors="*{authorIntroduction}" class="fieldError">Incorrect Data</p>
 											</div>
 											<div class="author-contents">
 												<div class="mb-3 filebox">

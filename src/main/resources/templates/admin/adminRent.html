@@ -6,6 +6,7 @@
 
 <!-- adminBook 페이지 CSS -->
 <th:block layout:fragment="css">
+	<link rel="stylesheet" href="/css/adminRent.css" />
 </th:block>
 
 <div layout:fragment="content">
@@ -97,34 +98,33 @@
 												<div class="col-lg-2"></div>
 											</div>
 
-
 											<!-- paging 부분 -->
-										
-											<nav th:with="start=${(rentBooks.number / maxPage) * maxPage + 1}, 
-														  end = (${ ((rentBooks.totalPages == 0)) ? 1 :	(start + (maxPage -1) < rentBooks.totalPages ?
-											  			  start + (maxPage - 1) : rentBooks.totalPages)})"
-											  			  class="d-flex"
-														  aria-label="...">
-												<ul class="pagination d-flex justify-content-center">
-						  
-												    <li class="page-item " th:classappend="${rentBooks.first} ? 'disabled'">
-												      	<a class="page-link page-item" th:onclick="'javascript:page(' + ${rentBooks.number - 1} + ')'">◀</a>
-													</li>
-
-													<li class="page-item"
-														th:each="page: ${#numbers.sequence(start, end)}"
-														th:classappend="${rentBooks.number eq page -1} ? 'active' : '' ">
-														<a class="page-link" th:inline="text"
-														th:onclick="'javascript:page(' + ${page - 1} + ')'">
-															[[${page}]] </a>
-													</li>
-
-													<li class="page-item" th:classappend="${rentBooks.last} ? 'disabled'"><a
-														class="page-link page-item" th:onclick="'javascript:page(' + ${rentBooks.number + 1} + ')'">▶</a>
+											<div>
+												<nav th:with="start=${(rentBooks.number / maxPage) * maxPage + 1}, 
+															  end = (${ ((rentBooks.totalPages == 0)) ? 1 :	(start + (maxPage -1) < rentBooks.totalPages ?
+												  			  start + (maxPage - 1) : rentBooks.totalPages)})" 						
+																aria-label="...">
+													<ul class="pagination d-flex justify-content-center">
+							  
+													    <li class="page-item " th:classappend="${rentBooks.first} ? 'disabled'">
+													      	<a class="page-link page-item" th:onclick="'javascript:page(' + ${rentBooks.number - 1} + ')'">이전</a>
 														</li>
-
-												</ul>
-											</nav>
+	
+														<li class="page-item"
+															th:each="page: ${#numbers.sequence(start, end)}"
+															th:classappend="${rentBooks.number eq page -1} ? 'active' : '' ">
+															<a class="page-link" th:inline="text"
+															th:onclick="'javascript:page(' + ${page - 1} + ')'">
+																[[${page}]] </a>
+														</li>
+	
+														<li class="page-item" th:classappend="${rentBooks.last} ? 'disabled'"><a
+															class="page-link page-item" th:onclick="'javascript:page(' + ${rentBooks.number + 1} + ')'">다음</a>
+															</li>	
+													</ul>
+												</nav>												
+											</div>
+											
 											
 
 											<input type="hidden" th:name="${_csrf.parameterName}"

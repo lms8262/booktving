@@ -36,6 +36,10 @@ public class NewBookTvingDto {
 	@NotBlank
 	private String description;
 	
+	@NotBlank
+	private String itemId;
+	
+	
 	// Dto -> Entity 변환
 	public NewBookTving createNewBookTving(ModelMapper modelMapper) {
 		return modelMapper.map(this, NewBookTving.class);

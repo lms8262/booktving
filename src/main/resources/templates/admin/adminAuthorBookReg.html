@@ -70,16 +70,19 @@
 												<label for="bookName" class="author-label">도서명</label>
 												<br />
 												<input type="text" th:field="*{bookName}" placeholder="도서제목을 입력하세요" class="form-control col-12" />
+												<p th:if="${#fields.hasErrors('bookName')}" th:errors="*{bookName}" class="fieldError">Incorrect Data</p>
 											</div>
 											<div class="author-contents">
 												<label for="bookSubtitle" class="author-label">도서소개 타이틀</label>
 												<br />
 												<input type="text" th:field="*{bookSubTitle}" placeholder="작가의 도서소개 타이틀" class="form-control col-12" />
+												<p th:if="${#fields.hasErrors('bookSubTitle')}" th:errors="*{bookSubTitle}" class="fieldError">Incorrect Data</p>
 											</div>
 											<div class="author-contents">
 												<label for="bookIntrodution" class="author-label">도서소개</label>
 												<br />
 												<input type="text" th:field="*{bookIntrodution}" placeholder="도서를 소개하세요"class="form-control col-12" />
+												<p th:if="${#fields.hasErrors('bookIntrodution')}" th:errors="*{bookIntrodution}" class="fieldError">Incorrect Data</p>
 											</div>
 											<div class="author-contents">
 												<div class="mb-3 filebox">

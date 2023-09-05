@@ -130,12 +130,12 @@ public class MemberService implements UserDetailsService {
 		}
 		memberRepository.delete(member);
 	}
-
-	//로그인한 사용자 정보 가져오기
-	public Member listAll(String userId){
+	
+	//로그인한 사용자 이름 가져오기
+	public String getLoginMemberName(String userId){
 		
 		Member user = memberRepository.findByUserId(userId);
 		
-		return user;
+		return user.getMemberName();
 	}
 }
