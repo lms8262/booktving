@@ -23,8 +23,8 @@
 							<li class="menu"><a href="/category"> <span>카테고리</span></a></li>
 							<li class="menu"><a href="/search/main"> <span>검색</span></a></li>
 							<li class="menu"><a href="/question/questionInfo"> <span>문의하기</span></a></li>
-							<li class="menu" sec:authorize="hasAnyRole('USER', 'ADMIN', 'SNS_USER')"><a href="/myLibrary"> <span>나의서재</span></a></li>
-							<li class="menu slide-menu" sec:authorize="hasAnyRole('USER', 'ADMIN', 'SNS_USER')"><a href="javascript:;"> <span>나의정보</span></a>
+							<li class="menu" sec:authorize="hasAnyRole('USER', 'ADMIN')"><a href="/myLibrary"> <span>나의서재</span></a></li>
+							<li class="menu slide-menu" sec:authorize="hasAnyRole('USER', 'ADMIN')"><a href="javascript:;"> <span>나의정보</span></a>
 								<ul class="submenu">
 									<li><a href="/login/update"> <span>개인정보 수정</span></a></li>
 									<li><a href="/mypage/rentlist"> <span>대여내역</span></a></li>

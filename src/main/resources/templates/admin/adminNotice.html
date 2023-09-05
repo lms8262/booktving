@@ -63,7 +63,7 @@
 														</td>
 														<td scope="col" class="notice-no" th:text="${notice.id}"></td>
 														<td scope="col" class="notice-group" th:text="${notice.noticeGroup.krName}"></td>
-														<td scope="col" class="notice-title"><a th:href="'/admin/notice/' + ${notice.id}" th:text="${notice.title}" class="adminbook_link"></a></td>
+														<td scope="col" class="notice-title"><a th:href="'/admin/notice/modify/' + ${notice.id}" th:text="${notice.title}" class="adminbook_link"></a></td>
 														<td scope="col" class="createdby">관리자</td>
 														<td scope="col" class="regdate" th:text="${#temporals.format(notice.regTime, 'yyyy-MM-dd')}"></td>
 													</tr>

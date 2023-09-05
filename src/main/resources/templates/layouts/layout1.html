@@ -45,6 +45,19 @@
 
   	<script th:src="@{/js/main.js}" /></script>
 	
+	<script th:inline="javascript">
+		let loginMemberRole = [[${#authentication.authorities[0].authority}]];
+		let pathName = window.location.pathname;
+		let sns = '/login/sns';
+		let snsNew = '/login/sns/new';
+		if(loginMemberRole == 'ROLE_WAIT') {			
+			if(pathName != sns && pathName != snsNew) {
+				alert("추가정보 입력이 필요합니다.");
+				location.href= sns;
+			}
+		}
+	</script>
+	
 	<!-- 각 페이지의 스크립트가 작성될 위치 -->
 	<th:block layout:fragment="script"></th:block>
 

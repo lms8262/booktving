@@ -1,6 +1,5 @@
 package com.ezen.booktving.controller;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -54,6 +53,10 @@ public class MyLibraryController {
 	//나의서재 메인화면
 	@GetMapping(value = "/myLibrary")
 	public String myLibrary(Optional<Integer> page, Model model, Authentication authentication) {
+		if(authentication == null) {
+			return "redirect:/login";
+		}
+		
 		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
 		String userId = principalDetails.getUserId();
 		
@@ -85,6 +88,10 @@ public class MyLibraryController {
 	//나의 서재 대여도서 리스트
 	@GetMapping(value= {"/myLibrary/rentList", "/myLibrary/rentList/{page}"})
 	public String myLibraryRentList(@PathVariable("page") Optional<Integer> page, Authentication authentication, Model model) {
+		if(authentication == null) {
+			return "redirect:/login";
+		}
+		
 		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
 		String userId = principalDetails.getUserId();
 		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 8);
@@ -151,29 +158,25 @@ public class MyLibraryController {
 
 	//나의챌린지 페이지
 	@GetMapping(value = "/myLibrary/myChallenge")
-	public String myChallenge(Model model, @AuthenticationPrincipal UserDetails userDetails) {
-		
-		if(userDetails != null) {
-			
-			String memberName = memberService.getLoginMemberName(userDetails.getUsername());
-			model.addAttribute("memberName", memberName);
-			
-			List<ChallengeItemDto> challengeItemDtoList = challengeItemService.getChallengeList(userDetails.getUsername());
-			model.addAttribute("challengeItemDtoList", challengeItemDtoList);
-			
-			//List<ChallengeItemDto> activeChallengeItemList = challengeItemService.getActioveChallengeList(userDetails.getUsername());
-			//model.addAttribute("activeChallengeItemList", activeChallengeItemList);
-			
-			//List<RentBookDto> rentBookDtoList = myLibraryRentBookService.getMyRentBookList(userDetails.getUsername());
-			//model.addAttribute("rentBookDtoList", rentBookDtoList);
-			
-			long completedRentBooksCount = myLibraryRentBookService.getCountOfCompletedRentBooks(userDetails.getUsername());
-			model.addAttribute("completedRentBooksCount", completedRentBooksCount);
-			
-			return "myLibrary/myChallenge";
-		} else {
-			return "login/login";
+	public String myChallenge(Model model, Authentication authentication) {
+		if(authentication == null) {
+			return "redirect:/login";
 		}
+		
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		String userId = principalDetails.getUserId();
+		
+		String memberName = memberService.getLoginMemberName(userId);
+		model.addAttribute("memberName", memberName);
+		
+		List<ChallengeItemDto> challengeItemDtoList = challengeItemService.getChallengeList(userId);
+		model.addAttribute("challengeItemDtoList", challengeItemDtoList);
+		
+		long completedRentBooksCount = myLibraryRentBookService.getCountOfCompletedRentBooks(userId);
+		model.addAttribute("completedRentBooksCount", completedRentBooksCount);
+		
+		return "myLibrary/myChallenge";
+		
 	}
 	
 	//나의챌린지 목표 달성시 페이지 업데이트하기
@@ -207,10 +210,16 @@ public class MyLibraryController {
 	
 	//나의챌린지 생성 페이지
 	@GetMapping(value = "/myLibrary/myChallenge/new")
-	public String myChallengeNewPage(Model model, @AuthenticationPrincipal UserDetails userDetails, 
-									@Valid ChallengeNewDto challengeNewDto, BindingResult bindingResult ) {
+	public String myChallengeNewPage(Model model, Authentication authentication, 
+									@Valid ChallengeNewDto challengeNewDto, BindingResult bindingResult) {
+		if(authentication == null) {
+			return "redirect:/login";
+		}
 		
-		String memberName = memberService.getLoginMemberName(userDetails.getUsername());
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		String userId = principalDetails.getUserId();
+		
+		String memberName = memberService.getLoginMemberName(userId);
 		model.addAttribute("memberName", memberName);
 		
 		return "myLibrary/myChallengeNew";
@@ -220,6 +229,9 @@ public class MyLibraryController {
 	@PostMapping(value = "/myLibrary/myChallenge/new")
 	public @ResponseBody ResponseEntity myChallengeNew(@RequestBody @Valid ChallengeNewDto challengeNewDto, 
 					BindingResult bindingResult, Authentication authentication) {
+		if(authentication == null) {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
 		
 		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
 		String userId = principalDetails.getUserId();
@@ -244,6 +256,10 @@ public class MyLibraryController {
 	// 찜 목록
 	@GetMapping(value = "/myLibrary/favoritebook")
 	public String myFavorite(Model model, Authentication authentication) {
+		if(authentication == null) {
+			return "redirect:/login";
+		}
+		
 		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
 		String userId = principalDetails.getUserId();
 

@@ -1,6 +1,5 @@
 package com.ezen.booktving.controller;
 
-import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -406,9 +405,11 @@ public class AdminController {
 	// 문의 답변 작성 및 저장
 	@PostMapping(value = "/admin/answer")
 	public String saveAdminAnswer(AnswerDto answerDto, Long questionId, Authentication authentication) {
-		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-		String userId = principalDetails.getUserId();
-		adminQuestionService.saveAnswer(answerDto, questionId, userId);
+		if(authentication == null) {
+			return "redirect:/login";
+		}
+		
+		adminQuestionService.saveAnswer(answerDto, questionId);
 		return "redirect:/admin/question";
 	}
 
@@ -466,7 +467,7 @@ public class AdminController {
 	}
 	
 	// 공지사항 수정 페이지 보여주기
-	@GetMapping(value = "/admin/notice/{noticeId}")
+	@GetMapping(value = "/admin/notice/modify/{noticeId}")
 	public String adminNoticeModify(@PathVariable("noticeId") Long noticeId, Model model) {
 
 		try {
@@ -485,7 +486,7 @@ public class AdminController {
 	}
 
 	//공지사항 수정하기
-	@PostMapping(value = "/admin/notice/(noticeId)")
+	@PostMapping(value = "/admin/notice/modify/{noticeId}")
 	public String noticeUpdate(@Valid NoticeDto noticeDto, Model model, BindingResult bindingResult) {
 		if(bindingResult.hasErrors()) {
 			return "admin/adminNoticeReg";

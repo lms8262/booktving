@@ -273,8 +273,8 @@ public class ApiService {
         
         URL url = new URL(imgPath);
         BufferedImage image = ImageIO.read(url);
-        
-        ImageIO.write(image, format, new File("C:/booktving/book/" + imgName));
+        									  // 이부분 배포시 바꿔야함
+        ImageIO.write(image, format, new File("C:/booktving/book" + "/" + imgName));
         
         BookImg bookImg = BookImg.builder()
         						.imgName(imgName)

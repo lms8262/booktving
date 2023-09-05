@@ -3,7 +3,6 @@ package com.ezen.booktving.service;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -123,7 +122,6 @@ public class MemberService implements UserDetailsService {
 	}
 
 	//회원정보 수정 회원탈퇴
-	@Transactional
 	public void deleteMember2(String userId) {
 		Member member = memberRepository.findByUserId(userId);
 		if (member == null) {

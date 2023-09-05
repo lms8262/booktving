@@ -179,7 +179,23 @@ select {
 
 /* ¹öÆ° */
 .btn_area {
-	margin: 30px 0 91px;
+	margin: 30px 0 0 0;
+	display: flex;
+	justify-content: space-around;
+}
+
+.btn_area > button {
+	padding: 7px;
+	background-color: #FFD360;
+	color: #fff;
+	font-weight: bold;
+	border-radius: 5px;
+	border-color: #FFD360;
+	border-style: none;
+}
+
+.btn_area > button:hover {
+	cursor: pointer;
 }
 
 #btnJoin {

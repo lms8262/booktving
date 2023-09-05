@@ -41,7 +41,7 @@ public class PrincipalOauth2UserService extends DefaultOAuth2UserService {
 		String username = oAuth2UserInfo.getName();
 		String password = "SNS로그인입니다."; // 사용자가 입력한 적은 없지만 만들어준다
 
-		Role role = Role.SNS_USER;
+		Role role = Role.WAIT;
 
 		Member member = memberRepository.findByProviderAndProviderId(provider, providerId);
 

@@ -78,10 +78,8 @@ public class Member extends BaseTimeEntity {
 			password = memberFormDto.getPassword();
 			member.setProvider(memberFormDto.getProvider());
 			member.setProviderId(memberFormDto.getProviderId());
-			member.setRole(Role.SNS_USER);
 		} else {
 			password = passwordEncoder.encode(memberFormDto.getPassword());
-			member.setRole(Role.USER);
 		}
 		
 		member.setUserId(memberFormDto.getUserId());
@@ -93,6 +91,7 @@ public class Member extends BaseTimeEntity {
 		member.setAddress(memberFormDto.getAddress());
 		member.setAddressNo(memberFormDto.getAddressNo());
 		member.setAddressDetail(memberFormDto.getAddressDetail());
+		member.setRole(Role.USER);
 
 		return member;
 	}
@@ -107,17 +106,13 @@ public class Member extends BaseTimeEntity {
 
 	//비밀번호 제외 업데이트
 	public void updateMember(@Valid MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) {
+		this.memberName = memberFormDto.getMemberName();
 		this.email = memberFormDto.getEmail();
 		this.tel = memberFormDto.getTel();
 		this.address = memberFormDto.getAddress();
+		this.addressNo = memberFormDto.getAddressNo();
+		this.addressDetail = memberFormDto.getAddressDetail();
 
-		// 생년월일 업데이트 작업 수행
-		this.birth = memberFormDto.getBirth();
-
-		// 비밀번호 업데이트 작업 수행
-		if (memberFormDto.getPassword() != null) {
-			this.password = passwordEncoder.encode(memberFormDto.getPassword());
-		}
 	}
 
 	//간편로그인

@@ -1,5 +1,8 @@
 package com.ezen.booktving.entity;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.ezen.booktving.constant.QuestionStatus;
 import com.ezen.booktving.dto.AnswerDto;
 
@@ -34,20 +37,16 @@ public class Answer extends BaseEntity {
 	
 	@OneToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "question_id", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Question question;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "member_id", nullable = false)
-	private Member member;
-	
-	public static Answer createAnswer(AnswerDto answerDto, Question question, Member answerMember) {
+	public static Answer createAnswer(AnswerDto answerDto, Question question) {
 		
 		question.setQuestionStatus(QuestionStatus.COMPLETE);
 		
 		Answer answer = new Answer();
 		answer.setContent(answerDto.getContent());
 		answer.setQuestion(question);
-		answer.setMember(answerMember);
 		
 		return answer;
 	}

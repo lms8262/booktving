@@ -59,6 +59,9 @@ public class BookController {
 	// 도서 찜하기
 	@PostMapping(value = "/book/bookDetail/likeBook")
 	public @ResponseBody ResponseEntity like(@RequestBody HashMap<String, String> map, Authentication authentication) {
+		if(authentication == null) {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
 		String isbn = map.get("isbn");
 		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
 		String userId = principalDetails.getUserId();
@@ -71,6 +74,9 @@ public class BookController {
 	// 리뷰 등록
 	@PostMapping(value = "/book/bookDetail/review/{isbn}")
 	public String reviewCreate(Authentication authentication, BookReviewDto bookReviewDto, @PathVariable("isbn") String isbn) {
+		if(authentication == null) {
+			return "redirect:/login";
+		}
 		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
 		String userId = principalDetails.getUserId();
 		bookService.saveReview(bookReviewDto, userId, isbn);
@@ -81,11 +87,14 @@ public class BookController {
 	@PostMapping(value = "/book/bookDetail/rent/{isbn}")
 	@ResponseBody
 	public ResponseEntity rentBook(@PathVariable("isbn") String isbn, Authentication authentication) {
+		if(authentication == null) {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
 		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
 		String userId = principalDetails.getUserId();
 		
 		if(!commutationService.isExistsMemberCommutation(userId)) {
-			return new ResponseEntity<String>(HttpStatus.FORBIDDEN);
+			return new ResponseEntity<>(HttpStatus.FORBIDDEN);
 		}
 		
 		Long result = rentBookService.saveRentBook(userId, isbn);

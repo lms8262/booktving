@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -71,11 +70,17 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 
 	@Override
 	public Map<String, Object> getAttributes() {
+		if(oAuth2UserInfo == null) {
+			return null;
+		}
 		return oAuth2UserInfo.getAttributes();
 	}
 
 	@Override
 	public String getName() {
+		if(oAuth2UserInfo == null) {
+			return null;
+		}
 		return oAuth2UserInfo.getProviderId();
 	}
 	

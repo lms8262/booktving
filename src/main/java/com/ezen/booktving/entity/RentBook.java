@@ -59,6 +59,7 @@ public class RentBook extends BaseTimeEntity {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "book_id", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Book book;
 	
 	

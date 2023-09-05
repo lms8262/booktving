@@ -78,11 +78,6 @@
 
 	<script th:inline="javascript">
 	
-	$(document).ready(function() {
-	
-	
-	});
-	
 	function newChallenge(){
 		var token = $("meta[name='_csrf']").attr("content");
 		var header = $("meta[name='_csrf_header']").attr("content");
@@ -120,10 +115,7 @@
 				}
 			});
 			
-			
 			deactivateChallenge(challengeItemId);
-			console.log("Challenge Item ID: " + challengeItemId);
-						
 	}
 	
 	</script>

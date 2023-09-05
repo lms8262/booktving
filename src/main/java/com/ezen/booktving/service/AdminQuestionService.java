@@ -56,20 +56,15 @@ public class AdminQuestionService {
 	}
 	
 	@Transactional
-	public String saveAnswer(AnswerDto answerDto, Long questionId, String userId) {
+	public String saveAnswer(AnswerDto answerDto, Long questionId) {
+		
 	    Question question = questionRepository.findById(questionId)
 	            .orElseThrow(EntityNotFoundException::new);
-	    
-	    Member member = memberRepository.findByUserId(userId);
-	    
-	    if(member == null) {
-	    	throw new EntityNotFoundException();
-	    }
 	    
 	    Answer answer = answerRepository.findByQuestionId(questionId);
 	    
 	    if(answer == null) {
-	    	answer = Answer.createAnswer(answerDto, question, member);	    	
+	    	answer = Answer.createAnswer(answerDto, question);	    	
 	    	answer.setQuestion(question);
 	    } else {
 	    	answer.updateAnswer(answerDto.getContent());

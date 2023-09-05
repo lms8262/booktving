@@ -922,3 +922,5 @@ insert into recommend_keyword(recommend_keyword_type, recommend_keyword_name, re
 insert into recommend_keyword(recommend_keyword_type, recommend_keyword_name, reg_time, update_time) values('Author', '무라카미 하루키', now(), now());
 insert into recommend_keyword(recommend_keyword_type, recommend_keyword_name, reg_time, update_time) values('Title', '오펜하이머', now(), now());
 insert into recommend_keyword(recommend_keyword_type, recommend_keyword_name, reg_time, update_time) values('Title', '한국사', now(), now());
+
+commit;

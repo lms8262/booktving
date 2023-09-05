@@ -80,6 +80,10 @@ public class LoginCotroller {
 	//소셜 로그인 회원가입 페이지
 	@GetMapping(value = "/login/sns")
 	public String snsship(Authentication authentication, Model model) {
+		if(authentication == null) {
+			return "redirect:/login";
+		}
+		
 		PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
 		OAuth2UserInfo oAuth2UserInfo = principal.getOAuth2UserInfo();
 		
@@ -106,7 +110,7 @@ public class LoginCotroller {
 			redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
 			return "redirect:/login/sns";
 		}
-		return "redirect:/";
+		return "redirect:/logout";
 	}
 	
 	// 아이디 찾기
@@ -181,6 +185,10 @@ public class LoginCotroller {
 	//회원정보 수정페이지
 	@GetMapping(value = "/login/update")
 	public String getupdateDtl(Model model, Authentication authentication) {
+		if(authentication == null) {
+			return "redirect:/login";
+		}
+		
 		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
 		String userId = principalDetails.getUserId();
 		try {
@@ -197,8 +205,9 @@ public class LoginCotroller {
 
 	//회원 수정
 	@PostMapping(value = "/login/update")
-	public String memberUpdate(@Valid MemberFormDto memberFormDto, Model model, BindingResult bindingResult) {
+	public String memberUpdate(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
+			model.addAttribute("memberFormDto", memberFormDto);
 			return "membership/privacy";
 		}
 		try {
@@ -206,7 +215,6 @@ public class LoginCotroller {
 		} catch (Exception e) {
 			model.addAttribute("errorMessage", "고객정보를 가져올때 에러가 발생했습니다.");
 			e.printStackTrace();
-			// TODO: handle exception
 		}
 		return "redirect:/";
 	}
@@ -216,17 +224,12 @@ public class LoginCotroller {
 	public ResponseEntity<String> deleteMember2(@PathVariable("userId") String userId) {
 		try {
 			memberService.deleteMember2(userId);
-			return new ResponseEntity<>("탈퇴했습니다.", HttpStatus.OK);
+			return new ResponseEntity<>(HttpStatus.OK);
 		}
 
 		catch (Exception e) {
 			return new ResponseEntity<>("Error deleting member: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	/*
-	@GetMapping(value = "/logout")
-	public String logout(HttpServletRequest request, HttpServletResponse response) {
-		
-	}
-	*/
+	
 }
