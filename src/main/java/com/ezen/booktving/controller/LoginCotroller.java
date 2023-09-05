@@ -1,6 +1,5 @@
 package com.ezen.booktving.controller;
 
-import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -25,10 +24,11 @@ import com.ezen.booktving.auth.PrincipalDetails;
 import com.ezen.booktving.dto.MemberFormDto;
 import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.repository.MemberRepository;
-import com.ezen.booktving.service.IdService;
 import com.ezen.booktving.service.MemberService;
 import com.ezen.booktving.service.RamdomPasswordService;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -37,7 +37,6 @@ import lombok.RequiredArgsConstructor;
 public class LoginCotroller {
 
 	private final MemberService memberService;
-	private final IdService idService;
 	private final MemberRepository memberRepository;
 	private final RamdomPasswordService randomPassword;
 	private final PasswordEncoder passwordEncoder;
@@ -56,7 +55,7 @@ public class LoginCotroller {
 
 	}
 
-//회원가입
+	//회원가입
 	@GetMapping(value = "/login/new")
 	public String membership(Model model) {
 		model.addAttribute("memberFormDto", new MemberFormDto());
@@ -109,8 +108,6 @@ public class LoginCotroller {
 		}
 		return "redirect:/";
 	}
-
-	
 	
 	// 아이디 찾기
 	@GetMapping("/findid")
@@ -144,7 +141,7 @@ public class LoginCotroller {
 	// 비밀번호 찾고 난수생성기로 랜덤비밀번호 생성
 	@PostMapping("/findpw")
 	@ResponseBody
-	public HashMap<String, String> memberps(@RequestBody Map<String, Object> psdata, Principal principal) {
+	public HashMap<String, String> memberps(@RequestBody Map<String, Object> psdata) {
 
 		String email = (String) psdata.get("email");
 		String userId = (String) psdata.get("userId");
@@ -181,11 +178,13 @@ public class LoginCotroller {
 		return msg;
 	}
 
-//회원정보 수정페이지
+	//회원정보 수정페이지
 	@GetMapping(value = "/login/update")
-	public String getupdateDtl(Model model, Principal principal) {
+	public String getupdateDtl(Model model, Authentication authentication) {
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		String userId = principalDetails.getUserId();
 		try {
-			MemberFormDto memberFormDto = memberService.getUpdateDtl(principal.getName());
+			MemberFormDto memberFormDto = memberService.getUpdateDtl(userId);
 			model.addAttribute("memberFormDto", memberFormDto);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -196,7 +195,7 @@ public class LoginCotroller {
 		return "membership/privacy";
 	};
 
-//회원 수정
+	//회원 수정
 	@PostMapping(value = "/login/update")
 	public String memberUpdate(@Valid MemberFormDto memberFormDto, Model model, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
@@ -212,9 +211,9 @@ public class LoginCotroller {
 		return "redirect:/";
 	}
 
-//회원탈퇴
+	//회원탈퇴
 	@DeleteMapping(value = "/login/{userId}/delete")
-	public ResponseEntity<String> deleteMember2(@PathVariable("userId") String userId, Principal principal) {
+	public ResponseEntity<String> deleteMember2(@PathVariable("userId") String userId) {
 		try {
 			memberService.deleteMember2(userId);
 			return new ResponseEntity<>("탈퇴했습니다.", HttpStatus.OK);
@@ -224,6 +223,10 @@ public class LoginCotroller {
 			return new ResponseEntity<>("Error deleting member: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	
+	/*
+	@GetMapping(value = "/logout")
+	public String logout(HttpServletRequest request, HttpServletResponse response) {
+		
+	}
+	*/
 }

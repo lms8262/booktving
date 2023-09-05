@@ -56,11 +56,11 @@ public class AdminQuestionService {
 	}
 	
 	@Transactional
-	public String saveAnswer(AnswerDto answerDto, Long questionId, String username) {
+	public String saveAnswer(AnswerDto answerDto, Long questionId, String userId) {
 	    Question question = questionRepository.findById(questionId)
 	            .orElseThrow(EntityNotFoundException::new);
 	    
-	    Member member = memberRepository.findByUserId(username);
+	    Member member = memberRepository.findByUserId(userId);
 	    
 	    if(member == null) {
 	    	throw new EntityNotFoundException();

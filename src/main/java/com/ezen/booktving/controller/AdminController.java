@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.ezen.booktving.auth.PrincipalDetails;
 import com.ezen.booktving.dto.AdminQuestionDto;
 import com.ezen.booktving.dto.AdminRentHistBookDto;
 import com.ezen.booktving.dto.AnswerDto;
@@ -71,7 +73,7 @@ public class AdminController {
 	@GetMapping(value = { "/admin/books", "/admin/books/{page}" })
 	public String adminBook(BookSearchDto bookSearchDto, @PathVariable("page") Optional<Integer> page, Model model) {
 
-		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 3);
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
 
 		Page<Book> books = bookRegService.getAdminBookPage(bookSearchDto, pageable);
 
@@ -163,7 +165,7 @@ public class AdminController {
 
 	// 도서 상세 페이지 삭제
 	@DeleteMapping("/admin/book/{bookId}/delete")
-	public @ResponseBody ResponseEntity deleteBooks(@PathVariable("bookId") Long bookId, Principal principal) {
+	public @ResponseBody ResponseEntity deleteBooks(@PathVariable("bookId") Long bookId) {
 
 		bookRegService.deleteBooks(bookId);
 
@@ -201,7 +203,7 @@ public class AdminController {
 	@GetMapping(value = { "/admin/rents", "/admin/rents/{page}" })
 	public String adminRent(BookSearchDto bookSearchDto, @PathVariable("page") Optional<Integer> page, Model model) {
 
-		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 3);
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
 
 		// 서비스 호출
 		Page<AdminRentHistBookDto> rentBooks = adminBookRentHistService.getAdminRentHistPage(bookSearchDto, pageable);
@@ -215,8 +217,7 @@ public class AdminController {
 
 	// 도서 상세 페이지 삭제
 	@DeleteMapping("/admin/rents/{rentBookId}/delete")
-	public @ResponseBody ResponseEntity deleteAdminRentBook(@PathVariable("rentBookId") Long rentBookId,
-			Principal principal) {
+	public @ResponseBody ResponseEntity deleteAdminRentBook(@PathVariable("rentBookId") Long rentBookId) {
 
 		adminBookRentHistService.deleteAdminRentBook(rentBookId);
 
@@ -386,7 +387,7 @@ public class AdminController {
 	// 문의관리 페이지 보여주기
 	@GetMapping(value = "/admin/question")
 	public String adminQuestion(QuestionDto questionDto, @PathVariable("page") Optional<Integer> page, Model model) {
-		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 3);
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
 		
 		Page<AdminQuestionDto> questionDtoList = adminQuestionService.getAdminQuestionPage(pageable);
 		model.addAttribute("questionList", questionDtoList);
@@ -404,15 +405,16 @@ public class AdminController {
 
 	// 문의 답변 작성 및 저장
 	@PostMapping(value = "/admin/answer")
-	public String saveAdminAnswer(AnswerDto answerDto, Long questionId, Principal principal) {
-
-		adminQuestionService.saveAnswer(answerDto, questionId, principal.getName());
+	public String saveAdminAnswer(AnswerDto answerDto, Long questionId, Authentication authentication) {
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		String userId = principalDetails.getUserId();
+		adminQuestionService.saveAnswer(answerDto, questionId, userId);
 		return "redirect:/admin/question";
 	}
 
 	// 문의삭제
 	@DeleteMapping("/admin/question/{id}/delete")
-	public @ResponseBody ResponseEntity deleteAdminQuestion(@PathVariable("id") Long id, Principal principal) {
+	public @ResponseBody ResponseEntity deleteAdminQuestion(@PathVariable("id") Long id) {
 		adminQuestionService.deleteAdminQuestion(id);
 		return new ResponseEntity<Long>(id, HttpStatus.OK);
 	}

@@ -18,7 +18,7 @@ public class MyLibraryRentBookInfoDto {
 	
 	private String bookName; //도서명
 	
-	private String itemId; //바로읽기 아이디
+	private Integer itemId; //바로읽기 아이디
 	
 	private String isbn; //ISBN
 	

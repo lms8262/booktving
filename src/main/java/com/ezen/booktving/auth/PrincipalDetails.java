@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Map;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -32,8 +33,8 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Collection<GrantedAuthority> collection = new ArrayList<>();
-
-		collection.add(new SimpleGrantedAuthority(member.getRole().toString()));
+		
+		collection.add(new SimpleGrantedAuthority("ROLE_" + member.getRole().name()));
 
 		return collection;
 	}
@@ -77,4 +78,9 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 	public String getName() {
 		return oAuth2UserInfo.getProviderId();
 	}
+	
+	public String getUserId() {
+		return member.getUserId();
+	}
+	
 }

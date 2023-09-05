@@ -78,7 +78,7 @@ public class Member extends BaseTimeEntity {
 			password = memberFormDto.getPassword();
 			member.setProvider(memberFormDto.getProvider());
 			member.setProviderId(memberFormDto.getProviderId());
-			member.setRole(Role.ROLE_SNS_USER);
+			member.setRole(Role.SNS_USER);
 		} else {
 			password = passwordEncoder.encode(memberFormDto.getPassword());
 			member.setRole(Role.USER);
@@ -93,13 +93,6 @@ public class Member extends BaseTimeEntity {
 		member.setAddress(memberFormDto.getAddress());
 		member.setAddressNo(memberFormDto.getAddressNo());
 		member.setAddressDetail(memberFormDto.getAddressDetail());
-		
-
-		if (memberFormDto.getMemberName().isEmpty()) {
-			member.setMemberName(memberFormDto.getMemberName());
-		} else {
-			member.setMemberName(memberFormDto.getMemberName());
-		}
 
 		return member;
 	}

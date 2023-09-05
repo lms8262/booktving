@@ -1,8 +1,8 @@
 package com.ezen.booktving.controller;
 
-import java.security.Principal;
 import java.util.List;
 
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.ezen.booktving.auth.PrincipalDetails;
 import com.ezen.booktving.dto.QuestionDto;
 import com.ezen.booktving.entity.Answer;
 import com.ezen.booktving.service.QuestionService;
@@ -34,8 +35,10 @@ public class QuestionController {
 	}
 
 	@PostMapping(value = "/question/questionCreate")
-	public String questionCreate(QuestionDto questionDto, Principal principal) {
-		String userId = principal.getName();
+	public String questionCreate(QuestionDto questionDto, Authentication authentication) {
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		String userId = principalDetails.getUserId();
+
 		questionService.savePost(questionDto, userId);
 		return "question/questionInfo";
 	}

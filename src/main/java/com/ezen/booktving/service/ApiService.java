@@ -105,7 +105,7 @@ public class ApiService {
     							.publisher(contents.get("publisher").toString())
     							.imgUrl(contents.get("cover").toString())
     							.link(contents.get("link").toString())
-    							.itemId(contents.get("itemId").toString())
+    							.itemId(Integer.parseInt(contents.get("itemId").toString()))
     							.build()
     		
     		);
@@ -245,6 +245,7 @@ public class ApiService {
         Integer page = itemNode.get("subInfo").get("itemPage").intValue();
         String contents = itemNode.get("subInfo").get("toc").textValue();
         String authorInfo = itemNode.get("subInfo").get("authors").get(0).get("authorInfo").textValue();
+        Integer itemId = itemNode.get("itemId").intValue();
         
         Book book = Book.builder()
     			.bookName(bookName)
@@ -257,6 +258,7 @@ public class ApiService {
         		.page(page)
         		.contents(contents)
         		.authorInfo(authorInfo)
+        		.itemId(itemId)
         		.build();
         
         bookRepository.save(book);

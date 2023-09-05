@@ -7,7 +7,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ezen.booktving.auth.PrincipalDetails;
 import com.ezen.booktving.dto.BookDto;
 
 import com.ezen.booktving.dto.BookReviewDto;
@@ -57,39 +58,21 @@ public class BookController {
 
 	// 도서 찜하기
 	@PostMapping(value = "/book/bookDetail/likeBook")
-	public @ResponseBody ResponseEntity like(@RequestBody HashMap<String, String> map, Principal principal) {
+	public @ResponseBody ResponseEntity like(@RequestBody HashMap<String, String> map, Authentication authentication) {
 		String isbn = map.get("isbn");
-		String userId = principal.getName();
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		String userId = principalDetails.getUserId();
 
 		Long id = favoriteBookService.like(userId, isbn);
 
 		return new ResponseEntity<Long>(id, HttpStatus.OK);
 	}
 
-	// 찜 목록
-	@GetMapping(value = "/myLibrary/favoritebook")
-	public String myFavorite(Model model, Principal principal) {
-		String userId = principal.getName();
-
-		// 사용자의 찜한 도서 목록 가져오기
-		List<FavoriteBookDto> favoriteBookDtos = favoriteBookService.getFavoriteBooksByMember(userId);
-
-		model.addAttribute("favoriteBooks", favoriteBookDtos);
-
-		return "book/myFavorite";
-	}
-
-	// 찜 삭제
-	@DeleteMapping("/myLibrary/favoritebook/remove/{id}")
-	public @ResponseBody ResponseEntity removeFavoriteBook(@PathVariable("id") Long id, Principal principal) {
-		favoriteBookService.removeFavoriteBook(id);
-		return new ResponseEntity<Long>(id, HttpStatus.OK);
-	}
-
 	// 리뷰 등록
 	@PostMapping(value = "/book/bookDetail/review/{isbn}")
-	public String reviewCreate(Principal principal, BookReviewDto bookReviewDto, @PathVariable("isbn") String isbn) {
-		String userId = principal.getName();
+	public String reviewCreate(Authentication authentication, BookReviewDto bookReviewDto, @PathVariable("isbn") String isbn) {
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		String userId = principalDetails.getUserId();
 		bookService.saveReview(bookReviewDto, userId, isbn);
 		return "redirect:/book/bookDetail/" + isbn;
 	}
@@ -97,8 +80,9 @@ public class BookController {
 	// 도서 대여요청
 	@PostMapping(value = "/book/bookDetail/rent/{isbn}")
 	@ResponseBody
-	public ResponseEntity rentBook(@PathVariable("isbn") String isbn, Principal principal) {
-		String userId = principal.getName();
+	public ResponseEntity rentBook(@PathVariable("isbn") String isbn, Authentication authentication) {
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		String userId = principalDetails.getUserId();
 		
 		if(!commutationService.isExistsMemberCommutation(userId)) {
 			return new ResponseEntity<String>(HttpStatus.FORBIDDEN);

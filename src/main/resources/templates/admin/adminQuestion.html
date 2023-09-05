@@ -111,7 +111,7 @@
 
 											<!-- paging 부분 -->
 											<div>
-												<nav th:with="start=${(questionList / maxPage) * maxPage + 1}, 
+												<nav th:with="start=${(questionList.number / maxPage) * maxPage + 1}, 
 															  end = (${ ((questionList.totalPages == 0)) ? 1 :	(start + (maxPage -1) < questionList.totalPages ?
 												  			  start + (maxPage - 1) : questionList.totalPages)})" 						
 																aria-label="...">

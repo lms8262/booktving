@@ -21,7 +21,7 @@ public class CustomOAuth2SuccessHandler implements AuthenticationSuccessHandler 
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
-		// TODO Auto-generated method stub
+		
 		PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
 		Member member = principal.getMember();
 		String targetUrl = determineTargetUrl(member);

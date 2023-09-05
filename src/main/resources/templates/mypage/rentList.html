@@ -41,15 +41,12 @@
 													<div th:each="rentBook : ${rentBooks.getContent()}">
 														<div class="card">
 															<div class="each">
-																<div class="col-1">
-																	<span class="book-rent-num">대여[[${rentBook.id}]]</span>
-																</div>
 																<div class="col-3">
 																	<div class="img">
 																		<img class="rentlist-img"  alt="이미지" th:src="${rentBook.imgUrl}">
 																	</div>
 																</div>
-																<div class="test col-8" style="display: flex;">
+																<div class="col-9" style="display: flex;">
 
 																	<div class="col-5">
 																		<h5 class="book-name" th:text="${rentBook.bookName}">도서명</h5>

@@ -63,7 +63,7 @@ public class Book extends BaseTimeEntity {
 	private String authorInfo;
 	
 	@Column(nullable = false)
-	private String itemId;
+	private Integer itemId;
 
 	//book 엔티티 수정
 	public void updateBook(BookRegFormDto bookRegFormDto) {

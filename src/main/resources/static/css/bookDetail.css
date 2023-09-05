@@ -11,7 +11,7 @@
 }
 
 .book-content {
-	height: 400px;
+	min-height: 400px;
 	width: 1310px;
 	display: flex;
 	position: relative;
