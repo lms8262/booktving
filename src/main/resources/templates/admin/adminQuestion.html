@@ -108,6 +108,34 @@
 												</div>
 												<div class="col-lg-2"></div>
 											</div>
+											
+											
+											<!-- paging 부분 -->
+											<div>
+												<nav th:with="start=${(questionList / maxPage) * maxPage + 1}, 
+															  end = (${ ((questionList.totalPages == 0)) ? 1 :	(start + (maxPage -1) < questionList.totalPages ?
+												  			  start + (maxPage - 1) : questionList.totalPages)})" 						
+																aria-label="...">
+													<ul class="pagination d-flex justify-content-center">
+							  
+													    <li class="page-item " th:classappend="${questionList.first} ? 'disabled'">
+													      	<a class="page-link page-item" th:onclick="'javascript:page(' + ${questionList.number - 1} + ')'">이전</a>
+														</li>
+	
+														<li class="page-item"
+															th:each="page: ${#numbers.sequence(start, end)}"
+															th:classappend="${questionList.number eq page -1} ? 'active' : '' ">
+															<a class="page-link" th:inline="text"
+															th:onclick="'javascript:page(' + ${page - 1} + ')'">
+																[[${page}]] </a>
+														</li>
+	
+														<li class="page-item" th:classappend="${questionList.last} ? 'disabled'"><a
+															class="page-link page-item" th:onclick="'javascript:page(' + ${questionList.number + 1} + ')'">다음</a>
+															</li>	
+													</ul>
+												</nav>												
+											</div>
 
 											<!-- paging 부분 -->
 											<div>
