@@ -1,5 +1,8 @@
 package com.ezen.booktving.entity;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.ezen.booktving.constant.YesNoStatus;
 
 import jakarta.persistence.Column;
@@ -50,6 +53,7 @@ public class BookImg extends BaseTimeEntity {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "book_id", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Book book;
 	
 	//이미지에 대한 정보를 업데이트 하는 메소드

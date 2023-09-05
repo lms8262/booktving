@@ -1,6 +1,5 @@
 package com.ezen.booktving.controller;
 
-import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -10,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -71,7 +71,7 @@ public class AdminController {
 	@GetMapping(value = { "/admin/books", "/admin/books/{page}" })
 	public String adminBook(BookSearchDto bookSearchDto, @PathVariable("page") Optional<Integer> page, Model model) {
 
-		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 3);
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
 
 		Page<Book> books = bookRegService.getAdminBookPage(bookSearchDto, pageable);
 
@@ -163,10 +163,9 @@ public class AdminController {
 
 	// 도서 상세 페이지 삭제
 	@DeleteMapping("/admin/book/{bookId}/delete")
-	public @ResponseBody ResponseEntity deleteBooks(@PathVariable("bookId") Long bookId, Principal principal) {
-
+	public @ResponseBody ResponseEntity deleteBooks(@PathVariable("bookId") Long bookId) {
+		
 		bookRegService.deleteBooks(bookId);
-
 		return new ResponseEntity<Long>(bookId, HttpStatus.OK);
 	}
 
@@ -174,7 +173,7 @@ public class AdminController {
 	@GetMapping(value = "/admin/member")
 	public String adminMemberMng(MemberSearchDto membersearchDto,
 			@RequestParam(name = "page", required = false, defaultValue = "0") int page, Model model) {
-		Pageable pageable = PageRequest.of(page, 3);
+		Pageable pageable = PageRequest.of(page, 10);
 		Page<Member> members = memberService.getAdminMemberPage(membersearchDto, pageable);
 		model.addAttribute("members", members);
 		model.addAttribute("membersearchDto", membersearchDto);
@@ -202,7 +201,7 @@ public class AdminController {
 	@GetMapping(value = { "/admin/rents", "/admin/rents/{page}" })
 	public String adminRent(BookSearchDto bookSearchDto, @PathVariable("page") Optional<Integer> page, Model model) {
 
-		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 3);
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
 
 		// 서비스 호출
 		Page<AdminRentHistBookDto> rentBooks = adminBookRentHistService.getAdminRentHistPage(bookSearchDto, pageable);
@@ -216,8 +215,7 @@ public class AdminController {
 
 	// 도서 상세 페이지 삭제
 	@DeleteMapping("/admin/rents/{rentBookId}/delete")
-	public @ResponseBody ResponseEntity deleteAdminRentBook(@PathVariable("rentBookId") Long rentBookId,
-			Principal principal) {
+	public @ResponseBody ResponseEntity deleteAdminRentBook(@PathVariable("rentBookId") Long rentBookId) {
 
 		adminBookRentHistService.deleteAdminRentBook(rentBookId);
 
@@ -391,7 +389,7 @@ public class AdminController {
 	// 문의관리 페이지 보여주기
 	@GetMapping(value = "/admin/question")
 	public String adminQuestion(QuestionDto questionDto, @PathVariable("page") Optional<Integer> page, Model model) {
-		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 3);
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
 		Page<AdminQuestionDto> questionDtoList = adminQuestionService.getAdminQuestionPage(pageable);
 		model.addAttribute("questionList", questionDtoList);
 		model.addAttribute("maxPage", 5);
@@ -408,15 +406,18 @@ public class AdminController {
 
 	// 문의 답변 작성 및 저장
 	@PostMapping(value = "/admin/answer")
-	public String saveAdminAnswer(AnswerDto answerDto, Long questionId, Principal principal) {
-		adminQuestionService.saveAnswer(answerDto,questionId,principal.getName());
+	public String saveAdminAnswer(AnswerDto answerDto, Long questionId, Authentication authentication) {
+		if(authentication == null) {
+			return "redirect:/login";
+		}
+		
+		adminQuestionService.saveAnswer(answerDto, questionId);
 		return "redirect:/admin/question";
 	}
 
 	// 문의삭제
 	@DeleteMapping("/admin/question/{id}/delete")
-
-	public @ResponseBody ResponseEntity deleteAdminQuestion(@PathVariable("id") Long id, Principal principal) {
+	public @ResponseBody ResponseEntity deleteAdminQuestion(@PathVariable("id") Long id) {
 		adminQuestionService.deleteAdminQuestion(id);
 		return new ResponseEntity<Long>(id, HttpStatus.OK);
 	}

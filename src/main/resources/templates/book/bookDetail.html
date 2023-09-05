@@ -137,6 +137,12 @@
 		});
 		
 		const sendIt = () => {
+			if([[${#authentication.authorities[0].authority}]] == 'ROLE_ANONYMOUS') {
+				alert('로그인 후 이용하세요.');
+				location.href='/login';
+				return;
+			}
+			
 			var f = document.myForm;
 			str = f.content.value;
 			str = str.trim();
@@ -145,6 +151,7 @@
 				f.content.focus();
 				return;
 			}
+			
 			f.submit();
 		}
 		
@@ -172,10 +179,14 @@
 		                alert("찜 등록이 완료되었습니다.");
 		            }
 				},
-				error: function (xhr, textStatus, errorThrown) {
-					alert("찜하기 실패: " + xhr.responseText);
-					
-				}
+				error: function(jqXHR, status, error) {
+					if(jqXHR.status == '401') {
+						alert('로그인 후 이용해주세요');
+	                    location.href='/login';
+					} else {					
+						alert(jqXHR.responseText);
+					}
+				} 
 			});
 		}
 		

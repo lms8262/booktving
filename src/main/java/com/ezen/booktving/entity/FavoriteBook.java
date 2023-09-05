@@ -7,7 +7,6 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import com.ezen.booktving.dto.BookImgDto;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -42,10 +41,12 @@ public class FavoriteBook extends BaseTimeEntity {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Member member;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "book_id", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Book book;
 	
 	@Transient // 이 필드는 데이터베이스에 매핑하지 않음

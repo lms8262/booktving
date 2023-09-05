@@ -1,6 +1,5 @@
 package com.ezen.booktving.controller;
 
-import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,12 +8,12 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,8 +22,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ezen.booktving.auth.PrincipalDetails;
 import com.ezen.booktving.dto.ChallengeItemDto;
 import com.ezen.booktving.dto.ChallengeNewDto;
+import com.ezen.booktving.dto.FavoriteBookDto;
 import com.ezen.booktving.dto.FavoriteBookDtoList;
 import com.ezen.booktving.dto.MyLibraryRentBookInfoDto;
 import com.ezen.booktving.dto.MyLibraryRentBookListDto;
@@ -47,51 +48,54 @@ public class MyLibraryController {
 	private final MemberService memberService;
 	private final ChallengeItemService challengeItemService;
 	
-	
-	
 	//나의서재 메인화면
 	@GetMapping(value = "/myLibrary")
-	public String myLibrary(Optional<Integer> page, Model model, @AuthenticationPrincipal UserDetails userDetails) {
-		
-		if(userDetails != null) {
-			
-			String memberName = memberService.getLoginMemberName(userDetails.getUsername());
-			model.addAttribute("memberName", memberName);
-			
-			Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 5);
-
-			//bookcase
-			//isEmpty
-			List<RentBook> rentBookList = myLibraryRentBookService.listAll(userDetails.getUsername());
-			model.addAttribute("rentBookList", rentBookList);
-			//not isEmpty
-			Page<MyLibraryRentBookListDto> rentBooks = myLibraryRentBookService.getMyLibraryRentBookList(userDetails.getUsername(), pageable);
-			model.addAttribute("rentBooks", rentBooks);
-			
-			//favoriteBook
-			//isEmpty
-			List<FavoriteBook> favoriteBookList = favoriteBookService.getFavoriteListAll(userDetails.getUsername());
-			model.addAttribute("favoriteBookList", favoriteBookList);
-			//not isEmpty
-			Page<FavoriteBookDtoList> favoriteBooks = favoriteBookService.getFavoriteBookList(userDetails.getUsername(), pageable);
-			model.addAttribute("favoriteBooks", favoriteBooks);
-			
-						
-			return "myLibrary/myLibraryMain";
-		} else {
-			
+	public String myLibrary(Optional<Integer> page, Model model, Authentication authentication) {
+		if(authentication == null) {
 			return "redirect:/login";
 		}
+		
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		String userId = principalDetails.getUserId();
+		
+		String memberName = memberService.getLoginMemberName(userId);
+		model.addAttribute("memberName", memberName);
+		
+		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 5);
+
+		//bookcase
+		//isEmpty
+		List<RentBook> rentBookList = myLibraryRentBookService.listAll(userId);
+		model.addAttribute("rentBookList", rentBookList);
+		//not isEmpty
+		Page<MyLibraryRentBookListDto> rentBooks = myLibraryRentBookService.getMyLibraryRentBookList(userId, pageable);
+		model.addAttribute("rentBooks", rentBooks);
+		
+		//favoriteBook
+		//isEmpty
+		List<FavoriteBook> favoriteBookList = favoriteBookService.getFavoriteListAll(userId);
+		model.addAttribute("favoriteBookList", favoriteBookList);
+		//not isEmpty
+		Page<FavoriteBookDtoList> favoriteBooks = favoriteBookService.getFavoriteBookList(userId, pageable);
+		model.addAttribute("favoriteBooks", favoriteBooks);
+					
+		return "myLibrary/myLibraryMain";
+		
 	}
 	
 	//나의 서재 대여도서 리스트
 	@GetMapping(value= {"/myLibrary/rentList", "/myLibrary/rentList/{page}"})
-	public String myLibraryRentList(@PathVariable("page") Optional<Integer> page, Principal principal, Model model) {
+	public String myLibraryRentList(@PathVariable("page") Optional<Integer> page, Authentication authentication, Model model) {
+		if(authentication == null) {
+			return "redirect:/login";
+		}
 		
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		String userId = principalDetails.getUserId();
 		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 8);
 		
 		//2. 서비스 호출
-		Page<MyLibraryRentBookListDto> myLibraryRentBookListDtoList = myLibraryRentBookService.getMyLibraryRentBookList(principal.getName(), pageable);
+		Page<MyLibraryRentBookListDto> myLibraryRentBookListDtoList = myLibraryRentBookService.getMyLibraryRentBookList(userId, pageable);
 		
 		//3. 서비스에서 가져온 값들을 view단에 model을 이용해 전송
 		model.addAttribute("rentBooks", myLibraryRentBookListDtoList);
@@ -102,7 +106,7 @@ public class MyLibraryController {
 	
 	//나의 서재 대여도서 상세페이지 	
 	@GetMapping(value = "/myLibrary/rentbookinfo/{rentBookId}")
-	public String myLibraryRentBookInfo(Model model,@AuthenticationPrincipal UserDetails userDetails, @PathVariable("rentBookId") Long rentBookId) {
+	public String myLibraryRentBookInfo(Model model, @PathVariable("rentBookId") Long rentBookId) {
 		
 		MyLibraryRentBookInfoDto rentBookInfoDto = myLibraryRentBookService.getMyLibraryRentBookInfo(rentBookId);
 		model.addAttribute("rentBookDto", rentBookInfoDto);
@@ -152,92 +156,129 @@ public class MyLibraryController {
 
 	//나의챌린지 페이지
 	@GetMapping(value = "/myLibrary/myChallenge")
-	public String myChallenge(Model model, @AuthenticationPrincipal UserDetails userDetails) {
-			
-		if(userDetails != null) {
-			
-			String memberName = memberService.getLoginMemberName(userDetails.getUsername());
-			model.addAttribute("memberName", memberName);
-			
-			List<ChallengeItemDto> challengeItemDtos = challengeItemService.getChallengeList(userDetails.getUsername());
-			model.addAttribute("challengeItems", challengeItemDtos);
-			
-			//활성화 데이터 갯수
-			long isActiveCount = challengeItemService.getCountOfIsActive(userDetails.getUsername());
-			model.addAttribute("isActiveCount", isActiveCount);
-			
-			//완독 대여도서 갯수
-			long completedRentBooksCount = myLibraryRentBookService.getCountOfCompletedRentBooks(userDetails.getUsername());
-			model.addAttribute("completedRentBooksCount", completedRentBooksCount);
-				
-			return "myLibrary/myChallenge";
-		} else {
-				return "login/login";
+	public String myChallenge(Model model, Authentication authentication) {
+		if(authentication == null) {
+			return "redirect:/login";
 		}
+		
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		String userId = principalDetails.getUserId();
+		
+		String memberName = memberService.getLoginMemberName(userId);
+		model.addAttribute("memberName", memberName);
+		
+		List<ChallengeItemDto> challengeItemDtos = challengeItemService.getChallengeList(userId);
+		model.addAttribute("challengeItems", challengeItemDtos);
+		
+		//활성화 데이터 갯수
+		long isActiveCount = challengeItemService.getCountOfIsActive(userId);
+		model.addAttribute("isActiveCount", isActiveCount);
+		
+		//완독 대여도서 갯수
+		long completedRentBooksCount = myLibraryRentBookService.getCountOfCompletedRentBooks(userId);
+		model.addAttribute("completedRentBooksCount", completedRentBooksCount);
+			
+		return "myLibrary/myChallenge";
+
 	}
+
+	//나의챌린지 목표 달성시 페이지 업데이트하기
+	@PostMapping(value = "/myLibrary/updateChallengeItem/{challengeItemId}")
+	@ResponseBody
+	public ResponseEntity updateChallengeItem(@PathVariable("challengeItemId") Long challengeItemId) {
 		
-		//나의챌린지 목표 달성시 페이지 업데이트하기
-		@PostMapping(value = "/myLibrary/updateChallengeItem/{challengeItemId}")
-		@ResponseBody
-		public ResponseEntity updateChallengeItem(@PathVariable("challengeItemId") Long challengeItemId) {
+		try {
+			challengeItemService.updateChallengeItemSuccess(challengeItemId);
 			
-			try {
-				challengeItemService.updateChallengeItemSuccess(challengeItemId);
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<String>("챌린지 성공을 축하드립니다.", HttpStatus.OK);
+	}
+	
+	//나의챌린지-아이템 비활성화 시키기
+	@PostMapping(value = "/myLibrary/deactivateChallenge/{challengeItemId}")
+	@ResponseBody
+	public ResponseEntity deactivateChallenge(@PathVariable("challengeItemId") Long challengeItemId) {
+		
+		try {
+			challengeItemService.deactivateChallenge(challengeItemId);
+			
+		} catch (Exception e) {
+			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<String>("성공첼린지가 비활성화 되었습니다. 새로운 챌린지를 생성해 보세요.", HttpStatus.OK);
+	}
+	
+	//나의챌린지 생성 페이지
+	@GetMapping(value = "/myLibrary/myChallenge/new")
+	public String myChallengeNewPage(Model model, Authentication authentication, 
+									@Valid ChallengeNewDto challengeNewDto, BindingResult bindingResult) {
+		if(authentication == null) {
+			return "redirect:/login";
+		}
+		
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		String userId = principalDetails.getUserId();
+		
+		String memberName = memberService.getLoginMemberName(userId);
+		model.addAttribute("memberName", memberName);
+		
+		return "myLibrary/myChallengeNew";
+	}
+	
+	//나의챌린지 생성하기
+	@PostMapping(value = "/myLibrary/myChallenge/new")
+	public @ResponseBody ResponseEntity myChallengeNew(@RequestBody @Valid ChallengeNewDto challengeNewDto, 
+					BindingResult bindingResult, Authentication authentication) {
+		if(authentication == null) {
+			return new ResponseEntity<>(HttpStatus.UNAUTHORIZED);
+		}
+		
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		String userId = principalDetails.getUserId();
+		
+		if(bindingResult.hasErrors()) {
+			StringBuilder sb = new StringBuilder();
+			List<FieldError> fieldErrors = bindingResult.getFieldErrors();
+			
+			for(FieldError fieldError : fieldErrors) {
+				sb.append(fieldError.getDefaultMessage());  //에러메세지를 합친다.
+			}
+			return new ResponseEntity<String>(sb.toString(), HttpStatus.BAD_REQUEST);
+		}	
 				
-			} catch (Exception e) {
-				return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-			}
-			return new ResponseEntity<String>("챌린지 성공을 축하드립니다.", HttpStatus.OK);
-			
+		try {
+			challengeItemService.saveChallenge(challengeNewDto, userId);
+		} catch (Exception e) {
+			return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+		}
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+	
+	// 찜 목록
+	@GetMapping(value = "/myLibrary/favoritebook")
+	public String myFavorite(Model model, Authentication authentication) {
+		if(authentication == null) {
+			return "redirect:/login";
 		}
 		
-		//나의챌린지-아이템 비활성화 시키기
-		@PostMapping(value = "/myLibrary/deactivateChallenge/{challengeItemId}")
-		@ResponseBody
-		public ResponseEntity deactivateChallenge(@PathVariable("challengeItemId") Long challengeItemId) {
-			
-			try {
-				challengeItemService.deactivateChallenge(challengeItemId);
-				
-			} catch (Exception e) {
-				return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
-			}
-			return new ResponseEntity<String>("성공첼린지가 비활성화 되었습니다. 새로운 챌린지를 생성해 보세요.", HttpStatus.OK);
-		}
-		
-		//나의챌린지 생성 페이지
-		@GetMapping(value = "/myLibrary/myChallenge/new")
-		public String myChallengeNewPage(Model model, @AuthenticationPrincipal UserDetails userDetails, 
-										@Valid ChallengeNewDto challengeNewDto, BindingResult bindingResult ) {
-			
-			String memberName = memberService.getLoginMemberName(userDetails.getUsername());
-			model.addAttribute("memberName", memberName);
-			
-			return "myLibrary/myChallengeNew";
-		}
-		
-		//나의챌린지 생성하기
-		@PostMapping(value = "/myLibrary/myChallenge/new")
-		public @ResponseBody ResponseEntity myChallengeNew(@RequestBody @Valid ChallengeNewDto challengeNewDto, 
-						BindingResult bindingResult, Principal principal) {
-			
-			if(bindingResult.hasErrors()) {
-				StringBuilder sb = new StringBuilder();
-				List<FieldError> fieldErrors = bindingResult.getFieldErrors();
-				
-				for(FieldError fieldError : fieldErrors) {
-					sb.append(fieldError.getDefaultMessage());  //에러메세지를 합친다.
-				}
-				return new ResponseEntity<String>(sb.toString(), HttpStatus.BAD_REQUEST);
-			}
-			
-			String userId = principal.getName();
-			
-			try {
-				challengeItemService.saveChallenge(challengeNewDto, userId);
-			} catch (Exception e) {
-				return new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
-			}
-			return new ResponseEntity<>(HttpStatus.OK);
-		}
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		String userId = principalDetails.getUserId();
+
+		// 사용자의 찜한 도서 목록 가져오기
+		List<FavoriteBookDto> favoriteBookDtos = favoriteBookService.getFavoriteBooksByMember(userId);
+
+		model.addAttribute("favoriteBooks", favoriteBookDtos);
+
+		return "book/myFavorite";
+	}
+
+	// 찜 삭제
+	@DeleteMapping("/myLibrary/favoritebook/remove/{id}")
+	public @ResponseBody ResponseEntity removeFavoriteBook(@PathVariable("id") Long id) {
+		favoriteBookService.removeFavoriteBook(id);
+		return new ResponseEntity<Long>(id, HttpStatus.OK);
+	}
+
 }

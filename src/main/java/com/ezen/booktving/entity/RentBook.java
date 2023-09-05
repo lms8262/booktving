@@ -7,7 +7,6 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import com.ezen.booktving.constant.YesNoStatus;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -55,10 +54,12 @@ public class RentBook extends BaseTimeEntity {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Member member;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "book_id", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Book book;
 	
 	

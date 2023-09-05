@@ -50,6 +50,6 @@ public class NewBookTving extends BaseEntity{
 	private String description;
 	
 	@Column(nullable = true)
-	private String itemId;
+	private Integer itemId;
 
 }

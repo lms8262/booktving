@@ -112,8 +112,8 @@
 
 					<!-- 즐겨찾기 -->
 					<div class="bookMark-wrap container">
-						<div class="bookMark">
-							<a href="/mylibrary">
+						<div class="bookMark" sec:authorize="hasAnyRole('USER', 'ADMIN')">
+							<a href="/myLibrary">
 								<div class="booMark-img">
 									<i class="fa-solid fa-book-bookmark fa-xl"
 										style="color: #000000;"></i>
@@ -131,14 +131,6 @@
 							</a>
 						</div>
 						
-						<div class="bookMark">
-							<a href="#">
-								<div class="booMark-img">
-									<p class="icron">10</p>
-								</div>
-								<p class="bookMark-text">Top10</p>
-							</a>
-						</div>
 					</div>
 
 					<!-- 북티빙 Top 10 -->

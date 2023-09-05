@@ -7,10 +7,8 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.thymeleaf.util.StringUtils;
 
-import com.ezen.booktving.constant.NoticeGroup;
 import com.ezen.booktving.dto.NoticeSearchDto;
 import com.ezen.booktving.entity.Notice;
-import com.ezen.booktving.entity.QAuthor;
 import com.ezen.booktving.entity.QNotice;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.core.types.dsl.Wildcard;

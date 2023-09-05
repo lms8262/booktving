@@ -120,7 +120,6 @@
 						onclick="sample6_execDaumPostcode()" value="우편번호 찾기"
 						style="width: 150px;">
 				</h3>
-				<br>
 				<div class="input-group">
 					<input type="text" th:field="*{addressNo}" aria-label="First name"
 						class="form-control" placeholder="우편번호" style="width: 30%">
@@ -137,10 +136,10 @@
 
 			<!-- JOIN BTN-->
 			<div class="btn_area">
-				<button type="submit" id="btnJoin" style="margin-left: 45px;">
+				<button type="submit">
 					<span>가입하기</span>
 				</button>
-				<button type="reset" id="btnJoin" onclick="location.href='/'">
+				<button type="button" onclick="location.href='/'">
 					<span>취소</span>
 				</button>
 			</div>
@@ -152,8 +151,7 @@
 	</form>
 </div>
 <th:block layout:fragment="script">
-<script
-		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script th:inline="javascript">
 		function sample6_execDaumPostcode() {
 			new daum.Postcode(

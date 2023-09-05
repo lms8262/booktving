@@ -32,8 +32,8 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		Collection<GrantedAuthority> collection = new ArrayList<>();
-
-		collection.add(new SimpleGrantedAuthority(member.getRole().toString()));
+		
+		collection.add(new SimpleGrantedAuthority("ROLE_" + member.getRole().name()));
 
 		return collection;
 	}
@@ -70,11 +70,22 @@ public class PrincipalDetails implements UserDetails, OAuth2User {
 
 	@Override
 	public Map<String, Object> getAttributes() {
+		if(oAuth2UserInfo == null) {
+			return null;
+		}
 		return oAuth2UserInfo.getAttributes();
 	}
 
 	@Override
 	public String getName() {
+		if(oAuth2UserInfo == null) {
+			return null;
+		}
 		return oAuth2UserInfo.getProviderId();
 	}
+	
+	public String getUserId() {
+		return member.getUserId();
+	}
+	
 }

@@ -3,7 +3,6 @@ package com.ezen.booktving.service;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -11,6 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ezen.booktving.auth.PrincipalDetails;
 import com.ezen.booktving.dto.MemberFormDto;
 import com.ezen.booktving.dto.MemberSearchDto;
 import com.ezen.booktving.entity.Member;
@@ -84,8 +84,8 @@ public class MemberService implements UserDetailsService {
 		if (member == null) {
 			throw new UsernameNotFoundException(userId);
 		}
-		return User.builder().username(member.getUserId()).password(member.getPassword())
-				.roles(member.getRole().toString()).build();
+		
+		return new PrincipalDetails(member);
 	}
 	
 	public void deleteMenu(String userId) {
@@ -128,8 +128,7 @@ public class MemberService implements UserDetailsService {
 		memberRepository.delete(member);
 	}
 
-//회원정보 수정 회원탈퇴
-	@Transactional
+	//회원정보 수정 회원탈퇴
 	public void deleteMember2(String userId) {
 		Member member = memberRepository.findByUserId(userId);
 		if (member == null) {

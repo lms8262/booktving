@@ -1,6 +1,5 @@
 package com.ezen.booktving.controller;
 
-import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,7 +53,7 @@ public class LoginCotroller {
 
 	}
 
-//회원가입
+	//회원가입
 	@GetMapping(value = "/login/new")
 	public String membership(Model model) {
 		model.addAttribute("memberFormDto", new MemberFormDto());
@@ -79,6 +78,10 @@ public class LoginCotroller {
 	// 소셜 로그인 회원가입 페이지
 	@GetMapping(value = "/login/sns")
 	public String snsship(Authentication authentication, Model model) {
+		if(authentication == null) {
+			return "redirect:/login";
+		}
+		
 		PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
 		OAuth2UserInfo oAuth2UserInfo = principal.getOAuth2UserInfo();
 
@@ -105,7 +108,7 @@ public class LoginCotroller {
 			redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
 			return "redirect:/login/sns";
 		}
-		return "redirect:/";
+		return "redirect:/logout";
 	}
 
 	// 아이디 찾기
@@ -140,24 +143,14 @@ public class LoginCotroller {
 	// 비밀번호 찾고 난수생성기로 랜덤비밀번호 생성
 	@PostMapping("/findpw")
 	@ResponseBody
-	public HashMap<String, String> memberps(@RequestBody Map<String, Object> psdata, Principal principal) {
+	public HashMap<String, String> memberps(@RequestBody Map<String, Object> psdata) {
 
 		String email = (String) psdata.get("email");
 		String userId = (String) psdata.get("userId");
 
 		HashMap<String, String> msg = new HashMap<>();
 		Member member = memberRepository.findByUserIdAndEmail(userId, email);
-		/*
-		 * String pass = randomPassword.passwordFind(email, null); // pass 암호화된 비밀번호
-		 * String ramdomps = randomPassword.getRamdomPassword(12);
-		 * 
-		 * // ramdomps 를 view에 출력 String password =
-		 * randomPassword.updatePassword(ramdomps, email, passwordEncoder);
-		 * 
-		 * randomPassword.sendEmail(email, "새로운 비밀번호", "새로운 비밀번호: " + ramdomps);
-		 * 
-		 * String asd = "이메일로 임시 비밀번호가 발송되었습니다."; msg.put("message", asd);
-		 */
+		
 		if (member != null) {
 			String ramdomps = randomPassword.getRamdomPassword(12);
 			String encodedRandomPassword = passwordEncoder.encode(ramdomps);
@@ -177,11 +170,17 @@ public class LoginCotroller {
 		return msg;
 	}
 
-//회원정보 수정페이지
+	//회원정보 수정페이지
 	@GetMapping(value = "/login/update")
-	public String getupdateDtl(Model model, Principal principal) {
+	public String getupdateDtl(Model model, Authentication authentication) {
+		if(authentication == null) {
+			return "redirect:/login";
+		}
+		
+		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
+		String userId = principalDetails.getUserId();
 		try {
-			MemberFormDto memberFormDto = memberService.getUpdateDtl(principal.getName());
+			MemberFormDto memberFormDto = memberService.getUpdateDtl(userId);
 			model.addAttribute("memberFormDto", memberFormDto);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -192,10 +191,11 @@ public class LoginCotroller {
 		return "membership/privacy";
 	};
 
-//회원 수정
+	//회원 수정
 	@PostMapping(value = "/login/update")
-	public String memberUpdate(@Valid MemberFormDto memberFormDto, Model model, BindingResult bindingResult) {
+	public String memberUpdate(@Valid MemberFormDto memberFormDto, BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
+			model.addAttribute("memberFormDto", memberFormDto);
 			return "membership/privacy";
 		}
 		try {
@@ -203,17 +203,16 @@ public class LoginCotroller {
 		} catch (Exception e) {
 			model.addAttribute("errorMessage", "고객정보를 가져올때 에러가 발생했습니다.");
 			e.printStackTrace();
-			// TODO: handle exception
 		}
 		return "redirect:/";
 	}
 
-//회원탈퇴
+	//회원탈퇴
 	@DeleteMapping(value = "/login/{userId}/delete")
-	public ResponseEntity<String> deleteMember2(@PathVariable("userId") String userId, Principal principal) {
+	public ResponseEntity<String> deleteMember2(@PathVariable("userId") String userId) {
 		try {
 			memberService.deleteMember2(userId);
-			return new ResponseEntity<>("탈퇴했습니다.", HttpStatus.OK);
+			return new ResponseEntity<>(HttpStatus.OK);
 		}
 
 		catch (Exception e) {
