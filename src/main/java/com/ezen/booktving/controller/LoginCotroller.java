@@ -25,7 +25,6 @@ import com.ezen.booktving.auth.PrincipalDetails;
 import com.ezen.booktving.dto.MemberFormDto;
 import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.repository.MemberRepository;
-import com.ezen.booktving.service.IdService;
 import com.ezen.booktving.service.MemberService;
 import com.ezen.booktving.service.RamdomPasswordService;
 
@@ -37,7 +36,6 @@ import lombok.RequiredArgsConstructor;
 public class LoginCotroller {
 
 	private final MemberService memberService;
-	private final IdService idService;
 	private final MemberRepository memberRepository;
 	private final RamdomPasswordService randomPassword;
 	private final PasswordEncoder passwordEncoder;
@@ -78,25 +76,25 @@ public class LoginCotroller {
 		return "login/login";
 	}
 
-	//소셜 로그인 회원가입 페이지
+	// 소셜 로그인 회원가입 페이지
 	@GetMapping(value = "/login/sns")
 	public String snsship(Authentication authentication, Model model) {
 		PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
 		OAuth2UserInfo oAuth2UserInfo = principal.getOAuth2UserInfo();
-		
+
 		MemberFormDto memberFormDto = new MemberFormDto();
 		memberFormDto.setMemberName(oAuth2UserInfo.getName());
 		memberFormDto.setProvider(oAuth2UserInfo.getProvider());
 		memberFormDto.setProviderId(oAuth2UserInfo.getProviderId());
 		memberFormDto.setPassword(principal.getPassword());
-		
+
 		model.addAttribute("memberFormDto", memberFormDto);
 		return "login/joinForm";
 	}
-	
-	
+
 	@PostMapping(value = "/login/sns/new")
-	public String snsNew(@Valid MemberFormDto memberFormDto, BindingResult bindingRestult, Model model, RedirectAttributes redirectAttributes) {
+	public String snsNew(@Valid MemberFormDto memberFormDto, BindingResult bindingRestult, Model model,
+			RedirectAttributes redirectAttributes) {
 
 		if (bindingRestult.hasErrors()) {
 			return "login/joinForm";
@@ -110,8 +108,6 @@ public class LoginCotroller {
 		return "redirect:/";
 	}
 
-	
-	
 	// 아이디 찾기
 	@GetMapping("/findid")
 	public String showFindIdForm() {
@@ -224,6 +220,5 @@ public class LoginCotroller {
 			return new ResponseEntity<>("Error deleting member: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
-	
+
 }
