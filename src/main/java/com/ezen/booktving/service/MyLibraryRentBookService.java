@@ -15,7 +15,6 @@ import com.ezen.booktving.dto.AdminRentHistBookDto;
 import com.ezen.booktving.dto.MyLibraryRentBookInfoDto;
 import com.ezen.booktving.dto.MyLibraryRentBookListDto;
 import com.ezen.booktving.dto.RentBookDto;
-import com.ezen.booktving.entity.Book;
 import com.ezen.booktving.entity.RentBook;
 import com.ezen.booktving.repository.BookImgRepository;
 import com.ezen.booktving.repository.RentBookRepository;

@@ -87,7 +87,7 @@ public class MemberService implements UserDetailsService {
 		
 		return new PrincipalDetails(member);
 	}
-
+	
 	public void deleteMenu(String userId) {
 		Member member = memberRepository.findByUserId(userId);
 		memberRepository.delete(member);
@@ -101,6 +101,13 @@ public class MemberService implements UserDetailsService {
 
 		return memberFormDto;
 	}
+	
+	
+	public MemberFormDto getUpdateDTL(Long id) {
+		Member member = memberRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+		MemberFormDto memberFormDto = MemberFormDto.of(member, modelMapper);
+		return memberFormDto;
+	}
 
 	public String updateMember1(@Valid MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) throws Exception {
 		Member member = memberRepository.findByUserId(memberFormDto.getUserId());
@@ -108,14 +115,14 @@ public class MemberService implements UserDetailsService {
 		return member.getUserId();
 	}
 
-	//회원관리
+//회원관리
 	@Transactional(readOnly = true)
 	public Page<Member> getAdminMemberPage(MemberSearchDto membersearchDto, Pageable pageable) {
 		Page<Member> memberPage = memberRepository.getAdminMemberPage(membersearchDto, pageable);
 		return memberPage;
 	}
 
-	//회원관리 삭제
+//회원관리 삭제
 	public void deleteMember(Long memberId) {
 		Member member = memberRepository.findById(memberId).orElseThrow(EntityNotFoundException::new);
 		memberRepository.delete(member);
@@ -129,6 +136,7 @@ public class MemberService implements UserDetailsService {
 		}
 		memberRepository.delete(member);
 	}
+
 	
 	//로그인한 사용자 이름 가져오기
 	public String getLoginMemberName(String userId){
@@ -136,5 +144,6 @@ public class MemberService implements UserDetailsService {
 		Member user = memberRepository.findByUserId(userId);
 		
 		return user.getMemberName();
+
 	}
 }

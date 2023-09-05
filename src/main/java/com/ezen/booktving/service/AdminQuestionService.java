@@ -13,11 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ezen.booktving.dto.AdminQuestionDto;
 import com.ezen.booktving.dto.AnswerDto;
 import com.ezen.booktving.entity.Answer;
-import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.entity.Question;
 import com.ezen.booktving.repository.AdminQuestionRepository;
 import com.ezen.booktving.repository.AnswerRepository;
-import com.ezen.booktving.repository.MemberRepository;
 import com.ezen.booktving.repository.QuestionRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -31,7 +29,6 @@ public class AdminQuestionService {
 	private final AdminQuestionRepository adminQuestionRepository;
 	private final QuestionRepository questionRepository;
 	private final AnswerRepository answerRepository;
-	private final MemberRepository memberRepository;
 	
 	@Transactional(readOnly = true)
 	public AdminQuestionDto getAdminQuestion(Long id) {

@@ -5,7 +5,6 @@ import java.time.LocalDate;
 import org.modelmapper.ModelMapper;
 
 import com.ezen.booktving.constant.QuestionStatus;
-import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.entity.Question;
 
 import lombok.Getter;
@@ -25,7 +24,7 @@ public class AdminQuestionDto {
 	
 	private String content;
 	
-	private Member member;
+	private String userId;
 	
 	private LocalDate questionDate;
 	
@@ -35,7 +34,7 @@ public class AdminQuestionDto {
 		this.id = question.getId();
 		this.title = question.getTitle();
 		this.content = question.getContent();
-		this.member = question.getMember();
+		this.userId = question.getMember().getUserId();
 		this.questionDate = question.getQuestionDate();
 		this.questionStatus = question.getQuestionStatus();
 	}

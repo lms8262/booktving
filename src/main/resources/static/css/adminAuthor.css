@@ -31,3 +31,13 @@
 	box-shadow: none;
 	outline: none;
 }
+
+select:focus,
+selecr:active,
+.form-control:focus,
+.form-control:focus {
+	text-decoration: none !important;
+ 	color: #000 !important;
+ 	outline: none !important ;
+ 	box-shadow: none !important;
+}

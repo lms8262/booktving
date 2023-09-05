@@ -9,7 +9,8 @@
 </head>
 <th:block layout:fragment="css">
 	<link rel="stylesheet" type="text/css" href="/css/mebership.css" />
-
+	<style>
+</style>
 </th:block>
 <div layout:fragment="content">
 
@@ -17,49 +18,27 @@
 	<div id="content">
 		<form role="form" action="/login/update" method="post"
 			th:object="${memberFormDto}">
-			
+
 			<!-- ID -->
 			<div>
 				<h3 class="join_title">
 					<label for="userId">아이디(수정불가)</label>
 				</h3>
 				<span class="box int_id"> <input type="text" class="int"
-					maxlength="20" placeholder="아이디 입력(6~20자)" th:field="*{userId}"
-					readonly>
+					maxlength="20" placeholder="아이디 입력(6~20자)" th:field="*{userId}">
 				</span> <span class="error_next_box"> </span> <span class="step_url"></span>
 			</div>
 
 			<!-- NAME -->
 			<div>
 				<h3 class="join_title">
-					<label th:for="name">이름</label>
+					<label th:for="memberName">이름</label>
 				</h3>
 				<span class="box int_name"> <input type="text" class="int"
 					maxlength="20" placeholder="이름을 입력해주세요" th:field="*{memberName}">
 				</span> <span class="error_next_box"></span>
 				<p th:if="${#fields.hasErrors('memberName')}"
 					th:errors="*{memberName}" class="fieldError">Incorrect Data</p>
-			</div>
-
-			<!-- address -->
-			<div>
-				<h3 class ="join_title">
-					<label th:for="address" class="text-black">주소</label> <input
-						type="button" class="btn btn-primary mb-3 "
-						onclick="sample6_execDaumPostcode()" value="우편번호 찾기"
-						style="width: 150px;">
-				</h3>
-				<div class="input-group">
-					<input type="text" th:field="*{addressNo}" aria-label="First name"
-						class="form-control" placeholder="우편번호" style="width: 30%">
-					<input type="text" th:field="*{address}" aria-label="Last name"
-						class="form-control" placeholder="주소" style="width: 70%">
-				</div>
-				<input type="text" class="form-control" placeholder="상세주소를 입력해주세요"
-					th:field="*{addressDetail}">
-				<p
-					th:if="${#fields.hasErrors('addressDetail') || #fields.hasErrors('address') || #fields.hasErrors('addressNo')}"
-					th:errors="*{addressDetail}" class="fieldError">Incorrect Data</p>
 			</div>
 			
 			<!-- EMAIL -->
@@ -86,14 +65,37 @@
 				<p th:if="${#fields.hasErrors('tel')}" th:errors="*{tel}"
 					class="fieldError">Incorrect Data</p>
 			</div>
+			
+			<!-- address -->
+			<div>
+				<h3 class="join_title">
+					<label th:for="address" class="text-black">주소</label> <input
+						type="button" class="btn btn-primary mb-3 "
+						onclick="sample6_execDaumPostcode()" value="우편번호 찾기"
+						style="width: 150px;">
+				</h3>
+				<br>
+				<div class="input-group">
+					<input type="text" th:field="*{addressNo}" aria-label="First name"
+						class="form-control" placeholder="우편번호" style="width: 30%">
+					<input type="text" th:field="*{address}" aria-label="Last name"
+						class="form-control" placeholder="주소" style="width: 70%">
+				</div>
+				<input type="text" class="form-control" placeholder="상세주소를 입력해주세요"
+					th:field="*{addressDetail}">
+				<p
+					th:if="${#fields.hasErrors('addressDetail') || #fields.hasErrors('address') || #fields.hasErrors('addressNo')}"
+					th:errors="*{addressDetail}" class="fieldError">Incorrect Data</p>
+			</div>
 
 			<!-- JOIN BTN-->
 			<div class="btn_area">
 				<button type="submit" id="btnUpdate">
 					<span>수정하기</span>
 				</button>
-				<button type="button" id="btn-danger"
-					onclick="deleteMember()">회원탈퇴</button>
+				<button type="reset" id="btnJoin" onclick="location.href='/login'">
+					<span>취소</span>
+				</button>
 			</div>
 			
 			<input type="hidden" th:field="*{birth}">
@@ -101,8 +103,8 @@
 			<input type="hidden" id="memberIdInput"
 				th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 		</form>
-
-	</div>
+		
+		</div>
 
 </div>
 <th:block layout:fragment="script">
@@ -205,6 +207,7 @@
 						}
 					}).open();
 		}
+
 	</script>
 </th:block>
 </html>

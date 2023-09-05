@@ -311,7 +311,7 @@
 	text-align: center;
 }
 
-.challenge-item #buttonContainer button{
+.challenge-item #successButton{
 	display: block;
 	width: 150px;
 	height: 40px;

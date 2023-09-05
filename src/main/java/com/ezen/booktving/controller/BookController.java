@@ -1,16 +1,13 @@
 package com.ezen.booktving.controller;
 
 import java.io.IOException;
-import java.security.Principal;
 import java.util.HashMap;
-import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +18,6 @@ import com.ezen.booktving.auth.PrincipalDetails;
 import com.ezen.booktving.dto.BookDto;
 
 import com.ezen.booktving.dto.BookReviewDto;
-import com.ezen.booktving.dto.FavoriteBookDto;
 import com.ezen.booktving.service.ApiService;
 import com.ezen.booktving.service.BookService;
 import com.ezen.booktving.service.CommutationService;

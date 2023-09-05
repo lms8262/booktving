@@ -41,7 +41,7 @@
 										<div class="top-title"></div>
 										<h4>회원관리</h4>
 										<hr>
-										<form action="/admin/member" method="get">
+										<form th:action="@{'/admin/member'}" method="get">
 											<!-- 도서관리 contents -->
 											<table class="table table-responsive-md ">
 												<thead>
@@ -52,16 +52,18 @@
 														<th scope="col">가입일</th>
 														<th scope="col">생년월일</th>
 														<th scope="col">삭제</th>
-
 													</tr>
 												</thead>
 												<tbody>
 													<tr th:each="member : ${members.content}">
 														<th th:text="${member.id}" scope="row"></th>
 														<td th:text="${member.role}"></td>
-														<td th:text="${member.memberName}"></td>
-														<td th:text="${#temporals.format(member.regTime, 'yyyy-MM-dd')}"></td>
+
+														<td><a th:text="${member.memberName}"
+															th:href="'/admin/member/'+${member.id}+'/new'"></a></td>
+														<td th:text="${member.regTime}"></td>
 														<td th:text="${member.birth}"></td>
+
 														<td>
 															<button type="button" class="btn btn-danger"
 																th:value="${member.id}"
@@ -70,6 +72,38 @@
 													</tr>
 												</tbody>
 											</table>
+
+		
+											<!-- 페이지 -->
+											<div>
+												<nav
+													th:with="start=${(members.number / maxPage) * maxPage + 1},
+	               end=${ ((members.totalPages == 0)) ? 1 : (start + (maxPage - 1) < members.totalPages ?
+	                     start + (maxPage - 1) : members.totalPages)}"
+													aria-label="..." style="display: flex">
+													<ul
+														class="pagination d-flex justify-content-center adminbook-page">
+														<li class="page-item pageitem"
+															th:classappend="${members.first} ? 'disabled'"><a
+															class="page-link page-item"
+															th:onclick="'javascript:page(' + ${members.number - 1} + ')'">이전</a>
+														</li>
+
+														<li class="page-item pageitem"
+															th:each="page : ${#numbers.sequence(start, end)}"
+															th:classappend="${members.number eq page - 1} ? 'active' : '' ">
+															<a class="page-link" th:inline="text"
+															th:onclick="'javascript:page(' + ${page - 1} + ')'">[[${page}]]</a>
+														</li>
+
+														<li class="page-item pageitem"
+															th:classappend="${members.last} ? 'disabled'"><a
+															class="page-link page-item"
+															th:onclick="'javascript:page(' + ${members.number + 1} + ')'">다음</a>
+														</li>
+													</ul>
+												</nav>
+											</div>
 
 
 											<!-- 검색 bar 부분 -->
@@ -104,9 +138,9 @@
 												</div>
 												<div class="col-lg-1"></div>
 											</div>
-											
-											
-											
+
+
+
 											<!-- 페이지 -->
 											<div>
 												<nav
@@ -114,7 +148,8 @@
 	               end=${ ((members.totalPages == 0)) ? 1 : (start + (maxPage - 1) < members.totalPages ?
 	                     start + (maxPage - 1) : members.totalPages)}"
 													aria-label="..." style="display: flex">
-													<ul class="pagination d-flex justify-content-center adminbook-page">
+													<ul
+														class="pagination d-flex justify-content-center adminbook-page">
 														<li class="page-item pageitem"
 															th:classappend="${members.first} ? 'disabled'"><a
 															class="page-link page-item"

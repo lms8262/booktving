@@ -27,8 +27,6 @@ import com.ezen.booktving.repository.MemberRepository;
 import com.ezen.booktving.service.MemberService;
 import com.ezen.booktving.service.RamdomPasswordService;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
@@ -77,7 +75,7 @@ public class LoginCotroller {
 		return "login/login";
 	}
 
-	//소셜 로그인 회원가입 페이지
+	// 소셜 로그인 회원가입 페이지
 	@GetMapping(value = "/login/sns")
 	public String snsship(Authentication authentication, Model model) {
 		if(authentication == null) {
@@ -86,20 +84,20 @@ public class LoginCotroller {
 		
 		PrincipalDetails principal = (PrincipalDetails) authentication.getPrincipal();
 		OAuth2UserInfo oAuth2UserInfo = principal.getOAuth2UserInfo();
-		
+
 		MemberFormDto memberFormDto = new MemberFormDto();
 		memberFormDto.setMemberName(oAuth2UserInfo.getName());
 		memberFormDto.setProvider(oAuth2UserInfo.getProvider());
 		memberFormDto.setProviderId(oAuth2UserInfo.getProviderId());
 		memberFormDto.setPassword(principal.getPassword());
-		
+
 		model.addAttribute("memberFormDto", memberFormDto);
 		return "login/joinForm";
 	}
-	
-	
+
 	@PostMapping(value = "/login/sns/new")
-	public String snsNew(@Valid MemberFormDto memberFormDto, BindingResult bindingRestult, Model model, RedirectAttributes redirectAttributes) {
+	public String snsNew(@Valid MemberFormDto memberFormDto, BindingResult bindingRestult, Model model,
+			RedirectAttributes redirectAttributes) {
 
 		if (bindingRestult.hasErrors()) {
 			return "login/joinForm";
@@ -112,7 +110,7 @@ public class LoginCotroller {
 		}
 		return "redirect:/logout";
 	}
-	
+
 	// 아이디 찾기
 	@GetMapping("/findid")
 	public String showFindIdForm() {
@@ -152,17 +150,7 @@ public class LoginCotroller {
 
 		HashMap<String, String> msg = new HashMap<>();
 		Member member = memberRepository.findByUserIdAndEmail(userId, email);
-		/*
-		 * String pass = randomPassword.passwordFind(email, null); // pass 암호화된 비밀번호
-		 * String ramdomps = randomPassword.getRamdomPassword(12);
-		 * 
-		 * // ramdomps 를 view에 출력 String password =
-		 * randomPassword.updatePassword(ramdomps, email, passwordEncoder);
-		 * 
-		 * randomPassword.sendEmail(email, "새로운 비밀번호", "새로운 비밀번호: " + ramdomps);
-		 * 
-		 * String asd = "이메일로 임시 비밀번호가 발송되었습니다."; msg.put("message", asd);
-		 */
+		
 		if (member != null) {
 			String ramdomps = randomPassword.getRamdomPassword(12);
 			String encodedRandomPassword = passwordEncoder.encode(ramdomps);
@@ -231,5 +219,5 @@ public class LoginCotroller {
 			return new ResponseEntity<>("Error deleting member: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 }

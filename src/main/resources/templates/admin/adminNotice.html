@@ -2,7 +2,11 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	  layout:decorate="~{layouts/layout1}">
-	
+
+<head>
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>	
 	 
 <!-- adminBook 페이지 CSS --> 
 <th:block layout:fragment="css">
@@ -41,12 +45,14 @@
 										</div>
 										
 										
-										<form role="form" action="">
+										<form role="form"  th:action="@{'/admin/notice/' + ${notices.number}}" method="get" th:object="${notices}">
 											<!-- 도서관리 contents -->
 											<table class="table table-responsive-md ">						
 												<thead>
 													<tr>
-														<th scope="col"></th>
+														<th scope="col">
+															<input type="checkbox" id="check-all"/> 
+														</th>
 														<th scope="col">No.</th>
 														<th scope="col">분류</th>
 														<th scope="col">제목</th>
@@ -58,7 +64,7 @@
 													<tr th:each="notice, status : ${notices.getContent()}">
 														<td>
 															<label class="checkbox-inline">
-																<input type="checkbox" th:name="chBoxs" class="chBoxs" id="chBoxs"  value="${notice.id}" /> 
+																<input type="checkbox" th:id="check- + ${notice.id}" name="check" th:value="${notice.id}" /> 
 															</label>
 														</td>
 														<td scope="col" class="notice-no" th:text="${notice.id}"></td>
@@ -77,27 +83,22 @@
 													<button type="button" class="btn reg_btn" style="width: 100px;" onclick="location.href='/admin/noticeReg'">등록하기</button>
 												</div>
 												<div class="col-md-2">
-													<button type="submit" class="btn delete_btn" style="width: 100px;">삭제하기</button>
+													<button type="button" onclick="deleteNotice()" class="btn delete_btn" style="width: 100px;">삭제하기</button>
 												</div>
 											</div>
 
 											<!-- 검색 bar 부분 -->
-											<div class="row search-bar" style="height: 40px;">
+											<div class="row search-bar" style="height: 40px;"  th:object="${noticeSearchDto}" >
 												<div class="col-lg-2"></div>
 												<div class="col-lg-2" style="display: flex;">
 													<!-- 검색분류 -->
-													<select class="form-control">
-														<option value="">검색분류</option>
-														<option value=""></option>
-														<option value=""></option>
-														<option value=""></option>
-														<option value=""></option>
-														<option value=""></option>
+													<select class="form-control" th:field="*{searchBy}">
+														<option value="title">제목</option>
 													</select>
 												</div>
 												<div class="col-lg-6">
 													<div style="display: flex;">
-														<input type="text" class="form-control col-sm-10" placeholder="검색어 입력">
+														<input type="text" class="form-control col-sm-10" placeholder="검색어 입력" th:field="*{searchQuery}" />
 														<button id="searchBtn" type="submit" class="btn search-btn col-sm-2">검색</button>
 													</div>
 												</div>
@@ -130,7 +131,7 @@
 												</ul>
 											</nav>
 											
-
+											<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
 										</form>
 									</div>
 								</div>
@@ -149,24 +150,100 @@
 <!-- adminBook 페이지 javaScript -->
 <th:block layout:fragment="script">
 
-	<script>
+	<script th:inline="javascript">
 	
 	$(document).ready(function(){
+		var errorMessage = [[${errorMessage}]];
+		
+		if(errorMessage != null) {
+			alert(errorMessage);
+		}
+		
 		$("#searchBtn").on("click", function(e){
 			e.preventDefault(); 
-			page(0); 
-		});			
+			page(0);
+		});
+		
+		$("#check-all").on("click", function(e) {
+			if($("#check-all").is(":checked")) {
+				$("input[name=check]").prop("checked", true);
+			} else {
+				$("input[name=check]").prop("checked", false);
+			}
+		});
+		
+		$("input[name=check]").on("click", function(e) {
+			var total = $("input[name=check]").length;
+			var checked = $("input[name=check]:checked").length;
+			
+			if(total != checked) {
+				$("#check-all").prop("checked", false);
+			} else {
+				$("#check-all").prop("checked", true);
+			}
+		});
+				
 	});
 	
+	//페이징
 	function page(page){
 		
 		var searchBy = $("#searchBy").val();
 		var searchQuery = $("#searchQuery").val();
 		
-		location.href = "/admin/adminBook/" + page 
+		location.href = "/admin/notice/" + page 
 					  + "?searchBy=" + searchBy
 					  + "&searchQuery=" + searchQuery
 	}	
+	
+	function deleteNotice() {
+		if($("input[name=check]:checked").length <= 0) {
+			alert("삭제할 공지사항을 하나 이상 선택해주세요.");
+			return;
+		};
+		
+		const deleteConf = confirm("선택한 공지사항을 삭제하시겠습니까?");
+		
+		if(!deleteConf) return;
+		
+		let token = $("meta[name='_csrf']").attr("content");
+        let header = $("meta[name='_csrf_header']").attr("content");
+        
+		let noticeIdList = [];
+		
+		
+		$("input[name=check]:checked").each(function(i) {
+			noticeIdList.push($(this).val());
+		});
+		
+		let objParams = {
+			"noticeIdList" : noticeIdList
+		};
+        
+        $.ajax({
+            url : "/admin/notice/delete",
+            type : "DELETE",
+            contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+            data : objParams,
+            beforeSend : function(xhr){
+                // 데이터를 전송하기 전에 헤더에 csrf값을 설정
+                xhr.setRequestHeader(header, token);
+            },
+            cache   : false,
+            success  : function(result, status){
+            	alert("선택한 공지사항을 삭제했습니다.");
+                location.href='/admin/notice';
+            },
+            error : function(jqXHR, status, error){
+                if(jqXHR.status == '401'){
+                    alert('로그인 후 이용해주세요');
+                    location.href='/login';
+                } else{
+                    alert(jqXHR.responseText);
+                }
+            }
+        });
+	}
 	
 	</script>
 </th:block>

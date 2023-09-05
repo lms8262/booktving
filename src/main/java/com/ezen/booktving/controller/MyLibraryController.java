@@ -9,8 +9,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -108,7 +106,7 @@ public class MyLibraryController {
 	
 	//나의 서재 대여도서 상세페이지 	
 	@GetMapping(value = "/myLibrary/rentbookinfo/{rentBookId}")
-	public String myLibraryRentBookInfo(Model model,@AuthenticationPrincipal UserDetails userDetails, @PathVariable("rentBookId") Long rentBookId) {
+	public String myLibraryRentBookInfo(Model model, @PathVariable("rentBookId") Long rentBookId) {
 		
 		MyLibraryRentBookInfoDto rentBookInfoDto = myLibraryRentBookService.getMyLibraryRentBookInfo(rentBookId);
 		model.addAttribute("rentBookDto", rentBookInfoDto);
@@ -169,43 +167,47 @@ public class MyLibraryController {
 		String memberName = memberService.getLoginMemberName(userId);
 		model.addAttribute("memberName", memberName);
 		
-		List<ChallengeItemDto> challengeItemDtoList = challengeItemService.getChallengeList(userId);
-		model.addAttribute("challengeItemDtoList", challengeItemDtoList);
+		List<ChallengeItemDto> challengeItemDtos = challengeItemService.getChallengeList(userId);
+		model.addAttribute("challengeItems", challengeItemDtos);
 		
+		//활성화 데이터 갯수
+		long isActiveCount = challengeItemService.getCountOfIsActive(userId);
+		model.addAttribute("isActiveCount", isActiveCount);
+		
+		//완독 대여도서 갯수
 		long completedRentBooksCount = myLibraryRentBookService.getCountOfCompletedRentBooks(userId);
 		model.addAttribute("completedRentBooksCount", completedRentBooksCount);
-		
+			
 		return "myLibrary/myChallenge";
-		
+
 	}
-	
+
 	//나의챌린지 목표 달성시 페이지 업데이트하기
-	@PostMapping(value = "/updateChallengeItem/{challengeItemId}")
+	@PostMapping(value = "/myLibrary/updateChallengeItem/{challengeItemId}")
 	@ResponseBody
 	public ResponseEntity updateChallengeItem(@PathVariable("challengeItemId") Long challengeItemId) {
 		
 		try {
 			challengeItemService.updateChallengeItemSuccess(challengeItemId);
-			return new ResponseEntity<String>("success", HttpStatus.OK);
 			
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
-		
+		return new ResponseEntity<String>("챌린지 성공을 축하드립니다.", HttpStatus.OK);
 	}
 	
 	//나의챌린지-아이템 비활성화 시키기
-	@PostMapping(value = "/deactivateChallenge/{challengeItemId}")
+	@PostMapping(value = "/myLibrary/deactivateChallenge/{challengeItemId}")
 	@ResponseBody
 	public ResponseEntity deactivateChallenge(@PathVariable("challengeItemId") Long challengeItemId) {
 		
 		try {
 			challengeItemService.deactivateChallenge(challengeItemId);
-			return new ResponseEntity<>("success", HttpStatus.OK);
 			
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
+		return new ResponseEntity<String>("성공첼린지가 비활성화 되었습니다. 새로운 챌린지를 생성해 보세요.", HttpStatus.OK);
 	}
 	
 	//나의챌린지 생성 페이지
@@ -235,6 +237,7 @@ public class MyLibraryController {
 		
 		PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
 		String userId = principalDetails.getUserId();
+		
 		if(bindingResult.hasErrors()) {
 			StringBuilder sb = new StringBuilder();
 			List<FieldError> fieldErrors = bindingResult.getFieldErrors();
@@ -243,8 +246,8 @@ public class MyLibraryController {
 				sb.append(fieldError.getDefaultMessage());  //에러메세지를 합친다.
 			}
 			return new ResponseEntity<String>(sb.toString(), HttpStatus.BAD_REQUEST);
-		}
-		
+		}	
+				
 		try {
 			challengeItemService.saveChallenge(challengeNewDto, userId);
 		} catch (Exception e) {

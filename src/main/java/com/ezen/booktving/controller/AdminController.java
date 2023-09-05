@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.ezen.booktving.auth.PrincipalDetails;
 import com.ezen.booktving.dto.AdminQuestionDto;
 import com.ezen.booktving.dto.AdminRentHistBookDto;
 import com.ezen.booktving.dto.AnswerDto;
@@ -33,15 +32,15 @@ import com.ezen.booktving.dto.BookRegFormDto;
 import com.ezen.booktving.dto.BookSearchDto;
 import com.ezen.booktving.dto.KeywordDto;
 import com.ezen.booktving.dto.KeywordFormDto;
+import com.ezen.booktving.dto.MemberFormDto;
 import com.ezen.booktving.dto.MemberSearchDto;
 import com.ezen.booktving.dto.NoticeDto;
 import com.ezen.booktving.dto.NoticeSearchDto;
-
+import com.ezen.booktving.dto.QuestionDto;
 import com.ezen.booktving.entity.Author;
 import com.ezen.booktving.entity.Book;
 import com.ezen.booktving.entity.Member;
 import com.ezen.booktving.entity.Notice;
-import com.ezen.booktving.dto.QuestionDto;
 import com.ezen.booktving.service.AdminBookRentHistService;
 import com.ezen.booktving.service.AdminQuestionService;
 import com.ezen.booktving.service.AuthorService;
@@ -165,18 +164,16 @@ public class AdminController {
 	// 도서 상세 페이지 삭제
 	@DeleteMapping("/admin/book/{bookId}/delete")
 	public @ResponseBody ResponseEntity deleteBooks(@PathVariable("bookId") Long bookId) {
-
+		
 		bookRegService.deleteBooks(bookId);
-
 		return new ResponseEntity<Long>(bookId, HttpStatus.OK);
 	}
 
 	// 회원관리 페이지 보여주기
 	@GetMapping(value = "/admin/member")
 	public String adminMemberMng(MemberSearchDto membersearchDto,
-			@PathVariable("page") @RequestParam(name = "page", required = false, defaultValue = "0") int page,
-			Model model) {
-		Pageable pageable = PageRequest.of(page, 3);
+			@RequestParam(name = "page", required = false, defaultValue = "0") int page, Model model) {
+		Pageable pageable = PageRequest.of(page, 10);
 		Page<Member> members = memberService.getAdminMemberPage(membersearchDto, pageable);
 		model.addAttribute("members", members);
 		model.addAttribute("membersearchDto", membersearchDto);
@@ -192,9 +189,11 @@ public class AdminController {
 	}
 
 	// 회원정보 상세페이지 보여주기 //value 경로는 개발하면서 변경. {memberId}
-	@GetMapping(value = "/admin/member/")
-	public String adminMemberDetail() {
+	@GetMapping(value = "/admin/member/{memberId}/new")
+	public String adminMemberDetail(Model model, @PathVariable("memberId") Long memberId) {
+		MemberFormDto memberFormDto = memberService.getUpdateDTL(memberId);
 
+		model.addAttribute("member", memberFormDto);
 		return "admin/adminMemberDetail";
 	}
 
@@ -225,7 +224,8 @@ public class AdminController {
 
 	// 추천 키워드 관리 페이지 보여주기
 	@GetMapping(value = "/admin/keyword/recommend")
-	public String adminRecommendKeyword(@RequestParam(required = false) String searchKeywordName, @RequestParam Optional<Integer> page, Model model) {
+	public String adminRecommendKeyword(@RequestParam(required = false) String searchKeywordName,
+			@RequestParam Optional<Integer> page, Model model) {
 
 		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
 		Page<KeywordDto> keywordDtoList = keyWordService.getRecommendKeywordList(searchKeywordName, pageable);
@@ -237,8 +237,9 @@ public class AdminController {
 
 	// 추천 키워드 등록
 	@PostMapping(value = "/admin/keyword/recommend/append")
-	public String appendRecommendKeyword(@Valid KeywordFormDto keywordFormDto, BindingResult bindingResult, RedirectAttributes redirectAttributes, Model model) {
-		if(bindingResult.hasErrors()) {
+	public String appendRecommendKeyword(@Valid KeywordFormDto keywordFormDto, BindingResult bindingResult,
+			RedirectAttributes redirectAttributes, Model model) {
+		if (bindingResult.hasErrors()) {
 			redirectAttributes.addFlashAttribute("errorMessage", bindingResult.getFieldError().getDefaultMessage());
 			return "redirect:/admin/keyword/recommend";
 		}
@@ -260,7 +261,7 @@ public class AdminController {
 	public ResponseEntity pullUpRecommendKeyword(@RequestParam(value = "keywordIdList[]") List<Long> keywordIdList) {
 		Collections.reverse(keywordIdList);
 
-		try {			
+		try {
 			keyWordService.pullUpRecommendKeyword(keywordIdList);
 		} catch (EntityNotFoundException e) {
 			e.printStackTrace();
@@ -286,8 +287,7 @@ public class AdminController {
 
 	// 추천작가 관리 페이지 보여주기
 	@GetMapping(value = { "/admin/author", "/admin/author/{page}" })
-	public String adminAuthor(AuthorSearchDto authorSearchDto, @PathVariable("page") Optional<Integer> page,
-			Model model) {
+	public String adminAuthor(AuthorSearchDto authorSearchDto, @PathVariable("page") Optional<Integer> page, Model model) {
 
 		try {
 			Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
@@ -339,16 +339,19 @@ public class AdminController {
 	}
 
 	// 작가정보 삭제
-	@DeleteMapping("/admin/author/delete")
-	public String deleteAuthor(@RequestParam(name = "chBoxs", required = false) Long[] chBoxs) {
+	@DeleteMapping(value = "/admin/author/delete")
+	@ResponseBody
+	public ResponseEntity deleteAuthor(@RequestParam(value = "authorIdList[]") List<Long> authorIdList) {
 
-		// 작가정보 삭제
-		if (chBoxs != null && chBoxs.length > 0) {
-			for (Long authorId : chBoxs) {
-				authorService.deleteAuthor(authorId);
-			}
+		try {
+			authorService.deleteAuthor(authorIdList);
+		} catch (EntityNotFoundException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
-		return "redirect:/admin/author";
+		
+		return new ResponseEntity<>(HttpStatus.OK);
+	
 	}
 
 	// 추천작가 도서등록 페이지 보여주기
@@ -387,7 +390,6 @@ public class AdminController {
 	@GetMapping(value = "/admin/question")
 	public String adminQuestion(QuestionDto questionDto, @PathVariable("page") Optional<Integer> page, Model model) {
 		Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
-		
 		Page<AdminQuestionDto> questionDtoList = adminQuestionService.getAdminQuestionPage(pageable);
 		model.addAttribute("questionList", questionDtoList);
 		model.addAttribute("maxPage", 5);
@@ -421,51 +423,48 @@ public class AdminController {
 	}
 	
 	//공지사항 관리페이지
-		@GetMapping(value = {"/admin/notice", "/admin/notice/{page}"})
-		public String adminNotice(NoticeSearchDto noticeSearchDto, @PathVariable("page") Optional<Integer> page, Model model) {
+	@GetMapping(value = {"/admin/notice", "/admin/notice/{page}"})
+	public String adminNotice(NoticeSearchDto noticeSearchDto, @PathVariable("page") Optional<Integer> page, Model model) {
 
-			try {
-				Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
-				Page<Notice> notices = noticeService.getAdminNoticePage(noticeSearchDto, pageable);
-				
-				model.addAttribute("notices", notices);
-				model.addAttribute("noticeSearchDto", noticeSearchDto);
-				model.addAttribute("maxPage", 5);
-				
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
+			Pageable pageable = PageRequest.of(page.isPresent() ? page.get() : 0, 10);
+			Page<Notice> notices = noticeService.getAdminNoticePage(noticeSearchDto, pageable);
+			
+			model.addAttribute("notices", notices);
+			model.addAttribute("noticeSearchDto", noticeSearchDto);
+			model.addAttribute("maxPage", 5);
 			
 			return "admin/adminNotice";
-		}
+	}
+
 
 	// 공지사항 등록 페이지 보여주기
-	@GetMapping(value = "/admin/noticeReg")
+	@GetMapping(value="/admin/noticeReg")
+
 	public String adminNoticeReg(Model model) {
 		model.addAttribute("noticeDto", new NoticeDto());
-		
+
 		return "admin/adminNoticeReg";
 	}
-	
-	//공지사항 등록하기
+
+	// 공지사항 등록하기
 	@PostMapping(value = "/admin/noticeReg")
 	public String noticeNew(@Valid NoticeDto noticeDto, BindingResult bindingResult, Model model) {
-		
-		if(bindingResult.hasErrors()) {
+
+		if (bindingResult.hasErrors()) {
 			return "admin/adminNoticeReg";
 		}
-		
-		try {			
+
+		try {
 			noticeService.saveNotice(noticeDto);
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("errorMessage", "공지사항 등록 중 에러가 발생했습니다.");
-			
+
 			return "admin/adminNoticeReg";
 		}
 		return "redirect:/admin/notice";
 	}
-	
+
 	// 공지사항 수정 페이지 보여주기
 	@GetMapping(value = "/admin/notice/modify/{noticeId}")
 	public String adminNoticeModify(@PathVariable("noticeId") Long noticeId, Model model) {
@@ -476,22 +475,22 @@ public class AdminController {
 		} catch (Exception e) {
 			e.printStackTrace();
 			model.addAttribute("errorMessage", "공지사항 정보를 가져올 때 에러가 발생했습니다.");
-			
+
 			model.addAttribute("noticeDto", new NoticeDto());
-			
+
 			return "admin/adminNoticeReg";
 		}
-		
+
 		return "admin/adminNoticeModify";
 	}
 
 	//공지사항 수정하기
 	@PostMapping(value = "/admin/notice/modify/{noticeId}")
 	public String noticeUpdate(@Valid NoticeDto noticeDto, Model model, BindingResult bindingResult) {
-		if(bindingResult.hasErrors()) {
+		if (bindingResult.hasErrors()) {
 			return "admin/adminNoticeReg";
 		}
-		
+
 		try {
 			noticeService.updateNotice(noticeDto);
 		} catch (Exception e) {
@@ -500,6 +499,22 @@ public class AdminController {
 			return "admin/adminNoticeReg";
 		}
 		return "redirect:/admin/notice";
+
+	}
+	
+	//공지사항 삭제하기
+	@DeleteMapping(value = "/admin/notice/delete")
+	@ResponseBody
+	public ResponseEntity deleteNotice(@RequestParam("noticeIdList[]") List<Long> noticeIdList) {
+		
+		try {
+			noticeService.deleteNotice(noticeIdList);
+		} catch (EntityNotFoundException e) {
+			e.printStackTrace();
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
+		return new ResponseEntity<>(HttpStatus.OK);
 		
 	}
+	
 }
