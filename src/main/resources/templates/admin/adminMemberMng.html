@@ -37,11 +37,12 @@
 							<div class="container">
 								<div class="row">
 									<div class="col-12">
-
+		
 										<div class="top-title"></div>
 										<h4>회원관리</h4>
 										<hr>
-										<form action="/admin/member" method="get">
+										<form th:action="@{'/admin/member'}" method="get"
+											>
 											<!-- 도서관리 contents -->
 											<table class="table table-responsive-md ">
 												<thead>
@@ -52,16 +53,16 @@
 														<th scope="col">가입일</th>
 														<th scope="col">생년월일</th>
 														<th scope="col">삭제</th>
-
 													</tr>
 												</thead>
 												<tbody>
 													<tr th:each="member : ${members.content}">
 														<th th:text="${member.id}" scope="row"></th>
 														<td th:text="${member.role}"></td>
-														<td th:text="${member.memberName}"><a th:href="/admin/member/"></a></td>
+														<td><a th:text="${member.memberName}" th:href="'/admin/member/'+${member.id}+'/new'"></a></td>
 														<td th:text="${member.regTime}"></td>
 														<td th:text="${member.birth}"></td>
+														
 														<td>
 															<button type="button" class="btn btn-danger"
 																th:value="${member.id}"
@@ -78,7 +79,8 @@
 	               end=${ ((members.totalPages == 0)) ? 1 : (start + (maxPage - 1) < members.totalPages ?
 	                     start + (maxPage - 1) : members.totalPages)}"
 													aria-label="..." style="display: flex">
-													<ul class="pagination d-flex justify-content-center adminbook-page">
+													<ul
+														class="pagination d-flex justify-content-center adminbook-page">
 														<li class="page-item pageitem"
 															th:classappend="${members.first} ? 'disabled'"><a
 															class="page-link page-item"

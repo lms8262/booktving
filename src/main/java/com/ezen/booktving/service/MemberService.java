@@ -113,6 +113,13 @@ public class MemberService implements UserDetailsService {
 
 		return memberFormDto;
 	}
+	
+	
+	public MemberFormDto getUpdateDTL(Long id) {
+		Member member = memberRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+		MemberFormDto memberFormDto = MemberFormDto.of(member, modelMapper);
+		return memberFormDto;
+	}
 
 	public String updateMember1(@Valid MemberFormDto memberFormDto, PasswordEncoder passwordEncoder) throws Exception {
 		Member member = memberRepository.findByUserId(memberFormDto.getUserId());
