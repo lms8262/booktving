@@ -159,12 +159,14 @@ public class MyLibraryController {
 			String memberName = memberService.getLoginMemberName(userDetails.getUsername());
 			model.addAttribute("memberName", memberName);
 			
-			List<ChallengeItemDto> challengeItemDtoList = challengeItemService.getChallengeList(userDetails.getUsername());
-			model.addAttribute("challengeItemDtoList", challengeItemDtoList);
+			List<ChallengeItemDto> challengeItemDtos = challengeItemService.getChallengeList(userDetails.getUsername());
+			model.addAttribute("challengeItems", challengeItemDtos);
 			
+			//활성화 데이터 갯수
 			long isActiveCount = challengeItemService.getCountOfIsActive(userDetails.getUsername());
 			model.addAttribute("isActiveCount", isActiveCount);
 			
+			//완독 대여도서 갯수
 			long completedRentBooksCount = myLibraryRentBookService.getCountOfCompletedRentBooks(userDetails.getUsername());
 			model.addAttribute("completedRentBooksCount", completedRentBooksCount);
 				
@@ -185,7 +187,7 @@ public class MyLibraryController {
 			} catch (Exception e) {
 				return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 			}
-			return new ResponseEntity<String>("success", HttpStatus.OK);
+			return new ResponseEntity<String>("챌린지 성공을 축하드립니다.", HttpStatus.OK);
 			
 		}
 		
@@ -200,7 +202,7 @@ public class MyLibraryController {
 			} catch (Exception e) {
 				return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 			}
-			return new ResponseEntity<String>("deactivate", HttpStatus.OK);
+			return new ResponseEntity<String>("성공첼린지가 비활성화 되었습니다. 새로운 챌린지를 생성해 보세요.", HttpStatus.OK);
 		}
 		
 		//나의챌린지 생성 페이지

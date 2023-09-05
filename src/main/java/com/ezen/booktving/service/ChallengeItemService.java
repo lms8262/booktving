@@ -41,40 +41,24 @@ public class ChallengeItemService {
 	
 	//챌린지 보여주기
 	public List<ChallengeItemDto> getChallengeList(String userId){
-		
+			
 		List<ChallengeItem> challengeItemList = challengeItemRepository.findChallengeItems(userId);
 		
 		List<ChallengeItemDto> challengeItemDtoList = new ArrayList<>();
-		
+			
 		for(ChallengeItem challengeItem : challengeItemList) {
 			ChallengeItemDto challengeItemDto = new ChallengeItemDto(challengeItem);
 			
 				challengeItemDtoList.add(challengeItemDto);
 			}
-						
+							
 		return challengeItemDtoList;
 	}
 	
 	public long getCountOfIsActive(String userId) {
 		return challengeItemRepository.countByIsActiveAndMember_UserId(YesNoStatus.Y, userId);
 	}
-	
-	/*
-	//challengeItem 중 활성화 데이터 가져오기
-	public List<ChallengeItemDto> getActioveChallengeList(String userId){
-		List<ChallengeItem> activeChallengeItemList = challengeItemRepository.findActiveChallengeItems(userId);
-		
-		List<ChallengeItemDto> challengeItemDtoList = new ArrayList<>();
-		
-		for(ChallengeItem challengeItem : activeChallengeItemList) {
-			ChallengeItemDto challengeItemDto = new ChallengeItemDto(challengeItem);
 			
-			challengeItemDtoList.add(challengeItemDto);
-		}
-		return challengeItemDtoList;
-	}
-	*/
-	
 	//challengeItem 중 비활성 데이터 저장하기
 	public void deactivateChallenge(Long challengeItemId) {
 		ChallengeItem challengeItem = challengeItemRepository.findById(challengeItemId).orElseThrow(EntityNotFoundException::new);
@@ -83,9 +67,7 @@ public class ChallengeItemService {
 			challengeItem.setIsActive(YesNoStatus.N);
 			challengeItemRepository.save(challengeItem);
 		}
-	}
-	
-	
+	}	
 	
 	//챌린지 성공 데이터 업데이트
 	public void updateChallengeItemSuccess(Long challengeItemId) {

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="~{layouts/layout1}">
-	
-	 
-<!-- adminBook 페이지 CSS --> 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+
+<!-- adminBook 페이지 CSS -->
 <th:block layout:fragment="css">
-	<link rel="stylesheet" href="/css/adminMember.css" />	
+	<link rel="stylesheet" href="/css/adminMember.css" />
 </th:block>
 
 <div layout:fragment="content">
@@ -15,7 +15,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-12 section-wrap">
-				
+
 					<div class="row">
 						<nav class="menu col-lg-2">
 							<ul class="col-12">
@@ -28,56 +28,52 @@
 								<li><a href="/admin/notice">공지관리</a></li>
 							</ul>
 						</nav>
-						
-						 
+
+
 						<div class="admin-content col-lg-10">
 							<div class="container">
 								<div class="row">
 									<div class="col-12">
-										
+
+							
+
 										<div class="top-title">
 											<h4>회원정보</h4>
 											<hr>
 										</div>
-										
-										
-										<form role="form" action="">
-											
-											<div class="col-md-2"></div>
-											<div class="col-md-8">
-												<table class="table table-responsive-md ">						
-													<tr>
-														<th class="col-sm-3">아이디</th>
-														<td class="col-sm-9"></td>
-													</tr>
-													<tr>
-														<th class="col-sm-3">회원이름</th>
-														<td class="col-sm-9"></td>
-													</tr>
-													<tr>
-														<th class="col-sm-3">전화번호</th>
-														<td class="col-sm-9"></td>
-													</tr>																										
-												</table>
-												
-												<!-- 등록버튼  -->
-												<div class="form-group button col-12">
-													<div class="col-md-9"></div>
-													<div class="col-md-3 goBack-link">
-														<a href="/adminMember" class="btn goBack" style="width: 100px;">뒤로가기</a>
-													</div>
+										<div class="col-md-2"></div>
+										<div class="col-md-8">
+											<table class="table table-responsive-md ">
+												<tr>
+													<th class="col-sm-3">아이디</th>
+													<td th:text="${member.userId}" class="col-sm-9"></td>
+												</tr>
+												<tr>
+													<th class="col-sm-3">회원이름</th>
+													<td th:text="${member.memberName}"  class="col-sm-9"></td>
+												</tr>
+												<tr>
+													<th class="col-sm-3">전화번호</th>
+													<td  th:text="${member.tel}" class="col-sm-9"></td>
+												</tr>
+											</table>
+
+											<!-- 등록버튼  -->
+											<div class="form-group button col-12">
+												<div class="col-md-9"></div>
+												<div class="col-md-3 goBack-link">
+													<a href="/admin/member" class="btn goBack"
+														style="width: 100px;">뒤로가기</a>
 												</div>
 											</div>
-											<div class="col-md-2"></div>
-
-																						
-										</form>
+										</div>
+										<div class="col-md-2"></div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				
+
 				</div>
 			</div>
 		</div>
@@ -90,7 +86,7 @@
 <th:block layout:fragment="script">
 
 	<script>
-	
+		
 	</script>
 </th:block>
 
