@@ -48,10 +48,10 @@ public class MemberService implements UserDetailsService {
 	}
 
 	// 중복아이디
-
 	private void validateDuplicateUserId(MemberFormDto memberFormDto) {
 
 		Member findMember = memberRepository.findByUserId(memberFormDto.getUserId());
+
 		if (findMember != null) {
 			throw new IllegalStateException("이미 사용중인 ID입니다.");
 		}
@@ -150,8 +150,13 @@ public class MemberService implements UserDetailsService {
 		memberRepository.delete(member);
 	}
 
-	public Member listAll(String userId) {
+	
+	//로그인한 사용자 이름 가져오기
+	public String getLoginMemberName(String userId){
+		
 		Member user = memberRepository.findByUserId(userId);
-		return user;
+		
+		return user.getMemberName();
+
 	}
 }

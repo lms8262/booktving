@@ -19,7 +19,7 @@
 					<div class="row">
 						<nav class="menu col-lg-2">
 							<ul class="col-12">
-								<li><a href="/admin/book">도서관리</a></li>
+								<li><a href="/admin/books">도서관리</a></li>
 								<li><a href="/admin/member">회원관리</a></li>
 								<li><a href="/admin/rents">대출관리</a></li>
 								<li><a href="/admin/keyword/recommend">추천 키워드 관리</a></li>
@@ -109,6 +109,13 @@
 															type="text" placeholder="ISBN 입력" th:field="*{isbn}" />
 														<p th:if="${#fields.hasErrors('isbn')}"
 															th:errors="*{isbn}" class="fieldError">Incorrect Data</p>
+													</div>
+		
+													<div class="bookReg-form-wrap">
+														<label th:for="itemId" class="book-reg-label">바로읽기 아이디</label> <input
+															type="text" placeholder="바로읽기 아이디 입력" th:field="*{itemId}" />
+														<p th:if="${#fields.hasErrors('itemId')}"
+															th:errors="*{itemId}" class="fieldError">Incorrect Data</p>
 													</div>
 
 												</div>

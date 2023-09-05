@@ -1,7 +1,11 @@
 package com.ezen.booktving.entity;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.ezen.booktving.constant.YesNoStatus;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -36,16 +40,22 @@ public class ChallengeItem extends BaseTimeEntity {
 	@Column(nullable = false)
 	private YesNoStatus success;
 	
+	@Enumerated(EnumType.STRING)
+	@Column(name = "is_active", nullable = false)
+    private YesNoStatus isActive;
+	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "challenge_id", nullable = false)
-	private Challenge challenge;
+	@JoinColumn(name = "member_id", nullable = false)
+	private Member member;
 	
 	
-	public static ChallengeItem createChallengeItem(Integer targetMount, YesNoStatus success) {
+	
+	public static ChallengeItem createChallengeItem(Integer targetMount, YesNoStatus success, YesNoStatus isActive) {
 		
 		ChallengeItem challengeItem = new ChallengeItem();
 		challengeItem.setTargetMount(targetMount);
-		challengeItem.setSuccess(success);
+		challengeItem.setSuccess(YesNoStatus.N);
+		challengeItem.setIsActive(YesNoStatus.Y);
 		
 		return challengeItem;
 	}

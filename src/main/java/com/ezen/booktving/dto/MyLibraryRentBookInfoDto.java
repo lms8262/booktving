@@ -2,6 +2,8 @@ package com.ezen.booktving.dto;
 
 import java.time.LocalDate;
 
+
+import com.ezen.booktving.constant.YesNoStatus;
 import com.ezen.booktving.entity.BookImg;
 import com.ezen.booktving.entity.RentBook;
 
@@ -15,6 +17,10 @@ public class MyLibraryRentBookInfoDto {
 	private Long id; //대여아이디
 	
 	private String bookName; //도서명
+	
+	private String itemId; //바로읽기 아이디
+	
+	private String isbn; //ISBN
 	
 	private String author; //저자명
 	
@@ -30,6 +36,9 @@ public class MyLibraryRentBookInfoDto {
 	
 	private String sentence; //한 문장
 	
+	private YesNoStatus completeYn; //완독여부
+	
+	
 	public MyLibraryRentBookInfoDto(RentBook rentBook, BookImg bookImg) {
 		this.id = rentBook.getId();
 		this.bookName = rentBook.getBook().getBookName();
@@ -40,5 +49,9 @@ public class MyLibraryRentBookInfoDto {
 		this.imgUrl = bookImg.getImgUrl();
 		this.review = rentBook.getReview();
 		this.sentence = rentBook.getSentence();
+		this.completeYn = rentBook.getCompleteYn();
+		this.isbn = rentBook.getBook().getIsbn();
+		this.itemId = rentBook.getBook().getItemId();
 	}
+
 }

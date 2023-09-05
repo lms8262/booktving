@@ -3,6 +3,7 @@ package com.ezen.booktving.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -14,10 +15,9 @@ import com.ezen.booktving.dto.AdminRentHistBookDto;
 import com.ezen.booktving.dto.MyLibraryRentBookInfoDto;
 import com.ezen.booktving.dto.MyLibraryRentBookListDto;
 import com.ezen.booktving.dto.RentBookDto;
-import com.ezen.booktving.entity.ChallengeItem;
+import com.ezen.booktving.entity.Book;
 import com.ezen.booktving.entity.RentBook;
 import com.ezen.booktving.repository.BookImgRepository;
-import com.ezen.booktving.repository.ChallengeItemRepository;
 import com.ezen.booktving.repository.RentBookRepository;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -27,10 +27,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Transactional
 public class MyLibraryRentBookService {
+	private final ModelMapper modelMapper;
 	private final RentBookRepository rentBookRepository;
 	private final BookImgRepository bookImgRepository;
-	
-	
 	
 	//대여목록 리스트 가져오는 서비스
 	@Transactional(readOnly = true)
@@ -53,31 +52,74 @@ public class MyLibraryRentBookService {
 	
 	//대여도서 상세페이지 가져오는 서비스
 	@Transactional(readOnly = true)
-	public Page<MyLibraryRentBookInfoDto> getMyLibraryRentBookInfo(String userId, Pageable pageable) {
+	public MyLibraryRentBookInfoDto getMyLibraryRentBookInfo(Long rentBookId) {
 		
-		List<RentBook> rentbookInfo = rentBookRepository.findRents(userId, pageable);
+		RentBook rentBook = rentBookRepository.findById(rentBookId).orElseThrow(EntityNotFoundException::new);
 		
-		Long totalCount = rentBookRepository.countRent(userId);
+		MyLibraryRentBookInfoDto myLibraryRentBookInfoDto = new MyLibraryRentBookInfoDto(rentBook, bookImgRepository.findByBookIdAndRepYn(rentBook.getBook().getId(), YesNoStatus.Y));
 		
-		List<MyLibraryRentBookInfoDto> myLibraryRentBookInfoDtos  = new ArrayList<>();
-		
-		for(RentBook rentBook : rentbookInfo) {
-			MyLibraryRentBookInfoDto myLibraryRentBookInfoDto = new MyLibraryRentBookInfoDto(rentBook, bookImgRepository.findByBookIdAndRepYn(rentBook.getBook().getId(), YesNoStatus.Y));
-			
-			myLibraryRentBookInfoDtos.add(myLibraryRentBookInfoDto);
-		}
-		
-		return new PageImpl<>(myLibraryRentBookInfoDtos, pageable, totalCount);
+		return myLibraryRentBookInfoDto;
 	} 
 	
-	//로그인한 사용자의 도서대여정보 가져오기
+	//대여도서 독서완료 등록하기
+	@Transactional
+	public void rentBookComplete(Long rentBookId) {
+		RentBook rentBook = rentBookRepository.findById(rentBookId).orElseThrow(EntityNotFoundException::new);
+		
+		YesNoStatus currentStatus = rentBook.getCompleteYn();
+		
+		if(currentStatus == YesNoStatus.N) {
+			rentBook.setCompleteYn(YesNoStatus.Y);
+		} else {
+			rentBook.setCompleteYn(YesNoStatus.N);
+		}
+			rentBookRepository.save(rentBook);
+	}
+	
+	//대여도서 상세페이지 리뷰등록하기
+	@Transactional
+	public void addReview(Long rentBookId, String reviewText) {
+		RentBook rentBook = rentBookRepository.findById(rentBookId).orElseThrow(EntityNotFoundException::new);
+	        
+        rentBook.setReview(reviewText);	        
+        rentBookRepository.save(rentBook);
+    }
+	
+	//대여도서 상세페이지 리뷰삭제하기
+	@Transactional
+	public void deleteReview(Long rentBookId) {
+		RentBook rentBook = rentBookRepository.findById(rentBookId).orElseThrow(EntityNotFoundException::new);
+	        
+	    rentBook.setReview(null);
+	    rentBookRepository.save(rentBook);
+	}
+	
+	//대여도서 상세페이지 한문장 등록하기
+	@Transactional
+	public void addSentence(Long rentBookId, String sentence) {
+		RentBook rentBook = rentBookRepository.findById(rentBookId).orElseThrow(EntityNotFoundException::new);
+		
+		rentBook.setSentence(sentence);
+		rentBookRepository.save(rentBook);
+	}
+	
+	//대여도서 상세페이지 한문장 삭제하기
+	@Transactional
+	public void deleteSentence(Long rentBookId) {
+		RentBook rentBook = rentBookRepository.findById(rentBookId).orElseThrow(EntityNotFoundException::new);
+        
+        rentBook.setSentence(null);
+        rentBookRepository.save(rentBook);
+    }
+	
+	//로그인한 사용자의 도서대여정보 가져오기-나의서재 메인
 	public List<RentBook> listAll(String userId){
 		List<RentBook> rentBookList = rentBookRepository.findRentByMember(userId);
 		
 		List<AdminRentHistBookDto> rentBookDtoList = new ArrayList<>();
 		
 		for(RentBook rentBook : rentBookList) {
-			AdminRentHistBookDto rentBookDto = AdminRentHistBookDto.of(rentBook);
+			AdminRentHistBookDto rentBookDto = AdminRentHistBookDto.of(rentBook, modelMapper);
 			rentBookDtoList.add(rentBookDto);
 		}
 		return rentBookList;

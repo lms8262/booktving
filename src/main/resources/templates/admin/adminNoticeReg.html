@@ -60,11 +60,13 @@
 												<label for="title" class="notice-label">제목</label>
 												<br />
 												<input type="text" placeholder="제목 입력" class="form-control col-12"  th:field="*{title}" />
+												<p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="fieldError">Incorrect Data</p>
 											</div>
 											<div class="notice-contents">
 												<label for="title" class="notice-label">내용</label>
 												<br />
 												<textarea rows="10" th:field="*{content}" placeholder="내용 입력" class="form-control col-12" id="notice"></textarea>
+												<p th:if="${#fields.hasErrors('notice')}" th:errors="*{notice}" class="fieldError">Incorrect Data</p>
 											</div>
 																				
 											<!-- 등록버튼  -->

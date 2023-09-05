@@ -36,15 +36,17 @@ public class NewBookTvingDto {
 	@NotBlank
 	private String description;
 	
-	private static ModelMapper modelMapper = new ModelMapper();
+	@NotBlank
+	private String itemId;
+	
 	
 	// Dto -> Entity 변환
-	public NewBookTving createNewBookTving() {
+	public NewBookTving createNewBookTving(ModelMapper modelMapper) {
 		return modelMapper.map(this, NewBookTving.class);
 	}
 	
 	// Entity -> Dto 변환
-	public static NewBookTvingDto of(NewBookTving newBookTving) {
+	public static NewBookTvingDto of(NewBookTving newBookTving, ModelMapper modelMapper) {
 		return modelMapper.map(newBookTving, NewBookTvingDto.class);
 	}
 }

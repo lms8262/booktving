@@ -25,6 +25,8 @@ public class RentBookService {
 	private final MemberRepository memberRepository;
 	private final BookRepository bookRepository;
 	
+	
+	//책 대여하기
 	public Long saveRentBook(String userId, String isbn) {
 		Member member = memberRepository.findByUserId(userId);
 		Book book = bookRepository.findByIsbn(isbn);
@@ -48,4 +50,5 @@ public class RentBookService {
 		rentBookRepository.save(rentBook);
 		return rentBook.getId();
 	}
+
 }

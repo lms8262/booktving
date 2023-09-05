@@ -66,6 +66,14 @@
 	margin-top: 30px;
 }
 
+.answer {
+	width: 1050px;
+	height: 150px;
+	border: 1px solid #BEBDBD;
+	border-radius: 5px;
+	margin-top: 30px;
+}
+
 .detail-title {
 	line-height: 45px;
 	padding-left: 10px;
@@ -81,7 +89,7 @@
 	width: 125px;
 }
 
-.detail-list>button {
+.detail-list > button {
 	background-color: #FFB800;
 	color: black;
 	border-style: none;

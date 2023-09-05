@@ -20,6 +20,9 @@ public interface RentBookRepository extends JpaRepository<RentBook, Long>, RentB
 	Long countRent(@Param("userId") String userId);
 	
 	@Query("select r from RentBook r where r.member.userId = :userId")
+	List<RentBook> findRentBooksByUserId(@Param("userId") String userId);
+	
+	@Query("select r from RentBook r where r.member.userId = :userId")
 	List<RentBook> findRentByMember(@Param("userId") String userId);
 	
 	//프로젝션을 이용해 rentBook의 완독 데이터가져오기

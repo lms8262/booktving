@@ -1,8 +1,12 @@
 package com.ezen.booktving.entity;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.ezen.booktving.constant.QuestionStatus;
 import com.ezen.booktving.dto.AnswerDto;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -33,7 +37,7 @@ public class Answer extends BaseEntity {
 	private String content;
 	
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "question_id", unique = true, nullable = false)
+	@JoinColumn(name = "question_id", nullable = false)
 	private Question question;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -50,5 +54,9 @@ public class Answer extends BaseEntity {
 		answer.setMember(answerMember);
 		
 		return answer;
+	}
+	
+	public void updateAnswer(String content) {
+		this.content = content;
 	}
 }

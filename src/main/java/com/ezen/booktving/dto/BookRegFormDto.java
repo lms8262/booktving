@@ -45,6 +45,9 @@ public class BookRegFormDto {
 	@NotBlank(message = "카테고리는 필수 선택 사항 입니다.")
 	private String category;
 	
+	@NotBlank(message = "카테고리는 필수 선택 사항 입니다.")
+	private String itemId;
+	
 	//도서 이미지 정보를 저장
 	private List<BookImgDto> bookImgDtoList = new ArrayList<>();
 	

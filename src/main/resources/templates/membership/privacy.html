@@ -114,7 +114,7 @@
 			</div>
 			<!-- address -->
 			<div>
-				<h3 class ="join_title">
+				<h3 class="join_title">
 					<label th:for="address" class="text-black">주소</label> <input
 						type="button" class="btn btn-primary mb-3 "
 						onclick="sample6_execDaumPostcode()" value="우편번호 찾기"
@@ -138,9 +138,9 @@
 			<!-- JOIN BTN-->
 			<div class="btn_area">
 				<button type="submit" id="btnJoin" style="margin-left: 45px;">
-					<span>가입하기</span>
+					<span>수정하기</span>
 				</button>
-				<button type="reset" id="btnJoin">
+				<button type="reset" id="btnJoin" onclick="location.href='/login'">
 					<span>취소</span>
 				</button>
 			</div>
@@ -152,7 +152,7 @@
 	</form>
 </div>
 <th:block layout:fragment="script">
-<script
+	<script
 		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<script th:inline="javascript">
 		function sample6_execDaumPostcode() {
@@ -207,6 +207,7 @@
 						}
 					}).open();
 		}
+
 	</script>
 </th:block>
 </html>
