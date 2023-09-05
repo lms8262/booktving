@@ -183,7 +183,7 @@ public class AdminController {
 	}
 
 	// 회원 관리 삭제
-	@DeleteMapping(value = "/admin/member/{Id}/delete")
+	@DeleteMapping(value = "/admin/member/{memberId}/delete")
 	public @ResponseBody ResponseEntity deleteMember(@PathVariable("memberId") Long memberId) {
 		memberService.deleteMember(memberId);
 		return new ResponseEntity<Long>(memberId, HttpStatus.OK);
