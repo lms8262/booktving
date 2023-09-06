@@ -18,7 +18,7 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-public class NoticeControllrt {
+public class NoticeController {
 	
 	private final NoticeService noticeService;
 
