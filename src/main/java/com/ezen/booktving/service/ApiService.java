@@ -15,6 +15,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import org.springframework.web.reactive.function.client.WebClient;
@@ -43,6 +44,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ApiService {
 	
+	@Value("${bookImgLocation}")
+	private String bookImgLocation;
 	private final WebClient webClient;
 	private final BestSellerRepository bestSellerRepository;
 	private final NewBookTvingRepository newBookTvingRepository;
@@ -273,8 +276,8 @@ public class ApiService {
         
         URL url = new URL(imgPath);
         BufferedImage image = ImageIO.read(url);
-        									  // 이부분 배포시 바꿔야함
-        ImageIO.write(image, format, new File("C:/booktving/book" + "/" + imgName));
+        
+        ImageIO.write(image, format, new File(bookImgLocation + "/" + imgName));
         
         BookImg bookImg = BookImg.builder()
         						.imgName(imgName)

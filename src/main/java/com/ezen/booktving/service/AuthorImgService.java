@@ -1,5 +1,6 @@
 package com.ezen.booktving.service;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,7 +19,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthorImgService {
 	
-	private String authorImgLocation = "c:/booktving/author";
+	@Value("${authorImgLocation}")
+	private String authorImgLocation;
 	private final AuthorImgRepository authorImgRepository;
 	private final AuthorBookImgRepository authorBookImgRepository;
 	private final FileService fileService;
