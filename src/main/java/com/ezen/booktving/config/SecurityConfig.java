@@ -55,7 +55,7 @@ public class SecurityConfig {
 				.requestMatchers(mvc.pattern("/"), mvc.pattern("/favicon.ico"), mvc.pattern("/error"), mvc.pattern("/image/**")).permitAll()
 				.requestMatchers(mvc.pattern("/membership/**"), mvc.pattern("/login/**")).permitAll()
 				.requestMatchers(mvc.pattern("/findid"), mvc.pattern("/findpw")).permitAll()
-				.requestMatchers(mvc.pattern("/category/**"), mvc.pattern("/search/**"), mvc.pattern("/question/**")).permitAll()
+				.requestMatchers(mvc.pattern("/category/**"), mvc.pattern("/search/**"), mvc.pattern("/question/**"), mvc.pattern("/notice/**")).permitAll()
 				.requestMatchers(mvc.pattern("/author/**"), mvc.pattern("/book/**"), mvc.pattern("/mylibrary/**"),mvc.pattern("/mypage/**")).permitAll()
 				// 'admin'으로 시작하는 경로는 관리자만 접근가능하도록 설정
 				.requestMatchers(mvc.pattern("/admin/**")).hasRole("ADMIN")
