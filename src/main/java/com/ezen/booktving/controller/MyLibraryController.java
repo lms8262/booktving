@@ -271,7 +271,7 @@ public class MyLibraryController {
 
 		model.addAttribute("favoriteBooks", favoriteBookDtos);
 
-		return "book/myFavorite";
+		return "myLibrary/myFavorite";
 	}
 
 	// 찜 삭제
