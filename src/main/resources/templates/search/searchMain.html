@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/layout1}">
+	 
+<th:block layout:fragment="css">
+	<link rel="stylesheet" th:href="@{/css/search.css}" />
+</th:block>
+
+<div layout:fragment="content">
+	<div class="search_wrap">
+		<div class="container">
+			<form class="search-form" method="get" action="/search/detail" th:object="${bookSearchDto}" name="searchForm">			
+				<div class="search-select">
+					<select id="searchBy" name="searchBy">
+						<option value="Keyword">제목+저자</option>
+						<option value="Title">제목</option>
+						<option value="Author">저자</option>
+						<option value="Publisher">출판사</option>
+					</select>
+				</div>
+				<div class="search-input d-flex container">
+					<button id="searchBtn" type="button">
+						<img alt="search" src="/images/search.png">
+					</button>
+					<div class="d-flex align-items-center">
+						<input type="text" id="searchQuery" name="searchQuery" placeholder="검색어를 입력하세요">
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div>
+		<div class="search_recommend container" th:if="${not #lists.isEmpty(recommendKeywordList)}">		
+			<h5>
+				북티빙 추천 검색어
+			</h5>
+			<div>
+				<ul class="recommend-list d-flex flex-wrap">
+					<li th:each="recommendKeyword : ${recommendKeywordList}">
+						<a th:href="'/search/detail?searchBy=' + ${recommendKeyword.keywordType} + '&searchQuery=' + ${recommendKeyword.keywordName}">[[${recommendKeyword.keywordName}]]</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		<p class="text-center mt-4" th:unless="${not #lists.isEmpty(recommendKeywordList)}">등록된 추천 키워드가 없습니다.</p>
+	</div>
+	<div class="popular-wrap">
+		<div class="search_popular container d-flex" th:if="${not #lists.isEmpty(popularKeywordList)}">
+			<div class="popular-title d-flex">			
+				<h5>
+					인기 검색어
+				</h5>
+			</div>
+		</div>
+		<div class ="container">
+			<ul class="popular-list">
+				<li th:each="popularKeyword, status : ${popularKeywordList}">
+					<a th:href="'/search/detail?searchBy=Keyword&searchQuery=' + ${popularKeyword}">
+						[[${status.count}]]&nbsp;&nbsp;
+						<span>[[${popularKeyword}]]</span>
+					</a>
+				</li>
+			</ul>
+			<p class="text-center" th:unless="${not #lists.isEmpty(popularKeywordList)}">등록된 인기 검색어가 없습니다.</p>
+		</div>
+	</div>
+</div>
+
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+		$(document).ready(function() {
+			
+			var errorMessage = [[${errorMessage}]];
+			
+			if(errorMessage != null) {
+				alert(errorMessage);
+			}
+			
+			$("#searchBtn").on("click", function(e) {
+				e.preventDefault(); // submit 방지
+				
+				search();
+				
+			});
+			
+		});
+		
+		function search() {
+			var searchQuery = $("#searchQuery").val();
+			
+			if(searchQuery.replace(/\s| /gi, "").length == 0) {
+				alert("검색어는 필수로 입력해주세요.");
+				return false;
+			}
+			
+			const f = document.searchForm;
+			f.submit();
+		}
+		
+	</script>
+</th:block>
+
+</html>

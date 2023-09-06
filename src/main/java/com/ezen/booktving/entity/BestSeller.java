@@ -6,9 +6,10 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -18,11 +19,12 @@ import lombok.ToString;
 @Setter
 @ToString
 @Builder
-@EqualsAndHashCode
-public class BestSeller {
+@NoArgsConstructor
+@AllArgsConstructor
+public class BestSeller extends BaseEntity {
 
 	@Id
-	@Column(name = "bestSeller_id")
+	@Column(name = "best_seller_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
@@ -46,4 +48,5 @@ public class BestSeller {
 	
 	@Column(nullable = false)
 	private String link;
+
 }

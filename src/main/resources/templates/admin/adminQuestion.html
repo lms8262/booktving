@@ -1,12 +1,14 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="~{layouts/layout1}">
-	
-	 
-<!-- adminBook 페이지 CSS --> 
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+<head>
+	<meta name="_csrf" th:content="${_csrf.token}" />
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
+<!-- adminBook 페이지 CSS -->
 <th:block layout:fragment="css">
-	<link rel="stylesheet" href="/css/adminMember.css" />	
+	<link rel="stylesheet" href="/css/adminQuestion.css" />
 </th:block>
 
 <div layout:fragment="content">
@@ -15,64 +17,73 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-12 section-wrap">
-				
+
 					<div class="row">
 						<nav class="menu col-lg-2">
 							<ul class="col-12">
-								<li><a href="/admin/book">도서관리</a></li>
+								<li><a href="/admin/books">도서관리</a></li>
 								<li><a href="/admin/member">회원관리</a></li>
-								<li><a href="/admin/rent">대출관리</a></li>
-								<li><a href="/admin/keyword">키워드 관리</a></li>
+								<li><a href="/admin/rents">대출관리</a></li>
+								<li><a href="/admin/keyword/recommend">추천 키워드 관리</a></li>
+								<li><a href="/admin/author">추천작가 관리</a></li>
 								<li><a href="/admin/question">문의관리</a></li>
 								<li><a href="/admin/notice">공지관리</a></li>
 							</ul>
 						</nav>
-						
-						
+
+
 						<div class="admin-content col-lg-10">
 							<div class="container">
 								<div class="row">
 									<div class="col-12">
-										
+
 										<div class="top-title">
 											<h4>문의관리</h4>
 											<hr>
 										</div>
-										
-										
+
+
 										<form role="form" action="">
 											<!-- 도서관리 contents -->
-											<table class="table table-responsive-md ">						
+											<table class="table table-responsive-md ">
 												<thead>
 													<tr>
-														<th scope="col"></th>
 														<th scope="col">NO.</th>
 														<th scope="col">제목</th>
-														<th scope="col">회원이름</th>
+														<th scope="col">회원아이디</th>
 														<th scope="col">등록일</th>
+														<th scope="col">답변여부</th>
 													</tr>
 												</thead>
 												<tbody>
-													<tr>
-														<td>
-															<input type="checkbox" value=""/> 
+													<tr th:each="question : ${questionList.getContent()}">
+														<td class="adminmenu_td" th:text="${question.id}"></td>
+														<td class="adminmenu_td"><a th:text="${question.title}"
+																th:href="@{/admin/answer/{id}(id=${question.id})}"></a>
 														</td>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
+														<td class="adminmenu_td" th:text="${question.userId}">
+														</td>
+														<td class="adminmenu_td" th:text="${question.questionDate}">
+														</td>
+														<td class="adminmenu_td" th:text="${question.questionStatus.krName}">
+														</td>
 													</tr>
 												</tbody>
 											</table>
-											
+
+
+
 											<!-- 등록버튼  -->
 											<div class="form-group button col-12">
 												<div class="col-md-8"></div>
 												<div class="col-md-2">
-													<button type="button" class="btn reg_btn" style="width: 100px;">답변등록</button>
+													<button type="button" class="btn reg_btn"
+														style="width: 100px;">답변등록</button>
 												</div>
 												<div class="col-md-2">
-													<button type="button" class="btn delete_btn" style="width: 100px;">삭제</button>
+													<button type="button" class="btn delete_btn"
+														style="width: 100px;" value="${question.id}"
+														onclick="adminDeleteQuestion(this.value)">삭제</button>
 												</div>
 											</div>
 
@@ -83,58 +94,55 @@
 													<!-- 검색분류 -->
 													<select class="form-control">
 														<option value="">검색분류</option>
-														<option value=""></option>
-														<option value=""></option>
-														<option value=""></option>
-														<option value=""></option>
-														<option value=""></option>
+														<option value="">제목</option>
+														<option value="">회원아이디</option>
 													</select>
 												</div>
 												<div class="col-lg-6">
 													<div style="display: flex;">
-														<input type="text" class="form-control col-sm-10" placeholder="검색어 입력">
-														<button id="searchBtn" type="submit" class="btn search-btn col-sm-2">검색</button>
+														<input type="text" class="form-control col-sm-10"
+															placeholder="검색어 입력">
+														<button id="searchBtn" type="submit"
+															class="btn search-btn col-sm-2">검색</button>
 													</div>
 												</div>
 												<div class="col-lg-2"></div>
 											</div>
 
-
 											<!-- paging 부분 -->
-											<!-- 개발 후 medel key 으로 수정해서 사용하세요
-											<nav th:with="start=${(items.number / maxPage) * maxPage + 1}, 
-														  end = (${ ((items.totalPages == 0)) ? 1 :	(start + (maxPage -1) < items.totalPages ?
-											  			  start + (maxPage - 1) : items.totalPages)})" 						
-															aria-label="...">
-												<ul class="pagination d-flex justify-content-center">
-						  
-												    <li class="page-item " th:classappend="${items.first} ? 'disabled'">
-												      	<a class="page-link page-item" th:onclick="'javascript:page(' + ${items.number - 1} + ')'">◀</a>
-													</li>
-
-													<li class="page-item"
-														th:each="page: ${#numbers.sequence(start, end)}"
-														th:classappend="${items.number eq page -1} ? 'active' : '' ">
-														<a class="page-link" th:inline="text"
-														th:onclick="'javascript:page(' + ${page - 1} + ')'">
-															[[${page}]] </a>
-													</li>
-
-													<li class="page-item" th:classappend="${items.last} ? 'disabled'"><a
-														class="page-link page-item" th:onclick="'javascript:page(' + ${items.number + 1} + ')'">▶</a>
+											<div>
+												<nav th:with="start=${(questionList.number / maxPage) * maxPage + 1}, 
+															  end = (${ ((questionList.totalPages == 0)) ? 1 :	(start + (maxPage -1) < questionList.totalPages ?
+												  			  start + (maxPage - 1) : questionList.totalPages)})" 						
+																aria-label="...">
+													<ul class="pagination d-flex justify-content-center">
+							  
+													    <li class="page-item " th:classappend="${questionList.first} ? 'disabled'">
+													      	<a class="page-link page-item" th:onclick="'javascript:page(' + ${questionList.number - 1} + ')'">이전</a>
 														</li>
+	
+														<li class="page-item"
+															th:each="page: ${#numbers.sequence(start, end)}"
+															th:classappend="${questionList.number eq page -1} ? 'active' : '' ">
+															<a class="page-link" th:inline="text"
+															th:onclick="'javascript:page(' + ${page - 1} + ')'">
+																[[${page}]] </a>
+														</li>
+	
+														<li class="page-item" th:classappend="${questionList.last} ? 'disabled'"><a
+															class="page-link page-item" th:onclick="'javascript:page(' + ${questionList.number + 1} + ')'">다음</a>
+															</li>	
+													</ul>
+												</nav>												
+											</div>
 
-												</ul>
-											</nav>
-											-->
-											
 										</form>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				
+
 				</div>
 			</div>
 		</div>
@@ -145,30 +153,17 @@
 
 <!-- adminBook 페이지 javaScript -->
 <th:block layout:fragment="script">
-
-	<script>
-	/*  개발 후 검색 항목에 맞게 수정해서 사용하세요
-	$(document).ready(function(){
-		$("#searchBtn").on("click", function(e){
-			e.preventDefault(); 
-			page(0); 
-		});			
-	});
-	
-	function page(page){
+	<script th:inline="javascript">
+		$(document).ready(function(){
+			$("#searchBtn").on("click", function(e){
+				e.preventDefault(); 
+				page(0); 
+			});			
+		});
 		
-		var searchDateType = $("#searchDateType").val();
-		var searchSellStatus = $("#searchSellStatus").val();
-		var searchBy = $("#searchBy").val();
-		var searchQuery = $("#searchQuery").val();
-		
-		location.href = "/admin/adminBook/" + page 
-					  + "?searchDateType=" +  searchDateType 
-					  + "&searchSellStatus=" + searchSellStatus
-					  + "&searchBy=" + searchBy
-					  + "&searchQuery=" + searchQuery
-	}	
-	 */
+		function page(page) {
+			location.href = "/admin/question?page=" + page;
+		}
 	</script>
 </th:block>
 

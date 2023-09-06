@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/layout1}">
+	
+<head>
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
+	 
+<!-- adminBook 페이지 CSS --> 
+<th:block layout:fragment="css">
+	<link rel="stylesheet" href="/css/adminAuthor.css" />	
+</th:block>
+
+<div layout:fragment="content">
+
+	<div class="top">
+		<div class="container">
+			<div class="row">
+				<div class="col-12 section-wrap">
+				
+					<div class="row">
+						<nav class="menu col-lg-2">
+							<ul class="col-12">
+								<li><a href="/admin/books">도서관리</a></li>
+								<li><a href="/admin/member">회원관리</a></li>
+								<li><a href="/admin/rents">대출관리</a></li>
+								<li><a href="/admin/keyword/recommend">추천 키워드 관리</a></li>
+								<li><a href="/admin/author">추천작가 관리</a></li>
+								<li><a href="/admin/question">문의관리</a></li>
+								<li><a href="/admin/notice">공지관리</a></li>
+							</ul>
+						</nav>
+						
+						
+						<div class="admin-content col-lg-10">
+							<div class="container">
+								<div class="row">
+									<div class="col-12">
+										
+										<div class="top-title">
+											<h4>추천작가 관리</h4>
+											<hr>
+										</div>
+										
+										
+										<form role="form" th:action="@{'/admin/author/' + ${authors.number}}" method="get" th:object="${authors}" >
+											<!-- 도서관리 contents -->
+											<table class="table table-responsive-md ">						
+												<thead>
+													<tr>
+														<th scope="col">
+															<label class="checkbox-inline">
+																<input type="checkbox" id="check-all" />
+															</label>
+														</th>
+														<th scope="col">작가 아이디</th>
+														<th scope="col">작가명</th>
+														<th scope="col">작성자</th>
+														<th scope="col">등록일</th>
+														<th scope="col">도서등록</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr th:each="author, status : ${authors.getContent()}">
+														<td>
+															<label class="checkbox-inline">
+																<input type="checkbox" th:id="check- + ${author.id}" name="check" th:value="${author.id}" />
+															</label>
+														</td>
+														<td scope="col" class="authorId" th:text="${author.id}"></td>
+														<td scope="col" class="authorNameKo" th:text="${author.authorNameKo}" ></td>
+														<td scope="col" class="createdBy" th:text="${author.createdBy}"></td>
+														<td scope="col" class="regTime" th:text="${#temporals.format(author.regTime, 'yyyy-MM-dd')}"></td>
+														<td scope="col" class="book-reg">
+															<a class="btn reg_btn book_reg_btn" style="width: 50px;" th:href="'/admin/authorBookReg/' + ${author.id}">등록</a>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+											
+											<!-- 등록버튼  -->
+											<div class="form-group button col-12">
+												<div class="col-md-8"></div>
+												<div class="col-md-2">
+													<button type="button" class="btn reg_btn" style="width: 100px;" onclick="location.href='/admin/authorReg'">등록하기</button>
+												</div>
+												<div class="col-md-2">
+													<button type="button" onclick="deleteAuthor()" class="btn delete_btn" style="width: 100px;">삭제하기</button>
+												</div>
+											</div>
+
+											<!-- 검색 bar 부분 -->
+											<div class="row search-bar" style="height: 40px;" th:object="${authorSearchDto}">
+												<div class="col-lg-2"></div>
+												<div class="col-lg-2" style="display: flex;">
+													<!-- 검색분류 -->
+													<select class="form-control" th:field="*{searchBy}">
+														<option value="">검색분류</option>
+														<option value="id">작가아이디</option>
+														<option value="authorNameKo">작가명</option>
+													</select>
+												</div>
+												<div class="col-lg-6">
+													<div style="display: flex;">
+														<input type="text" class="form-control col-sm-10" placeholder="검색어 입력" th:field="*{searchQuery}" />
+														<button id="searchBtn" type="submit" class="btn search-btn col-sm-2">검색</button>
+													</div>
+												</div>
+												<div class="col-lg-2"></div>
+											</div>	
+											
+											<!-- paging 부분 -->
+											<div>
+												<nav th:with="start=${(authors.number / maxPage) * maxPage + 1}, 
+															  end = (${ ((authors.totalPages == 0)) ? 1 :	(start + (maxPage -1) < authors.totalPages ?
+												  			  start + (maxPage - 1) : authors.totalPages)})" 						
+																aria-label="...">
+													<ul class="pagination d-flex justify-content-center">
+							  
+													    <li class="page-item " th:classappend="${authors.first} ? 'disabled'">
+													      	<a class="page-link page-item" th:onclick="'javascript:page(' + ${authors.number - 1} + ')'">이전</a>
+														</li>
+	
+														<li class="page-item"
+															th:each="page: ${#numbers.sequence(start, end)}"
+															th:classappend="${authors.number eq page -1} ? 'active' : '' ">
+															<a class="page-link" th:inline="text"
+															th:onclick="'javascript:page(' + ${page - 1} + ')'">
+																[[${page}]] </a>
+														</li>
+	
+														<li class="page-item" th:classappend="${authors.last} ? 'disabled'"><a
+															class="page-link page-item" th:onclick="'javascript:page(' + ${authors.number + 1} + ')'">다음</a>
+															</li>	
+													</ul>
+												</nav>												
+											</div>										
+											<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+<!-- adminBook 페이지 javaScript -->
+<th:block layout:fragment="script">
+
+	<script th:inline="javascript">
+	
+	$(document).ready(function(){
+		var errorMessage = [[${errorMessage}]];
+		
+		if(errorMessage != null) {
+			alert(errorMessage);
+		}
+		
+		$("#searchBtn").on("click", function(e){
+			e.preventDefault(); 
+			page(0); 
+		});	
+		
+		$("#check-all").on("click", function(e) {
+			if($("#check-all").is(":checked")) {
+				$("input[name=check]").prop("checked", true);
+			} else {
+				$("input[name=check]").prop("checked", false);
+			}
+		});
+		
+		$("input[name=check]").on("click", function(e) {
+			var total = $("input[name=check]").length;
+			var checked = $("input[name=check]:checked").length;
+			
+			if(total != checked) {
+				$("#check-all").prop("checked", false);
+			} else {
+				$("#check-all").prop("checked", true);
+			}
+		});
+			
+	});
+	
+	//페이징
+	function page(page){
+		
+		var searchBy = $("#searchBy").val();
+		var searchQuery = $("#searchQuery").val();
+		
+		location.href = "/admin/author/" + page 
+					  + "?searchBy=" + searchBy
+					  + "&searchQuery=" + searchQuery;
+	}	
+	
+	function deleteAuthor() {
+		if($("input[name=check]:checked").length <= 0) {
+			alert("삭제할 작가를 하나 이상 선택해주세요.");
+			return;
+		};
+		
+		const deleteConf = confirm("선택한 작가를 삭제하시겠습니까?");
+		
+		if(!deleteConf) return;
+		
+		let token = $("meta[name='_csrf']").attr("content");
+        let header = $("meta[name='_csrf_header']").attr("content");
+        
+		let authorIdList = [];
+		
+		
+		$("input[name=check]:checked").each(function(i) {
+			authorIdList.push($(this).val());
+		});
+		
+		let objParams = {
+			"authorIdList" : authorIdList
+		};
+        
+        $.ajax({
+            url : "/admin/author/delete",
+            type : "DELETE",
+            contentType : "application/x-www-form-urlencoded; charset=UTF-8",
+            data : objParams,
+            beforeSend : function(xhr){
+                // 데이터를 전송하기 전에 헤더에 csrf값을 설정
+                xhr.setRequestHeader(header, token);
+            },
+            cache   : false,
+            success  : function(result, status){
+            	alert("선택한 작가를 삭제했습니다.");
+                location.href='/admin/author';
+            },
+            error : function(jqXHR, status, error){
+                if(jqXHR.status == '401'){
+                    alert('로그인 후 이용해주세요');
+                    location.href='/login';
+                } else{
+                    alert(jqXHR.responseText);
+                }
+            }
+        });
+	}
+	
+	 
+	</script>
+</th:block>
+
+</html>

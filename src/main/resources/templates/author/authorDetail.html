@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/layout1}">
+	 
+<!-- author 페이지 CSS --> 
+<th:block layout:fragment="css">
+	<link rel="stylesheet" type="text/css" href="/css/author.css" />
+	<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Pinyon+Script&display=swap" rel="stylesheet">	
+</th:block>
+
+<div layout:fragment="content">
+
+	<div class="top">
+		<div class="container-fluid author-detail-wrap">
+			<div class="row background-color">
+				<div class="col-12 section-wrap">
+					
+					<div class="container section-wrap-author">
+						<div>
+							<div class="author-pictogram">
+								<img alt="픽토그램" src="/images/author/pen.png">
+							</div>
+							
+							<div class="author-picture">
+								<img th:alt="${author.authorNameKo}" th:src="${author.authorImgDto.imgUrl}">
+							</div>
+							<div class="author-name">
+								<p class="author-name-eg" th:text="${author.authorNameEg}"></p>
+								<p class="author-name-ko" th:text="${author.authorNameKo}"></p>
+							</div>
+							<div class="author-title-wrap">
+								<p class="author-title" th:utext="${author.title}"></p>
+							</div>
+							<div class="author-info">
+								<div class="author-info-title">
+									<h5>작가소개</h5>
+									<div class="author-deco-bar"></div>
+								</div>
+								<div class="author-info-content" th:text="${author.authorIntroduction}"></div>
+							</div>
+							
+							<div class="author-book-wrap">
+								<div class="author-book-title">
+									<h5>대표저서</h5>
+									<div class="author-deco-bar"></div>
+								</div>
+								
+								<div th:if="${not #lists.isEmpty(authorBooks)}">
+									<th:block th:each="authorBook, status : ${authorBooks}">
+											<div class="author-book-content mb-5">
+												<div class="book-img-box col-3">
+													<img th:alt="${authorBook.bookName}" th:src="${authorBook.authorBookImgDto.imgUrl}">
+												</div>
+												<div class="book-text-box col-7">
+													<p class="book-info-title" th:text="${authorBook.bookSubTitle}"></p>
+													<p class="book-title" th:text="${authorBook.bookName}"></p>
+													<p class="book-introdution" th:utext="${authorBook.bookIntrodution}"></p>										</div>
+												<div class="col-1"></div>
+											</div>
+									</th:block>
+								</div>
+								<div th:if="${#lists.isEmpty(authorBooks)}">
+									<p class="author-book-null">
+										등록된 대표 저서가 없습니다.
+									</p>
+								</div>
+							</div>
+													
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>	
+	</div>
+						
+</div>
+
+
+<!-- author 페이지 javaScript -->
+<th:block layout:fragment="script">
+</th:block>
+</html>

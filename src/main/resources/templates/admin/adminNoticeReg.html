@@ -6,7 +6,7 @@
 	 
 <!-- adminBook 페이지 CSS --> 
 <th:block layout:fragment="css">
-	<link rel="stylesheet" href="/css/adminMember.css" />	
+	<link rel="stylesheet" href="/css/adminNoticeReg.css" />	
 </th:block>
 
 <div layout:fragment="content"> 
@@ -19,10 +19,11 @@
 					<div class="row">
 						<nav class="menu col-lg-2">
 							<ul class="col-12">
-								<li><a href="/admin/book">도서관리</a></li>
+								<li><a href="/admin/books">도서관리</a></li>
 								<li><a href="/admin/member">회원관리</a></li>
-								<li><a href="/admin/rent">대출관리</a></li>
-								<li><a href="/admin/keyword">키워드 관리</a></li>
+								<li><a href="/admin/rents">대출관리</a></li>
+								<li><a href="/admin/keyword/recommend">추천 키워드 관리</a></li>
+								<li><a href="/admin/author">추천작가 관리</a></li>
 								<li><a href="/admin/question">문의관리</a></li>
 								<li><a href="/admin/notice">공지관리</a></li>
 							</ul>
@@ -40,14 +41,17 @@
 										</div>
 										
 										
-										<form role="form" action="">
+										<form role="form" action="/admin/noticeReg" method="post" enctype="multipart/form-data"
+													th:object="${noticeDto}" name="noticeDto" >
+											
+											<input type="hidden" th:field="*{id}" />
 											
 											<div class="form-group row dropdown col-12">
 												<div class="notice-status">
-													<select class="form-select">
+													<select class="form-select noticeGroup" th:field="*{noticeGroup}" >
 														<option value="">분류</option>
-														<option value="notice">공지</option>
-														<option value="information">안내</option>
+														<option value="NOTICE">공지</option>
+														<option value="GUIDE">안내</option>
 													</select>
 												</div>
 											</div>
@@ -55,25 +59,28 @@
 											<div class="notice-title">
 												<label for="title" class="notice-label">제목</label>
 												<br />
-												<input type="text" placeholder="제목 입력" class="form-control col-12"/>
+												<input type="text" placeholder="제목 입력" class="form-control col-12"  th:field="*{title}" />
+												<p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="fieldError">Incorrect Data</p>
 											</div>
 											<div class="notice-contents">
 												<label for="title" class="notice-label">내용</label>
 												<br />
-												<textarea rows="10" placeholder="내용 입력" class="form-control col-12" id="notice"></textarea>
+												<textarea rows="10" th:field="*{content}" placeholder="내용 입력" class="form-control col-12" id="notice"></textarea>
+												<p th:if="${#fields.hasErrors('notice')}" th:errors="*{notice}" class="fieldError">Incorrect Data</p>
 											</div>
 																				
 											<!-- 등록버튼  -->
 											<div class="form-group button col-12">
 												<div class="col-md-8"></div>
 												<div class="col-md-2">
-													<button type="button" class="btn reg_btn" style="width: 100px;">등록하기</button>
+													<button type="submit" class="btn reg_btn" style="width: 100px;">등록하기</button>
 												</div>
 												<div class="col-md-2">
-													<button type="button" class="btn delete_btn" style="width: 100px;">다시쓰기</button>
+													<button type="reset" class="btn delete_btn" style="width: 100px;">다시쓰기</button>
 												</div>
 											</div>
-																						
+													
+											<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">									
 										</form>
 									</div>
 								</div>
@@ -93,6 +100,16 @@
 <th:block layout:fragment="script">
 
 	<script>
+	
+	$(document).ready(function(){
+		
+		var errorMessage = [[${errorMessage}]];
+		if(errorMessage != null){
+			alert(errorMessage);
+		}
+		bindDomEvent();
+	
+	});
 	
 	</script>
 </th:block>

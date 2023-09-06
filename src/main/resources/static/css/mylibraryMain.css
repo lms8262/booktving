@@ -1,0 +1,319 @@
+@charset "UTF-8";
+
+.section-wrap {
+	position: relative;
+}
+
+/* 나의서재 프로필 영역 */
+.top .container-fluid{
+	padding: 0;
+}
+
+.mylibrary-top{
+	width: 100%;
+	height: 300px;
+	background-image: url("/images/myLibrary/mylibrary-bgimg.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	padding: 80px 20px;
+}
+
+.profile-box{
+	display:flex;
+	color: #fff; 
+}
+
+.profile-img-box{
+	width:80px;
+	height:80px;
+	overflow: hidden;
+	border-radius: 80px;
+}
+
+.profile-img-box img{
+	width:100%;
+}
+
+.user-info-box {
+	display: flex;
+	align-items: center;
+	padding: 0;
+}
+
+.user-info{
+	margin: 0;	
+}
+
+
+
+/* 나의서재 메뉴 영역 */
+.myLibrary-menu-wrap{
+	height: 80px;
+	position: absolute;
+	top: 260px;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 100;
+}
+
+.myLibrary-menu-box{
+	display: flex;
+	height: 80px;
+	line-height: 80px;
+}
+
+.myLibrary-nav{
+	margin: 0;
+	height: inherit;
+}
+
+.myLibrary-menu1{
+	display:flex;
+	justify-content: space-between;
+	font-weight: bold;
+	padding: 0;
+	margin: 0;
+}
+
+.myLibrary-menu1 li {
+	height: 40px;
+	line-height: 40px;
+	margin: 0;
+}
+
+.myLibrary-menu1 li a {
+	text-align: center;
+	cursor: pointer;
+	color: #fff;
+}
+
+.myLibrary-menu1 span {
+	height: 40px;
+	line-height: 40px;
+	margin: 0;
+	color: #fff;
+	padding: 0 20px;
+}
+
+.myLibrary-menu2 {
+	display: flex;
+	justify-content: space-between;
+	font-weight: bold;
+	padding: 0;
+	margin: 0;
+}
+
+.myLibrary-menu2 li {
+	height: 40px;
+	line-height: 40px;
+	margin: 0;
+}
+
+.myLibrary-menu2 li a {
+	text-align: center;
+	cursor: pointer;
+}
+
+.myLibrary-menu2 span{
+	height: 40px;
+	line-height: 40px;
+	margin: 0;
+	padding: 0 20px;
+}
+
+.myLibrary-nav li:hover a {
+	text-decoration: none;
+}
+
+/* 나의서재 컨텐츠영역 */
+.myLibrary-contents-wrap{
+	height: auto;
+	margin-top: 150px;
+	margin-bottom: 100px;
+}
+
+.myLibrary-pictogram{
+	width: 30px;
+}
+
+.myLibrary-title{
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.myLibrary-more{
+	float: right;
+	margin-right: 20px;
+}
+
+.myLibrary-more a{
+	color: #bbb;
+}
+
+/* 나의서재 bookcase 영역 */
+.bookcase-box{
+	width: 80%;
+	height: 300px;
+	border: 1px solid #eee;
+	border-radius: 50px;
+	box-shadow: 5px 5px 5px #ddd;
+	margin-top: 80px;
+	padding: 25px 35px;
+	position: relative;
+}
+
+.bookcase-box-title{
+	margin-bottom: 30px;
+}
+
+.rent-book-wrap{
+	width: 65%;
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 10;
+}
+
+.rent-book{
+	width: 110px;
+	height: 140px;
+	border-radius: 7px 7px 0 0;
+	box-shadow: 3px 3px 5px #ccc;
+	overflow: hidden;
+	float: left;
+}
+
+.rent-book img{
+    width: 100%;
+}
+
+.rent-book-null-wrap {
+	display: flex;
+	justify-content:center; 
+	margin-top: 60px;
+}
+
+.rent-book-deco-bar{
+	width: 90%;
+	height: 10px;
+	position: absolute;
+	top: 225px;
+	left: 50%;
+	transform: translateX(-50%);
+	box-shadow: 3px 3px 5px #bbb;
+	background-color: #fff;
+	z-index: 150;
+}
+
+
+/* 나의서재 favorite 영역 */
+.favorite-box{
+	width: 80%;
+	height: 300px;
+	border: 1px solid #eee;
+	border-radius: 50px;
+	box-shadow: 5px 5px 5px #ddd;
+	margin-top: 80px;
+	padding: 25px 35px;
+	position: relative;
+}
+
+.favorite-box-title{
+	margin-bottom: 30px;
+}
+
+.favorite-book-wrap{
+	width: 65%;
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 10;
+}
+
+.favorite-book{
+	width: 110px;
+	height: 140px;
+	border-radius: 7px 7px 0 0;
+	box-shadow: 3px 3px 5px #ccc;
+	overflow: hidden;
+	float: left;
+}
+
+.favorite-book img{
+    width: 100%;
+}
+
+
+.favorite-book-null-wrap {
+	display: flex;
+	justify-content:center; 
+	margin-top: 60px;
+}
+
+.favorite-book-deco-bar{
+	width: 90%;
+	height: 10px;
+	position: absolute;
+	top: 225px;
+	left: 50%;
+	transform: translateX(-50%);
+	box-shadow: 3px 3px 5px #bbb;
+	z-index: 150;
+	background-color: #fff
+}
+
+/* 나의서재 author 영역 */
+.author-box{
+	width: 80%;
+	height: 300px;
+	border: 1px solid #eee;
+	border-radius: 50px;
+	box-shadow: 5px 5px 5px #ddd;
+	margin-top: 80px;
+	padding: 25px 35px;
+	position: relative;
+}
+
+.author-box-title{
+	margin-bottom: 30px;
+}
+
+.favorite-author-wrap{
+	width: 90%;
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	z-index: 10;
+}
+
+.favorite-author {
+	background-color: #bbb;
+	width: 15%;
+	height: 140px;
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	border-radius: 7px 7px 0 0;
+	z-index: 1;
+	box-shadow: 3px 3px 5px #ccc;
+}
+
+.favorite-author-null-wrap {
+	display: flex;
+	justify-content:center; 
+	margin-top: 60px;
+}
+
+.favorite-author-deco-bar{
+	width: 90%;
+	height: 10px;
+	position: absolute;
+	top: 225px;
+	left: 50%;
+	transform: translateX(-50%);
+	box-shadow: 3px 3px 5px #bbb;
+	z-index: 150;
+	background-color: #fff
+}
+
+

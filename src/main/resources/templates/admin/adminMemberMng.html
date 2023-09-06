@@ -1,12 +1,17 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	  layout:decorate="~{layouts/layout1}">
-	
-	 
-<!-- adminBook 페이지 CSS --> 
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+<head>
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
+<!-- adminBook 페이지 CSS -->
 <th:block layout:fragment="css">
-	<link rel="stylesheet" href="/css/adminMember.css" />	
+	<link rel="stylesheet" th:href="@{/css/adminMember.css}" />
+	<style>
+</style>
 </th:block>
 
 <div layout:fragment="content">
@@ -15,149 +20,200 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-12 section-wrap">
-				
+
 					<div class="row">
 						<nav class="menu col-lg-2">
 							<ul class="col-12">
-								<li><a href="/admin/book">도서관리</a></li>
+								<li><a href="/admin/books">도서관리</a></li>
 								<li><a href="/admin/member">회원관리</a></li>
-								<li><a href="/admin/rent">대출관리</a></li>
-								<li><a href="/admin/keyword">키워드 관리</a></li>
+								<li><a href="/admin/rents">대출관리</a></li>
+								<li><a href="/admin/keyword/recommend">추천 키워드 관리</a></li>
+								<li><a href="/admin/author">추천작가 관리</a></li>
 								<li><a href="/admin/question">문의관리</a></li>
 								<li><a href="/admin/notice">공지관리</a></li>
 							</ul>
 						</nav>
-						
-						
 						<div class="admin-content col-lg-10">
 							<div class="container">
 								<div class="row">
 									<div class="col-12">
-										
-										<div class="top-title">
-											<h4>회원관리</h4>
-											<hr>
-										</div>
-										
-										
-										<form role="form" action="">
+
+										<div class="top-title"></div>
+										<h4>회원관리</h4>
+										<hr>
+										<form th:action="@{'/admin/member'}" method="get">
 											<!-- 도서관리 contents -->
-											<table class="table table-responsive-md ">						
+											<table class="table table-responsive-md ">
 												<thead>
 													<tr>
-														<th scope="col"></th>
 														<th scope="col">No.</th>
+														<th scope="col">역할</th>
 														<th scope="col">회원이름</th>
 														<th scope="col">가입일</th>
 														<th scope="col">생년월일</th>
+														<th scope="col">삭제</th>
 													</tr>
 												</thead>
 												<tbody>
-													<tr>
+													<tr th:each="member : ${members.content}">
+														<th th:text="${member.id}" scope="row"></th>
+														<td th:text="${member.role}"></td>
+
+														<td><a th:text="${member.memberName}"
+															th:href="'/admin/member/'+${member.id}+'/new'"></a></td>
+														<td th:text="${member.regTime}"></td>
+														<td th:text="${member.birth}"></td>
+
 														<td>
-															<input type="checkbox" value=""/> 
+															<button type="button" class="btn btn-danger"
+																th:value="${member.id}"
+																onclick="deleteMember(this.value)">삭제</button>
 														</td>
-														<td></td>
-														<td></td>
-														<td></td>
-														<td></td>
 													</tr>
 												</tbody>
 											</table>
-											
+
 											<!-- 검색 bar 부분 -->
-											<div class="row search-bar" style="height: 40px;">
-												<div class="col-lg-2"></div>
-												<div class="col-lg-2" style="display: flex;">
-													<!-- 검색분류 -->
-													<select class="form-control">
-														<option value="">검색분류</option>
-														<option value=""></option>
-														<option value=""></option>
-														<option value=""></option>
-														<option value=""></option>
+											<div class="row search-bar" style="height: 40px;"
+												th:object="${bookSearchDto}">
+												<div class="col-lg-1"></div>
+												<div class="col-lg-2" style="display: flex">
+													<select class="form-control" id="searchDateType"
+														name="searchDateType">
+														<option value="all">전체기간</option>
+														<option value="1d">1일</option>
+														<option value="1w">1주</option>
+														<option value="1m">1개월</option>
+														<option value="6m">6개월</option>
 													</select>
 												</div>
-												<div class="col-lg-6">
-													<div style="display: flex;">
-														<input type="text" class="form-control col-sm-10" placeholder="검색어 입력">
-														<button id="searchBtn" type="submit" class="btn search-btn col-sm-2">검색</button>
-													</div>
+												<div class="col-lg-2">
+													<!-- 역할선택 -->
+													<select id="role" name="role" class="form-control">
+														<option value="">역할(전체)</option>
+														<option value="USER">회원</option>
+														<option value="ADMIN">관리자</option>
+													</select>
 												</div>
-												<div class="col-lg-2"></div>
+												<div class="col-lg-6 search-btn-box">
+													<input type="text"
+														class="form-control col-sm-10 admin-member-search"
+														placeholder="검색어 입력"
+														th:field="${memberSearchDto.searchQuery}" />
+													<button type="button" class="btn search-btn col-sm-2"
+														id="searchBtn">검색</button>
+												</div>
+												<div class="col-lg-1"></div>
 											</div>
 
-
-											<!-- paging 부분 -->
-											<!-- 개발 후 medel key 으로 수정해서 사용하세요
-											<nav th:with="start=${(items.number / maxPage) * maxPage + 1}, 
-														  end = (${ ((items.totalPages == 0)) ? 1 :	(start + (maxPage -1) < items.totalPages ?
-											  			  start + (maxPage - 1) : items.totalPages)})" 						
-															aria-label="...">
-												<ul class="pagination d-flex justify-content-center">
-						  
-												    <li class="page-item " th:classappend="${items.first} ? 'disabled'">
-												      	<a class="page-link page-item" th:onclick="'javascript:page(' + ${items.number - 1} + ')'">◀</a>
-													</li>
-
-													<li class="page-item"
-														th:each="page: ${#numbers.sequence(start, end)}"
-														th:classappend="${items.number eq page -1} ? 'active' : '' ">
-														<a class="page-link" th:inline="text"
-														th:onclick="'javascript:page(' + ${page - 1} + ')'">
-															[[${page}]] </a>
-													</li>
-
-													<li class="page-item" th:classappend="${items.last} ? 'disabled'"><a
-														class="page-link page-item" th:onclick="'javascript:page(' + ${items.number + 1} + ')'">▶</a>
+											<!-- 페이지 -->
+											<div>
+												<nav
+													th:with="start=${(members.number / maxPage) * maxPage + 1},
+	               end=${ ((members.totalPages == 0)) ? 1 : (start + (maxPage - 1) < members.totalPages ?
+	                     start + (maxPage - 1) : members.totalPages)}"
+													aria-label="..." style="display: flex">
+													<ul
+														class="pagination d-flex justify-content-center adminbook-page">
+														<li class="page-item pageitem"
+															th:classappend="${members.first} ? 'disabled'"><a
+															class="page-link page-item"
+															th:onclick="'javascript:page(' + ${members.number - 1} + ')'">이전</a>
 														</li>
 
-												</ul>
-											</nav>
-											-->
-											
+														<li class="page-item pageitem"
+															th:each="page : ${#numbers.sequence(start, end)}"
+															th:classappend="${members.number eq page - 1} ? 'active' : '' ">
+															<a class="page-link" th:inline="text"
+															th:onclick="'javascript:page(' + ${page - 1} + ')'">[[${page}]]</a>
+														</li>
+
+														<li class="page-item pageitem"
+															th:classappend="${members.last} ? 'disabled'"><a
+															class="page-link page-item"
+															th:onclick="'javascript:page(' + ${members.number + 1} + ')'">다음</a>
+														</li>
+													</ul>
+												</nav>
+											</div>
+
 										</form>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-				
 				</div>
+
 			</div>
 		</div>
 	</div>
-
 </div>
+
+
+
 
 
 <!-- adminBook 페이지 javaScript -->
 <th:block layout:fragment="script">
 
-	<script>
-	/*  개발 후 검색 항목에 맞게 수정해서 사용하세요
-	$(document).ready(function(){
-		$("#searchBtn").on("click", function(e){
-			e.preventDefault(); 
-			page(0); 
-		});			
-	});
-	
-	function page(page){
-		
-		var searchDateType = $("#searchDateType").val();
-		var searchSellStatus = $("#searchSellStatus").val();
-		var searchBy = $("#searchBy").val();
-		var searchQuery = $("#searchQuery").val();
-		
-		location.href = "/admin/adminBook/" + page 
-					  + "?searchDateType=" +  searchDateType 
-					  + "&searchSellStatus=" + searchSellStatus
-					  + "&searchBy=" + searchBy
-					  + "&searchQuery=" + searchQuery
-	}	
-	 */
+	<script th:inline="javascript">
+		$(document).ready(function() {
+			// Handle search button click
+			$("#searchBtn").on("click", function(e) {
+				e.preventDefault();
+				page(0);
+			});
+		});
+
+		function page(page) {
+			// Get input values using jQuery and data attributes
+			var searchDateType = $("#searchDateType").val();
+			var role = $("#role").val();
+			var searchQuery = /*[[${memberSearchDto.searchQuery}]]*/''; // Use Thymeleaf to populate the initial value
+
+			// Construct URL for pagination
+			var url = "/admin/member?page=" + page + "&searchDateType="
+					+ searchDateType + "&role=" + role + "&searchQuery="
+					+ searchQuery;
+
+			// Redirect to the constructed URL
+			location.href = url;
+		}
+
+		function deleteMember(memberId) {
+			const deleteConf = confirm("삭제하시겠습니까?");
+
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+
+			// Request URL for deleting the menu
+			var url = "/admin/member/" + memberId + "/delete";
+
+			$.ajax({
+				url : url,
+				type : "DELETE",
+				contentType : "application/json",
+				beforeSend : function(xhr) {
+					// Set the CSRF token in the request header
+					xhr.setRequestHeader(header, token);
+				},
+				dataType : "json",
+				cache : false,
+				success : function(result, status) {
+					// Refresh the page after successful deletion
+					location.reload();
+				},
+				error : function(jqXHR, status, error) {
+					if (jqXHR.status == '401') {
+						alert('로그인 후 이용해주세요.');
+						location.href = '/login';
+					} else {
+						alert(jqXHR.responseText);
+					}
+				}
+			});
+		}
 	</script>
 </th:block>
-
 </html>

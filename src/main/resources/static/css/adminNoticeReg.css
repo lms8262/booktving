@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+
+textarea:focus, 
+input:focus,
+select:focus {
+    outline: none !important;
+	box-shadow: none !important;
+	border-color: inherit !important; 
+}
+
+/* 에러처리 */
+.fieldError {
+	color: red;
+	font-weight: 800;
+	margin-top: 10px;
+}

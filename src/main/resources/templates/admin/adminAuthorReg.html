@@ -1,0 +1,144 @@
+
+
+
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/layout1}">
+	
+	 
+<!-- adminBook 페이지 CSS --> 
+<th:block layout:fragment="css">
+	<link rel="stylesheet" href="/css/adminAuthorReg.css" />	
+</th:block>
+
+<div layout:fragment="content"> 
+
+	<div class="top">
+		<div class="container">
+			<div class="row">
+				<div class="col-12 section-wrap">
+				
+					<div class="row">
+						<nav class="menu col-lg-2">
+							<ul class="col-12">
+								<li><a href="/admin/books">도서관리</a></li>
+								<li><a href="/admin/member">회원관리</a></li>
+								<li><a href="/admin/rents">대출관리</a></li>
+								<li><a href="/admin/keyword/recommend">추천 키워드 관리</a></li>
+								<li><a href="/admin/author">추천작가 관리</a></li>
+								<li><a href="/admin/question">문의관리</a></li>
+								<li><a href="/admin/notice">공지관리</a></li>
+							</ul>
+						</nav>
+						
+						 
+						<div class="admin-content col-lg-10">
+							<div class="container">
+								<div class="row">
+									<div class="col-12">
+										
+										<div class="top-title">
+											<h4>추천작가 등록</h4>
+											<hr>
+										</div>
+										
+										
+										<form role="form" action="/admin/authorReg" method="post" enctype="multipart/form-data"
+												th:object="${authorFormDto}" name="authorFormDto">
+											
+											<!-- 작가정보 등록 -->										
+											<div class="author-contents">
+												<label for="authorNameKo" class="author-label">작가명(한글)</label>
+												<br />
+												<input type="text" placeholder="작가명(한글)" th:field="*{authorNameKo}" class="form-control col-12" />
+												<p th:if="${#fields.hasErrors('authorNameKo')}" th:errors="*{authorNameKo}" class="fieldError">Incorrect Data</p>
+											</div>
+											<div class="author-contents">
+												<label for="authorNameEg" class="author-label">작가명(영문)</label>
+												<br />
+												<input type="text" placeholder="작가명(영문)" th:field="*{authorNameEg}" class="form-control col-12" />
+												<p th:if="${#fields.hasErrors('authorNameEg')}" th:errors="*{authorNameEg}" class="fieldError">Incorrect Data</p>
+											</div>
+											<div class="author-contents">
+												<label for="title" class="author-label">작가소개 타이틀</label>
+												<br />
+												<input type="text" placeholder="작가를 한문장으로 소개해보세요" th:field="*{title}" class="form-control col-12" />
+												<p th:if="${#fields.hasErrors('title')}" th:errors="*{title}" class="fieldError">Incorrect Data</p>
+											</div>
+											<div class="author-contents">
+												<label for="authorintroduction" class="author-label">작가소개</label>
+												<br />
+												<textarea type="text" rows="10" placeholder="작가를 소개하세요" th:field="*{authorIntroduction}" class="form-control col-12" ></textarea>
+												<p th:if="${#fields.hasErrors('authorIntroduction')}" th:errors="*{authorIntroduction}" class="fieldError">Incorrect Data</p>
+											</div>
+											<div class="author-contents">
+												<div class="mb-3 filebox">
+													<label for="authorImgFile" class="form-label">작가 이미지 등록</label>
+													<input class="form-control" type="file" id="authorImgFile" name="authorImgFile">
+												</div>
+											</div>
+											
+											
+											
+
+											<!-- 등록버튼  -->
+											<div class="form-group button col-12">
+												<div class="col-md-8"></div>
+												<div class="col-md-2">
+													<button type="button" class="btn reg_btn" onclick="submit()" style="width: 100px;">등록하기</button>
+												</div>
+												<div class="col-md-2">
+													<button type="reset" class="btn delete_btn" style="width: 100px;">다시쓰기</button>
+												</div>
+											</div>
+												
+											<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">											
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+
+<!-- adminBook 페이지 javaScript -->
+<th:block layout:fragment="script">
+
+	<script th:inline="javascript">
+	
+	$(document).ready(function(){
+		
+		var errorMessage = [[${errorMessage}]];
+		if(errorMessage != null){
+			alert(errorMessage);
+		}
+		bindDomEvent();
+	
+	});
+	
+	function bindDomEvent(){
+		$(".custom-file-input").on("chand", function(){
+			var fileName = $(this).val().split("\\").pop();
+			var fileExt = fileName.substring(fileName.lastIndexof(".") + 1);
+			fileExt = fileExt.toLowerCase();
+			
+			if(fileExt != "jpg" && fileExt != "jpeg" && fileExt != "gif" && fileExt != "png" && fileExt != "bmp"){
+				alert("이미지 파일만 등록이 가능합니다.");
+				return;
+			}
+			$(this).siblings(".custom-file-label").html(fileName);
+		});
+	}
+	
+	</script>
+</th:block>
+
+</html>

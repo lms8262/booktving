@@ -7,36 +7,6 @@ body{
 	height: 100%;
 }
 
-<<<<<<< HEAD
-
-.text-center {
-	text-align: center;
-}
-
-.p-t-115 {
-	padding-top: 115px;
-}
-
-.text-center {
-	text-align: center !important;
-}
-
-.txt1 {
-	font-family: Poppins-Regular;
-	font-size: 13px;
-	color: #666;
-	line-height: 1.5;
-}
-
-.txt2 {
-	font-family: Poppins-Regular;
-	font-size: 13px;
-	color: #333;
-	line-height: 1.5;
-}
-=======
->>>>>>> 26112e0bd9f8dbc4b8a8906c785ff7b87cd2640a
-
 a {
 	font-family: Poppins-Regular;
 	font-size: 14px;
@@ -50,9 +20,12 @@ a {
 }
 a,
 a:hover,
-a:focus {
+a:focus,
+a:active {
   text-decoration: none;
   color: #000;
+  outline: none;
+  box-shadow: none;
 }
 
 a:hover,
@@ -64,9 +37,13 @@ ul{
 	list-style: none
 }
 
+.site-wrap {
+	padding: 0;
+}
 
 /* sec: header */
-.header-section{
+.header-section {
+	min-width: 1920px;
 	display:flex;
 	align-items:center;
 	height: 100px;
@@ -75,6 +52,7 @@ ul{
 
 .header-box{
 	padding: 0;
+	min-width: 1140px;
 }
 
 .main-nav{
@@ -88,32 +66,45 @@ ul{
 .logo{
 	margin: 0;
 	display: flex;
-	align-items: center;
+	justify-content: flex-end;
 }
 
 .logo img{
 	width:150px;
 }
 
+.menu-box {
+	margin: 0 0 0 40px;
+}
+
+.login-box {
+	margin: 0 0 0 auto;
+}
+
 .nav_left{
-	width: 520px;
 	height: 40px;
 	line-height: 40px;
 	display: flex;
 	align-items: center;
+	justify-content: flex-start;
 	padding: 0;
 	margin: 0;	
-	position: relative;
 }
 
 nav .menu{
-	width: 120px;
+	width: auto;
 	height: 40px;
 	line-height: 40px;
-	display: block;	
+	display: block;
 	padding: 0 !important;
-	margin: 0 !important;
+	margin: 0 10px !important;
 	text-align: center;
+	position: relative;
+}
+
+nav .menu a{
+	width: auto;
+	padding: 0 10px;
 }
 
 nav li:hover {
@@ -124,9 +115,7 @@ nav .submenu{
 	display: none;
 	width: 150px;
 	position:absolute; 
-	padding: 0;
-	top: 40px;
-	left: 435px;	
+	padding: 0;	
 	border: 1px solid #eee;
 	background-color: #fff;
 }
@@ -135,7 +124,6 @@ nav .slide-menu:hover .submenu{
 	display: block !important;
     z-index: 100 !important;
 }
-
 
 nav .submenu li {
 	padding: 5px 0;
@@ -151,14 +139,23 @@ nav .submenu li:hover{
 }
 
 .nav_right{
-	max-width:250px;
+	height: 40px;
+	line-height: 40px;
 	display: flex;
 	align-items: center;
-	justify-content:space-between;
+	justify-content: flex-start;
 	padding: 0;
 	margin: 0;
 }
 
+.nav_right li {
+	width:auto;
+	margin: 0 10px;
+}
+
+.nav_right li a{
+	width: auto;
+}
 
 .admin-btn img{
 	width: 30px;
@@ -197,6 +194,11 @@ nav .submenu li:hover{
 	padding-left: 20px;
 }
 
+.section-wrap .menu li a {
+	height: 40px;
+	line-height: 40px; 
+}
+
 .section-wrap .menu li:hover {
 	background-color: #fff;
 	font-weight: bold;
@@ -209,7 +211,7 @@ nav .submenu li:hover{
 	border-radius: 20px 0 0 20px;
 }
 
-.section-wrap .menu li::after {
+.section-wrap .menu li:active {
 	background-color: #fff;
 	font-weight: bold;
 	border-radius: 20px 0 0 20px;
@@ -230,6 +232,7 @@ nav .submenu li:hover{
 
 form{
 	margin-top: 40px;
+	margin-bottom:  50px;
 }
 
 table {
@@ -249,6 +252,11 @@ table>tbody:last-child {
 	border-bottom: none !important;		
 }
 
+.table tbody td{
+	text-align: center;
+	line-height: inherit;
+}
+
 .button{
 	display: flex;
 }
@@ -259,11 +267,19 @@ table>tbody:last-child {
 	justify-content: flex-end;	
 }
 
+button:hover,
+button:active,
+button:focus {
+	outline: none !important;
+	box-shadow: none !important;
+}
+
 .button .btn{
 	color: #fff;
 	font-weight: bold;
 	border-radius: 0;	
 }
+
 .reg_btn {
 	background-color: #FFD360;	
 }
@@ -359,46 +375,6 @@ form nav {
 }
 /* 회원정보 페이지 끝 */
 
-
-/* 키워드 관리페이지 */
-.explanation{
-	font-size: 12px;
-}
-
-.keyword_reg{
-	display: flex;
-	margin-bottom: 60px;
-}
-
-.reg-box{
-	display: flex;
-	padding: 0;
-	margin-top: 40px;
-}
-
-.reg-box label{
-	padding: 0;
-	margin: 0;
-	line-height: 38px;
-}
-
-.reg-box input{
-	border-radius: 0;	
-}
-
-.reg-box button{
-	padding: 0;
-	margin-left: 10px;
-	border-radius: 20px;
-	color: #fff;
-	font-weight: bold;
-}
-
-.reg-box button:hover{
-	color: #fff;
-}
-/* 키워드 관리페이지 끝*/
-
 /* 문의답변 페이지 */
 
 .answer-title{
@@ -443,17 +419,20 @@ form nav {
 
 /* sec: content : admin  페이지 공통 양식 끝 */
 
-
-
 /* sec: footer */
 .footer_section{
+	min-width: 1920px;
 	background-color: #FFD360;
+}
+
+.footer_section > div {
+	min-width: 1140px;
 }
 
 .footer-content{
 	height: 300px;
 	background-color: #FFD360;
-	padding: 30px 0;
+	padding: 50px 0;
 	display: block;
 	position: relative;
 }

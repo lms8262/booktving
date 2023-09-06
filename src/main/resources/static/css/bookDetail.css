@@ -1,23 +1,35 @@
 @charset "UTF-8";
 
-.top {
-	height: 3000px;
+a,
+a:hover,
+a:focus,
+a:active {
+  text-decoration: none;
+  color: #000;
+  outline: none;
+  box-shadow: none;
 }
 
-.content {
-	height: 1100px;
-	width: 1310px;
+a:hover,
+a:focus {
+  color: initial;
+}
+
+ul{
+	list-style: none
+}
+
+.top {
+	height: auto;
 	border-left: 1px solid #eee;
 	border-right: 1px solid #eee;
 }
 
 .book-content {
-	height: 400px;
+	min-height: 400px;
 	width: 1310px;
-
 	display: flex;
 	position: relative;
-	
 }
 
 .bookimg {
@@ -29,16 +41,17 @@
 
 .img {
 	height: 322px;
-	weight: 220px;
 	border: 1px solid #eee;
 	margin-left: 30px;
 	margin-top: 40px;
 }
 
-.bookdetail {
-	height: 400px;
-	margin-top: 70px;
-	margin-left: 50px;
+.bookdetail  {
+	padding: 50px 40px;
+}
+
+.bookIntroduction{
+	text-align: justify	;
 }
 
 .button {
@@ -46,38 +59,38 @@
 }
 
 .like {
-	height: 35px;
-	weight: 90px;
 	margin-right: 20px;
 	border-style: none;
 	background-color: #FFD360;
-	border-radius: 20px;
+	border-radius: 50px;
 	font-size: 15px;
+	padding: 10px 20px;
 }
 
 .rent {
-	height: 35px;
-	weight: 90px;
 	border-style: none;
 	background-color: #FFD360;
-	border-radius: 20px;
+	border-radius: 50px;
 	font-size: 15px;
+	padding: 10px 20px;
 }
 
 .content .book-info-detail {
 	height: 100px;
 	background-color: #F5F3EA;
 	display: flex;
+	padding: 0;
+	overflow: hidden;
 }
 
 .slide-wrapper {
-	display: inline-flex;
-	padding-top: 15px;
-	padding-left: 0;
+	display: flex;
+	margin: 0;
+	justify-content: center;
+	align-items: center;
 }
 
 .slide-item {
-	width: 220px;
 	position: relative;
 	border-right: 1px solid #c3c2c2;
 	text-align: center;
@@ -90,6 +103,29 @@
 .bookindex {
 	border-bottom: 1px solid #eee;
 	cursor: pointer;
+}
+#collapseExample{
+	height: auto;
+}
+
+.book-content{
+	height: auto;
+	min-height: 100px;
+	padding: 20px 40px;
+	border: none;
+}
+
+.book-content > p{
+	margin: 0;
+	text-align: left;
+}
+
+.book-author-info{
+	height: auto;
+	min-height: 100px;
+	padding: 20px 40px;
+	border: none;
+	text-align: justify;
 }
 
 .btn {
@@ -113,4 +149,114 @@
 	width: 24px;
 	height: 24px;
 	margin-left: 1000px;
+}
+
+.bookindex-image{
+	padding: 20px;
+	height: 73px;
+	display: flex;
+	align-items: center;
+	justify-content: end;	
+	border-bottom: 12px solid #f4f4f4;
+}
+
+.aladin {
+	margin: 0;
+	width: 20px;
+}
+
+.aladin-text {
+	font-size: 15px;
+	color: #aaa;
+	margin: 0 20px;
+}
+
+.review {
+	margin-top: 25px;
+	margin-left: 60px;
+	
+}
+
+.profile {
+	width: 32px;
+	height: 32px;
+	margin: 0;
+	padding-top: 20px;
+	padding-left: 0;
+	display: flex;
+	margin-top: 20px;
+}
+
+.myprofile {
+	width: 32px;
+	height: 32px;
+	margin-left: 0px;
+	margin-top: 10px;
+}
+
+.profile-img {
+	width: 32px;
+	height: 32px;
+	border-radius: 70px;
+	
+}
+
+.review-profile {
+	padding-left: 0;
+}
+
+.review-content {
+	margin-left: 50px;
+	margin-top: -25px;
+	line-height: 1em;
+}
+
+span {
+	font-size: 13px;
+}
+
+.myreview {
+	height: 70px;
+	width: 1050px;
+	display: flex;
+	margin: 0;
+	padding-top: 20px;
+	margin-right: 50px;
+}
+
+.review-input {
+	margin: 0;
+	padding-left: 60px;
+ }
+
+.review-input input {
+	border: 1px solid #e4e4e4;
+	border-radius: 5px;
+	width: 100%;
+	height: 50px;
+	padding: 10px;
+}
+
+.review-register {
+	padding-left: 10px;
+	margin: 0;
+}
+
+.review-button {
+	width: 80px;
+	height: 35px;
+	border-style: none;
+	background-color: #FFD360;
+	height: 50px;
+	border-radius: 5px;
+	color: #fff;
+	font-weight: bold;
+	}
+
+.review-form {
+	display: flex;
+}
+
+button:hover {
+	cursor: pointer;
 }

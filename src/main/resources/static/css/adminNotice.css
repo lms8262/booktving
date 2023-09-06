@@ -1,1 +1,27 @@
 @charset "UTF-8";
+
+.table tbody td{
+	text-align: center;
+	height: auto;
+	line-height: inherit;
+}
+
+.pagination li{
+	margin: 0;
+}
+
+.pagination .page-item.active .page-link {
+	color: #fff;
+	background-color: #ffd360;
+	border-color: #ffd360;
+}
+
+select:focus,
+selecr:active,
+.form-control:focus,
+.form-control:focus {
+	text-decoration: none !important;
+ 	color: #000 !important;
+ 	outline: none !important ;
+ 	box-shadow: none !important;
+}

@@ -1,0 +1,185 @@
+@charset "UTF-8";
+
+.rentbookInfo {
+	flex-wrap: nowrap;
+}
+
+.bookInfo-sec1 {
+	margin: 0;
+	margin-top: 30px;
+}
+
+
+/* 대여도서 이미지 부분 */
+.rent-book-img img{
+	width: 100%;
+}
+
+.rent-btnbox1 {
+	margin-top: 15px;
+}
+
+.rent-btnbox2 {
+	margin-top: 15px;
+}
+
+.rent-btn {
+	padding: 10px;
+	border-radius: 5px;
+	border-color: white;
+	font-weight: bold;
+	font-size: 1.1rem;
+}
+
+.rent-read-btn {
+	background-color: #FFD360;
+}
+
+.rent-complete-btn {
+	background-color: #504C5B;
+	color: #FFD360;
+}
+
+/* 대여도서 정보 */
+.bookInfo-sec2 {
+	margin: 0;
+	margin-top: 30px;
+	font-size: 15px;
+} 
+
+#bookName {
+	font-weight: bold;
+	font-size: 25px;
+	margin-bottom: 20px;
+}
+
+.book-info-box p {
+	margin-bottom: 15px;
+	font-weight: normal;
+	color: #636363;
+	font-size: 14px;
+}
+
+.book-info-box p span{
+	font-weight: bold;
+}
+
+#bookinfo {
+	font-size: 18px;
+	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+#bookContent {
+	font-size: 14px;
+	color: #636363;
+	text-align: justify;
+	line-height: 30px;
+}
+
+#publication-date {
+	font-size: 0.9rem;
+}
+
+.rent-book-content {
+	margin-bottom: 0.5rem;
+}
+
+.rentbookcontent {
+	padding: 15px;
+}
+
+.hr{
+	border: 2px dotted #ddd;
+	margin : 30px 0 ;	
+}
+
+/* 리뷰&한문장 부분 */
+
+.review {
+	margin-top: 60px;
+}
+
+.total-review {
+	margin: 0;
+	height: auto;
+	padding-bottom: 40px;
+}
+
+.review-h5 {
+	font-weight: 550;
+	font-size: 20px;
+	margin-bottom: 15px;
+}
+
+.box-flex{
+	display: flex;
+	margin-bottom: 10px;
+}
+
+.review-bar1 {
+	width: 85%;
+	height: 50px;
+	line-height: 50px;
+	border: 1px solid #ddd;
+	border-left: 0;
+	border-right: 0;
+	text-align: left;
+	padding-left: 20px;
+	margin: 0;
+	font-size: 13px;
+}
+
+.rent-book-form-x {
+	display: flex;
+	align-items: center;
+	margin: 0 32px;
+}
+
+.rent-book-form{
+	display: flex;
+	align-items: center;
+	margin: 0;
+}
+.rentbook-btn1 {
+	background-color: white;
+	border: 0;
+	padding: 0;
+	font-size: 19px;
+}
+
+.review-bar2 {
+	width: 85%;
+	padding: 10px;
+	border: 1px solid #ddd;
+	border-radius: 8px;
+	margin: 15px 0;
+}
+
+.rentbook-end-box {
+	display: flex;
+	justify-content: end;
+	margin-right: 55px;
+	padding-bottom: 50px;
+}
+
+.btn{
+	border-radius: 5px;
+	border: 1.5px solid #FFD360;
+	background-color: #fff;
+	font-weight: bold;
+	padding: 15px;
+	color: #FFD360;
+	font-size: 15px;
+	margin-left: 10px;
+}
+
+.rentbook-list-btn {
+    background-color: #FFD360;
+    color: #fff;
+    margin: 0;
+}
+
+button{
+	cursor: pointer;
+}

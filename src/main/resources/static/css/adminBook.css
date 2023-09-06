@@ -1,3 +1,59 @@
 @charset "UTF-8";
 
+.table thead th {
+	vertical-align: middle;
+}
 
+.table tbody td{
+	width: auto;
+	vertical-align: middle;
+	text-align: center;
+	height: auto;
+}
+
+.adminmenu_td {
+	height: 35px;
+	text-align: center;
+	overflow: hidden;
+  	text-overflow: ellipsis;
+  	word-break: break-all;
+}
+
+.adminbook_link {
+	color: black;
+	font-weight: bold;
+}
+
+.adminbook_link:hover {
+	color: #ffd360;
+}
+
+.adminbook-page > li {
+	margin: 0;
+}
+
+#checkall {
+	accent-color: #ffd360;	
+}
+
+#bookChkBox {
+	accent-color: #ffd360;
+}
+
+
+.pagination li{
+	margin: 0;
+}
+
+.pagination .page-item.active .page-link {
+	color: #fff;
+	background-color: #ffd360;
+	border-color: #ffd360;
+}
+
+/* 에러처리 */
+.fieldError {
+	color: red;
+	font-weight: 800;
+	margin-top: 10px;
+}

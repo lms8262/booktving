@@ -10,51 +10,41 @@
 				<nav class="main-nav">
 
 					<!-- 로고 -->
-					<div class="logo col-lg-2">
-						<a href="/"> <img alt="logo" src="/images/logo.png">
+					<div class="logo">
+						<a href="/"> <img alt="logo" src="/images/header/logo.png">
 						</a>
 					</div>
 
 					<!-- 메뉴 -->
 					<!-- 개발 후 로그인 전/후 메뉴 sec:authorize코드 추가예정  -->
-					<div class="col-lg-6 menu-box">
+
+					<div class="menu-box">
 						<ul class="nav_left">
-							<li class="menu"><a href=""> <span>카테고리</span>
-							</a></li>
-							<li class="menu"><a href=""> <span>검색</span>
-							</a></li>
-							<li class="menu"><a href=""> <span>문의하기</span>
-							</a></li>
-							<li class="menu"><a href=""> <span>팔로우</span>
-							</a></li>
-							<li class="menu"><a href=""> <span>나의서재</span>
-							</a></li>
-							<li class="menu slide-menu"><a href="javascript:;"> <span>나의정보</span>
-							</a>
+							<li class="menu"><a href="/category"> <span>카테고리</span></a></li>
+							<li class="menu"><a href="/search/main"> <span>검색</span></a></li>
+							<li class="menu"><a href="/question/questionInfo"> <span>문의하기</span></a></li>
+							<li class="menu" sec:authorize="hasAnyRole('USER', 'ADMIN')"><a href="/myLibrary"> <span>나의서재</span></a></li>
+							<li class="menu slide-menu" sec:authorize="hasAnyRole('USER', 'ADMIN')"><a href="javascript:;"> <span>나의정보</span></a>
 								<ul class="submenu">
-									<li><a href=""> <span>개인정보 수정</span>
-									</a></li>
-									<li><a href=""> <span>대여내역</span>
-									</a></li>
-									<li><a href=""> <span>이용권 관리</span>
-									</a></li>
+									<li><a href="/login/update"> <span>개인정보 수정</span></a></li>
+									<li><a href="/mypage/rentlist"> <span>대여내역</span></a></li>
+									<li><a href="/mypage/commutation"> <span>이용권 관리</span></a></li>
 								</ul></li>
 						</ul>
 					</div>
 
-					<div class="col-lg-4">
+					<div class="login-box">
 						<ul class="nav_right">
-							<li class="admin"><a href="/admin/book" class="admin-btn"
-								> <img alt="admin"
-									src="/images/admin.png">
+
+							<li class="admin"><a href="/admin/books" class="admin-btn" 
+								sec:authorize="hasRole('ADMIN')"> <img alt="admin" src="/images/header/admin.png">
+
 							</a></li>
 							<li class="login"><a href="/login" class="login-btn"
-								> <img alt="login"
-									src="/images/login.png">
+								sec:authorize="isAnonymous()"> <img alt="login"src="/images/header/login.png">
 							</a></li>
-							<li class="logout"><a href="" class="logout-btn"
-								> <img alt="logout"
-									src="/images/logout.png">
+							<li class="logout"><a href="/logout" class="logout-btn"
+								sec:authorize="isAuthenticated()"> <img alt="logout" src="/images/header/logout.png">
 							</a></li>
 						</ul>
 					</div>

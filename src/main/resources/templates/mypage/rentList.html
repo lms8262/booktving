@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+<head>
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
+
+
+<!-- rentlist 페이지 CSS -->
+<th:block layout:fragment="css">
+	<link rel="stylesheet" href="/css/rentlist.css" />
+</th:block>
+
+<div layout:fragment="content">
+
+	<div class="top">
+		<div class="container">
+			<div class="row">
+				<div class="col-12 section-wrap">
+
+					<div class="row">
+
+
+						<div class="admin-content col-lg-12">
+							<div class="container">
+								<div class="row">
+									<div class="col-12">
+
+										<div class="top-title">
+											<h4>나의 대여내역</h4>
+											<hr>
+										</div>
+
+										<!-- 내 대여내역 contents -->
+										<div class="container">
+											<div class="row">
+												<div class="col-md-12">
+													<div th:each="rentBook : ${rentBooks.getContent()}">
+														<div class="card">
+															<div class="each">
+																<div class="col-3">
+																	<div class="img">
+																		<img class="rentlist-img"  alt="이미지" th:src="${rentBook.imgUrl}">
+																	</div>
+																</div>
+																<div class="col-9" style="display: flex;">
+
+																	<div class="col-5">
+																		<h5 class="book-name" th:text="${rentBook.bookName}">도서명</h5>
+																		<span class="rent-sub" th:text="${rentBook.author}">저자명</span>
+																		/ <span class="rent-sub"
+																			th:text="${rentBook.publisher}">출판사명</span>
+																	</div>
+																	<div class="col-3">
+																		<p class="book-price">결제방식</p>
+																		<span class="rent-sub">이용권</span>
+																	</div>
+																	<div class="col-4">
+																		<p class="book-date">대여일</p>
+																		<span class="rent-sub" th:text="${rentBook.rentDate}"></span>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+
+
+
+
+										<!--페이지 버튼  -->
+										<div>
+											<nav
+												th:with="start=${(rentBooks.number/maxPage)*maxPage + 1}
+			                 ,end=(${(rentBooks.totalPages == 0) ? 1 : (start + (maxPage - 1) < rentBooks.totalPages ? start + (maxPage - 1) : rentBooks.totalPages)})"
+												aria-label="Page navigation example" class="page-nav">
+												<ul
+													class="pagination d-flex justify-content-center adminbook-page">
+													<li class="page-item pageitem"
+														th:classappend="${rentBooks.first}?'disabled'"><a
+														class="page-link"
+														th:onclick="'javascript:page(' + ${rentBooks.number - 1} +')'">이전</a>
+													</li>
+
+													<li class="page-item pageitem"
+														th:each="page: ${#numbers.sequence(start, end)}"
+														th:classappend="${rentBooks.number eq page-1}?'active':''">
+														<a class="page-link" th:inline="text"
+														th:onclick="'javascript:page(' + ${page - 1} +')'">[[${page}]]</a>
+													</li>
+
+													<li class="page-item pageitem"
+														th:classappend="${rentBooks.last}?'disabled'"><a
+														class="page-link"
+														th:onclick="'javascript:page(' + ${rentBooks.number + 1} +')'">다음</a>
+													</li>
+												</ul>
+											</nav>
+										</div>
+
+
+
+
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+<th:block layout:fragment="script">
+	<script>
+	
+	function page(page) {
+		location.href = "/mypage/rentlist/" + page;
+	}
+	
+	</script>
+	
+</th:block>
+
+</html>

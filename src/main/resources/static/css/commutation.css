@@ -1,0 +1,32 @@
+@charset "UTF-8";
+
+
+.commutation-title {
+	font-weight: bold;
+}
+
+.commutation-text {
+	font-weight: bold;
+}
+
+.commutationBtn {
+	margin-left: 10px;
+	border-radius: 20px;
+	color: black;
+	font-weight: bold;
+}
+
+.commutation-ticket {
+	border: 1px solid #eee;
+	border-radius: 10px;
+	padding: 20px 40px;
+}
+
+.commutation-ticket > p {
+	margin: 0 auto;
+	font-weight: bold;
+}
+
+.commutation-ticket > p > span {
+	padding: 0px 10px;
+}

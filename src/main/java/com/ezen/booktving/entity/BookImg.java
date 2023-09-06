@@ -1,5 +1,8 @@
 package com.ezen.booktving.entity;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.ezen.booktving.constant.YesNoStatus;
 
 import jakarta.persistence.Column;
@@ -13,7 +16,10 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
@@ -22,6 +28,9 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class BookImg extends BaseTimeEntity {
 	
 	@Id
@@ -44,5 +53,14 @@ public class BookImg extends BaseTimeEntity {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "book_id", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Book book;
+	
+	//이미지에 대한 정보를 업데이트 하는 메소드
+	public void updateBookImg(String oriImgName, String imgName, String imgUrl) {
+		this.oriImgName = oriImgName;
+		this.imgName = imgName;
+		this.imgUrl = imgUrl;
+	}
+
 }

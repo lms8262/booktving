@@ -1,0 +1,53 @@
+@charset "UTF-8";
+
+
+
+textarea:focus, 
+input:focus,
+select:focus {
+    outline: none !important;
+	box-shadow: none !important;
+	border-color: inherit !important; 
+}
+
+.author-contents{
+	margin-top: 15px;
+}
+
+.filebox input{
+	padding: 4px;
+}
+
+hr{
+	margin: 30px 0;
+}
+
+form .dropdown label{
+	padding: 0;
+	margin: 0;
+}
+
+.book-title{
+	width: 80px;
+	height: 35px;
+	line-height: 35px;
+	border-radius: 20px;
+	border: 1px solid #FFF;
+	background-color: #ffd360;
+	text-align: center;
+	margin: 0;
+	font-weight: bold;
+	color: #fff;	
+}
+
+textarea{
+	text-align: justify;
+}
+
+
+/* 에러처리 */
+.fieldError {
+	color: red;
+	font-weight: 800;
+	margin-top: 10px;
+}

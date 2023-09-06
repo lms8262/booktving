@@ -1,5 +1,8 @@
 package com.ezen.booktving.entity;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -18,7 +21,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class AuthorBook{
+public class AuthorBook extends BaseEntity{
 	
 	@Id
 	@Column(name = "author_book_id")
@@ -33,18 +36,15 @@ public class AuthorBook{
 	
 	@Column(nullable = false)
 	private String bookIntrodution;
-	
-	@Column(nullable = false, unique = true)
-	private String imgName;
-	
-	@Column(nullable = false)
-	private String oriImgName;
-	
-	@Column(nullable = false)
-	private String imgUrl;
-	
+		
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "author_id", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Author author;
-	
+
+	public void updateAuthorBook(String bookName, String bookSubTitle, String bookIntrodution) {
+		this.bookName = bookName;
+		this.bookSubTitle = bookSubTitle;
+		this.bookIntrodution = bookIntrodution;
+	}
 }

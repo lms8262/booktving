@@ -1,0 +1,344 @@
+@charset "UTF-8";
+
+.section-wrap {
+	position: relative;
+}
+
+/* 나의서재 프로필 영역 */
+.top .container-fluid{
+	padding: 0;
+}
+
+.mylibrary-top{
+	width: 100%;
+	height: 300px;
+	background-image: url("/images/myLibrary/mylibrary-bgimg.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	padding: 80px 20px;
+}
+
+.profile-box{
+	display:flex;
+	color: #fff; 
+}
+
+.profile-img-box{
+	width:80px;
+	height:80px;
+	overflow: hidden;
+	border-radius: 80px;
+}
+
+.profile-img-box img{
+	width:100%;
+}
+
+.user-info-box {
+	display: flex;
+	align-items: center;
+	padding: 0;
+}
+
+.user-info{
+	margin: 0;	
+}
+
+
+/* 나의서재 컨텐츠영역 */
+.myLibrary-contents-wrap{
+	height: auto;
+	margin-top: 150px;
+	margin-bottom: 100px;
+}
+
+.myLibrary-pictogram{
+	width: 30px;
+}
+
+.myLibrary-title{
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.myLibrary-more{
+	float: right;
+	margin-right: 20px;
+}
+
+.myLibrary-more a{
+	color: #bbb;
+}
+
+/* 나의 챌린지 */
+
+.challenge-wrap {
+	height: auto;
+	padding: 80px 0;
+}
+
+.challengeNew-box{
+	display: flex;
+	align-items: center;
+	height: 250px;
+	background-color: #ddd;
+	border-radius: 15px;
+	border: 1px solid #bbb;
+	padding: 30px 20px;
+}
+
+.challenge-text{
+	text-align: center;
+	font-size: 20px;
+	margin-bottom: 40px;
+}
+
+.challenge-link-wrap{
+	display: flex;
+	justify-content: center;
+}
+
+.challenge-new-link{ 
+	width: 200px;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	background-color: rgb(244, 244, 244);
+	border: 1px solid #000;
+	border-radius: 5px;
+	color: rgb(85, 85, 85);
+	font-size: 18px;
+	padding: 0 30px;
+}
+
+/* 나만의 챌린지 생성페이지 */
+.myChallenge-wrap{
+	padding: 60px 0;
+}
+
+.title-box h4{
+	font-weight: bold;
+	padding-bottom: 20px;
+}
+
+.challenge-content-wrap{
+	height: auto;
+	padding: 20px 0;
+}
+
+.challenge-content-wrap p{
+	margin: 0;
+}
+
+.content1{
+	font-size: 20px;
+	font-weight: 500;
+	padding-bottom: 20px;
+}
+
+.content2, .content3 {
+	font-size: 17px;
+}
+
+.content3{
+	padding-bottom: 30px;
+}
+
+.content4{
+	font-size: 17px;
+	font-weight: bold;
+	padding-bottom: 15px;
+}
+
+.content5, .content6{
+	padding-bottom: 5px;
+}
+
+.challenge-target-wrap{
+	padding-top: 80px;
+}
+
+.challenge-target-box{
+	display: flex;
+}
+
+.challenge-target-box img{
+	width: 50px;
+	margin: 0;
+}
+
+.challenge-target-box p {
+	margin: 0;
+	display: flex;
+	align-items: center;
+	padding-left: 30px;
+}
+
+.challenge-target-bar{
+	padding: 30px 0;
+}
+
+.challenge-target-bar input {
+	 accent-color: #ffd360;
+}
+
+.button-box-wrap{
+	display: flex;
+}
+
+.button-box {
+	display: flex;
+	justify-content: center;
+	padding: 60px 0;	
+}
+
+.button-box button {
+	width: 150px;
+	height: 50px;
+	line-height: 50px;
+	border-radius: 5px;
+	border: none;
+	color: #fff;
+	font-weight: bold;
+	background-color: #ffd360;
+	font-size: 17px;
+	cursor: pointer;
+}
+
+.button-box button:hover{
+	background-color: rgb(255, 200, 55);
+}
+
+.deco-img-box{
+	display: flex;
+	justify-content: center;
+	padding-top: 40px;
+}
+
+.deco-img-box img {
+	width: 500px;
+}
+
+
+/* 나만의 챌린지 페이지(챌린지 생성 후) */
+.challenge-title-box h4{
+	font-weight: bold;
+}
+
+.challenge-list-wrap{
+	display: flex;
+	padding: 0 30px;
+	padding-top: 50px;
+}
+
+.challenge-list-wrap-nomargin{
+	display: flex;
+	justify-content: center;
+	margin: 0;
+	padding: 0;
+}
+
+.challenge-list-wrap-nomargin form{
+	margin: 0;
+	display: flex;
+}
+
+.challenge-list-content-box{
+	display: flex;
+	align-items: center;
+	background-color: #ddd;
+	border-radius: 15px;
+	border: 1px solid #bbb;
+	padding: 30px 20px;
+}
+
+.challenge-list-content-box img{
+	width: 160px;
+}
+
+.targer-title{
+	text-align: center;
+	font-size: 25px;
+	font-weight: bold;
+}
+
+.reading-target{
+	height: 60px;
+	line-height: 60px;
+	display: flex;
+	justify-content: center;
+	align-items: last baseline;
+	margin-left: 30px;
+}
+
+.reading-target input{
+	width: 55px;
+	margin: 0;
+	text-align: center;
+	border : none;
+	outline: none;
+	background-color: inherit;
+	color: #000;
+}
+
+.reading-target p {
+	width: 50px;
+	margin: 0;
+	text-align: center;
+}
+
+.reading-target .completeYn{
+	font-size: 50px;
+	font-weight: bold;
+	text-align: end;
+}
+
+.reading-target .targetMount{
+	font-size: 20px;
+	text-align: start;
+}
+
+.challenge-item{
+	display: flex;
+	align-items: center;
+	font-size: 25px;
+	font-weight: bold;
+}
+
+.challenge-item p{
+	margin: 0;
+	margin-bottom: 30px;
+	text-align: center;
+}
+
+.challenge-item #successButton{
+	display: block;
+	width: 150px;
+	height: 40px;
+	line-height: 40px;
+	background-color: #ffd360;
+	border-radius: 20px;
+	color: #fff;
+	font-size: 20px;
+	text-align: center;
+	margin: 0 auto;
+	cursor: pointer;
+}
+
+.challenge-item-box p {
+	margin-bottom: 10px;
+}
+
+.challenge-item-box .new-challenge{
+	display: block;
+	width: 150px;
+	height: 40px;
+	line-height: 40px;
+	background-color: #ffd360;
+	border-radius: 20px;
+	color: #fff;
+	font-size: 20px;
+	text-align: center;
+	margin: 0 auto;
+	border: 2px solid #000;
+}

@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+<head>
+<meta name="_csrf" th:content="${_csrf.token}" />
+<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+</head>
+
+
+<th:block layout:fragment="css">
+	<link rel="stylesheet" href="/css/myLibraryRentBookInfo	.css" />
+</th:block>
+
+<div layout:fragment="content">
+
+	<div class="top">
+		<div class="container">
+			<div class="row">
+				<div class="col-12 section-wrap">
+					<div class="row">
+
+						<div class="col-lg-12">
+							<div class="container">
+								<div class="row">
+									<div class="col-12">
+
+
+										<div class="top-title">
+											<h4>대여한 도서 상세페이지</h4>
+											<hr>
+										</div>
+
+
+										<!--나의 서재 대여도서 상세페이지 -->
+										<div class="container">
+											<div class="col">
+												<div class="col-xxl-6 rentbookinfo">
+													<div class="container">
+														<div class="row rentbookInfo">
+															<div class="bookInfo-sec1 col-3">
+																<div class="rent-book-img col-12">
+																	<img th:alt="${rentBookDto.bookName}" th:src="${rentBookDto.imgUrl}">
+																</div>
+																<div class="rent-btnbox1 col-12">
+																<a th:href="'https://www.aladin.co.kr/shop/book/wletslookViewer.aspx?ItemId=' + ${rentBookDto.itemId}" target='_blank'>
+																	<button class="rent-read-btn rent-btn col-12">바로읽기</button>
+																</a>
+																</div>
+																
+																<form class="rent-book-form" method="post" action="/myLibrary/rentbookinfo/Complete" th:object="${rentBookDto}">
+																	<input type="hidden" name="rentBookId" th:value="${rentBookDto.id}" />
+																	<div class="rent-btnbox2 col-12" th:if="${#strings.equals(rentBookDto.completeYn, 'N')}">
+																		<button type="submit" class="rent-complete-btn rent-btn col-12">미완독</button>
+																	</div>
+																	<div class="rent-btnbox2 col-12" th:unless="${#strings.equals(rentBookDto.completeYn, 'N')}">
+																		<button type="submit" class="rent-complete-btn rent-btn col-12">완독</button>
+																	</div>
+																<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+																</form>
+															</div>
+															<div class="bookInfo-sec2 col-9">
+																<div class="container">
+																	<div class="col">
+																		<div class="col-md-12 book-info-box">
+																			<h4 id="bookName" th:text="${rentBookDto.bookName}"></h4>
+																			<p class="rent-book-content" id="author">저 자 : <span th:text="${rentBookDto.author}"></span> </p>
+																			<p class="rent-book-content" id="publisher">출판사 : <span th:text="${rentBookDto.publisher}"></span></p>
+																			<p class="rent-book-content" id="publication-date">출간일 : <span th:text="${rentBookDto.publicationDate}"></span></p>
+																		</div>
+
+																		<div class="col-md- rentbookcontent">
+																			<h4 id="bookinfo">책소개</h4>
+																			<div id="bookContent-box">
+																				<p id="bookContent" th:utext="${rentBookDto.bookIntroduction}"></p>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+														</div>
+													</div>
+												</div>
+
+												<hr class="hr" />
+
+												<div class="col-xxl-6 review">
+													<div class="container">
+														<div class="col">
+															<div class="col-lg- total-review review-sub1">
+																<h5 class="review-h5">나의 한줄 리뷰</h5>
+																<div class="box-flex">
+																	<div class="review-bar1 data" th:if="${#strings.isEmpty(rentBookDto.review)}"> 작성 된 리뷰가 없습니다. 나만의 리뷰를 남겨보세요.</div>
+																	<div class="review-bar1 data" th:if="${not #strings.isEmpty(rentBookDto.review)}"
+																							th:text="${rentBookDto.review}"></div>
+																	<form class="rent-book-form-x" method="post" action="/myLibrary/rentbookinfo/deleteReview">
+																		<input type="hidden" name="rentBookId" th:value="${rentBookDto.id}" />
+																		<button class="rentbook-btn1">
+																			<i class="fa-solid fa-rectangle-xmark fa-2xl" style="color: #ffd360;"></i>
+																		</button>																	
+																		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">	
+																	</form>
+																</div>
+																<form class="rent-book-form" method="post" action="/myLibrary/rentbookinfo/addReview">
+																	<input type="hidden" name="rentBookId" th:value="${rentBookDto.id}" />
+																	<input class="review-bar2" type="text" name="reviewText">
+																	<button type="submit" class="rentbook-btn2 btn">작성하기</button>
+																	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+																</form>
+															</div>
+
+															<div class="col-lg- total-review review-sub2">
+																<h5 class="review-h5">나의 한 문장</h5>
+																<div class="box-flex">
+																	<div class="review-bar1 data" th:if="${#strings.isEmpty(rentBookDto.sentence)}"> 작성 된 글이 없습니다. 인상 깊었던 한 문장을 기록해보세요.</div>
+																	<div class="review-bar1 data" th:if="${not #strings.isEmpty(rentBookDto.sentence)}"
+																				th:text="${rentBookDto.sentence}"></div>
+																	<form class="rent-book-form-x" method="post" action="/myLibrary/rentbookinfo/deleteSentence">
+																		<input type="hidden" name="rentBookId" th:value="${rentBookDto.id}" />
+																		<button class="rentbook-btn1">
+																			<i class="fa-solid fa-rectangle-xmark fa-2xl" style="color: #ffd360;"></i>
+																		</button>
+																		<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">	
+																	</form>
+																</div>
+																<form class="rent-book-form"  method="post" action="/myLibrary/rentbookinfo/addSentence">
+																	<input type="hidden" name="rentBookId" th:value="${rentBookDto.id}" />
+																	<input class="review-bar2" type="text" name="sentence" >
+																	<button type="submit" class="rentbook-btn2 btn">작성하기</button>
+																	<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+																</form>
+															</div>
+														</div>
+													</div>
+												</div>
+												
+												<hr class="hr" />
+
+
+											</div>
+											<div class="rentbook-end-box">
+												<button class="rentbook-list-btn btn" onclick="location.href='/myLibrary/rentList'">목록으로</button>
+											</div>
+										</div>
+
+
+									</div>
+								</div>
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+</html>

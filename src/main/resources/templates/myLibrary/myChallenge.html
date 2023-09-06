@@ -1,0 +1,213 @@
+	<!DOCTYPE html>
+	<html xmlns:th="http://www.thymeleaf.org"
+		xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+		layout:decorate="~{layouts/layout1}">
+	
+	<head>
+	<meta name="_csrf" th:content="${_csrf.token}" />
+	<meta name="_csrf_header" th:content="${_csrf.headerName}" />
+	</head>
+	
+	
+	<th:block layout:fragment="css">
+		<link rel="stylesheet" href="/css/myChallenge.css" />
+	</th:block>
+	
+	<div layout:fragment="content">
+	
+		<div class="top">
+			<div class="container-fluid">
+				<div class="row">
+					<div class="container-fluid section-wrap">
+					
+						<!-- top profile -->
+						<div class="mylibrary-top">
+							<div class="container profile-box">
+								<div class="col-2">
+									<div class="profile-img-box">
+										<img alt="프로필" src="/images/myLibrary/profile.png">
+									</div>
+								</div>
+								<div class="col-4 user-info-box">
+									<p class="user-info">[[${memberName}]]<span>&nbsp;님의 서재</spans></p>
+								</div>
+								<div class="col-6"></div>
+							</div>						
+						</div>
+	
+						<!-- 나의챌린지 생성하기 content -->
+						<div class="challenge-wrap" >
+							
+							<div class="container challengeNew-box" th:if="${#lists.isEmpty(challengeItems) or isActiveCount == 0}">
+								<div class="challenge-text-wrap">
+									<p class="challenge-text"> <strong> [[${memberName}]] </strong> &nbsp;님 나만의 챌린지를 시작해 보세요.</p>
+									<div class="challenge-link-wrap">
+										<a class="challenge-new-link" href="/myLibrary/myChallenge/new">
+											<sapn> 챌린지 생성 <i class="fa-solid fa-circle-plus" style="color: #555555;"></i> </sapn>
+										</a>
+									</div>
+								</div>
+							</div>
+							
+							
+							<div class="container challenge-list-box" th:if="${not #lists.isEmpty(challengeItems) and isActiveCount >= 1}">
+								<div class="challenge-title-box">
+									<h4>나만의 챌린지</h4>
+									<hr>
+								</div>
+		
+								<div class="challenge-list-wrap" th:each="challengeItem, status : ${challengeItems}" th:if="${#strings.equals(challengeItem.isActive, 'Y')}">
+								<input type="hidden" id="challengeItemId" th:value="${challengeItem.id}">
+									<div class="col-lg-12 challenge-list-wrap-nomargin">
+										
+										<div class="challenge-list-content-box col-5">
+											
+											<div class="col-4">
+												<img src="/images/myLibrary/book.png" />
+											</div>
+											
+											<div class="col-8">
+												<p class="targer-title">목표독서량</p>
+												<div class="reading-target">
+													<input class="completeYn" id="completedRentBooksCount" th:if="${completedRentBooksCount} > 0" th:value="${completedRentBooksCount}" disabled />
+													<input class="completeYn" th:unless="${completedRentBooksCount} > 0" value="0" disabled />
+													<p>/</p>
+													<input th:value="${challengeItem.targetMount}" id="targetMount" class="targetMount" disabled />
+												</div>
+											</div>
+											
+										</div>
+										
+										<div class="col-7 challenge-item">
+											
+											
+											<div th:if="${#strings.equals(challengeItem.isActive, 'Y') and #strings.equals(challengeItem.success, 'N')}">
+												<p>꾸준한 독서로 목표를 달성해 보세요!</p>
+												<button id="successButton" onclick="autoCheckChallenge()" th:if="${completedRentBooksCount >= challengeItem.targetMount}">챌린지 성공</button>
+											</div>
+			
+											<div class="challenge-item-box" th:if="${#strings.equals(challengeItem.isActive, 'Y') and #strings.equals(challengeItem.success, 'Y')}">
+												<p>축하합니다!! 목표를 달성했습니다.</p>
+												<p>새로운 목표를 세워보세요!</p>
+												<button id="newChallenge" class="new-challenge" onclick="deactivateChallenge()">새로운 목표</button>
+											</div>
+											
+										</div>
+										
+									</div>
+								</div>
+							</div>
+							
+						</div>
+						
+					</div>
+				</div>
+			</div>
+		</div>
+	
+	</div>
+	
+	
+	<th:block layout:fragment="script">
+		
+		<script th:inline="javascript">
+		
+		$(document).ready(function() {
+		    
+		});
+		
+			
+		//completedRentBooksCount & targetMount 값 비교 / challengeItemId 값 넘겨주기
+		function autoCheckChallenge(){
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+					
+			var challengeItemId = document.getElementById("challengeItemId").value;
+		
+		
+			var completedRentBooksCount = parseInt(document.getElementById("completedRentBooksCount").value)
+			var targetMount = parseInt(document.getElementById("targetMount").value);
+			
+			if(completedRentBooksCount >= targetMount ){
+				
+				var url = "/myLibrary/updateChallengeItem/" + challengeItemId;
+				
+				var paramData = {
+					challengeItemId : $("#challengeItemId").val()
+				}
+				var param = JSON.stringify(paramData);
+				
+					
+				$.ajax({
+					url : url,
+					type : "POST",
+					contentType : "application/json",
+					data : param,
+					beforeSend : function(xhr){
+						xhr.setRequestHeader(header, token)
+					},
+					
+					cache : false,
+					success : function(result, status){
+						alert("챌린지를 성공으로 표시했습니다.");
+						location.href="/myLibrary/myChallenge";
+					},	
+					error : function(jqXHR, status, error) {
+						if(jqXHR.status == '401'){
+							alert('로그인 후 이용해주세요.')
+							location.href = '/members/login';
+						} else {
+							// sb.toString() 의 에러메세지 출력(responseText 는 ResponseEntity 에서 받아온 값을 출력)
+							alert(jqXHR.responseText);   
+						}
+					}
+				});
+			};
+		}
+		
+		//비활성화 데이터 넘기기
+		function deactivateChallenge(){
+			var token = $("meta[name='_csrf']").attr("content");
+			var header = $("meta[name='_csrf_header']").attr("content");
+			
+			var challengeItemId = document.getElementById("challengeItemId").value;
+				
+			var url = "/myLibrary/deactivateChallenge/" + challengeItemId;
+			
+			var paramData = {
+					challengeItemId : $("#challengeItemId").val()
+				}
+			var param = JSON.stringify(paramData);
+					
+			$.ajax({
+				url : url,
+				type : "POST",
+				contentType : "application/json",
+				data : param,
+				beforeSend : function(xhr){
+					xhr.setRequestHeader(header, token)
+				},
+				
+				cache : false,			
+				success : function(result, status){
+					alert("새로운 목표를 설정하세요.");
+					location.href="/myLibrary/myChallenge/new";
+				},	
+				error : function(jqXHR, status, error) {
+					if(jqXHR.status == '401'){
+						alert('로그인 후 이용해주세요.')
+						location.href = '/members/login';
+					} else {
+						alert(jqXHR.responseText);   
+					}
+				}
+			});
+			
+		}
+		
+		
+		</script>
+		
+	</th:block>
+	
+	</html>

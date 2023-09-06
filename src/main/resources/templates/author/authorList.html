@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	  layout:decorate="~{layouts/layout1}">
+	 
+<!-- author 페이지 CSS --> 
+<th:block layout:fragment="css">
+	<link rel="stylesheet" type="text/css" href="/css/author.css" />	
+</th:block>
+
+<div layout:fragment="content">
+
+	<div class="top">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-12 section-wrap">
+					
+					<div class="container">
+						
+						<div class="top-title">
+							<img class="icorn" alt="icorn" src="/images/author/pen.png" />
+							<h4>북티빙이 사랑한 작가</h4>
+						</div>
+							
+						<div class="row author-box">
+							<th:block th:each="author, status : ${authors.getContent()}" >
+								<div class="author-wrap col-md-3 mb-4">
+									<div class="author-list">
+										<a class="author-link" th:href="'/author/detail/' + ${author.id}">
+											<img th:alt="${author.authorNameKo}" th:src="${author.imgUrl}" />
+										</a>
+										<!--
+										<a class="favorite-button">
+											<i class="fa-regular fa-star" style="color: #a4a9b2;"></i>
+										</a>
+										-->
+									</div>
+								</div>
+							</th:block>
+							
+						</div>				
+						
+						<div class="bottom-logo">							
+							<a class="logo-link" href="/author/list">
+								<img alt="logo" src="/images/author/logo.png" />
+							</a>							
+						</div>
+						
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+</div>
+
+
+<!-- author 페이지 javaScript -->
+<th:block layout:fragment="script">
+</th:block>
+
+</html>

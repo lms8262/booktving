@@ -1,4 +1,9 @@
 @charset "UTF-8";
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+}
 
 h5 {
 	font-weight: bold;
@@ -6,20 +11,57 @@ h5 {
 }
 
 /* 공지사항 */
+
 .notice-wrap{
+	height: 40px;
+	line-height: 40px;	
+	overflow: hidden;
+	position: relative;
+}
+
+.notice-box{
+	position: absolute;
+	top: 0;
+	left: 0;
 	height: 40px;
 	line-height: 40px;
 	padding-left: 30px;
+	opacity: 0;
+	transform : translateY(-100%);
+	transition : opacity 0.5s, transform 0.5s;
 }
-/* 이미지슬라이드 끝 */
+
+.notice-box.active{
+	opacity: 1;
+	transform:	translateY(0);
+}
+
+/* 공지사항 끝 */
 
 /* 이미지슬라이드 */
 .imgSlide-wrap{
 	width: 100%;
-	height: 350px;
+	height: 400px;
+	position: relative;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+}
+
+.slidelist {
+	width: 300%;
+}
+
+.slide-ul{
+	display: flex;
+}
+
+.imgSlide-wrap .contents-wrap {
+	width: 100%;
 }
 
 .contents-wrap{
+	display: block;
 	position: relative;	
 }
 
@@ -34,17 +76,21 @@ h5 {
 	margin-top: -200px;
 }
 
-.slide-contents{
+.slide-contents-wrap{
+	display: flex;	
+	justify-content: center;
+	height: 320px;
+}
+
+.slide-content{
 	display: flex;
-	height: 300px;
 	position: absolute;
 	top: 50px;
-	left: 25%;
 }
 
 .img{
 	width: 400px;
-	height: 100%;
+	height: 320px;
 	border-radius: 10px;
 	margin-right: 50px;
 	overflow: hidden;
@@ -53,6 +99,7 @@ h5 {
 
 .img img{
 	width: 400px;
+	height: 320px;
 }
 
 .text {
@@ -124,49 +171,502 @@ h5 {
 	text-align: center;
 	font-size: 15px;
 }
+
+.bookMark-search-img img{
+	height: 45px;
+	line-height: 45px;
+	font-weight: bold;
+	font-size: 20px;
+	margin: 0;
+}
+
 /* 즐겨찾기 끝 */
 
 /* 북티빙 Top10 */
 .top10-wrap{
-	height: 300px;
+	height: 500px;
 	padding-top: 30px;
+	position:relative; 
 }
+
+.tab-content{
+	margin: 0;
+}
+
+.top10-contents-wrap {
+	display: flex;
+	justify-content:center;
+	width: 85%;
+	margin: 0 auto;
+	padding-top: 20px;
+}
+
+.tabmenu {
+	width: 100%;
+	display: flex;
+	height: 450px;
+	margin: 0;
+	padding: 0;
+}
+
+.tabmenu>li {
+	width: 70px;
+	line-height: 40px;
+	margin: 0;
+}
+
+.tabmenu>li>a{
+	display: block;
+	font-size: 14px;
+	text-align: center;
+	margin-bottom: 30px;
+}
+
+.tabmenu>li>a:hover,
+.tabmenu>li>a:focus,
+.tabmenu>li>a:active {
+	font-weight: bold;
+}
+
+.tabmenu>li .rank-list{
+	display: flex;
+	height: 0;
+	overflow: hidden;
+	margin: 0 auto;
+}
+
+.tabmenu >li.active .rank-list{
+	display: flex;
+	width: 1500px;
+	height: 380px;
+	z-index: 100;
+	padding: 0;
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
+.top10-contents {
+	margin: 5px;
+	position: relative;
+}
+
+.top10-rank{
+	display: block;
+	position: absolute;
+	bottom: 15px;
+	z-index: 50;
+}
+
+.top10-rank h1{
+	color: #fff;
+	-webkit-text-stroke: 2.5px #000;
+	font-weight: bolder;
+	font-size: 70px;
+	text-shadow: 2px 2px 2px #eee;
+}
+
+.top10-contents .top10-cover{
+	width: 170px;
+	height: 230px;
+	overflow: hidden;
+	margin-left: 20px;
+	position: relative;
+}
+
+.top10-contents .top10-cover a{
+	width: 100%;
+	height: 100%;
+	position: absolute;	
+}
+
+.top10-contents .top10-cover img{
+	width: 170px;
+	height: 230px;
+}
+
+.top10-contents-text {
+	width: 175px ;
+	margin: 0;
+}
+
+.top10-title-author {
+	width: 170px;
+	margin: 0;
+	margin-left: 17px;
+	padding-left: 10px;
+	overflow: hidden;
+  	white-space: nowrap;
+  	text-overflow: ellipsis;
+  	word-break: break-all;
+}
+
+.top10-title-author .top10-title{
+	margin: 0;
+  	font-weight: bold;
+  	font-size: 13.5px;
+}
+
+.top10-title-author .top10-author{
+	display: flex;
+}
+
+.top10-title-author .top10-author p{
+	padding-left: 5px;
+  	font-size: 12px;
+  	margin: 0px;
+  	padding: 0;
+}
+
+
 /* 북티빙 Top10 끝 */
 
 /* NEW 북티빙 */
 .new-wrap{
-	height: 450px;
+	padding-left: 0;
+	padding-right: 0;
 	padding-top: 30px;
 }
 
+.new-wrap h5 {
+	margin-bottom: 50px;
+	padding-left: 15px;
+}
 .new-box-wrap{
 	display: flex;
+	width: auto;
+	padding: 0;
+	margin: 0 auto;
+	box-sizing: border-box;
+}
+
+.th-block-box{
+	padding: 0;
 }
 
 .new-box{
-	height: 150px;
+	box-sizing: border-box;
+	height: 200px;
+	margin: 0;
+}
+
+.new-box .new-box-flex {
+	display:flex;
+	margin: 0 5px;
 	background-color: #eee;
 	border-radius: 20px;
-	margin: 10px;
 }
+
+.new-book-text{
+	width: 50%;
+	padding: 40px 0 20px 0;
+	margin-left: 30px ;
+}
+
+.new-book-text .new-book-title {
+	height: 30px;
+	padding: 0;
+	font-weight: bold;
+	overflow: hidden;
+  	white-space: nowrap;
+  	text-overflow: ellipsis;
+  	word-break: break-all;
+  	font-size: 20px;
+  	margin: 0; 
+}
+
+.new-book-text .new-book-author{
+	height: 24px;
+	line-height: 24px;
+	font-size: 12px;	
+	overflow: hidden;
+  	white-space: nowrap;
+  	text-overflow: ellipsis;
+  	word-break: break-all;
+  	padding: 0;
+}
+
+.new-book-text span{
+	height:24px;
+	line-height: 24px;
+	padding: 0 5px;
+}
+
+.new-book-text .new-book-publisher{
+	height: 24px;
+	line-height: 24px;
+	font-size: 12px;	
+	overflow: hidden;
+  	white-space: nowrap;
+  	text-overflow: ellipsis;
+  	word-break: break-all;
+  	padding: 0;
+}
+
+.new-book-text .new-book-author-publishrer{
+	display: flex;
+}
+
+.new-book-author-publishrer p{
+	margin: 0;
+}
+
+.new-book-text .description{
+	position: absolute;
+	bottom: 30px;
+	margin: 0;
+	font-size: 17px;
+	font-weight: bold;
+}
+
+.new-book-cover{
+	width: 50%;
+	margin : 0;
+	overflow: hidden;
+	padding: 0
+}
+
+.new-book-cover img{
+	height: 200px;
+	transform:rotate(15deg);
+	margin-left: 30px;
+	filter: drop-shadow(5px 5px 5px gray);
+}
+
 /* NEW 북티빙 끝 */
 
 
 /* 북티빙이 사랑한 작가 */
 .author-wrap{
-	height: 400px;
+	height: 480px;
 	background-color: #ebfff8;
 }
 
-.author-wrap .author-contents {
+.author-wrap .author {
 	padding-top: 30px;
+}
+
+.author-more{
+	width: 40px;
+	height: 20px;
+	line-height: 19px;
+	background-color: #ddd;
+	border-radius: 30px;
+	text-align: center;
+	float: right;
+	margin-right: 20px;
+	color: #000;
+	font-size: 10px;
+}
+
+.author-contents-wrap{
+	display: flex;
+	width: auto;
+	padding: 0;
+	margin: 0 auto;
+	margin-top: 40px;
+	box-sizing: border-box;
+}
+
+.author-contents-wrap .authors{
+	box-sizing: border-box;
+	height: 250px;
+	margin: 0;
+}
+
+.authors .author-contents-box{
+	margin: 0 5px;
+	border-radius: 15px;
+}
+
+.author-contents{
+	border: 1px solid #ddd;
+	padding:0;
+	height: 225px;
+	overflow: hidden;
+}
+
+.author-cover img{
+	height: 100%;
+}
+
+.author-contents-text{
+	width:100%;
+	margin-top: 10px;
+	padding-left: 20px;
+}
+
+.author-text{
+	margin: 0;
+}
+
+.author-text p {
+	height: 25px;
+}
+
+.author-text .author-name{
+	font-size: 20px;
+	font-weight: bold;
+	margin: 0 7px 5px 0;
+}
+
+.author-text .author-name-eg{
+	font-size: 15px;
+	font-weight: normal;
+	line-height: 25px;
+}
+
+.author-text .sub-title{
+	font-size: 12px;
 }
 
 /* 북티빙이 사랑한 작가 끝 */
 
 /* 서점 베스트 셀러 */
 .bestSeller-wrap{
+	padding: 0;
 	padding-top: 30px;
-	height: 300px;
+	height: 450px;
+	margin-top: 20px;
 }
+
+.bestSeller-title-box{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.bestSeller-top-title {
+	display: flex;
+	margin: 0;
+}
+
+.bestSeller-top-title .aladin-logo{
+	display:flex;	
+	position: relative;
+	margin-left: 12px;
+}
+
+.bestSeller-top-title img{
+	width: 65px;
+	height: 25px;
+	margin: 0;
+}
+
+.bestSeller-top-title .standard {
+	width: 20px;
+	margin: 0;
+	font-size: 10px;
+	height: 25px;
+	line-height : 25px;
+	position: absolute;
+	top: 0;
+	left: 67px;
+	color: #bbb;
+}
+
+.bestSeller-more {
+	display : flex;
+	align-items: center;
+	margin: 0;
+	height: 40px;
+	line-height: 40px;
+}
+
+.bestSeller-more .more-text {
+	font-size: 10px;
+	color: #bbb;
+}
+
+.bestSeller-more .more {
+	width: 40px;
+	height: 20px;
+	line-height: 20px;
+	background-color: #ddd;
+	border-radius: 30px;
+	text-align: center;
+}
+
+.bestSeller-more .more a{
+	display : flex;
+	align-items: center;
+	justify-content: center;
+	color: #000;
+	font-weight: bold;
+	font-size: 10px;	
+}
+
+.bestSeller-contents-wrap {
+	display: flex;
+	justify-content: center;
+	margin: 0;
+	padding-top: 20px;
+}
+
+.bestSeller-contents {
+	margin: 5px;
+}
+
+.bestSeller-cover img{
+	overflow: hidden;
+	width: 170px;
+	height: 245px;
+	border: 0.5px solid #eee;
+}
+
+.bestSeller-contents-text {
+	width: 175px ;
+	margin: 0;
+	margin-top: 10px;
+}
+
+.bestSeller-rank {
+	width: 30px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin: 0;
+}
+
+.bestSeller-rank h2 {
+	margin: 0;
+}
+
+.bestSeller-title-author {
+	width: 130px;
+	display: flex;
+	align-items: center;
+	margin: 0;
+}
+
+.bestSeller-title-author div{
+	padding: 0;
+	overflow: hidden;
+  	white-space: nowrap;
+  	text-overflow: ellipsis;
+  	word-break: break-all;
+  	margin: 0;
+}
+
+.bestSeller-title-author div a{
+	padding-left: 5px;
+	margin: 0;
+	overflow: hidden;
+  	white-space: nowrap;
+  	text-overflow: ellipsis;
+  	word-break: break-all;
+  	font-weight: bold;
+  	font-size: 12px;
+}
+
+.bestSeller-title-author .bestSeller-author .author{
+	padding-left: 5px;
+	overflow: hidden;
+  	white-space: nowrap;
+  	text-overflow: ellipsis;
+  	word-break: break-all;
+  	font-size: 12px;
+  	margin-bottom: 0px
+}
+
 /* 서점 베스트 셀러 끝 */

@@ -1,0 +1,163 @@
+@charset "UTF-8";
+
+
+.content {
+	height: 1100px;
+	width: 1310px;
+}
+
+.favorite-content {
+	height: 80px;
+	width: 1050px;
+	border-bottom: 1px solid rgb(192, 192, 192);
+	padding-top: 20px;
+}
+
+.slide-menu:hover .submenu {
+	display: block !important;
+	z-index: 100 !important;
+}
+
+.menu {
+	overflow: hidden;
+}
+
+.submenu {
+	display: none;
+}
+
+.submenu li {
+	width: 80px;
+	border: 1px solid #c0c0c0;
+	border-radius: 10px;
+	text-align: center;
+}
+
+.submenu li a {
+	text-align: center;
+}
+
+nav .submenu li:hover {
+	background-color: #FFD360;
+	font-weight: bold;
+}
+
+strong {
+	font-size: 20px;
+}
+
+.favorite-menu {
+	height: 80px;
+	width: 1050px;
+	padding-top: 20px;
+}
+
+.count {
+	display: flex;
+}
+
+.count p {
+	font-size: 20px;
+	margin: 0;
+}
+
+.icon {
+	margin: 0;
+	justify-content: flex-end;
+}
+
+.search {
+	border-style: none;
+	background-color: white;
+}
+
+.menu {
+	border-style: none;
+	background-color: white;
+}
+
+.favorite-book {
+	display: flex;
+	justify-content: left;
+	margin: 0;
+}
+
+.book-image {
+	height: 320px;
+	padding: 0;
+}
+
+.fav-info {
+	display: flex;
+	justify-content: start;
+	padding: 10px 0;
+	height: 50px;
+}
+
+.div-title {
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+	height: inherit;
+	display: flex;
+	justify-content: left;
+}
+
+.title {
+	padding: 10px;
+	overflow: hidden;
+  	white-space: nowrap;
+  	text-overflow: ellipsis;
+  	word-break: break-all;
+  	margin: 0;
+}
+
+.div-button {
+	width: 10px;
+}
+
+.menu {
+	border-style: none;
+	background-color: white;
+	padding: 0;
+	color: black;
+	list-style: none;
+}
+
+.submenu2 {
+	display: none;
+	width: 50px;
+	position:absolute; 
+	padding: 0;	
+	border: 1px solid #eee;
+	background-color: #fff;
+	border-radius: 5px;
+}
+
+.slide-menu2:hover .submenu2 {
+	display: block !important;
+    z-index: 100 !important;
+}
+
+.submenu2 li {
+	padding: 5px 5px;
+}
+
+.submenu2 a {
+	text-align: center;
+}
+
+.submenu2 li:hover {
+	font-weight: bold;
+}
+
+.author {
+	width: 210px;
+	padding-top: 2px;
+	padding-left: 5px;
+}
+
+.text-author {
+	font-size: 15px;
+	color: rgb(192, 192, 192);
+}

@@ -1,0 +1,238 @@
+@charset "UTF-8";
+
+/* 북티빙이 사랑한 작가 목록페이지 */
+.top-title{
+	display: flex;
+	justify-content: center;
+}
+
+.icorn{
+	width: 40px;
+	margin: 0;
+}
+
+.top-title h4 {
+	margin: 0;
+}
+
+.author-box{
+	display: flex;
+	justify-content: space-around;
+	margin-top: 60px;
+	padding-left: 5px;
+	padding-right: 5px;
+}
+
+.author-list{
+	overflow: hidden;
+	height: 230px;
+	border-radius: 15px;
+	border: 1px solid #ddd;
+	box-shadow: 2px 2px 3px #eee;
+}
+
+.author-list a {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+}
+
+.author-list img {
+	position: absolute;
+	width: 100%;
+	top:50%;
+}
+
+.bottom-logo{
+	margin: 70px 0;	
+}
+
+.logo-link img {
+	width: 150px;
+	display: flex;
+	justify-content: center;
+}
+
+
+/* 북티빙이 사랑한 작가-상세페이지 */
+.author-detail-wrap{
+	background-image: url("/images/author/author-bgimg.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+.author-detail-wrap .background-color{
+	background-color: rgba(8, 0, 31, 70%) ;
+}
+
+.section-wrap-author {
+	background-color: rgb(8, 0, 31);
+	display: flex;
+	align-items: flex-start;
+	padding: 100px 20px;
+}
+
+.author-pictogram{
+	width: 80px;
+	height: 80px;
+	border-radius: 80px;
+	background-color: #ddd;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+}
+
+.author-pictogram img {
+	width: 68%;
+	margin: 0;
+}
+
+.author-picture {
+	width: 350px;
+	height: 350px;
+	border-radius: 350px;
+	margin-top: 40px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	overflow: hidden;
+}
+
+.author-picture img {
+	height: 100%;
+	margin: 0;
+}
+
+.author-name {
+	height: 150px;
+}
+
+.author-name p {
+	color: #fff;
+	text-align: center;
+}
+
+.author-name-eg{
+	height: 100px;
+	margin:0;
+	margin-top: 20px;
+	font-size: 80px;
+    font-family:'Pinyon Script', cursive;
+	src:url('fonts/PinyonScript-Regular.ttf') format(‘ttf’);
+    font-style: normal;
+    text-shadow: 10px 10px 10px rgba(255,255,255,70%);
+}
+
+.author-name-ko{
+	font-size: 20px;
+}
+
+.author-title-wrap p {
+	margin: 150px 0;
+	color: #fff;
+	text-align: center;
+	font-size: 30px;
+}
+
+.author-info {
+	color: #fff;
+	padding: 0 200px;
+}
+
+.author-info-title{
+	display: flex;
+	align-items: center;
+}
+
+.author-info-title h5 { 
+	margin: 0;
+}
+
+.author-deco-bar {
+	width: 150px;
+	height: 2px;
+	background-color: #fff;
+	margin: 0 0 0 20px;
+}
+
+.author-info-content {
+	margin-top: 30px;
+	text-align: justify;
+	text-indent: 3em;
+}
+
+.author-book-wrap {
+	color: #fff;
+	padding: 150px 200px;
+}
+
+.author-book-title {
+	display: flex;
+	align-items: center;
+	margin-bottom: 60px;
+}
+
+.author-book-title h5{
+	margin: 0;
+}
+
+.author-book-content{
+	display: flex;
+	justify-content: flex-start;
+}
+
+.book-img-box{
+	height: 200px;
+	overflow: hidden;
+	border-radius: 10px;
+	padding: 0;
+	margin: 0;
+}
+
+.book-img-box img{
+	height: 100%;
+	border-radius: 10px;
+	border: 3px solid #eee;
+}
+
+.book-text-box{
+	padding-left: 15px;
+}
+
+.book-text-box p {
+	margin: 0;
+}
+
+.book-info-title{
+	width: auto;
+	height: auto;
+	line-height: 40px;
+	padding: 0 20px 0 20px;
+	text-align: center;
+	border-radius: 20px;
+	background-color: #5b5b5b;
+	box-shadow: 3px 3px 3px #bbb;
+	font-size: 18px;
+	font-weight:bold;
+	position: absolute;
+	top: 8%;
+	
+}
+
+.book-title {
+	font-size: 17px;
+	position: absolute;
+	top: 45%;
+	font-weight: bold;
+}
+
+.book-introdution{
+	font-size: 15px;
+	text-align: justify;
+	position: absolute;
+	bottom: 8%;
+}
+
+

@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+<th:block layout:fragment="css">
+	<link rel="stylesheet" href="/css/category.css" />
+</th:block>
+
+<div layout:fragment="content">
+	<div class="category-wrap">
+		<div class="container">
+	
+			<h4 class="category-title">카테고리</h4>
+			
+			<div class="container">
+				<div class="row category-content">		
+						
+					<div class="col-6 mb-3 category-box">
+						<div>						
+							<a href="/category/detail?categoryId=1&categoryName=소설/시/희곡">
+								<div class="d-flex">
+									<div class="category-name">
+										<h5>소설/시/희곡</h5>
+									</div>
+									<div class="category-img">
+										<img alt="categoryimg" src="/images/category/category1.jpg">
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
+					
+					<div class="col-6 mb-3 category-box">
+						<div>						
+							<a href="/category/detail?categoryId=170&categoryName=경제경영">
+								<div class="d-flex">
+									<div class="category-name">
+										<h5>경제경영</h5>
+									</div>
+									<div class="category-img">
+										<img alt="categoryimg" src="/images/category/category2.jpg">
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
+					
+					<div class="col-6 mb-3 category-box">
+						<div>						
+							<a href="/category/detail?categoryId=798&categoryName=사회과학">
+								<div class="d-flex">
+									<div class="category-name">
+										<h5>사회과학</h5>
+									</div>
+									<div class="category-img">
+										<img alt="categoryimg" src="/images/category/category3.jpg">
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
+					
+					<div class="col-6 mb-3 category-box">
+						<div>						
+							<a href="/category/detail?categoryId=55889&categoryName=에세이">
+								<div class="d-flex">
+									<div class="category-name">
+										<h5>에세이</h5>
+									</div>
+									<div class="category-img">
+										<img alt="categoryimg" src="/images/category/category4.jpg">
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
+					
+					<div class="col-6 mb-3 category-box">
+						<div>						
+							<a href="/category/detail?categoryId=517&categoryName=예술/대중문화">
+								<div class="d-flex">
+									<div class="category-name">
+										<h5>예술/대중문화</h5>
+									</div>
+									<div class="category-img">
+										<img alt="categoryimg" src="/images/category/category5.jpg">
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
+					
+					<div class="col-6 mb-3 category-box">
+						<div>						
+							<a href="/category/detail?categoryId=336&categoryName=자기계발">
+								<div class="d-flex">
+									<div class="category-name">
+										<h5>자기계발</h5>
+									</div>
+									<div class="category-img">
+										<img alt="categoryimg" src="/images/category/category6.jpg">
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
+					
+					<div class="col-6 mb-3 category-box">
+						<div>						
+							<a href="/category/detail?categoryId=1322&categoryName=외국어">
+								<div class="d-flex">
+									<div class="category-name">
+										<h5>외국어</h5>
+									</div>
+									<div class="category-img">
+										<img alt="categoryimg" src="/images/category/category7.jpg">
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
+					
+					<div class="col-6 mb-3 category-box">
+						<div>						
+							<a href="/category/detail?categoryId=351&categoryName=컴퓨터/모바일">
+								<div class="d-flex">
+									<div class="category-name">
+										<h5>컴퓨터/모바일</h5>
+									</div>
+									<div class="category-img">
+										<img alt="categoryimg" src="/images/category/category8.jpg">
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
+					
+					<div class="col-6 mb-3 category-box">
+						<div>						
+							<a href="/category/detail?categoryId=112011&categoryName=장르소설">
+								<div class="d-flex">
+									<div class="category-name">
+										<h5>장르소설</h5>
+									</div>
+									<div class="category-img">
+										<img alt="categoryimg" src="/images/category/category9.jpg">
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
+					
+					<div class="col-6 mb-3 category-box">
+						<div>						
+							<a href="/category/detail?categoryId=2551&categoryName=만화">
+								<div class="d-flex">
+									<div class="category-name">
+										<h5>만화</h5>
+									</div>
+									<div class="category-img">
+										<img alt="categoryimg" src="/images/category/category10.jpg">
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<th:block layout:fragment="script">
+	<script th:inline="javascript">
+		$(document).ready(function() {			
+			var errorMessage = [[${errorMessage}]];
+			
+			if(errorMessage != null) {
+				alert(errorMessage);
+			}
+		});
+	</script>
+</th:block>
+
+</html>
