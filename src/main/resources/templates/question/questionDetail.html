@@ -8,16 +8,19 @@
 
 <div layout:fragment="content">
 	<div class="top">
-		<div class="content">
-			<div class="detail-question">
-				<strong><a href="/question/questionInfo">고객센터</a></strong>
-				<p>
-					<a href="/question/questionCreate">1:1 문의</a>
-				</p>
+		<div class="container">
+			<div class="question-content">
+				<h4 class="question-title">고객센터</h4>
 			</div>
+				
+				<hr class="container">
+				
+				
 			<div class="que1">
-				<strong>1:1 문의</strong>
+				<h6>1:1 문의</h6>
 			</div>
+			
+			
 			<div class="detail-div">
 				<div class="title">
 					<p th:if="${question}" th:text="${question.title}" class="detail-title"></p>
