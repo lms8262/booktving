@@ -14,16 +14,18 @@
 
 <div layout:fragment="content">
 	<div class="top">
-		<div class="content">
-			<div class="create-question">
-				<strong><a href="/question/questionInfo">고객센터</a></strong>
-				<p>
-					<a href="/question/questionCreate">1:1 문의</a>
-				</p>
+		<div class="container">
+			<div class="question-content">
+				<h4 class="question-title">고객센터</h4>
 			</div>
+				
+				<hr class="container">
+				
 			<div class="que1">
-				<strong>1:1 문의</strong>
+				<h6>1:1 문의</h6>
 			</div>
+			
+			
 			<div class="buttons_list">
 				<button type="button" class="qna-create_list"
 					onclick="location.href='/question/questionCreate'">
@@ -33,22 +35,22 @@
 					&nbsp;문의내역보기</button>
 			</div>
 			<div class="qna-contents" th:each="question : ${questionList}">
-				<div class="qna-status">
-					<div class="status">
-						<p th:text="${question.questionStatus.krName}"></p>
+				<div class="qna-status col-12">
+					<div class="col-10">
+						<div class="status">
+							<p th:text="${question.questionStatus.krName}"></p>
+						</div>
+						<div class="title-box">
+							<p class="title">
+								<a th:href="@{/question/questionDetail/{id}(id=${question.id})}" th:text="${question.title}"></a>
+							</p>
+							<p th:text="${question.questionDate}" class="qna-date"></p>
+						</div>
 					</div>
-					<!-- 로그인한 사용자와 현재 문의 작성자가 동일한 경우에만 삭제 버튼 표시 -->
-					<button type="button" class="delete" th:value="${question.id}"
-						onclick="deleteQuestion(this.value)">삭제</button>
-				</div>
-				<div class="title">
-					<p>
-						<a th:href="@{/question/questionDetail/{id}(id=${question.id})}"
-							style="font-size: 16px; font-weight: bold"
-							th:text="${question.title}"></a>
-					</p>
-					<p style="color: gray; font-size: 13px"
-						th:text="${question.questionDate}"></p>
+					<div class="delete-box col-2">
+						<!-- 로그인한 사용자와 현재 문의 작성자가 동일한 경우에만 삭제 버튼 표시 -->
+						<button type="button" class="delete" th:value="${question.id}" onclick="deleteQuestion(this.value)">삭제</button>
+					</div>
 				</div>
 				
 			</div>
