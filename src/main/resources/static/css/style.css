@@ -42,8 +42,8 @@ ul{
 }
 
 /* sec: header */
-.header-section{
-	width: 1920px;
+.header-section {
+	min-width: 1920px;
 	display:flex;
 	align-items:center;
 	height: 100px;
@@ -421,7 +421,7 @@ form nav {
 
 /* sec: footer */
 .footer_section{
-	width: 1920px;
+	min-width: 1920px;
 	background-color: #FFD360;
 }
 
