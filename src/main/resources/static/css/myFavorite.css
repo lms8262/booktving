@@ -1,8 +1,5 @@
 @charset "UTF-8";
 
-.top {
-	
-}
 
 .content {
 	height: 1100px;
@@ -60,8 +57,8 @@ strong {
 }
 
 .count p {
+	font-size: 20px;
 	margin: 0;
-	width: 2500px;
 }
 
 .icon {
@@ -81,30 +78,38 @@ strong {
 
 .favorite-book {
 	display: flex;
-	width: 1050px;
-}
-
-.book {
-	width: 230px;
+	justify-content: left;
+	margin: 0;
 }
 
 .book-image {
-	width: 210px;
 	height: 320px;
-	background-color: rgb(192, 192, 192);
+	padding: 0;
 }
 
 .fav-info {
 	display: flex;
-	padding-top: 10px;
+	justify-content: start;
+	padding: 10px 0;
+	height: 50px;
 }
 
 .div-title {
-	width: 180px;
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+	height: inherit;
+	display: flex;
+	justify-content: left;
 }
 
 .title {
-	width: 200px;
+	padding: 10px;
+	overflow: hidden;
+  	white-space: nowrap;
+  	text-overflow: ellipsis;
+  	word-break: break-all;
+  	margin: 0;
 }
 
 .div-button {
@@ -153,5 +158,6 @@ strong {
 }
 
 .text-author {
-	font-size: 10px;
+	font-size: 15px;
+	color: rgb(192, 192, 192);
 }

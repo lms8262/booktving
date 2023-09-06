@@ -12,28 +12,27 @@
 
 <div layout:fragment="content">
 	<div class="top">
-		<div class="content">
+		<div class="container content">
 			<div class="favorite-content">
 				<strong>My Favorite</strong>
 			</div>
 			<div class="favorite-menu">
 				<div class="count">
-					<p>총 [[${favoriteBooks.size()}]]권</p>
+					<p>총 <strong>[[${favoriteBooks.size()}]] </strong>권</p>
 
 				</div>
 			</div>
-			<div class="favorite-book">
-				<div th:each="favoriteBook : ${favoriteBooks}" class="book">
-					<div class="book-image">
+			<div class="favorite-book col-md-3">
+				<div th:each="favoriteBook : ${favoriteBooks}" class="book col-12">
+					<div class="book-image col-12">
 						<img th:src="${favoriteBook.bookImgDtoList[0].imgUrl}" class="img" style="width: 210px; height: 320px;">
 					</div>
-					<div class="fav-info">
-						<div class="div-title">
+					<div class="fav-info col-12">
+						<div class="div-title col-11">
 							<p class="title" th:text="${favoriteBook.bookName}"></p>
 						</div>
-						<div class="menu">
-							<li class="menu slide-menu2"><a href="#"><i
-									class="fa-solid fa-ellipsis-vertical"></i> </a>
+						<div class="menu col-1">
+							<li class="menu slide-menu2"><a href="#"><i	class="fa-solid fa-ellipsis-vertical"></i> </a>
 								<ul class="submenu2">
 									<li><a th:onclick="removeFavoriteBook([[${favoriteBook.id}]])"><span>삭제</span>
 									</a></li>
@@ -42,9 +41,7 @@
 					</div>
 					<div class="author">
 						<div class="div-author">
-							<p class="text-author"
-								style="font-size: 5px; color: rgb(192, 192, 192)"
-								th:text="${favoriteBook.author}"></p>
+							<p class="text-author" th:text="${favoriteBook.author}"></p>
 						</div>
 					</div>
 				</div>

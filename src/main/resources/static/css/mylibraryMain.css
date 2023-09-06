@@ -187,7 +187,7 @@
     width: 100%;
 }
 
-.author-book-null-wrap {
+.rent-book-null-wrap {
 	display: flex;
 	justify-content:center; 
 	margin-top: 60px;
@@ -223,7 +223,7 @@
 }
 
 .favorite-book-wrap{
-	width: 90%;
+	width: 65%;
 	position: absolute;
 	left: 50%;
 	transform: translateX(-50%);
@@ -231,16 +231,18 @@
 }
 
 .favorite-book{
-	background-color: #bbb;
-	width: 15%;
+	width: 110px;
 	height: 140px;
-	position: absolute;
-	left: 50%;
-	transform: translateX(-50%);
 	border-radius: 7px 7px 0 0;
-	z-index: 1;
 	box-shadow: 3px 3px 5px #ccc;
+	overflow: hidden;
+	float: left;
 }
+
+.favorite-book img{
+    width: 100%;
+}
+
 
 .favorite-book-null-wrap {
 	display: flex;

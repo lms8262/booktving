@@ -34,6 +34,8 @@ public class BookDto {
 	
 	private String category;
 	
+	private String authorInfo;
+	
 	private List<BookImgDto> bookImgDtoList = new ArrayList<>();
 	
 	private List<BookReviewDto> bookReviewDtoList = new ArrayList<>();
