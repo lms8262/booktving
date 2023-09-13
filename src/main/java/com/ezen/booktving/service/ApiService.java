@@ -44,7 +44,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ApiService {
 	
-	@Value("${bookImgLocation}")
+	//@Value("${bookImgLocation}")
 	private String bookImgLocation;
 	private final WebClient webClient;
 	private final BestSellerRepository bestSellerRepository;
@@ -277,7 +277,7 @@ public class ApiService {
         URL url = new URL(imgPath);
         BufferedImage image = ImageIO.read(url);
         
-        ImageIO.write(image, format, new File(bookImgLocation + "/" + imgName));
+        ImageIO.write(image, format, new File("C:/booktving/book" + "/" + imgName));
         
         BookImg bookImg = BookImg.builder()
         						.imgName(imgName)
