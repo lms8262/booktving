@@ -8,8 +8,8 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer{
 	
-	@Value("${uploadPath}")
-	String uploadPath; //업로드할 경로
+	//@Value("${uploadPath}")
+	String uploadPath = "file:///C:/booktving/"; //업로드할 경로
 	
 	@Override
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
