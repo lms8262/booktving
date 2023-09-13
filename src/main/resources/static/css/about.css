@@ -1,0 +1,133 @@
+@charset "UTF-8";
+
+.content-wrap{
+	height: auto;
+}
+
+.body-wrap{
+	height: auto;
+	padding: 50px 10px;
+}
+
+.project-name{
+	text-align: center;
+}
+
+.project-name p{
+	font-size: 13px;
+}
+
+.project-name h3{
+	font-weight: bold;
+}
+
+.project-info{
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	margin-top: 40px;
+	margin-bottom: 40px;
+	padding: 30px 30px 50px;
+	border: 1px solid #ddd;
+	border-radius: 20px;
+}
+
+.project-info p {
+	text-align: center;
+	margin-bottom: 50px;
+}
+
+.function-info{
+	margin: 0;
+	margin-left: 60px;
+}
+
+.project-menu-wrap{
+	padding: 0;
+}
+
+.project-menu-wrap ul {
+	display: flex;
+	height: 50px;
+	margin: 0;
+	border-top: 1px solid #bbb;
+	border-bottom: 1px solid #bbb;
+	padding: 0;
+}
+
+.project-menu-wrap ul li {
+	display: flex;
+	align-items: center;
+	margin: 0;
+	padding: 10px 20px;
+}
+
+.project-menu-wrap li:hover {
+	background-color: #000;
+	color: #fff;
+}
+
+.project-content-wrap{
+	display: block;
+	margin: 0;
+	padding: 0;
+}
+
+.project-content-wrap > div {
+	
+}
+
+.DE-content{
+	display: flex;
+	justify-content: space-around;
+	padding: 20px;
+}
+
+.development{
+	display: flex;
+	flex-direction: column;
+	border: 1px solid #ddd;
+	padding: 15px;
+	margin: 0 5px;
+}
+
+.title-box{
+	width: 100%;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	background-color: #eee;
+}
+
+.development-img{
+	display: flex;
+	justify-content: center;
+}
+
+.development img{
+	width: 110px;
+	margin: 10px;
+}
+
+.tool-img-box{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.use-case-content{
+	padding: 20px;
+}
+
+.erd-content{
+	padding: 20px;
+}
+
+.erd-content img {
+	width: 100%;
+	
+}
+
+.git-content{
+	padding: 20px;
+}

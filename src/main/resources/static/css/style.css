@@ -5,6 +5,8 @@
 body{
 	background-color: #fff;
 	height: 100%;
+	padding: 0;
+	margin: 0;
 }
 
 a {
@@ -43,42 +45,49 @@ ul{
 
 /* sec: header */
 .header-section {
-	min-width: 1920px;
 	display:flex;
+	justify-content: center;
 	align-items:center;
 	height: 100px;
 	border-bottom: 1px solid #eee;
 }
 
-.header-box{
+.header-wrap{
+	display: flex;
+	justify-content: center;
+	height: 100%;
+	margin: 0;
 	padding: 0;
-	min-width: 1140px;
 }
 
 .main-nav{
+	height: 100px;
 	display: flex;
 	justify-content: space-between;
 	align-items:center;
-	padding: 0;
-	margin: 0 auto;
+	padding: 8px 12px;
+	margin: 0;
 }
 
 .logo{
+	padding: 8px;
+	height: 100%;	
 	margin: 0;
+}
+
+.logo>a {
 	display: flex;
-	justify-content: flex-end;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
 }
 
 .logo img{
-	width:150px;
+	width: 150px;
 }
 
 .menu-box {
 	margin: 0 0 0 40px;
-}
-
-.login-box {
-	margin: 0 0 0 auto;
 }
 
 .nav_left{
@@ -92,19 +101,12 @@ ul{
 }
 
 nav .menu{
-	width: auto;
 	height: 40px;
 	line-height: 40px;
-	display: block;
-	padding: 0 !important;
-	margin: 0 10px !important;
+	display: inline-block;
+	padding: 0 20px !important;
 	text-align: center;
 	position: relative;
-}
-
-nav .menu a{
-	width: auto;
-	padding: 0 10px;
 }
 
 nav li:hover {
@@ -138,35 +140,44 @@ nav .submenu li:hover{
 	font-weight: bold;
 }
 
+.login-box {
+	display: block;
+	margin: 0 0 0 auto;
+}
+
 .nav_right{
 	height: 40px;
 	line-height: 40px;
 	display: flex;
 	align-items: center;
-	justify-content: flex-start;
+	justify-content: flex-end;
 	padding: 0;
 	margin: 0;
 }
 
 .nav_right li {
-	width:auto;
-	margin: 0 10px;
+	display: inline-block;
+	margin: 0 5px;
 }
 
-.nav_right li a{
-	width: auto;
+.about {
+	margin-left: 10px !important;
+}
+
+.about_btn {
+	font-size: 13px	;
 }
 
 .admin-btn img{
-	width: 30px;
+	width: 25px;
 }
 
 .login-btn img{
-	width: 80px;
+	width: 70px;
 } 
 
 .logout-btn img{
-	width: 80px;
+	width: 70px;
 }
 
 /* sec: content : admin 페이지 공통 양식*/
@@ -504,4 +515,10 @@ form nav {
 .footer-copy p{
 	width: 100%;
 	text-align: center;
+}
+
+
+
+@media screen and ( max-width: 768px ){
+	
 }
