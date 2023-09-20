@@ -28,7 +28,7 @@
 
 <body>
 
-	<div class="site-wrap contain-fluid">
+	<div class="site-wrap">
 		<div th:replace="~{fragments/header::header}" class="header justify-content-center"></div>
 		<div layout:fragment="content" class="content justify-content-center"></div>
 		<div th:replace="~{fragments/footer::footer}" class="footer justify-content-center"></div>
@@ -56,6 +56,16 @@
 				location.href= sns;
 			}
 		}
+		
+		const toggleBtn = document.querySelector('.navbar_toogleBtn');
+		const menu = document.querySelector('.menu-box');
+		const login = document.querySelector('.login-box');			
+		
+		toggleBtn.addEventListener('click', () => {
+			menu.classList.toggle('active');
+			login.classList.toggle('active');
+		});
+		
 	</script>
 	
 	<!-- 각 페이지의 스크립트가 작성될 위치 -->

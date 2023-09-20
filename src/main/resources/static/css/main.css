@@ -7,7 +7,7 @@
 
 h5 {
 	font-weight: bold;
-	padding-left: 10px;
+	padding-left: 0.5rem;
 }
 
 .body-wrap{
@@ -17,8 +17,8 @@ h5 {
 /* 공지사항 */
 
 .notice-wrap{
-	height: 40px;
-	line-height: 40px;	
+	height: 2rem;
+	line-height: 2rem;	
 	overflow: hidden;
 	position: relative;
 }
@@ -27,9 +27,9 @@ h5 {
 	position: absolute;
 	top: 0;
 	left: 0;
-	height: 40px;
-	line-height: 40px;
-	padding-left: 30px;
+	height: 2rem;
+	line-height: 2rem;
+	padding-left: 1.5rem;
 	opacity: 0;
 	transform : translateY(-100%);
 	transition : opacity 0.5s, transform 0.5s;
@@ -45,7 +45,7 @@ h5 {
 /* 이미지슬라이드 */
 .imgSlide-wrap{
 	width: 100%;
-	height: 400px;
+	height: 20rem;
 	position: relative;
 	padding: 0;
 	margin: 0;
@@ -71,39 +71,39 @@ h5 {
 
 .slide-backgroun{
 	width: 100%;
-	height: 300px;
+	height: 15rem;
 	overflow: hidden;
 }
 
 .slide-backgroun img {
 	width: inherit;
-	margin-top: -200px;
+	margin-top: -10rem;
 }
 
 .slide-contents-wrap{
 	display: flex;	
 	justify-content: center;
-	height: 320px;
+	height: 16rem;
 }
 
 .slide-content{
 	display: flex;
 	position: absolute;
-	top: 50px;
+	top: 2.5rem;
 }
 
 .img{
-	width: 400px;
-	height: 320px;
-	border-radius: 10px;
-	margin-right: 50px;
+	width: 20rem;
+	height: 16rem;
+	border-radius: 0.5rem;
+	margin-right: 2.5rem;
 	overflow: hidden;
-	box-shadow: 5px 5px 10px rgb(188, 188, 188, 0.5);
+	box-shadow: 0.25rem 0.25rem 0.5rem rgb(188, 188, 188, 0.5);
 }
 
 .img img{
-	width: 400px;
-	height: 320px;
+	width: 20rem;
+	height: 16rem;
 }
 
 .text {
@@ -111,7 +111,7 @@ h5 {
 }
 
 .text .h6{
-	font-size: 18px;
+	font-size: 0.9rem;
 	font-weight: bold;
 }
 
@@ -121,21 +121,21 @@ h5 {
 }
 
 .text .hot {
-	width: 50px;
-	height: 25px;
-	line-height: 25px;
+	width: 2.5rem;
+	height: 1.25rem;
+	line-height: 1.25rem;
 	background-color: #fff;
 	color: #000;
-	border-radius: 20px;
+	border-radius: 1rem;
 	text-align: center;
-	font-size: 13px;
+	font-size: 0.65rem;
 	font-weight: bold;
-	margin: 20px 0;
+	margin: 1rem 0;
 }
 
 .text .felx-end {
 	text-align: end;
-	padding-right: 20px;
+	padding-right: 1rem;
 }	
 /* 이미지슬라이드 끝 */
 
@@ -144,43 +144,43 @@ h5 {
 .bookMark-wrap{
 	display: flex;
 	align-items: center;
-	height: 200px;
-	padding: 50px 0;
+	height: 10rem;
+	padding: 2.5rem 0;
 }
 
 .bookMark{
-	margin: 0 30px;
+	margin: 0 1.5rem;
 }
 
 .booMark-img{
 	background-color: #eee;
-	width: 60px;
-	height: 60px;
+	width: 3rem;
+	height: 3rem;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	border-radius: 10px;
+	border-radius: 0.5rem;
 }
 
 .booMark-img .icron {
-	height: 50px;
-	line-height: 50px;
+	height: 2.5rem;
+	line-height: 2.5rem;
 	font-weight: bold;
-	font-size: 20px;
+	font-size: 1rem;
 	margin: 0;
 }
 
 .bookMark-text {
-	margin-top: 10px;
+	margin-top: 0.5rem;
 	text-align: center;
-	font-size: 15px;
+	font-size: 0.75rem;
 }
 
 .bookMark-search-img img{
-	height: 45px;
-	line-height: 45px;
+	height: 2.25rem;
+	line-height: 2.25rem;
 	font-weight: bold;
-	font-size: 20px;
+	font-size: 1rem;
 	margin: 0;
 }
 
@@ -188,9 +188,13 @@ h5 {
 
 /* 북티빙 Top10 */
 .top10-wrap{
-	height: 500px;
-	padding-top: 30px;
+	height: 25rem;
+	padding-top: 1.5rem;
 	position:relative; 
+}
+
+.top10-title-wrap{
+	margin: 0 auto;
 }
 
 .tab-content{
@@ -202,28 +206,28 @@ h5 {
 	justify-content:center;
 	width: 85%;
 	margin: 0 auto;
-	padding-top: 20px;
+	padding-top: 1rem;
 }
 
 .tabmenu {
 	width: 100%;
 	display: flex;
-	height: 450px;
+	height: 22.5rem;
 	margin: 0;
 	padding: 0;
 }
 
 .tabmenu>li {
-	width: 70px;
-	line-height: 40px;
+	width: 3.5rem;
+	line-height: 2rem;
 	margin: 0;
 }
 
 .tabmenu>li>a{
 	display: block;
-	font-size: 14px;
+	font-size: 0.7rem;
 	text-align: center;
-	margin-bottom: 30px;
+	margin-bottom: 1.5rem;
 }
 
 .tabmenu>li>a:hover,
@@ -241,8 +245,8 @@ h5 {
 
 .tabmenu >li.active .rank-list{
 	display: flex;
-	width: 1500px;
-	height: 380px;
+	width: 75rem;
+	height: 19rem;
 	z-index: 100;
 	padding: 0;
 	position: absolute;
@@ -251,14 +255,14 @@ h5 {
 }
 
 .top10-contents {
-	margin: 5px;
+	margin: 0.25rem;
 	position: relative;
 }
 
 .top10-rank{
 	display: block;
 	position: absolute;
-	bottom: 15px;
+	bottom: 0.75rem;
 	z-index: 50;
 }
 
@@ -266,15 +270,15 @@ h5 {
 	color: #fff;
 	-webkit-text-stroke: 2.5px #000;
 	font-weight: bolder;
-	font-size: 70px;
-	text-shadow: 2px 2px 2px #eee;
+	font-size: 3.5rem;
+	text-shadow: 0.1rem 0.1rem 0.1rem #eee;
 }
 
 .top10-contents .top10-cover{
-	width: 170px;
-	height: 230px;
+	width: 8.5rem;
+	height: 11.5rem;
 	overflow: hidden;
-	margin-left: 20px;
+	margin-left: 1rem;
 	position: relative;
 }
 
@@ -285,20 +289,20 @@ h5 {
 }
 
 .top10-contents .top10-cover img{
-	width: 170px;
-	height: 230px;
+	width: 8.5rem;
+	height: 11.5rem;
 }
 
 .top10-contents-text {
-	width: 175px ;
+	width: 8.75rem ;
 	margin: 0;
 }
 
 .top10-title-author {
-	width: 170px;
+	width: 8.5rem;
 	margin: 0;
-	margin-left: 17px;
-	padding-left: 10px;
+	margin-left: 0.85rem;
+	padding-left: 0.5rem;
 	overflow: hidden;
   	white-space: nowrap;
   	text-overflow: ellipsis;
@@ -308,7 +312,7 @@ h5 {
 .top10-title-author .top10-title{
 	margin: 0;
   	font-weight: bold;
-  	font-size: 13.5px;
+  	font-size: 0.67rem;
 }
 
 .top10-title-author .top10-author{
@@ -316,9 +320,9 @@ h5 {
 }
 
 .top10-title-author .top10-author p{
-	padding-left: 5px;
-  	font-size: 12px;
-  	margin: 0px;
+	padding-left: 0.25rem;
+  	font-size: 0.6rem;
+  	margin: 0;
   	padding: 0;
 }
 
@@ -329,12 +333,12 @@ h5 {
 .new-wrap{
 	padding-left: 0;
 	padding-right: 0;
-	padding-top: 30px;
+	padding-top: 1.5rem;
 }
 
 .new-wrap h5 {
-	margin-bottom: 50px;
-	padding-left: 15px;
+	margin-bottom: 2.5rem;
+	padding-left: 0.75rem;
 }
 .new-box-wrap{
 	display: flex;
@@ -350,39 +354,39 @@ h5 {
 
 .new-box{
 	box-sizing: border-box;
-	height: 200px;
+	height: 10rem;
 	margin: 0;
 }
 
 .new-box .new-box-flex {
 	display:flex;
-	margin: 0 5px;
+	margin: 0 0.25rem;
 	background-color: #eee;
-	border-radius: 20px;
+	border-radius: 1rem;
 }
 
 .new-book-text{
 	width: 50%;
-	padding: 40px 0 20px 0;
-	margin-left: 30px ;
+	padding: 2rem 0 1rem 0;
+	margin-left: 1.5rem ;
 }
 
 .new-book-text .new-book-title {
-	height: 30px;
+	height: 1.5rem;
 	padding: 0;
 	font-weight: bold;
 	overflow: hidden;
   	white-space: nowrap;
   	text-overflow: ellipsis;
   	word-break: break-all;
-  	font-size: 20px;
+  	font-size: 1rem;
   	margin: 0; 
 }
 
 .new-book-text .new-book-author{
-	height: 24px;
-	line-height: 24px;
-	font-size: 12px;	
+	height: 1.2rem;
+	line-height: 1.2rem;
+	font-size: 0.6rem;	
 	overflow: hidden;
   	white-space: nowrap;
   	text-overflow: ellipsis;
@@ -391,15 +395,15 @@ h5 {
 }
 
 .new-book-text span{
-	height:24px;
-	line-height: 24px;
-	padding: 0 5px;
+	height:1.2rem;
+	line-height: 1.2rem;
+	padding: 0 0.25rem;
 }
 
 .new-book-text .new-book-publisher{
-	height: 24px;
-	line-height: 24px;
-	font-size: 12px;	
+	height: 1.2rem;
+	line-height: 1.2rem;
+	font-size: 0.6rem;	
 	overflow: hidden;
   	white-space: nowrap;
   	text-overflow: ellipsis;
@@ -417,9 +421,9 @@ h5 {
 
 .new-book-text .description{
 	position: absolute;
-	bottom: 30px;
+	bottom: 1.5rem;
 	margin: 0;
-	font-size: 17px;
+	font-size: 0.85rem;
 	font-weight: bold;
 }
 
@@ -431,10 +435,10 @@ h5 {
 }
 
 .new-book-cover img{
-	height: 200px;
+	height: 10rem;
 	transform:rotate(15deg);
-	margin-left: 30px;
-	filter: drop-shadow(5px 5px 5px gray);
+	margin-left: 1.5rem;
+	filter: drop-shadow(0.25rem 0.25rem 0.25rem gray);
 }
 
 /* NEW 북티빙 끝 */
@@ -442,62 +446,64 @@ h5 {
 
 /* 북티빙이 사랑한 작가 */
 .author-wrap{
-	height: 480px;
+	height: 24rem;
 	background-color: #ebfff8;
 }
 
 .author-wrap .author {
-	padding-top: 30px;
+	padding-top: 1.5rem;
 }
 
 .author-more{
-	width: 40px;
-	height: 20px;
-	line-height: 19px;
+	width: 2rem;
+	height: 1rem;
+	line-height: 1rem;
 	background-color: #ddd;
-	border-radius: 30px;
+	border-radius: 1.5rem3;
 	text-align: center;
 	float: right;
-	margin-right: 20px;
+	margin-right: 1rem;
 	color: #000;
-	font-size: 10px;
+	font-size: 0.5rem;
 }
 
 .author-contents-wrap{
 	display: flex;
-	width: auto;
+	justify-content: center;
 	padding: 0;
 	margin: 0 auto;
-	margin-top: 40px;
+	margin-top: 2rem;
 	box-sizing: border-box;
 }
 
 .author-contents-wrap .authors{
 	box-sizing: border-box;
-	height: 250px;
-	margin: 0;
+	height: 12.5rem;
+	margin: 0 auto;
 }
 
 .authors .author-contents-box{
-	margin: 0 5px;
-	border-radius: 15px;
+	margin: 0 0.25rem;
+	border-radius: 0.75rem;
 }
 
 .author-contents{
 	border: 1px solid #ddd;
+	width: 11.75rem;
+	height: 10.7rem;
 	padding:0;
-	height: 225px;
 	overflow: hidden;
 }
 
 .author-cover img{
+	width: 100%;
 	height: 100%;
 }
 
 .author-contents-text{
 	width:100%;
-	margin-top: 10px;
-	padding-left: 20px;
+	margin-top: 0.5rem;
+	padding-left: 1rem;
 }
 
 .author-text{
@@ -505,23 +511,28 @@ h5 {
 }
 
 .author-text p {
-	height: 25px;
+	height: auto;
+	overflow: hidden;
+  	white-space: nowrap;
+  	text-overflow: ellipsis;
+  	word-break: break-all;
+  	margin-bottom: 0;
 }
 
 .author-text .author-name{
-	font-size: 20px;
+	font-size: 1rem;
 	font-weight: bold;
 	margin: 0 7px 5px 0;
 }
 
 .author-text .author-name-eg{
-	font-size: 15px;
+	font-size: 0.75rem;
 	font-weight: normal;
-	line-height: 25px;
+	line-height: 1.25rem;
 }
 
 .author-text .sub-title{
-	font-size: 12px;
+	font-size: 0.6rem;
 }
 
 /* 북티빙이 사랑한 작가 끝 */
@@ -529,9 +540,9 @@ h5 {
 /* 서점 베스트 셀러 */
 .bestSeller-wrap{
 	padding: 0;
-	padding-top: 30px;
-	height: 450px;
-	margin-top: 20px;
+	padding-top: 1.5rem;
+	height: 22.5rem;
+	margin-top: 1rem;
 }
 
 .bestSeller-title-box{
@@ -548,24 +559,24 @@ h5 {
 .bestSeller-top-title .aladin-logo{
 	display:flex;	
 	position: relative;
-	margin-left: 12px;
+	margin-left: 0.6rem;
 }
 
 .bestSeller-top-title img{
-	width: 65px;
-	height: 25px;
+	width: 3.25rem;
+	height: 1.25rem;
 	margin: 0;
 }
 
 .bestSeller-top-title .standard {
-	width: 20px;
+	width: 1rem;
 	margin: 0;
-	font-size: 10px;
-	height: 25px;
-	line-height : 25px;
+	font-size: 0.5rem;
+	height: 1.25rem;
+	line-height : 1.25rem;
 	position: absolute;
 	top: 0;
-	left: 67px;
+	left: 3.35rem;
 	color: #bbb;
 }
 
@@ -573,21 +584,21 @@ h5 {
 	display : flex;
 	align-items: center;
 	margin: 0;
-	height: 40px;
-	line-height: 40px;
+	height: 2rem;
+	line-height: 2rem;
 }
 
 .bestSeller-more .more-text {
-	font-size: 10px;
+	font-size: 0.5rem;
 	color: #bbb;
 }
 
 .bestSeller-more .more {
-	width: 40px;
-	height: 20px;
-	line-height: 20px;
+	width: 2rem;
+	height: 1rem;
+	line-height: 1rem;
 	background-color: #ddd;
-	border-radius: 30px;
+	border-radius: 1.5rem;
 	text-align: center;
 }
 
@@ -597,35 +608,35 @@ h5 {
 	justify-content: center;
 	color: #000;
 	font-weight: bold;
-	font-size: 10px;	
+	font-size: 0.5rem;	
 }
 
 .bestSeller-contents-wrap {
 	display: flex;
 	justify-content: center;
-	margin: 0;
-	padding-top: 20px;
+	margin: 0 auto;
+	padding-top: 1rem;
 }
 
 .bestSeller-contents {
-	margin: 5px;
+	margin: 0.25rem;
 }
 
 .bestSeller-cover img{
 	overflow: hidden;
-	width: 170px;
-	height: 245px;
+	width: 8.5rem;
+	height: 12.25rem;
 	border: 0.5px solid #eee;
 }
 
 .bestSeller-contents-text {
-	width: 175px ;
+	width: 8.75rem ;
 	margin: 0;
-	margin-top: 10px;
+	margin-top: 0.5rem;
 }
 
 .bestSeller-rank {
-	width: 30px;
+	width: 1.5rem;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -637,7 +648,7 @@ h5 {
 }
 
 .bestSeller-title-author {
-	width: 130px;
+	width: 6.5rem;
 	display: flex;
 	align-items: center;
 	margin: 0;
@@ -653,24 +664,70 @@ h5 {
 }
 
 .bestSeller-title-author div a{
-	padding-left: 5px;
+	padding-left: 0.25rem;
 	margin: 0;
 	overflow: hidden;
   	white-space: nowrap;
   	text-overflow: ellipsis;
   	word-break: break-all;
   	font-weight: bold;
-  	font-size: 12px;
+  	font-size: 0.6rem;
 }
 
 .bestSeller-title-author .bestSeller-author .author{
-	padding-left: 5px;
+	padding-left: 0.25rem;
 	overflow: hidden;
   	white-space: nowrap;
   	text-overflow: ellipsis;
   	word-break: break-all;
-  	font-size: 12px;
+  	font-size: 0.6rem;
   	margin-bottom: 0px
 }
 
 /* 서점 베스트 셀러 끝 */
+
+
+
+@media screen and ( max-width: 1200px ){
+	.notice-wrap,
+	.bookMark-wrap,
+	.top10-wrap,
+	.new-wrap,
+	.author-contents-wrap,
+	.bestSeller-contents-wrap {
+		max-width: 57rem;
+	}
+}
+
+@media screen and ( max-width: 992px ){
+	.notice-wrap,
+	.bookMark-wrap,
+	.top10-wrap,
+	.new-wrap,
+	.author-contents-wrap,
+	.bestSeller-contents-wrap {
+		max-width: 48rem;
+	}	
+}
+
+@media screen and ( max-width: 768px ){
+	.notice-wrap,
+	.bookMark-wrap,
+	.top10-wrap,
+	.new-wrap,
+	.aauthor-contents-wrap,
+	.bestSeller-contents-wrap {
+		max-width: 36rem;
+	}
+}
+
+@media screen and ( max-width: 576px ){
+	.notice-wrap,
+	.bookMark-wrap,
+	.top10-wrap,
+	.new-wrap,
+	.author-contents-wrap,
+	.bestSeller-contents-wrap {
+		max-width: 27rem;
+	}
+}

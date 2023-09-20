@@ -50,6 +50,7 @@
 
 .member-wrap img{
 	width: 120px;
+	margin: 0 auto;
 }
 
 .member-title{
@@ -69,11 +70,13 @@
 .member{
 	display: flex;
 	flex-direction: column;
+	justify-content: center;
 }
 
 .member p {
 	font-size: 20px;
 	font-weight: bold;
+	text-align: center;
 }
 
 .member .name {
@@ -86,6 +89,8 @@
 }
 
 .member-border{
+	padding-left: 40px;
+	padding-right: 40px;
 	border-left: 1px solid #bbb;
 	border-right: 1px solid #bbb;
 }
@@ -95,6 +100,7 @@
 	font-weight: normal;
 	margin-bottom: 10px;
 	font-weight: 600;
+	text-align: justify;
 }
 
 .member-part span {
@@ -175,6 +181,7 @@
 .development img{
 	width: 110px;
 	margin: 10px;
+	margin: 0 auto;
 }
 
 .tool-img-box{

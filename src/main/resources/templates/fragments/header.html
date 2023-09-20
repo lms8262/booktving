@@ -4,14 +4,14 @@
 
 <header th:fragment="header" class="header-section container-fluid">
 	<div class="header-wrap">
-		<div class="container">
+		<div class="container position">
 			<nav class="main-nav">
 				<!-- 로고 -->
-				<div class="logo">
+				<div class="logo col-2">
 					<a href="/"> <img alt="logo" src="/images/header/logo.png"></a>
 				</div>
 				<!-- 메뉴 -->
-				<div class="menu-box">
+				<div class="menu-box col-6">
 					<ul class="nav_left">
 						<li class="menu"><a href="/category">카테고리</a></li>
 						<li class="menu"><a href="/search/main">검색</a></li>
@@ -26,7 +26,7 @@
 						</li>
 					</ul>
 				</div>
-				<div class="login-box">
+				<div class="login-box col-4">
 					<ul class="nav_right">
 						<li class="admin"><a href="/admin/books" class="admin-btn" sec:authorize="hasRole('ADMIN')">
 							<img alt="admin" src="/images/header/admin.png"></a>
@@ -40,8 +40,10 @@
 						</li>
 					</ul>
 				</div>
+				<a class="navbar_toogleBtn">
+					<i class="fa-solid fa-bars" style="color: #FFD360;"></i>
+				</a>
 			</nav>
-			<i class="fa-solid fa-bars" style="color: #303236;"></i>
 		</div>
 	</div>
 	

@@ -27,9 +27,9 @@
 			<!-- 이미지 슬라이드 -->
 			<div class="imgSlide-wrap imgslide container-fluid">
 					
-				<div class="slidelist swiper">
+				<div class="slidelist">
 						
-					<div class="slide-ul swiper-wrapper">
+					<div class="slide-ul">
 						<!-- 이미지슬라이드1 -->
 						<div class="contents-wrap slide-li swiper-slide">
 							<a href="/book/bookDetail/9791198243447">
@@ -123,7 +123,7 @@
 
 			<!-- 북티빙 Top 10 -->
 			<div class="top10-wrap container-fluid" th:if="${not #lists.isEmpty(rentBooks)}">
-				<div class="container">
+				<div class="container top10-title-wrap">
 					<h5>북티빙 Top 10</h5>
 				</div>
 						
@@ -291,12 +291,14 @@
 
 			<!-- 북티빙이 사랑한 작가 -->
 			<div class="author-wrap container-fluid">
-				<div class="container author">
-					<a href="/author/list">
-						<h5>북티빙이 사랑한 작가 <span class="author-more">more</span></h5>
-					</a>
+				<div class="author">
+					<div class="container">
+						<a href="/author/list">
+							<h5>북티빙이 사랑한 작가 <span class="author-more">more</span></h5>
+						</a>
+					</div>
 					
-					<div class="author-contents-wrap">
+					<div class="col-8 author-contents-wrap">
 						<th:block th:each="author, status : ${authors}">	
 							<div class="authors col-md-3">
 								<div class="author-contents-box">

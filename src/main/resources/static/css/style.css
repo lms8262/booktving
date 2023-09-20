@@ -5,15 +5,15 @@
 }
 
 html {
+	width: 96rem;
 	font-size: 20px;
 }
 
 body{
-	width: 96rem;
 	background-color: #fff;
 	height: 100%;
 	padding: 0;
-	margin: 0;
+	margin: 0 auto;
 	font-size: 1rem;
 }
 
@@ -52,10 +52,12 @@ ul{
 }
 
 /* sec: header */
+
 .header-section {
 	height: 100px;
 	border-bottom: 1px solid #eee;
 	padding: 0;
+	z-index: 100;
 }
 
 .header-wrap{
@@ -63,15 +65,18 @@ ul{
 	padding: 0;
 }
 
-.container{
-	position: relative;
+.position{
+	width: 100%;
 	margin: 0 auto;
+	padding: 0 1rem;
+	position: relative;
 }
 
 .main-nav{
 	height: 100px;
 	display: flex;
 	align-items:center;
+	justify-content: space-between;
 	padding: 0.4rem 0.6rem;
 	margin: 0 auto;
 }
@@ -85,21 +90,22 @@ ul{
 .logo>a {
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: left;
 	height: 100%;
 }
 
 .logo img{
 	width: 7.5rem;
+	
 }
 
 .menu-box {
-	margin: 0 0 0 2rem;
+	margin: 0;
+	display: flex;
+	justify-content: left;
 }
 
 .nav_left{
-	height: 2rem;
-	line-height: 2rem;
 	display: flex;
 	align-items: center;
 	justify-content: flex-start;
@@ -119,11 +125,6 @@ nav .menu{
 nav li a {
 	padding: 0.75rem;
 	line-height: 100%;
-
-}
-
-nav li:hover {
-	font-weight: bold;
 }
 
 nav .submenu{
@@ -155,7 +156,7 @@ nav .submenu li:hover{
 
 .login-box {
 	display: block;
-	margin: 0 0 0 auto;
+	margin: 0 auto;
 }
 
 .nav_right{
@@ -193,11 +194,13 @@ nav .submenu li:hover{
 	width: 3.5rem;
 }
 
-.fa-bars:before {
+.navbar_toogleBtn {
 	display: none;
 	position: absolute;
-	top:  2rem;
+	top:  1.5rem;
 	right: 2rem;
+	font-size: 1.2rem;
+	cursor: pointer;
 }
 
 /* sec: content : admin 페이지 공통 양식*/
@@ -452,12 +455,14 @@ form nav {
 
 /* sec: footer */
 .footer_section{
+	height: auto;
 	background-color: #FFD360;
 	padding: 2.5rem 0;
 }
 
 .footer-wrap{
 	display: flex;
+	height: auto;
 }
 
 .footer-top{
@@ -465,6 +470,7 @@ form nav {
 	line-height: 4rem;
 	display: flex;
 	justify-content: space-between;
+	align-items: center;
 }
 
 .footer-logo{
@@ -493,12 +499,15 @@ form nav {
 
 .footer-menu{
 	display:flex;
-	justify-content:flex-start;
-	height: 2.5rem;
-	line-height: 2.5rem;
+	justify-content:center;
+	height: auto;
 	font-size: 0.6rem;
 	color: #fff;
-	margin: 1rem 0;
+	margin: 2rem 0;
+}
+
+.footer-menu>div{
+	display: flex;
 }
 
 .footer-menu a{
@@ -530,9 +539,27 @@ form nav {
 	color: #fff;
 }
 
+@media screen and ( max-width: 1200px ){
+	.position{
+		max-width: 57rem;
+	}
+	
+	.footer-menu{
+		flex-direction: column;	
+	}
+	
+	.footer-menu > div {
+		justify-content: center;
+	}
+}
+
 @media screen and ( max-width: 992px ){
 	.header-section{
 		position: relative;
+	}
+	
+	.position{
+		max-width: 48rem;
 	}
 	
 	.main-nav {
@@ -546,22 +573,78 @@ form nav {
 	.logo a{
 		justify-content: left;
 	}
-	
+		
 	.menu-box{
-		display: block;
+		width: 100%;
+		display: none;
 		height: auto;
+		margin: 0 auto;
 	}
 	
 	.nav_left {
 		flex-direction: column;
 	}
 	
-	.fa-bars:before {
+	.nav_left li{
+		width: 100%;
+		text-align: center;
+	} 	
+	
+	nav li:hover {
+		background-color: #FFD360;
+		font-weight: bold;
+	}
+	
+	.slide-menu{
+		position: relative
+	}
+	
+	.submenu{
+		position: absolute;
+		top: 2rem;
+		left: 29rem;
+	}
+	
+	.login-box{
+		width: 100%;
+		display: none;
+	}
+		
+	.nav_right{
+		height: auto;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+	}
+	
+	.nav_right li {
+		width: 100%;
+		text-align: center;
+	}
+	
+	.navbar_toogleBtn{
 		display: block;
 	}
-
+	
+	.menu-box.active,
+	.login-box.active {
+		display: block;
+	}
+	
 }
 
+@media screen and ( max-width: 768px ){
+	.position{
+		max-width: 36rem;
+	}
+	
+}
+
+@media screen and ( max-width: 576px ){
+	.position{
+		max-width: 27rem;
+	}
+}
 
 
 
