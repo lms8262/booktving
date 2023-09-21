@@ -19,8 +19,8 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthorImgService {
 	
-	//@Value("${authorImgLocation}")
-	private String authorImgLocation = "c:/booktving/author";
+	@Value("${authorImgLocation}")
+	private String authorImgLocation;
 	private final AuthorImgRepository authorImgRepository;
 	private final AuthorBookImgRepository authorBookImgRepository;
 	private final FileService fileService;
