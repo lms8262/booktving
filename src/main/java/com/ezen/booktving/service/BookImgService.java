@@ -18,8 +18,8 @@ import lombok.RequiredArgsConstructor;
 @Transactional
 public class BookImgService {
 	
-	//@Value("${bookImgLocation}")
-	private String bookImgLocation = "c:/booktving/book";
+	@Value("${bookImgLocation}")
+	private String bookImgLocation;
 	private final BookImgRepository bookImgRepository;
 
 	private final FileService fileService;
