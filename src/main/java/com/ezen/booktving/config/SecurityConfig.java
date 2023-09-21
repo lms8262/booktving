@@ -57,6 +57,7 @@ public class SecurityConfig {
 				.requestMatchers(mvc.pattern("/findid"), mvc.pattern("/findpw")).permitAll()
 				.requestMatchers(mvc.pattern("/category/**"), mvc.pattern("/search/**"), mvc.pattern("/question/**"), mvc.pattern("/notice/**")).permitAll()
 				.requestMatchers(mvc.pattern("/author/**"), mvc.pattern("/book/**"), mvc.pattern("/mylibrary/**"),mvc.pattern("/mypage/**")).permitAll()
+				.requestMatchers(mvc.pattern("/about/**")).permitAll()
 				// 'admin'으로 시작하는 경로는 관리자만 접근가능하도록 설정
 				.requestMatchers(mvc.pattern("/admin/**")).hasRole("ADMIN")
 				.anyRequest().authenticated())// 그외 페이지는 모두 로그인 (인증을 받아야한다.)

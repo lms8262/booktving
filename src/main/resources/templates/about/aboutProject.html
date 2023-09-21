@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout1}">
+
+<!-- about 페이지 CSS -->
+<th:block layout:fragment="css">
+	<link rel="stylesheet" type="text/css" href="/css/about.css" />
+</th:block>
+
+<div layout:fragment="content">
+	<div class="content-wrap contain-fluid">
+		
+		<div class="body-wrap container">
+			
+			<div class="project-name">
+				<p>- 온라인 도서 대여 사이트 -</p>
+				<h3>EZEN 북티빙시대</h3>
+			</div>
+			
+			<div class="project-info">
+				<p>◆ 디지털 미디어 시대를 살아가는 현대인들에게 가치 있는 독서를 제공하고, 독서량 향상을 위한 목적으로 웹개발 ◆</p>
+				
+				<ul class="function-info">
+					<li>- 밀리의 서재에서 착안</li>
+					<li>- 찜 목록, 목표독서량 설정 기능을 통한 독서량 증진 기여  </li>
+					<li>- 회원 / 관리가 기능 분리</li>
+					<li>- 카테고리, 검색 기능을 통해 다양하 도서 제공</li>
+					<li>- 리뷰 기능을 통한 소통</li>
+					<li>- 나의 서재 구성(대여도서, 찜도서, 챌린지)으로 독서노트 역할</li>
+				</ul>
+			</div>
+			
+			<div class="member-wrap">
+				<p class="member-title">담당 파트 상세 기제</p>
+				<div class="member-flex">
+					<div class="member moonsu">
+						<p class="name">Lee Moon-su</p>
+						<p>(팀장)</p>
+						<img src="/images/about/moonsu.png" alt="profile">
+						<div class="member-part">
+							<p><span>○</span>회의진행, 일정관리 조율</p>
+							<p><span>○</span>깃 허브 관리, aws 배포</p>
+							<p class="margin-small"><span>○</span>도서 검색 기능 구현</p>
+							<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 도서검색 / 인기검색어 / 추천검색어</p>
+							<p><span>○</span>도서 카테고리 분류 구현</p>
+							<p class="margin-small"><span>○</span>도서 상세페이지 구현</p>
+							<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 도서 결제시스템, 도서 찜하기</p>
+							<p><span>○</span>대여 내역 및 이용권 관리 기능 구현</p>
+							<p class="margin-small"><span>○</span>문의하기 기능 구현</p>
+							<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 문의내역 리스트, 문의하기, 문의 답변하기</p>
+							<p><span>○</span>검색 키워드 / 대출내역 관리 페이지 구현</p>
+						</div>
+					</div>
+					
+					<div class="member jinwoo">
+						<p class="name">Lee Jin-woo</p>
+						<p>(팀원)</p>
+						<img src="/images/about/jinwoo.png" alt="profile">
+						<div class="member-part member-border">
+							<p class="margin-small"><span>○</span>회원가입 페이지 구현</p>
+							<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(주소 api 활용 우편번호 검색 기능 구현)</p>
+							<p><span>○</span>로그인(자체, 소셜, 자동) 기능 구현</p>
+							<p><span>○</span>아이디/비밀번호 찾기 기능 구현</p>
+							<p><span>○</span>개인정보 수정 페이지 구현</p>
+							<p><span>○</span>회원정보 관리 페이지 구현</p>
+						</div>
+					</div>
+					
+					<div class="member bohyun">
+						<p class="name">Choi Bo-hyun</p>
+						<p>(팀원)</p>
+						<img src="/images/about/bohyun.png" alt="profile">
+						<div class="member-part">
+							<p class="margin-small"><span>○</span>메인페이지 구현</p>
+							<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 북티빙Top10 / NEW북티빙 / 서점베스트셀러</p>
+							<p><span>○</span>추천작가 리스트, 상세페이지, 관리페이지 구현</p>
+							<p><span>○</span>도서 상세페이지 구현</p>
+							<p><span>○</span>문의 안내페이지 구현</p>
+							<p class="margin-small"><span>○</span>나의 서재 메인페이지 구현</p>
+							<p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- 나의 챌린지 / 대여도서 상세페이지</p>
+							<p><span>○</span>공지사항 목록 / 관리자 페이지 구현</p>
+							<p><span>○</span>관리자 페이지 디자인 구현</p>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+			
+			<div class="project-menu-wrap">
+				<ul>
+					<li class="developmentBtn">Development Environment</li>					
+					<li class="useCaseBtn">Use-Case</li>					
+					<li class="erdBtn">ERD</li>					
+					<li class="githubBtn">github</li>					
+				</ul>
+				
+				<div class="project-content-wrap col-lg-12">
+					<div id="developmentBox">
+						<div class="DE-content">
+							<div class="development front-end col-lg-4">
+								<p class="title-box">Front-End</p>
+								<div class="development-img-box">
+									<div class="development-img mb-4">
+										<img src="/images/about/html5.png" alt="front-end">
+										<img src="/images/about/css.png" alt="front-end">
+									</div>
+									<div class="development-img">
+										<img src="/images/about/js.png" alt="front-end">
+										<img src="/images/about/bootstrap.png" alt="front-end">
+									</div>
+								</div>
+							</div>
+							
+							<div class="development back-end col-lg-4">
+								<p class="title-box">Back-End</p>
+								<div class="development-img-box">
+									<div class="development-img mb-5">
+										<img src="/images/about/java.png" alt="back-end">
+										<img src="/images/about/spring.png" alt="back-end">
+									</div>
+									<div class="development-img mb-5">
+										<img src="/images/about/springboot.png" alt="back-end">
+										<img src="/images/about/maven-logo.png" alt="back-end">
+									</div>
+									<div class="development-img">
+										<img src="/images/about/jpa.png" alt="back-end">
+										<img src="/images/about/mysql.png" alt="back-end">
+									</div>
+								</div>
+							</div>
+							
+							<div class="development tool col-lg-3">
+								<p class="title-box">Tool</p>
+								<div class="development-img-box">
+									<div class="tool-img-box">
+										<img src="/images/about/eclipse.png" alt="tool">
+										<img src="/images/about/mysqlworkbench.png" alt="tool">
+										<img src="/images/about/github.png" alt="tool">
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="use-case-content" id="useCaseBox">
+						<div>
+							<img src="/images/about/UseCase.JPG" alt="use-case">
+						</div>
+					</div>
+					
+					<div class="erd-content" id="erdBox">
+						<div>
+							<a href="https://www.erdcloud.com/d/9d9nY76j7An9ukJWd">관련링크 : ERD</a>
+							<img src="/images/about/erd.png" alt="erd">
+						</div>
+					</div>
+					
+					
+					<div class="git-content" id="gitBox">
+						<div>
+							<a href="https://github.com/lms8262/booktving">관련링크 : git-hub</a>
+							<!--<img src="" alt="README">-->
+						</div>
+					</div>
+					
+				</div>
+				
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+
+<!-- about 페이지 javaScript -->
+<th:block layout:fragment="script">
+	
+	<script>
+		
+		const developmentBtn = document.querySelector('.developmentBtn');
+		const developmentBox = document.querySelector('#developmentBox');
+		const useCaseBtn = document.querySelector('.useCaseBtn');
+		const useCaseBox = document.querySelector('#useCaseBox');
+		const erdBtn = document.querySelector('.erdBtn');
+		const erdBox = document.querySelector('#erdBox');
+		const githubBtn = document.querySelector('.githubBtn');
+		const gitBox = document.querySelector('#gitBox');
+		
+		developmentBtn.addEventListener('click', () => {
+			useCaseBox.classList.remove('active')
+			erdBox.classList.remove('active')
+			gitBox.classList.remove('active')
+			developmentBox.classList.toggle('active');
+		});
+		useCaseBtn.addEventListener('click', () => {
+			developmentBox.classList.remove('active')
+			erdBox.classList.remove('active')
+			gitBox.classList.remove('active')
+			useCaseBox.classList.toggle('active');
+		});
+		erdBtn.addEventListener('click', () => {
+			developmentBox.classList.remove('active')
+			useCaseBox.classList.remove('active')
+			gitBox.classList.remove('active')
+			erdBox.classList.toggle('active');
+		});
+		githubBtn.addEventListener('click', () => {
+			developmentBox.classList.remove('active')
+			useCaseBox.classList.remove('active')
+			erdBox.classList.remove('active')
+			gitBox.classList.toggle('active');
+		});
+	
+		
+	</script>
+	
+</th:block>
+
+</html>
