@@ -2,58 +2,52 @@
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
-<header th:fragment="header" class="header-section">
-	<div class="container">
-		<div class="row">
-			<div class="col-lg-12 header-box">
-
-				<nav class="main-nav">
-
-					<!-- 로고 -->
-					<div class="logo">
-						<a href="/"> <img alt="logo" src="/images/header/logo.png">
-						</a>
-					</div>
-
-					<!-- 메뉴 -->
-					<!-- 개발 후 로그인 전/후 메뉴 sec:authorize코드 추가예정  -->
-
-					<div class="menu-box">
-						<ul class="nav_left">
-							<li class="menu"><a href="/category"> <span>카테고리</span></a></li>
-							<li class="menu"><a href="/search/main"> <span>검색</span></a></li>
-							<li class="menu"><a href="/question/questionInfo"> <span>문의하기</span></a></li>
-							<li class="menu" sec:authorize="hasAnyRole('USER', 'ADMIN')"><a href="/myLibrary"> <span>나의서재</span></a></li>
-							<li class="menu slide-menu" sec:authorize="hasAnyRole('USER', 'ADMIN')"><a href="javascript:;"> <span>나의정보</span></a>
-								<ul class="submenu">
-									<li><a href="/login/update"> <span>개인정보 수정</span></a></li>
-									<li><a href="/mypage/rentlist"> <span>대여내역</span></a></li>
-									<li><a href="/mypage/commutation"> <span>이용권 관리</span></a></li>
-								</ul></li>
-						</ul>
-					</div>
-
-					<div class="login-box">
-						<ul class="nav_right">
-
-							<li class="admin"><a href="/admin/books" class="admin-btn" 
-								sec:authorize="hasRole('ADMIN')"> <img alt="admin" src="/images/header/admin.png">
-
-							</a></li>
-							<li class="login"><a href="/login" class="login-btn"
-								sec:authorize="isAnonymous()"> <img alt="login"src="/images/header/login.png">
-							</a></li>
-							<li class="logout"><a href="/logout" class="logout-btn"
-								sec:authorize="isAuthenticated()"> <img alt="logout" src="/images/header/logout.png">
-							</a></li>
-						</ul>
-					</div>
-
-				</nav>
-
-			</div>
+<header th:fragment="header" class="header-section container-fluid">
+	<div class="header-wrap">
+		<div class="container position">
+			<nav class="main-nav">
+				<!-- 로고 -->
+				<div class="logo col-2">
+					<a href="/"> <img alt="logo" src="/images/header/logo.png"></a>
+				</div>
+				<!-- 메뉴 -->
+				<div class="menu-box col-6">
+					<ul class="nav_left">
+						<li class="menu"><a href="/category">카테고리</a></li>
+						<li class="menu"><a href="/search/main">검색</a></li>
+						<li class="menu"><a href="/question/questionInfo">문의하기</a></li>
+						<li class="menu" sec:authorize="hasAnyRole('USER', 'ADMIN')"><a href="/myLibrary">나의서재</a></li>
+						<li class="menu slide-menu" sec:authorize="hasAnyRole('USER', 'ADMIN')"><a href="javascript:;">나의정보</a>
+							<ul class="submenu">
+								<li><a href="/login/update">개인정보 수정</a></li>
+								<li><a href="/mypage/rentlist">대여내역</a></li>
+								<li><a href="/mypage/commutation">이용권 관리</a></li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+				<div class="login-box col-4">
+					<ul class="nav_right">
+						<li class="admin"><a href="/admin/books" class="admin-btn" sec:authorize="hasRole('ADMIN')">
+							<img alt="admin" src="/images/header/admin.png"></a>
+						</li>
+						<li class="about"><a href="/about/project" class="about_btn">ABOUT US</a></li>		
+						<li class="login"><a href="/login" class="login-btn" sec:authorize="isAnonymous()">
+							<img alt="login"src="/images/header/login.png"></a>
+						</li>
+						<li class="logout"><a href="/logout" class="logout-btn" sec:authorize="isAuthenticated()">
+							<img alt="logout" src="/images/header/logout.png"></a>
+						</li>
+					</ul>
+				</div>
+				<a class="navbar_toogleBtn">
+					<i class="fa-solid fa-bars" style="color: #FFD360;"></i>
+				</a>
+			</nav>
 		</div>
 	</div>
+	
+
 </header>
 
 </html>

@@ -1,0 +1,253 @@
+@charset "UTF-8";
+
+.content-wrap{
+	height: auto;
+}
+
+.body-wrap{
+	height: auto;
+	padding: 50px 10px;
+}
+
+.project-name{
+	text-align: center;
+}
+
+.project-name p{
+	font-size: 13px;
+}
+
+.project-name h3{
+	font-weight: bold;
+}
+
+.project-info{
+	display: flex;
+	flex-direction: column;
+	justify-content: start;
+	margin-top: 40px;
+	margin-bottom: 40px;
+	padding: 30px 30px 50px;
+	border: 1px solid #ddd;
+	border-radius: 20px;
+}
+
+.project-info p {
+	text-align: center;
+	margin-bottom: 50px;
+}
+
+.function-info{
+	margin: 0;
+	margin-left: 60px;
+}
+
+.member-wrap{
+	display: flex;
+	flex-direction: column;
+	padding: 50px 0;
+}
+
+.member-wrap img{
+	width: 120px;
+	margin: 0 auto;
+}
+
+.member-title{
+	text-align: left;
+	margin: 0;
+	padding: 10px 20px;
+	border-top: 1px solid #bbb;
+	border-bottom: 1px solid #bbb;
+}
+
+.member-flex{
+	display: flex;
+	justify-content: space-around;
+	margin: 20px 0;
+}
+
+.member{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.member p {
+	font-size: 20px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.member .name {
+	margin-bottom: 10px;
+}
+
+.member-part {
+	height: 340px;
+	padding: 30px 20px;
+}
+
+.member-border{
+	padding-left: 40px;
+	padding-right: 40px;
+	border-left: 1px solid #bbb;
+	border-right: 1px solid #bbb;
+}
+
+.member-part p{
+	font-size: 13px;
+	font-weight: normal;
+	margin-bottom: 10px;
+	font-weight: 600;
+	text-align: justify;
+}
+
+.member-part span {
+	padding-right: 10px;
+}
+
+.margin-small {
+	margin-bottom: 5px !important;
+}
+
+.member-part p > span {
+	font-size: 12px;
+}
+
+.project-menu-wrap{
+	padding: 0;
+}
+
+.project-menu-wrap ul {
+	display: flex;
+	height: 50px;
+	margin: 0;
+	border-top: 1px solid #bbb;
+	border-bottom: 1px solid #bbb;
+	padding: 0;
+}
+
+.project-menu-wrap ul li {
+	display: flex;
+	align-items: center;
+	margin: 0;
+	padding: 10px 20px;
+}
+
+.project-menu-wrap li:hover {
+	background-color: #000;
+	color: #fff;
+	cursor: pointer;
+}
+
+.project-content-wrap{
+	display: block;	
+	margin: 0;
+	padding: 0;
+}
+
+#developmentBox{
+	display: none;
+}
+
+.DE-content{
+	display: flex;
+	justify-content: space-around;
+	padding: 20px;
+}
+
+.development{
+	display: flex;
+	flex-direction: column;
+	border: 1px solid #ddd;
+	padding: 15px;
+	margin: 0 5px;
+}
+
+.title-box{
+	width: 100%;
+	height: 50px;
+	line-height: 50px;
+	text-align: center;
+	background-color: #eee;
+}
+
+.development-img{
+	display: flex;
+	justify-content: center;
+}
+
+.development img{
+	width: 110px;
+	margin: 10px;
+	margin: 0 auto;
+}
+
+.tool-img-box{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
+.use-case-content{
+	display: none;
+	padding: 20px;
+}
+
+.use-case-content img {
+	width: 100%;
+}
+
+.use-case-content > div {
+	padding: 30px 0;
+}
+
+.erd-content{
+	display: none;
+	padding: 20px;
+}
+
+.erd-content img {
+	width: 100%;
+}
+
+.erd-content > div {
+	display: flex;
+	flex-direction: column;
+	padding: 30px 0;
+}
+
+.git-content{
+	display: none;
+	padding: 20px;
+}
+
+.git-content > div {
+	display: flex;
+	flex-direction: column;
+	padding: 30px 0;
+}
+
+.git-content img {
+	width: 100%;
+}
+
+.erd-content  a,
+.git-content  a {
+	font-size: 20px;
+	padding-bottom: 50px;
+}
+
+.erd-content  a:hover,
+.git-content  a:hover {
+	font-weight: bold;
+	text-decoration: underline;
+}
+
+#developmentBox.active,
+#useCaseBox.active,
+#erdBox.active,
+#gitBox.active{
+	display: block;
+}
