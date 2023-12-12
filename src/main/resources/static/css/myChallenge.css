@@ -85,6 +85,7 @@
 	border-radius: 15px;
 	border: 1px solid #bbb;
 	padding: 30px 20px;
+	justify-content: center;
 }
 
 .challenge-text{
@@ -184,6 +185,7 @@
 
 .button-box-wrap{
 	display: flex;
+	justify-content: space-evenly;
 }
 
 .button-box {
@@ -303,6 +305,7 @@
 	align-items: center;
 	font-size: 25px;
 	font-weight: bold;
+	justify-content: center;
 }
 
 .challenge-item p{

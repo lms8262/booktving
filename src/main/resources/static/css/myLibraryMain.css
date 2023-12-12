@@ -152,7 +152,6 @@
 
 /* 나의서재 bookcase 영역 */
 .bookcase-box{
-	width: 80%;
 	height: 300px;
 	border: 1px solid #eee;
 	border-radius: 50px;
@@ -208,7 +207,6 @@
 
 /* 나의서재 favorite 영역 */
 .favorite-box{
-	width: 80%;
 	height: 300px;
 	border: 1px solid #eee;
 	border-radius: 50px;

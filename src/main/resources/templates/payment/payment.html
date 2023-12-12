@@ -17,7 +17,7 @@
 	<div class="container my-5">
 		<div>		
 			<h4 class="commutation-title mb-5">이용권 구매</h4>
-			<div class="text-center">
+			<div class="text-center d-flex">
 				<div class="col-3"></div>
 				<div class="col-6" th:if="${not #lists.isEmpty(commutationTicketList)}">
 					<th:block th:each="commutationTicket : ${commutationTicketList}">
